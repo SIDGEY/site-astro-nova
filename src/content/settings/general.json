@@ -1,88 +1,34 @@
 {
-  "siteName": "Atecna",
-  "defaultDescription": "Expert en transformation numérique IA & Data pour le mid-market.",
+  "siteName": "Astro Nova universe",
+  "defaultDescription": "Astro Nova est un jeu de stratégie 4X spatial immersif qui combine gestion de ressources, exploration, expansion et combat dans un univers dynamique.",
   "logo": "/uploads/logo_atecna_corail.svg",
   "navigation": [
     {
-      "label": "Expertises",
-      "link": "/p/expertises"
+      "label": "Caractéristiques Gameplay",
+      "link": "/expertises"
     },
     {
-      "label": "Approche",
-      "link": "/p/approche-methode"
+      "label": " Communauté",
+      "link": "/approche-methode"
     },
     {
-      "label": "Cas Clients",
+      "label": "Galerie",
       "link": "/cas-clients"
     },
     {
-      "label": "Insights",
-      "link": "/ressources"
+      "label": "Jouer",
+      "link": "https://play-astronova.com/game"
     }
   ],
   "footer": {
-    "value_proposition": {
-      "title": "Ce que vous obtenez avec Atecna",
-      "text": "Une Digital Factory produit, data & IA qui transforme une idée en livrable concret, en production.",
-      "bullets": [
-        "Sites web, applications, plateformes métiers ou produits IA industrialisés",
-        "Cadrage, construction, mise en production et mesure d’impact",
-        "Transfert pour que vos équipes gardent la maîtrise"
-      ]
-    },
     "contact": {
       "title": "Contact",
-      "address": "Lille (HQ) — 123 Allée de l'Innovation, 59000 Lille, France",
-      "email": "hello@atecna.fr",
-      "phone": "+33 (0)3 20 00 00 00",
-      "cta_label": "Échanger avec un expert",
+      "address": "",
+      "email": "contact@play-astronova.com",
+      "phone": " ",
+      "cta_label": " ",
       "cta_link": "/parler-ia"
     },
-    "section_titles": {
-      "main_nav": "Navigation principale",
-      "expertises": "Expertises",
-      "agencies": "Nos agences",
-      "certifications": "Nos engagements & certifications",
-      "resources": "Ressources & support",
-      "social": "Nous suivre"
-    },
-    "main_nav": [
-      {
-        "label": "À propos",
-        "href": "/p/notre-approche",
-        "type": "internal"
-      },
-      {
-        "label": "Expertises",
-        "href": "/p/expertises",
-        "type": "internal"
-      },
-      {
-        "label": "Cas clients",
-        "href": "/cas-clients",
-        "type": "internal"
-      },
-      {
-        "label": "Approche & méthode",
-        "href": "/p/approche-methode",
-        "type": "internal"
-      },
-      {
-        "label": "Diagnostics (IA / Data)",
-        "href": "/p/ia-data",
-        "type": "internal"
-      },
-      {
-        "label": "Blog / Insights",
-        "href": "/ressources",
-        "type": "internal"
-      },
-      {
-        "label": "Modalités d’intervention",
-        "href": "/p/notre-approche",
-        "type": "internal"
-      }
-    ],
     "expertises_nav": [
       {
         "label": "IA & Data",
@@ -147,26 +93,18 @@
         "type": "internal"
       }
     ],
-    "certifications": [
-      {
-        "label": "Qualiopi",
-        "href": "/p/ia-data",
-        "icon_filename": "/uploads/certifications/qualiopi.svg",
-        "type": "internal"
-      },
-      {
-        "label": "EcoVadis",
-        "href": "/articles/atecna-obtient-le-label-ecovadis-pour-son-engagement-rse/",
-        "icon_filename": "/uploads/certifications/ecovadis.svg",
-        "type": "internal"
-      },
-      {
-        "label": "Greenly",
-        "href": "/articles/atecna-sengage-pour-le-climat/",
-        "icon_filename": "/uploads/certifications/greenly.svg",
-        "type": "internal"
-      }
-    ],
+    "copyright": {
+      "text": "© Atecna — Tous droits réservés • 2026 • TVA / RCS sur demande"
+    },
+    "value_proposition": {
+      "title": "Ce que vous obtenez avec Atecna",
+      "text": "Une Digital Factory produit, data & IA qui transforme une idée en livrable concret, en production.",
+      "bullets": [
+        "Sites web, applications, plateformes métiers ou produits IA industrialisés",
+        "Cadrage, construction, mise en production et mesure d’impact",
+        "Transfert pour que vos équipes gardent la maîtrise"
+      ]
+    },
     "resources_nav": [
       {
         "label": "Mentions légales",
@@ -225,8 +163,71 @@
         "type": "internal"
       }
     ],
-    "copyright": {
-      "text": "© Atecna — Tous droits réservés • 2026 • TVA / RCS sur demande"
-    }
-  }
+    "section_titles": {
+      "main_nav": "Navigation principale",
+      "expertises": "Expertises",
+      "agencies": "Nos agences",
+      "certifications": "Nos engagements & certifications",
+      "resources": "Ressources & support",
+      "social": "Nous suivre"
+    },
+    "certifications": [
+      {
+        "label": "Qualiopi",
+        "href": "/p/ia-data",
+        "icon_filename": "/uploads/certifications/qualiopi.svg",
+        "type": "internal"
+      },
+      {
+        "label": "EcoVadis",
+        "href": "/articles/atecna-obtient-le-label-ecovadis-pour-son-engagement-rse/",
+        "icon_filename": "/uploads/certifications/ecovadis.svg",
+        "type": "internal"
+      },
+      {
+        "label": "Greenly",
+        "href": "/articles/atecna-sengage-pour-le-climat/",
+        "icon_filename": "/uploads/certifications/greenly.svg",
+        "type": "internal"
+      }
+    ],
+    "main_nav": [
+      {
+        "label": "À propos",
+        "href": "/p/notre-approche",
+        "type": "internal"
+      },
+      {
+        "label": "Expertises",
+        "href": "/p/expertises",
+        "type": "internal"
+      },
+      {
+        "label": "Cas clients",
+        "href": "/cas-clients",
+        "type": "internal"
+      },
+      {
+        "label": "Approche & méthode",
+        "href": "/p/approche-methode",
+        "type": "internal"
+      },
+      {
+        "label": "Diagnostics (IA / Data)",
+        "href": "/p/ia-data",
+        "type": "internal"
+      },
+      {
+        "label": "Blog / Insights",
+        "href": "/ressources",
+        "type": "internal"
+      },
+      {
+        "label": "Modalités d’intervention",
+        "href": "/p/notre-approche",
+        "type": "internal"
+      }
+    ]
+  },
+  "favicon": "https://play-astronova.com/favicon-32x32.png"
 }
