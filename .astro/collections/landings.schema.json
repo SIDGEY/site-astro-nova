@@ -911,6 +911,25 @@
                   },
                   "type": {
                     "type": "string",
+                    "const": "gameGallery"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
                     "const": "community"
                   },
                   "title": {
