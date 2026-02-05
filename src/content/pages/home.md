@@ -1,19 +1,21 @@
 ---
-title: Atecna | Produits digitaux, data & IA livrés en production
-description: Nous transformons vos idées digitales en produits concrets (site,
-  app, plateforme, IA), du cadrage à la mise en production.
+title: Conquérez l'univers avec stratégie
+description: Conquérez l'univers avec stratégie.Explorez des galaxies,
+  développez votre civilisation spatiale et affrontez d'autres joueurs dans une
+  expérience de stratégie 4X en temps réel.
 sectionVariants:
   - surface
 blocks:
   - type: hero
-    variant: tint-coral
-    title: Nous transformons vos idées digitales en produits concrets, en production.
-    subtitle: Sites web, applications, plateformes métier et IA industrialisée. Nous
-      cadrons, construisons et mettons en production avec des résultats mesurés.
-    ctaText: Échanger avec un expert
-    ctaLink: /parler-ia
-    secondaryCtaText: Voir des cas concrets
-    secondaryCtaLink: /cas-clients
+    variant: auto
+    title: Conquérez l'univers avec stratégie
+    subtitle: Explorez des galaxies, développez votre civilisation spatiale et
+      affrontez d'autres joueurs dans une expérience de stratégie 4X en temps
+      réel.
+    ctaText: S'inscrire à la bêta
+    ctaLink: https://play-astronova.com/
+    secondaryCtaText: En savoir plus
+    secondaryCtaLink: /caractéristique
   - type: benefits
     title: Ce que nous livrons
     subtitle: Des livrables visibles, avec une forme et un timing clairs.
