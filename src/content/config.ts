@@ -185,6 +185,21 @@ const blockDiagnosticIASchema = blockBaseSchema.extend({
   footerText: z.string().optional(),
 });
 
+
+const blockImageCardsSchema = blockBaseSchema.extend({
+  type: z.literal('imageCards'),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  cards: z.array(z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    buttonLabel: z.string().optional(),
+    buttonLink: z.string().optional(),
+    image: z.string(),
+    imageAlt: z.string().optional(),
+  })),
+});
+
 const blockCommercialsSchema = blockBaseSchema.extend({
   type: z.literal('commercials'),
   title: z.string().optional(),
@@ -213,6 +228,7 @@ const blockSchema = z.discriminatedUnion('type', [
   blockLeadFormSchema,
   blockDiagnosticIASchema,
   blockCommercialsSchema,
+  blockImageCardsSchema,
 ]);
 
 // --- Collections Definition ---

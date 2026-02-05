@@ -214,6 +214,19 @@ collections:
               { label: "CTA Link", name: "ctaLink", widget: "string", required: false },
               { label: "Texte de rassurance", name: "footerText", widget: "string", required: false }
             ]},
+            { label: "Image Cards", name: "imageCards", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Titre", name: "title", widget: "string", required: false },
+              { label: "Sous-titre", name: "subtitle", widget: "text", required: false },
+              { label: "Cartes", name: "cards", widget: "list", fields: [
+                { label: "Titre", name: "title", widget: "string" },
+                { label: "Description", name: "description", widget: "text", required: false },
+                { label: "Label bouton", name: "buttonLabel", widget: "string", required: false },
+                { label: "Lien bouton", name: "buttonLink", widget: "string", required: false },
+                { label: "Image", name: "image", widget: "image" },
+                { label: "Texte alternatif", name: "imageAlt", widget: "string", required: false }
+              ]}
+            ]},
             { label: "Lead Form", name: "leadForm", widget: "object", fields: [
               { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
               { label: "Title", name: "title", widget: "string" },
@@ -245,7 +258,7 @@ collections:
         { label: "FAQ", name: "faq", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Questions", name: "items", widget: "list", fields: [{ label: "Question", name: "question", widget: "string" }, { label: "Answer", name: "answer", widget: "text" }] }] },
         { label: "Rich Content", name: "richContent", widget: "object", fields: [{ label: "Content", name: "content", widget: "markdown" }] },
         { label: "CTA", name: "cta", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Button Text", name: "buttonText", widget: "string" }, { label: "Button Link", name: "buttonLink", widget: "string" }] },
-        { label: "Lead Form", name: "leadForm", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Introduction", name: "intro", widget: "markdown", required: false }, { label: "Label Bouton", name: "submitLabel", widget: "string", default: "Envoyer" }, { label: "Message de succès", name: "successMessage", widget: "text", default: "Merci ! Votre demande a été transmise avec succès." }, { label: "Type de formulaire HubSpot", name: "hubspotFormType", widget: "select", options: ["diagnostic", "contact", "generic"], default: "generic" }] }
+        { label: "Image Cards", name: "imageCards", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Cards", name: "cards", widget: "list", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "description", widget: "text", required: false }, { label: "Button Label", name: "buttonLabel", widget: "string", required: false }, { label: "Button Link", name: "buttonLink", widget: "string", required: false }, { label: "Image", name: "image", widget: "image" }, { label: "Image Alt", name: "imageAlt", widget: "string", required: false }] }] }, { label: "Lead Form", name: "leadForm", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Introduction", name: "intro", widget: "markdown", required: false }, { label: "Label Bouton", name: "submitLabel", widget: "string", default: "Envoyer" }, { label: "Message de succès", name: "successMessage", widget: "text", default: "Merci ! Votre demande a été transmise avec succès." }, { label: "Type de formulaire HubSpot", name: "hubspotFormType", widget: "select", options: ["diagnostic", "contact", "generic"], default: "generic" }] }
       ]}
 
   - name: "landings"
@@ -267,6 +280,7 @@ collections:
         { label: "FAQ", name: "faq", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Questions", name: "items", widget: "list", fields: [{ label: "Question", name: "question", widget: "string" }, { label: "Answer", name: "answer", widget: "text" }] }] },
         { label: "Rich Content", name: "richContent", widget: "object", fields: [{ label: "Content", name: "content", widget: "markdown" }] },
         { label: "CTA", name: "cta", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Button Text", name: "buttonText", widget: "string" }, { label: "Button Link", name: "buttonLink", widget: "string" }] },
+        { label: "Image Cards", name: "imageCards", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Cards", name: "cards", widget: "list", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "description", widget: "text", required: false }, { label: "Button Label", name: "buttonLabel", widget: "string", required: false }, { label: "Button Link", name: "buttonLink", widget: "string", required: false }, { label: "Image", name: "image", widget: "image" }, { label: "Image Alt", name: "imageAlt", widget: "string", required: false }] }] },
         { label: "Lead Form", name: "leadForm", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Introduction", name: "intro", widget: "markdown", required: false }, { label: "Label Bouton", name: "submitLabel", widget: "string", default: "Envoyer" }, { label: "Message de succès", name: "successMessage", widget: "text", default: "Merci ! Votre demande a été transmise avec succès." }, { label: "Type de formulaire HubSpot", name: "hubspotFormType", widget: "select", options: ["diagnostic", "contact", "generic"], default: "generic" }] }
       ]}
 
@@ -295,6 +309,19 @@ collections:
         { label: "Rich Content", name: "richContent", widget: "object", fields: [
           { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
           { label: "Content", name: "content", widget: "markdown" }
+        ]},
+        { label: "Image Cards", name: "imageCards", widget: "object", fields: [
+          { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+          { label: "Titre", name: "title", widget: "string", required: false },
+          { label: "Sous-titre", name: "subtitle", widget: "text", required: false },
+          { label: "Cartes", name: "cards", widget: "list", fields: [
+            { label: "Titre", name: "title", widget: "string" },
+            { label: "Description", name: "description", widget: "text", required: false },
+            { label: "Label bouton", name: "buttonLabel", widget: "string", required: false },
+            { label: "Lien bouton", name: "buttonLink", widget: "string", required: false },
+            { label: "Image", name: "image", widget: "image" },
+            { label: "Texte alternatif", name: "imageAlt", widget: "string", required: false }
+          ]}
         ]},
         { label: "Bloc commerciaux", name: "commercials", widget: "object", fields: [
           { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
@@ -354,6 +381,7 @@ collections:
         { label: "FAQ", name: "faq", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Questions", name: "items", widget: "list", fields: [{ label: "Question", name: "question", widget: "string" }, { label: "Answer", name: "answer", widget: "text" }] }] },
         { label: "Rich Content", name: "richContent", widget: "object", fields: [{ label: "Content", name: "content", widget: "markdown" }] },
         { label: "CTA", name: "cta", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Button Text", name: "buttonText", widget: "string" }, { label: "Button Link", name: "buttonLink", widget: "string" }] },
+        { label: "Image Cards", name: "imageCards", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Cards", name: "cards", widget: "list", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "description", widget: "text", required: false }, { label: "Button Label", name: "buttonLabel", widget: "string", required: false }, { label: "Button Link", name: "buttonLink", widget: "string", required: false }, { label: "Image", name: "image", widget: "image" }, { label: "Image Alt", name: "imageAlt", widget: "string", required: false }] }] },
         { label: "Lead Form", name: "leadForm", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Introduction", name: "intro", widget: "markdown", required: false }, { label: "Label Bouton", name: "submitLabel", widget: "string", default: "Envoyer" }, { label: "Message de succès", name: "successMessage", widget: "text", default: "Merci ! Votre demande a été transmise avec succès." }, { label: "Type de formulaire HubSpot", name: "hubspotFormType", widget: "select", options: ["diagnostic", "contact", "generic"], default: "generic" }] }
       ]}
 
