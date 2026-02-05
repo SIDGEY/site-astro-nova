@@ -1,0 +1,65 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface ImageCardItem {
+  title: string;
+  description?: string;
+  buttonLabel?: string;
+  buttonLink?: string;
+  image: string;
+  imageAlt?: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  cards: ImageCardItem[];
+  bgVariant?: BgVariant;
+}
+
+const { title, subtitle, cards = [], bgVariant } = Astro.props;
+---
+
+<Section variant={bgVariant || 'surface'}>
+  <div class="space-y-10">
+    {(title || subtitle) && (
+      <div class="max-w-3xl">
+        {title && <h2 class="text-3xl md:text-4xl font-bold text-text">{title}</h2>}
+        {subtitle && <p class="mt-4 text-lg text-muted">{subtitle}</p>}
+      </div>
+    )}
+
+    <div class="space-y-6">
+      {cards.map((card) => (
+        <article class="relative isolate overflow-hidden rounded-2xl border border-border/60 bg-[#08162f] min-h-[240px] md:min-h-[260px]">
+          <img
+            src={card.image}
+            alt={card.imageAlt || card.title}
+            class="absolute inset-0 h-full w-full object-cover object-right"
+            loading="lazy"
+          />
+
+          <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,14,33,0.98)_0%,rgba(4,14,33,0.94)_36%,rgba(4,14,33,0.7)_55%,rgba(4,14,33,0.15)_100%)]" aria-hidden="true"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-slate-900/25 via-transparent to-transparent" aria-hidden="true"></div>
+
+          <div class="relative z-10 flex h-full max-w-xl flex-col justify-center gap-5 p-8 md:p-10">
+            <h3 class="text-3xl font-bold text-white">{card.title}</h3>
+            {card.description && <p class="text-base leading-relaxed text-slate-200/95">{card.description}</p>}
+
+            {card.buttonLabel && card.buttonLink && (
+              <div>
+                <a
+                  href={card.buttonLink}
+                  class="inline-flex items-center justify-center rounded-lg border border-white/20 bg-slate-950/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-slate-900/75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  {card.buttonLabel}
+                </a>
+              </div>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</Section>

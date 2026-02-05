@@ -14,6 +14,7 @@ import WhyBlock from './blocks/WhyBlock.astro';
 import DeliveryBlock from './blocks/DeliveryBlock.astro';
 import EngagementModelsBlock from './blocks/EngagementModelsBlock.astro';
 import CommercialsBlock from './blocks/CommercialsBlock.astro';
+import ImageCardsBlock from './blocks/ImageCardsBlock.astro';
 import { computeBgVariants } from '../utils/bgHelper';
 
 interface Props {
@@ -58,6 +59,8 @@ const bgVariants = computeBgVariants(blocks, sectionVariants);
       return <EngagementModelsBlock {...commonProps} />;
     case 'commercials':
       return <CommercialsBlock {...commonProps} />;
+    case 'imageCards':
+      return <ImageCardsBlock {...commonProps} />;
     default:
       return null;
   }

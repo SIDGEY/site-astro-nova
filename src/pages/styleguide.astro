@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ImageCardsBlock from '../components/blocks/ImageCardsBlock.astro';
 ---
 
 <BaseLayout 
@@ -106,6 +107,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </div>
           </div>
         </div>
+      </div>
+
+
+      <div class="mb-32">
+        <h2 class="section-title">Image Cards Block</h2>
+        <ImageCardsBlock
+          cards={[
+            {
+              title: 'Planète',
+              description: 'Explorez un univers généré procéduralement rempli de systèmes stellaires uniques. Découvrez des planètes aux caractéristiques variées et établissez votre empire galactique.',
+              buttonLabel: 'En savoir plus',
+              buttonLink: '#',
+              image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80',
+              imageAlt: "Panorama science-fiction d'une planète",
+            },
+            {
+              title: 'Ressources',
+              description: 'Gérez vos ressources stratégiquement en construisant des installations de production et de stockage. Optimisez votre économie pour soutenir votre expansion.',
+              buttonLabel: 'En savoir plus',
+              buttonLink: '#',
+              image: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1400&q=80',
+              imageAlt: 'Cristaux bleus lumineux',
+            },
+            {
+              title: 'Bâtiments',
+              description: 'Développez votre arbre technologique pour débloquer de nouvelles capacités. Recherchez des innovations qui transformeront votre civilisation.',
+              buttonLabel: 'En savoir plus',
+              buttonLink: '#',
+              image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1400&q=80',
+              imageAlt: 'Base futuriste sur une planète',
+            },
+          ]}
+        />
       </div>
 
       <!-- Accessibility Checklist -->
