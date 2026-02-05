@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImageCardsBlock from '../components/blocks/ImageCardsBlock.astro';
+import FeatureShowcaseBlock from '../components/blocks/FeatureShowcaseBlock.astro';
 ---
 
 <BaseLayout 
@@ -137,6 +138,50 @@ import ImageCardsBlock from '../components/blocks/ImageCardsBlock.astro';
               buttonLink: '#',
               image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1400&q=80',
               imageAlt: 'Base futuriste sur une planète',
+            },
+          ]}
+        />
+      </div>
+
+
+
+      <div class="mb-32">
+        <h2 class="section-title">Feature Showcase Block</h2>
+        <FeatureShowcaseBlock
+          items={[
+            {
+              eyebrow: 'Ressources',
+              title: 'Gérez vos ressources pour prospérer',
+              description: 'Les ressources sont essentielles dans Astro Nova. Le métal est crucial pour la construction, tandis que le cristal sert aux technologies avancées.',
+              align: 'left',
+              backgroundImage: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1800&q=80',
+              backgroundImageAlt: 'Arrière-plan spatial bleu nuit',
+              screens: [
+                {
+                  image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+                  imageAlt: 'Interface mobile de gestion des ressources',
+                },
+              ],
+              tags: [{ label: '⛏' }, { label: '💎' }, { label: '⚡' }],
+            },
+            {
+              eyebrow: 'Mines',
+              title: "Optimisez l'extraction de vos ressources",
+              description: 'Les mines sont vos sources de ressources. Améliorez vos infrastructures pour augmenter votre production et suivre la croissance de votre empire.',
+              align: 'right',
+              backgroundImage: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1800&q=80',
+              backgroundImageAlt: 'Ville futuriste industrielle',
+              screens: [
+                {
+                  image: 'https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=800&q=80',
+                  imageAlt: 'Interface mobile des bâtiments',
+                },
+                {
+                  image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80',
+                  imageAlt: "Détails d'un bâtiment en cours de construction",
+                },
+              ],
+              tags: [{ label: 'Niveau 4' }, { label: 'x8' }],
             },
           ]}
         />

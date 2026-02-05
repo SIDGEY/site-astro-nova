@@ -200,6 +200,32 @@ const blockImageCardsSchema = blockBaseSchema.extend({
   })),
 });
 
+
+const blockFeatureShowcaseSchema = blockBaseSchema.extend({
+  type: z.literal('featureShowcase'),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  items: z.array(z.object({
+    eyebrow: z.string().optional(),
+    title: z.string(),
+    description: z.string(),
+    align: z.enum(['left', 'right']).default('left').optional(),
+    backgroundImage: z.string(),
+    backgroundImageAlt: z.string().optional(),
+    screens: z.array(z.object({
+      image: z.string(),
+      imageAlt: z.string().optional(),
+    })).optional(),
+    tags: z.array(z.object({
+      label: z.string().optional(),
+      image: z.string().optional(),
+      imageAlt: z.string().optional(),
+    })).optional(),
+    ctaLabel: z.string().optional(),
+    ctaLink: z.string().optional(),
+  })),
+});
+
 const blockCommercialsSchema = blockBaseSchema.extend({
   type: z.literal('commercials'),
   title: z.string().optional(),
@@ -229,6 +255,7 @@ const blockSchema = z.discriminatedUnion('type', [
   blockDiagnosticIASchema,
   blockCommercialsSchema,
   blockImageCardsSchema,
+  blockFeatureShowcaseSchema,
 ]);
 
 // --- Collections Definition ---
