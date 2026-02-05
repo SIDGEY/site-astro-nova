@@ -1,0 +1,38 @@
+---
+interface Props {
+  variant?: 'surface' | 'surface-2' | 'tint-coral' | 'tint-blue' | 'base' | 'alt' | 'highlight';
+  id?: string;
+  className?: string;
+}
+
+const { 
+  variant = 'base', 
+  id, 
+  className = "" 
+} = Astro.props;
+
+const variantClasses = {
+  surface: "bg-surface text-text",
+  "surface-2": "bg-surface-2 text-text border-y border-border",
+  "tint-coral": "bg-secondary/10 text-text border-y border-secondary/20",
+  "tint-blue": "bg-primary/10 text-text border-y border-primary/20",
+  base: "bg-bg text-text",
+  alt: "bg-surface-2 text-text border-y border-border",
+  highlight: "bg-highlight text-text border-y border-secondary/10",
+};
+
+const resolvedVariant = variantClasses[variant ?? 'surface'] ? variant ?? 'surface' : 'surface';
+---
+
+<section 
+  id={id} 
+  class:list={[
+    "py-20 md:py-28 transition-colors duration-500",
+    variantClasses[resolvedVariant],
+    className
+  ]}
+>
+  <div class="container-custom">
+    <slot />
+  </div>
+</section>

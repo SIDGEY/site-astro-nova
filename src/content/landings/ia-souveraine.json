@@ -1,0 +1,48 @@
+{
+  "title": "IA Souveraine : Maîtrisez vos données",
+  "description": "Déployez des modèles d'IA performants tout en gardant un contrôle total sur votre infrastructure et votre confidentialité.",
+  "blocks": [
+    {
+      "type": "hero",
+      "title": "L'IA de pointe, sans compromis sur la souveraineté.",
+      "subtitle": "Hébergez vos propres LLM et garantissez la confidentialité de vos données stratégiques avec nos solutions on-premise ou cloud souverain.",
+      "cta": {
+        "text": "Découvrir nos solutions",
+        "link": "/contact"
+      }
+    },
+    {
+      "type": "benefits",
+      "title": "Les piliers de l'IA Souveraine",
+      "items": [
+        {
+          "title": "Confidentialité Absolue",
+          "description": "Vos données ne quittent jamais votre infrastructure. Aucun entraînement tiers n'est effectué sur vos secrets industriels."
+        },
+        {
+          "title": "Indépendance Technologique",
+          "description": "Ne dépendez plus des géants du Web. Nous utilisons des modèles Open Source (Llama 3, Mistral) adaptés à vos besoins."
+        },
+        {
+          "title": "Conformité RGPD",
+          "description": "Répondez aux exigences réglementaires les plus strictes grâce à une traçabilité et un contrôle total."
+        }
+      ]
+    },
+    {
+      "type": "stats",
+      "items": [
+        { "label": "Sécurité", "value": "100", "suffix": "%" },
+        { "label": "Disponibilité", "value": "99.9", "suffix": "%" },
+        { "label": "Modèles supportés", "value": "25", "suffix": "+" }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Passez à l'IA Souveraine dès aujourd'hui",
+      "subtitle": "Nos experts vous accompagnent dans le choix et le déploiement de votre infrastructure.",
+      "buttonText": "Parler à un consultant",
+      "buttonLink": "/contact"
+    }
+  ]
+}

@@ -1,0 +1,232 @@
+{
+  "siteName": "Atecna",
+  "defaultDescription": "Expert en transformation numérique IA & Data pour le mid-market.",
+  "logo": "/uploads/logo_atecna_corail.svg",
+  "navigation": [
+    {
+      "label": "Expertises",
+      "link": "/p/expertises"
+    },
+    {
+      "label": "Approche",
+      "link": "/p/approche-methode"
+    },
+    {
+      "label": "Cas Clients",
+      "link": "/cas-clients"
+    },
+    {
+      "label": "Insights",
+      "link": "/ressources"
+    }
+  ],
+  "footer": {
+    "value_proposition": {
+      "title": "Ce que vous obtenez avec Atecna",
+      "text": "Une Digital Factory produit, data & IA qui transforme une idée en livrable concret, en production.",
+      "bullets": [
+        "Sites web, applications, plateformes métiers ou produits IA industrialisés",
+        "Cadrage, construction, mise en production et mesure d’impact",
+        "Transfert pour que vos équipes gardent la maîtrise"
+      ]
+    },
+    "contact": {
+      "title": "Contact",
+      "address": "Lille (HQ) — 123 Allée de l'Innovation, 59000 Lille, France",
+      "email": "hello@atecna.fr",
+      "phone": "+33 (0)3 20 00 00 00",
+      "cta_label": "Échanger avec un expert",
+      "cta_link": "/parler-ia"
+    },
+    "section_titles": {
+      "main_nav": "Navigation principale",
+      "expertises": "Expertises",
+      "agencies": "Nos agences",
+      "certifications": "Nos engagements & certifications",
+      "resources": "Ressources & support",
+      "social": "Nous suivre"
+    },
+    "main_nav": [
+      {
+        "label": "À propos",
+        "href": "/p/notre-approche",
+        "type": "internal"
+      },
+      {
+        "label": "Expertises",
+        "href": "/p/expertises",
+        "type": "internal"
+      },
+      {
+        "label": "Cas clients",
+        "href": "/cas-clients",
+        "type": "internal"
+      },
+      {
+        "label": "Approche & méthode",
+        "href": "/p/approche-methode",
+        "type": "internal"
+      },
+      {
+        "label": "Diagnostics (IA / Data)",
+        "href": "/p/ia-data",
+        "type": "internal"
+      },
+      {
+        "label": "Blog / Insights",
+        "href": "/ressources",
+        "type": "internal"
+      },
+      {
+        "label": "Modalités d’intervention",
+        "href": "/p/notre-approche",
+        "type": "internal"
+      }
+    ],
+    "expertises_nav": [
+      {
+        "label": "IA & Data",
+        "href": "/p/ia-data",
+        "type": "internal"
+      },
+      {
+        "label": "Produit & Design",
+        "href": "/p/expertises/produit-design",
+        "type": "internal"
+      },
+      {
+        "label": "Technologies & Architecture",
+        "href": "/p/expertises/technologies-architecture",
+        "type": "internal"
+      },
+      {
+        "label": "Performance digitale",
+        "href": "/p/expertises/performance-digitale",
+        "type": "internal"
+      },
+      {
+        "label": "Numérique responsable & accessibilité",
+        "href": "/p/expertises/numerique-responsable",
+        "type": "internal"
+      },
+      {
+        "label": "Conseil & Cadrage / Delivery",
+        "href": "/p/expertises/conseil-accompagnement",
+        "type": "internal"
+      }
+    ],
+    "agencies_nav": [
+      {
+        "label": "Lille",
+        "href": "/agences/lille",
+        "type": "internal"
+      },
+      {
+        "label": "Paris",
+        "href": "/agences/paris",
+        "type": "internal"
+      },
+      {
+        "label": "Lyon",
+        "href": "/agences/lyon",
+        "type": "internal"
+      },
+      {
+        "label": "Toulouse",
+        "href": "/agences/toulouse",
+        "type": "internal"
+      },
+      {
+        "label": "Barcelone",
+        "href": "/agences/barcelone",
+        "type": "internal"
+      },
+      {
+        "label": "Montréal",
+        "href": "/agences/montreal",
+        "type": "internal"
+      }
+    ],
+    "certifications": [
+      {
+        "label": "Qualiopi",
+        "href": "/p/ia-data",
+        "icon_filename": "/uploads/certifications/qualiopi.svg",
+        "type": "internal"
+      },
+      {
+        "label": "EcoVadis",
+        "href": "/articles/atecna-obtient-le-label-ecovadis-pour-son-engagement-rse/",
+        "icon_filename": "/uploads/certifications/ecovadis.svg",
+        "type": "internal"
+      },
+      {
+        "label": "Greenly",
+        "href": "/articles/atecna-sengage-pour-le-climat/",
+        "icon_filename": "/uploads/certifications/greenly.svg",
+        "type": "internal"
+      }
+    ],
+    "resources_nav": [
+      {
+        "label": "Mentions légales",
+        "href": "/mentions-legales",
+        "type": "internal"
+      },
+      {
+        "label": "Politique de confidentialité",
+        "href": "/politique-confidentialite",
+        "type": "internal"
+      },
+      {
+        "label": "Accessibilité",
+        "href": "/accessibilite",
+        "type": "internal"
+      },
+      {
+        "label": "Conditions générales",
+        "href": "/conditions-generales",
+        "type": "internal"
+      },
+      {
+        "label": "FAQ",
+        "href": "/faq",
+        "type": "internal"
+      },
+      {
+        "label": "Plan du site",
+        "href": "/sitemap.xml",
+        "type": "internal"
+      }
+    ],
+    "social_nav": [
+      {
+        "label": "LinkedIn",
+        "href": "https://linkedin.com/company/atecna",
+        "icon_filename": "/uploads/social/linkedin.svg",
+        "type": "external"
+      },
+      {
+        "label": "X / Twitter",
+        "href": "https://twitter.com/atecna",
+        "icon_filename": "/uploads/social/x.svg",
+        "type": "external"
+      },
+      {
+        "label": "YouTube",
+        "href": "https://www.youtube.com/",
+        "icon_filename": "/uploads/social/youtube.svg",
+        "type": "external"
+      },
+      {
+        "label": "Newsletter",
+        "href": "/newsletter",
+        "icon_filename": "/uploads/social/newsletter.svg",
+        "type": "internal"
+      }
+    ],
+    "copyright": {
+      "text": "© Atecna — Tous droits réservés • 2026 • TVA / RCS sur demande"
+    }
+  }
+}

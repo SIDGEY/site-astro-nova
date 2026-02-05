@@ -1,0 +1,83 @@
+{
+  "title": "Diagnostic IA 2026 : Évaluez votre maturité",
+  "description": "Un audit complet de vos processus pour identifier les opportunités de croissance via l'IA générative.",
+  "blocks": [
+    {
+      "type": "hero",
+      "title": "Votre entreprise est-elle prête pour la révolution IA ?",
+      "subtitle": "Obtenez un diagnostic personnalisé en 48h et découvrez comment l'IA peut optimiser vos opérations.",
+      "cta": {
+        "text": "Lancer mon diagnostic",
+        "link": "/contact"
+      }
+    },
+    {
+      "type": "logos",
+      "title": "Ils nous font confiance pour leur stratégie IA",
+      "logos": [
+        { "name": "TechCorp", "image": "/logos/techcorp.svg" },
+        { "name": "DataFlow", "image": "/logos/dataflow.svg" },
+        { "name": "Innovate", "image": "/logos/innovate.svg" },
+        { "name": "FutureMind", "image": "/logos/futuremind.svg" }
+      ]
+    },
+    {
+      "type": "stats",
+      "items": [
+        { "label": "Entreprises auditées", "value": "150", "suffix": "+" },
+        { "label": "Gain de productivité", "value": "30", "suffix": "%" },
+        { "label": "ROI moyen", "value": "6", "suffix": " mois" },
+        { "label": "Experts dédiés", "value": "12", "suffix": "" }
+      ]
+    },
+    {
+      "type": "benefits",
+      "title": "Pourquoi réaliser un diagnostic ?",
+      "items": [
+        {
+          "title": "Identification des cas d'usage",
+          "description": "Nous isolons les processus à forte valeur ajoutée où l'IA peut faire la différence immédiatement."
+        },
+        {
+          "title": "Analyse de la donnée",
+          "description": "Évaluation de la qualité et de la disponibilité de vos données pour nourrir vos futurs modèles."
+        },
+        {
+          "title": "Feuille de route stratégique",
+          "description": "Un plan d'action concret, étape par étape, pour intégrer l'IA sans perturber votre activité."
+        }
+      ]
+    },
+    {
+      "type": "testimonials",
+      "items": [
+        {
+          "quote": "Le diagnostic Atecna nous a ouvert les yeux sur le potentiel de nos données. En 3 mois, nous avons automatisé 40% de notre support client.",
+          "author": "Marc Lefebvre",
+          "role": "CTO chez RetailNext"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "title": "Vos questions sur le Diagnostic",
+      "items": [
+        {
+          "question": "Combien de temps dure le diagnostic ?",
+          "answer": "Le processus complet dure généralement entre 2 et 5 jours selon la taille de votre organisation."
+        },
+        {
+          "question": "Quels livrables vais-je recevoir ?",
+          "answer": "Vous recevrez un rapport détaillé incluant une matrice de valeur, une analyse technique et un plan d'implémentation chiffré."
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Prêt à transformer votre business ?",
+      "subtitle": "Réservez votre créneau avec un expert IA pour un premier échange gratuit.",
+      "buttonText": "Prendre rendez-vous",
+      "buttonLink": "/contact"
+    }
+  ]
+}

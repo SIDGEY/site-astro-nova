@@ -1,0 +1,239 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  bgVariant?: BgVariant;
+  intro?: string;
+  submitLabel?: string;
+  successMessage?: string;
+  hubspotFormType?: 'diagnostic' | 'contact' | 'generic';
+}
+
+const { 
+  title, 
+  subtitle, 
+  bgVariant,
+  intro, 
+  submitLabel = "Envoyer ma demande", 
+  successMessage = "Merci ! Votre demande a été transmise avec succès.",
+  hubspotFormType = 'generic'
+} = Astro.props;
+---
+
+<Section variant={bgVariant || 'surface-2'} id="lead-generation">
+  <div class="max-w-4xl mx-auto bg-surface p-8 md:p-16 rounded-[48px] shadow-2xl border border-border">
+    <div class="text-center mb-12">
+      <h2 class="section-title block text-center mx-auto mb-6">{title}</h2>
+      {subtitle && <p class="text-xl text-muted max-w-2xl mx-auto mb-8">{subtitle}</p>}
+      {intro && (
+        <div class="prose prose-lg dark:prose-invert max-w-2xl mx-auto mb-12 text-muted" set:html={intro} />
+      )}
+    </div>
+
+    <div id="form-container">
+      <form 
+        id="hubspot-form"
+        action="/api/hubspot-lead" 
+        method="POST" 
+        class="grid grid-cols-1 md:grid-cols-2 gap-8"
+      >
+        {/* Anti-spam honeypot */}
+        <div class="hidden" aria-hidden="true">
+          <label for="website_url">Website URL</label>
+          <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off" />
+        </div>
+
+        {/* Hidden fields for tracking */}
+        <input type="hidden" name="hubspotFormType" value={hubspotFormType} />
+        <input type="hidden" name="page_url" value={Astro.url.pathname || ""} />
+        <input type="hidden" name="page_title" value={title} />
+
+        <div class="space-y-2">
+          <label for="firstname" class="block text-sm font-bold text-text uppercase tracking-widest">Prénom</label>
+          <input 
+            type="text" 
+            id="firstname" 
+            name="firstname" 
+            required 
+            class="input-base" 
+            placeholder="Alex"
+            aria-required="true"
+          />
+        </div>
+        <div class="space-y-2">
+          <label for="lastname" class="block text-sm font-bold text-text uppercase tracking-widest">Nom</label>
+          <input 
+            type="text" 
+            id="lastname" 
+            name="lastname" 
+            required 
+            class="input-base" 
+            placeholder="Data"
+            aria-required="true"
+          />
+        </div>
+        <div class="md:col-span-2 space-y-2">
+          <label for="email" class="block text-sm font-bold text-text uppercase tracking-widest">Email professionnel</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            required 
+            class="input-base" 
+            placeholder="alex@entreprise.com"
+            aria-required="true"
+          />
+        </div>
+        <div class="space-y-2">
+          <label for="company" class="block text-sm font-bold text-text uppercase tracking-widest">Entreprise</label>
+          <input 
+            type="text" 
+            id="company" 
+            name="company" 
+            required 
+            class="input-base" 
+            placeholder="Atecna"
+            aria-required="true"
+          />
+        </div>
+        <div class="space-y-2">
+          <label for="company_size" class="block text-sm font-bold text-text uppercase tracking-widest">Taille entreprise</label>
+          <select id="company_size" name="company_size" required class="input-base" aria-required="true">
+            <option value="">Sélectionner...</option>
+            <option value="1-10">1-10 employés</option>
+            <option value="11-50">11-50 employés</option>
+            <option value="51-200">51-200 employés</option>
+            <option value="201-500">201-500 employés</option>
+            <option value="501-1000">501-1000 employés</option>
+            <option value="1001+">1001+ employés</option>
+          </select>
+        </div>
+        <div class="space-y-2">
+          <label for="role" class="block text-sm font-bold text-text uppercase tracking-widest">Votre rôle</label>
+            <select id="role" name="role" required class="input-base" aria-required="true">
+              <option value="">Sélectionner...</option>
+              <option value="DG">Direction Générale</option>
+              <option value="CTO">CTO / DSI</option>
+              <option value="CDO">CDO / Head of Data</option>
+              <option value="Marketing">Marketing / E-commerce</option>
+              <option value="Innovation">Innovation</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label for="objective" class="block text-sm font-bold text-text uppercase tracking-widest">Objectif principal</label>
+            <select id="objective" name="objective" required class="input-base" aria-required="true">
+              <option value="">Sélectionner...</option>
+              <option value="productivité">Gains de productivité</option>
+              <option value="qualité">Qualité & Conformité</option>
+              <option value="support">Support client IA</option>
+              <option value="pilotage">Pilotage & Décision</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div class="md:col-span-2 space-y-2">
+            <label for="message" class="block text-sm font-bold text-text uppercase tracking-widest">Votre message</label>
+            <textarea 
+              id="message" 
+              name="message" 
+              rows="4" 
+              class="input-base" 
+              placeholder="Décrivez brièvement votre projet..."
+            ></textarea>
+          </div>
+          
+          <div class="md:col-span-2 flex items-start gap-3 py-4">
+            <input 
+              type="checkbox" 
+              id="consent" 
+              name="consent" 
+              required 
+              class="w-5 h-5 mt-1 rounded border-border text-primary focus:ring-primary cursor-pointer"
+              aria-required="true"
+            />
+            <label for="consent" class="text-sm text-muted leading-relaxed cursor-pointer">
+              J'accepte qu'Atecna collecte mes données pour répondre à ma demande. Vos données ne sont jamais revendues.
+              <span class="text-primary font-bold">*</span>
+            </label>
+          </div>
+
+          <div class="md:col-span-2">
+            <button 
+              type="submit" 
+              id="submit-btn"
+              class="btn btn-primary w-full btn-lg shadow-primary/20 group"
+            >
+              <span class="flex items-center justify-center">
+                {submitLabel}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ml-3 group-hover:translate-x-1 transition-transform"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </span>
+            </button>
+            <div id="form-status" class="mt-6 text-center text-sm font-bold hidden" aria-live="polite"></div>
+          </div>
+        </form>
+      </div>
+
+      <div id="success-container" class="hidden text-center py-12">
+        <div class="w-20 h-20 bg-green-500/20 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3 class="text-3xl font-bold mb-4">Demande envoyée !</h3>
+        <p class="text-xl text-muted leading-relaxed">
+          {successMessage}
+        </p>
+        <button onclick="window.location.reload()" class="btn btn-ghost mt-10">Envoyer une autre demande</button>
+      </div>
+    </div>
+</Section>
+
+<script>
+  const form = document.getElementById('hubspot-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const statusEl = document.getElementById('form-status');
+  const formContainer = document.getElementById('form-container');
+  const successContainer = document.getElementById('success-container');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Reset status
+      statusEl?.classList.add('hidden');
+      statusEl?.classList.remove('text-red-500', 'text-green-500');
+      
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="flex items-center justify-center"><svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Envoi en cours...</span>';
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          formContainer?.classList.add('hidden');
+          successContainer?.classList.remove('hidden');
+          successContainer?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          throw new Error(result.message || "Une erreur est survenue.");
+        }
+      } catch (error: any) {
+        statusEl?.classList.remove('hidden');
+        statusEl?.classList.add('text-red-500');
+        statusEl!.textContent = error.message || "Erreur lors de l'envoi. Veuillez réessayer ou nous contacter à contact@atecna.fr";
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        submitBtn.innerHTML = originalBtnText;
+      }
+    });
+  }
+</script>

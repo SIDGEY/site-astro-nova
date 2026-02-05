@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const agencies = await getCollection('agencies');
+const title = 'Nos agences';
+const description = "Retrouvez l'ensemble des agences Atecna et les points de contact locaux.";
+const canonicalURL = 'https://atecna-2026.fr/agences';
+
+const breadcrumbs = [
+  { name: 'Accueil', item: 'https://atecna-2026.fr/' },
+  { name: 'Agences', item: canonicalURL },
+];
+---
+
+<BaseLayout {title} {description} {canonicalURL} {breadcrumbs}>
+  <section class="py-20 md:py-28 bg-bg text-text">
+    <div class="container-custom space-y-12">
+      <div class="max-w-2xl space-y-4">
+        <h1 class="text-4xl md:text-5xl font-bold">Nos agences</h1>
+        <p class="text-lg text-muted">Choisissez l'agence la plus proche et contactez un interlocuteur dédié.</p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {agencies.map((agency) => {
+          const slug = agency.id.replace(/\.md$/, '').replace(/\.json$/, '');
+          return (
+            <a
+              href={`/agences/${slug}`}
+              class="rounded-3xl border border-border bg-surface p-6 shadow-sm hover:border-primary/50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              <p class="text-xs uppercase tracking-[0.3em] text-primary font-semibold">Agence {agency.data.city}</p>
+              <h2 class="text-2xl font-semibold mt-3">{agency.data.title}</h2>
+              <p class="text-sm text-muted mt-2">{agency.data.address}</p>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  content: string;
+  bgVariant?: BgVariant;
+}
+
+const { content, bgVariant } = Astro.props;
+---
+<Section variant={bgVariant} className="!max-w-4xl mx-auto !py-16">
+  <div class="prose prose-lg md:prose-xl dark:prose-invert max-w-none prose-headings:text-[rgb(var(--text))] prose-p:text-[rgb(var(--text))] prose-a:text-primary hover:prose-a:underline">
+    <div set:html={content} />
+  </div>
+</Section>

@@ -1,0 +1,41 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  bgVariant?: BgVariant;
+  buttonText?: string;
+  buttonLink?: string;
+  cta?: {
+    text: string;
+    link: string;
+  };
+}
+
+const { title, subtitle, bgVariant, buttonText, buttonLink, cta } = Astro.props;
+---
+<Section variant={bgVariant || 'surface'}>
+  <div class="bg-secondary rounded-[48px] p-10 md:p-20 text-center text-secondary-contrast relative overflow-hidden shadow-2xl">
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-8 leading-tight text-white">
+        {title}
+      </h2>
+      {subtitle && (
+        <p class="text-xl md:text-2xl text-white/90 mb-12 leading-relaxed font-medium">
+          {subtitle}
+        </p>
+      )}
+      <div class="flex flex-col sm:flex-row justify-center gap-6">
+        <a href={buttonLink || cta?.link} class="btn bg-white text-secondary hover:bg-white/90 btn-lg">
+          {buttonText || cta?.text}
+        </a>
+      </div>
+    </div>
+    
+    <!-- Décoration épurée -->
+    <div class="absolute top-0 left-0 -z-0 w-80 h-80 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 -z-0 w-96 h-96 bg-black/10 rounded-full translate-x-1/4 translate-y-1/4 blur-3xl"></div>
+  </div>
+</Section>

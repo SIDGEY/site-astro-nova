@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Page introuvable" 
+  description="Désolé, la page que vous recherchez n'existe pas ou a été déplacée."
+  index={false}
+>
+  <section class="min-h-[70vh] flex items-center py-20 bg-[rgb(var(--bg))]">
+    <div class="container-custom text-center">
+      <span class="text-9xl font-extrabold text-primary/10 block mb-4">404</span>
+      <h1 class="text-5xl font-extrabold mb-6">Oups ! <span class="text-primary">Donnée égarée.</span></h1>
+      <p class="text-xl text-[rgb(var(--muted))] mb-10 max-w-lg mx-auto">
+        La page que vous cherchez semble avoir disparu des radars. Nos algorithmes n'ont pas réussi à la localiser.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/" class="btn btn-primary btn-lg">Retour à l'accueil</a>
+        <a href="/contact" class="btn btn-outline btn-lg">Contacter le support</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

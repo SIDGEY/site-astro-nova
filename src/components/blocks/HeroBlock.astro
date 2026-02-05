@@ -1,0 +1,44 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  bgVariant?: BgVariant;
+  ctaText?: string;
+  ctaLink?: string;
+  secondaryCtaText?: string;
+  secondaryCtaLink?: string;
+  cta?: {
+    text: string;
+    link: string;
+  };
+}
+
+const { title, subtitle, bgVariant, ctaText, ctaLink, secondaryCtaText, secondaryCtaLink, cta } = Astro.props;
+---
+<Section variant={bgVariant || 'surface'} className="relative overflow-hidden !py-24 md:!py-32">
+  <div class="max-w-4xl">
+    <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-[1.15] text-text">
+      {title.split(' ').map((word, i) => (
+        i === title.split(' ').length - 1 ? <span class="text-primary">{word}</span> : word + ' '
+      ))}
+    </h1>
+    {subtitle && (
+      <p class="text-xl md:text-2xl text-muted mb-12 max-w-2xl leading-relaxed">
+        {subtitle}
+      </p>
+    )}
+    <div class="flex flex-col sm:flex-row gap-6">
+      {(ctaText && ctaLink || cta) && (
+        <a href={ctaLink || cta?.link} class="btn btn-primary btn-lg">{ctaText || cta?.text}</a>
+      )}
+      <a href={secondaryCtaLink || "/cas-clients"} class="btn btn-ghost btn-lg">
+        {secondaryCtaText || "Nos succès"}
+      </a>
+    </div>
+  </div>
+  
+  <div class="absolute top-1/2 -translate-y-1/2 right-0 -z-10 w-1/3 h-[80%] bg-surface-2/50 rounded-l-[60px] hidden lg:block border-y border-l border-border/50"></div>
+</Section>

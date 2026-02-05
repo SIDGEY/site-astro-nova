@@ -1,0 +1,16 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlockRenderer from '../components/BlockRenderer.astro';
+
+const homeEntry = await getEntry('pages', 'home');
+
+if (!homeEntry) {
+  return Astro.redirect('/404');
+}
+const { title, description, blocks, sectionVariants } = homeEntry.data;
+---
+
+<BaseLayout description={description} title={title}>
+  <BlockRenderer {blocks} {sectionVariants} />
+</BaseLayout>

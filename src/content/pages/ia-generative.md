@@ -1,0 +1,25 @@
+---
+title: "IA Générative pour l'Entreprise"
+description: "Déployez des LLM sécurisés et performants pour automatiser vos processus métiers."
+blocks:
+  - type: "hero"
+    title: "L'IA Générative au service de votre performance"
+    subtitle: "Passez du gadget à l'outil industriel avec nos solutions de RAG (Retrieval Augmented Generation) et d'agents intelligents."
+    ctaText: "Voir nos réalisations"
+    ctaLink: "/cas-clients"
+  - type: "benefits"
+    title: "Vos bénéfices"
+    items:
+      - title: "Productivité"
+        text: "Réduisez le temps de traitement des tâches répétitives de 40%."
+      - title: "Sécurité"
+        text: "Vos données restent chez vous, sur vos propres infrastructures ou cloud souverain."
+      - title: "Innovation"
+        text: "Créez de nouveaux services impossibles à imaginer sans l'IA."
+  - type: "richContent"
+    content: "<h2>Une approche structurée</h2><p>Nous ne nous contentons pas de déployer des modèles. Nous intégrons l'IA dans votre écosystème existant.</p><ul><li>Audit de vos sources de données</li><li>Sélection du LLM adapté (OpenSource ou Propriétaire)</li><li>Fine-tuning et RAG</li><li>Interface utilisateur sur mesure</li></ul>"
+  - type: "cta"
+    title: "Envie de tester sur vos données ?"
+    buttonText: "Demander une démo"
+    buttonLink: "/parler-ia"
+---

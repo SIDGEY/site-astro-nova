@@ -1,0 +1,22 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  title?: string;
+  bgVariant?: BgVariant;
+  items?: { name: string; image: string }[];
+  logos?: { name: string; image: string }[];
+}
+
+const { title, items, logos, bgVariant } = Astro.props;
+const displayItems = items || logos || [];
+---
+<Section variant={bgVariant || 'surface-2'} className="!py-16">
+  {title && <h2 class="text-center text-xs font-bold uppercase tracking-[0.3em] text-muted mb-12">{title}</h2>}
+  <div class="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+    {displayItems.map((logo) => (
+      <img src={logo.image} alt={logo.name} class="h-7 md:h-10 w-auto object-contain dark:invert dark:brightness-200" />
+    ))}
+  </div>
+</Section>

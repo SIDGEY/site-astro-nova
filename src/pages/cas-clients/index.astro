@@ -1,0 +1,377 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const cases = await getCollection('cases');
+const sortedCases = [...cases].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+function normalizeSector(input: string | undefined) {
+  if (!input) return 'Autres';
+  const s = input.trim().toLowerCase();
+
+  // Exemple de regroupement (à adapter à tes vrais contenus)
+  if (['banque', 'finance', 'fintech'].includes(s)) return 'Banque & Finance';
+  if (['assurance', 'mutuelle'].includes(s)) return 'Assurance';
+  if (['retail', 'e-commerce', 'commerce'].includes(s)) return 'Retail & e-commerce';
+  if (['industrie', 'manufacturing', 'logistique'].includes(s)) return 'Industrie';
+  if (['public', 'collectivité', 'etat'].includes(s)) return 'Secteur public';
+  if (['santé', 'health'].includes(s)) return 'Santé';
+
+  // Si ton "sector" contient en réalité des expertises :
+  if (['ia', 'data', 'design', 'mobile', 'dev', 'architecture'].includes(s)) return 'Projets digitaux';
+
+  return input; // fallback
+}
+
+  // On prend les 9 premiers pour la page 1 par défaut
+const casesToDisplay = sortedCases; // on rend tout
+const pageSize = 9;
+const totalPages = Math.ceil(sortedCases.length / pageSize);
+
+// Extraire tous les secteurs et expertises pour les filtres
+const sectorCount = new Map<string, number>();
+cases.forEach(c => {
+  const s = normalizeSector(c.data.sector);
+  sectorCount.set(s, (sectorCount.get(s) ?? 0) + 1);
+});
+
+const allSectors = [...sectorCount.entries()]
+    .filter(([_, count]) => count >= 2) // seuil : au moins 2 cas
+    .sort((a, b) => b[1] - a[1])
+    .map(([sector]) => sector);
+
+//const allSectors = [...new Set(cases.map(c => normalizeSector(c.data.sector)))].sort();
+const allTags = [...new Set(cases.flatMap(c => {
+  return c.data.stack.map(s => typeof s === 'string' ? s : s.name);
+}))].sort();
+
+const breadcrumbs = [
+  { name: 'Accueil', item: 'https://atecna-2026.fr/' },
+  { name: 'Cas clients', item: 'https://atecna-2026.fr/cas-clients' }
+];
+
+// On définit les filtres principaux (Top tags)
+const topTags = [
+  "Stratégie", 
+  "Intelligence Artificielle", 
+  "IA", 
+  "Design UX/UI", 
+  "Développement technique", 
+  "Développement Mobile",
+  "data",
+  "Conseil digital"
+].filter(tag => allTags.includes(tag));
+---
+
+<BaseLayout 
+  title="Cas Clients | Impact & Performance Digitale" 
+  description="Découvrez comment Atecna accompagne les entreprises mid-market dans leur transformation via l'IA, la data et le produit."
+  breadcrumbs={breadcrumbs}
+>
+  <div class="container-custom py-16 md:py-24">
+    <header class="mb-20">
+      <h1 class="text-5xl md:text-7xl font-bold mb-8 text-text leading-tight tracking-tight">
+        Impact <span class="text-primary">concret.</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-muted max-w-3xl leading-relaxed font-medium">
+        Nous transformons les enjeux complexes en succès mesurables par la donnée, l'intelligence artificielle et l'excellence produit.
+      </p>
+    </header>
+
+    <!-- Filtres (Interactifs via JS) -->
+    <div class="space-y-6 mb-16 border-b border-border pb-8">
+      <div class="flex flex-wrap gap-3">
+        <button 
+          data-filter="all"
+          class="filter-btn px-6 py-2 rounded-full bg-primary text-primary-contrast font-bold text-sm transition-all"
+        >
+          Tous les cas
+        </button>
+        {topTags.map(tag => (
+          <button 
+            data-filter-tag={tag}
+            class="filter-btn px-6 py-2 rounded-full bg-surface border border-border text-text hover:border-primary transition-all font-bold text-sm"
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+      
+      <div class="flex flex-wrap gap-2">
+        <span class="text-xs uppercase tracking-widest text-muted font-bold self-center mr-2">Secteurs :</span>
+        {allSectors.map(sector => (
+          <button 
+            data-filter-sector={sector}
+            class="filter-btn px-4 py-1.5 rounded-full bg-surface-2 border border-transparent text-muted hover:text-primary hover:border-primary transition-all font-bold text-xs"
+          >
+            {sector}
+          </button>
+        ))}
+      </div>
+    </div>
+    
+    <div id="cases-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+      {casesToDisplay.map(entry => (
+          <article
+              class="case-card group transition-all duration-300"
+              data-tags={JSON.stringify(entry.data.stack.map(s => typeof s === 'string' ? s : s.name))}
+              data-sector={normalizeSector(entry.data.sector)}
+              data-date={entry.data.date.toISOString()}
+          >
+          <a href={`/cas/${entry.slug}`} class="block space-y-6">
+            <div class="aspect-video overflow-hidden rounded-[32px] bg-surface-2 border border-border group-hover:border-primary/30 transition-all duration-500 shadow-sm group-hover:shadow-xl flex items-center justify-center relative">
+               <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+               {entry.data.featured && (
+                 <div class="absolute top-4 right-4 badge bg-primary text-white shadow-lg text-[10px]">⭐ Mis en avant</div>
+               )}
+               {entry.data.coverImage ? (
+                 <img src={entry.data.coverImage} alt={entry.data.clientName} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+               ) : (
+                 <span class="text-2xl font-bold text-text/10 group-hover:text-primary/20 group-hover:scale-105 transition-all duration-700 uppercase tracking-tighter text-center px-6">
+                   {entry.data.clientName}
+                 </span>
+               )}
+            </div>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <div class="badge text-[10px]">
+                  {entry.data.sector}
+                </div>
+                <span class="text-[10px] text-muted font-bold uppercase tracking-widest">
+                  {entry.data.date.toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' })}
+
+                </span>
+              </div>
+              <h2 class="text-xl font-bold text-text group-hover:text-primary transition-colors leading-tight line-clamp-2 min-h-[3rem]">
+                {entry.data.summary}
+              </h2>
+              
+              <div class="grid grid-cols-2 gap-4 pt-4 border-t border-border/50">
+                {entry.data.results.slice(0, 2).map(result => (
+                  <div class="flex flex-col">
+                    <span class="text-primary font-bold text-xl tracking-tight">{result.value}</span>
+                    <span class="text-muted text-[9px] uppercase font-bold tracking-[0.1em] line-clamp-1">{result.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+
+        <!-- Pagination (Masquée car on filtre tout sur une seule page) -->
+    {totalPages > 1 && (
+      <nav id="pagination" class="mt-20 flex justify-center items-center gap-4" aria-label="Pagination">
+
+      </nav>
+
+      )}
+  </div>
+
+  <!-- Section CTA -->
+  <section class="py-24 bg-surface-2/30">
+    <div class="container-custom text-center">
+      <h2 class="text-4xl font-bold mb-8">Un enjeu similaire dans votre organisation ?</h2>
+      <p class="text-xl text-muted mb-12 max-w-2xl mx-auto">Nos experts vous accompagnent de la stratégie à l'exécution pour générer de la valeur durable.</p>
+      <a href="/parler-ia" class="btn btn-primary btn-lg">Parler à un expert</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const caseCards = Array.from(document.querySelectorAll('.case-card'));
+  const casesGrid = document.getElementById('cases-grid');
+  const paginationEl = document.getElementById('pagination');
+
+  const pageSize = 9;
+
+  // --- State depuis URL
+  const url = new URL(window.location.href);
+  let currentTag = url.searchParams.get('tag') || 'all';
+  let currentSector = url.searchParams.get('sector') || 'all';
+  let currentPage = parseInt(url.searchParams.get('page') || '1', 10);
+
+  function setUrl() {
+    const next = new URL(window.location.href);
+    if (currentTag === 'all') next.searchParams.delete('tag');
+    else next.searchParams.set('tag', currentTag);
+
+    if (currentSector === 'all') next.searchParams.delete('sector');
+    else next.searchParams.set('sector', currentSector);
+
+    if (currentPage <= 1) next.searchParams.delete('page');
+    else next.searchParams.set('page', String(currentPage));
+
+    history.replaceState(null, '', next.toString());
+  }
+
+  function getFilteredCards() {
+    return caseCards.filter(card => {
+      const cardTags = JSON.parse(card.getAttribute('data-tags') || '[]');
+      const cardSector = card.getAttribute('data-sector');
+
+      const tagMatch = currentTag === 'all' || cardTags.includes(currentTag);
+      const sectorMatch = currentSector === 'all' || cardSector === currentSector;
+      return tagMatch && sectorMatch;
+    });
+  }
+
+  function renderNoResults(visibleCount) {
+    const noResult = document.getElementById('no-results');
+    if (visibleCount === 0) {
+      if (!noResult && casesGrid) {
+        const div = document.createElement('div');
+        div.id = 'no-results';
+        div.className = 'col-span-full py-20 text-center';
+        div.innerHTML = `
+          <p class="text-2xl text-muted">Aucun cas client ne correspond à ces critères.</p>
+          <button class="mt-4 text-primary font-bold hover:underline" id="reset-filters">Réinitialiser les filtres</button>
+        `;
+        casesGrid.appendChild(div);
+        document.getElementById('reset-filters')?.addEventListener('click', () => {
+          currentTag = 'all';
+          currentSector = 'all';
+          currentPage = 1;
+          syncButtonsUI();
+          updateView();
+        });
+      }
+    } else {
+      noResult?.remove();
+    }
+  }
+
+  function syncButtonsUI() {
+    // reset styles
+    filterButtons.forEach(b => {
+      b.classList.remove('bg-primary', 'text-primary-contrast');
+      b.classList.add('bg-surface', 'text-text');
+    });
+
+    // all
+    const allBtn = document.querySelector('[data-filter="all"]');
+    if (currentTag === 'all' && currentSector === 'all') {
+      allBtn?.classList.add('bg-primary', 'text-primary-contrast');
+      allBtn?.classList.remove('bg-surface', 'text-text');
+    } else {
+      allBtn?.classList.remove('bg-primary', 'text-primary-contrast');
+      allBtn?.classList.add('bg-surface', 'text-text');
+    }
+
+    // tag buttons
+    if (currentTag !== 'all') {
+      const btn = document.querySelector(`[data-filter-tag="${CSS.escape(currentTag)}"]`);
+      btn?.classList.add('bg-primary', 'text-primary-contrast');
+      btn?.classList.remove('bg-surface', 'text-text');
+    }
+
+    // sector buttons (tu avais un style différent, on reste simple)
+    if (currentSector !== 'all') {
+      const btn = document.querySelector(`[data-filter-sector="${CSS.escape(currentSector)}"]`);
+      btn?.classList.add('bg-primary', 'text-primary-contrast');
+      btn?.classList.remove('bg-surface-2', 'text-muted');
+    }
+  }
+
+  function renderPagination(totalItems) {
+    if (!paginationEl) return;
+
+    const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+    currentPage = Math.min(currentPage, totalPages);
+
+    const prevDisabled = currentPage <= 1;
+    const nextDisabled = currentPage >= totalPages;
+
+    paginationEl.innerHTML = `
+      <button class="btn btn-outline btn-sm ${prevDisabled ? 'opacity-30 cursor-not-allowed' : ''}" ${prevDisabled ? 'disabled' : ''} data-page="prev">
+        <span aria-hidden="true">←</span> Précédent
+      </button>
+
+      <div class="text-sm font-bold text-muted">
+        Page <span class="text-text">${currentPage}</span> sur ${totalPages}
+      </div>
+
+      <button class="btn btn-outline btn-sm ${nextDisabled ? 'opacity-30 cursor-not-allowed' : ''}" ${nextDisabled ? 'disabled' : ''} data-page="next">
+        Suivant <span aria-hidden="true">→</span>
+      </button>
+    `;
+
+    paginationEl.querySelector('[data-page="prev"]')?.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        updateView();
+      }
+    });
+
+    paginationEl.querySelector('[data-page="next"]')?.addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        updateView();
+      }
+    });
+  }
+
+  function updateView() {
+    const filtered = getFilteredCards();
+    const total = filtered.length;
+
+    // Pagination slice
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    const pageItems = new Set(filtered.slice(start, end));
+
+    let visibleCount = 0;
+
+    caseCards.forEach(card => {
+      const isVisible = pageItems.has(card);
+
+      if (isVisible) {
+        card.classList.remove('hidden');
+        card.classList.add('block');
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+        visibleCount++;
+      } else {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.classList.remove('block');
+        card.classList.add('hidden');
+      }
+    });
+
+    renderNoResults(total);
+    renderPagination(total);
+    setUrl();
+  }
+
+  // Click handlers
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tag = btn.getAttribute('data-filter-tag');
+      const sector = btn.getAttribute('data-filter-sector');
+      const isAll = btn.getAttribute('data-filter') === 'all';
+
+      if (isAll) {
+        currentTag = 'all';
+        currentSector = 'all';
+        currentPage = 1;
+      } else if (tag) {
+        currentTag = tag;
+        currentPage = 1;
+      } else if (sector) {
+        currentSector = (currentSector === sector) ? 'all' : sector;
+        currentPage = 1;
+      }
+
+      syncButtonsUI();
+      updateView();
+    });
+  });
+
+  // init
+  syncButtonsUI();
+  updateView();
+</script>
+

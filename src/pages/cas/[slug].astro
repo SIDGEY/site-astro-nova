@@ -1,0 +1,132 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlockRenderer from '../../components/BlockRenderer.astro';
+
+export async function getStaticPaths() {
+  const cases = await getCollection('cases');
+  return cases.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data, render } = entry;
+const { Content } = await render();
+const canonicalURL = `https://atecna-2026.fr/cas/${entry.slug}`;
+
+const breadcrumbs = [
+  { name: 'Accueil', item: 'https://atecna-2026.fr/' },
+  { name: 'Cas clients', item: 'https://atecna-2026.fr/cas-clients' },
+  { name: data.clientName, item: canonicalURL }
+];
+---
+
+<BaseLayout 
+  title={`${data.clientName} | Impact Business & Performance`}
+  description={data.summary}
+  breadcrumbs={breadcrumbs}
+  {canonicalURL}
+>
+  <article class="bg-bg">
+    <!-- Hero Section -->
+    <header class="py-20 md:py-32 border-b border-border">
+      <div class="container-custom">
+        <div class="badge mb-6">{data.sector}</div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-8 text-text leading-tight tracking-tight max-w-5xl">
+          {data.summary}
+        </h1>
+        <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-12">
+          <div class="flex flex-col">
+            <span class="text-xs font-bold uppercase tracking-widest text-muted mb-2">Client</span>
+            <span class="text-2xl font-bold text-text">{data.clientName}</span>
+          </div>
+          <div class="w-px h-12 bg-border hidden md:block"></div>
+          <div class="flex flex-col">
+            <span class="text-xs font-bold uppercase tracking-widest text-muted mb-2">Expertises</span>
+            <div class="flex flex-wrap gap-2">
+              {data.stack.slice(0, 3).map(tech => (
+                <span class="text-sm font-bold text-primary">{typeof tech === 'string' ? tech : tech.name}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-custom py-20 md:py-32">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+        <!-- Main Content -->
+        <div class="lg:col-span-8 space-y-24">
+          <section class="space-y-8">
+            <h2 class="text-3xl font-bold text-text flex items-center gap-4">
+              <span class="w-2 h-10 bg-primary rounded-full"></span>
+              Le Contexte & Le Problème
+            </h2>
+            <div class="prose prose-xl dark:prose-invert max-w-none prose-p:text-text/90 prose-p:leading-relaxed">
+              <p>{data.problem}</p>
+            </div>
+          </section>
+
+          <section class="space-y-8">
+            <h2 class="text-3xl font-bold text-text flex items-center gap-4">
+              <span class="w-2 h-10 bg-secondary rounded-full"></span>
+              La Solution Atecna
+            </h2>
+            <div class="prose prose-xl dark:prose-invert max-w-none prose-p:text-text/90 prose-p:leading-relaxed">
+              <p>{data.solution}</p>
+            </div>
+          </section>
+
+          <section class="prose prose-xl dark:prose-invert max-w-none border-t border-border pt-20">
+            <Content />
+          </section>
+
+          {data.blocks && (
+            <BlockRenderer blocks={data.blocks} sectionVariants={data.sectionVariants} />
+          )}
+        </div>
+
+        <!-- Sidebar / Results -->
+        <aside class="lg:col-span-4 space-y-12">
+          <div class="bg-text text-bg p-10 rounded-[48px] shadow-2xl sticky top-32">
+            <h3 class="text-2xl font-bold mb-10 border-b border-bg/10 pb-6 uppercase tracking-widest text-xs">Impact & Résultats</h3>
+            <dl class="space-y-12">
+              {data.results.map(result => (
+                <div class="space-y-2">
+                  <dt class="text-bg/60 text-[10px] uppercase font-bold tracking-[0.2em]">{result.label}</dt>
+                  <dd class="text-5xl font-bold text-primary tracking-tighter">{result.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <div class="mt-16 pt-10 border-t border-bg/10">
+              <a href="/parler-ia" class="btn btn-primary w-full">Vous avez un enjeu similaire ?</a>
+            </div>
+          </div>
+
+          <div class="card-basic bg-surface-2/30">
+            <h3 class="text-xs font-bold uppercase tracking-widest mb-6 text-muted">Stack Technique</h3>
+            <div class="flex flex-wrap gap-2">
+              {data.stack.map(tech => (
+                <span class="px-4 py-2 bg-surface border border-border text-text rounded-xl text-sm font-semibold">
+                  {typeof tech === 'string' ? tech : tech.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <!-- Navigation entre cas clients -->
+  <section class="py-20 border-t border-border">
+    <div class="container-custom flex justify-between items-center">
+      <a href="/cas-clients" class="btn btn-ghost group">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 group-hover:-translate-x-1 transition-transform"><path d="m15 18-6-6 6-6"/></svg>
+        Tous les cas clients
+      </a>
+    </div>
+  </section>
+</BaseLayout>

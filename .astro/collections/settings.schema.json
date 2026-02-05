@@ -1,0 +1,354 @@
+{
+  "$ref": "#/definitions/settings",
+  "definitions": {
+    "settings": {
+      "type": "object",
+      "properties": {
+        "siteName": {
+          "type": "string"
+        },
+        "defaultDescription": {
+          "type": "string"
+        },
+        "favicon": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "navigation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "link"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "footer": {
+          "type": "object",
+          "properties": {
+            "value_proposition": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "bullets": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "title",
+                "text"
+              ],
+              "additionalProperties": false
+            },
+            "contact": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "cta_label": {
+                  "type": "string"
+                },
+                "cta_link": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "email",
+                "phone",
+                "cta_label",
+                "cta_link"
+              ],
+              "additionalProperties": false
+            },
+            "section_titles": {
+              "type": "object",
+              "properties": {
+                "main_nav": {
+                  "type": "string"
+                },
+                "expertises": {
+                  "type": "string"
+                },
+                "agencies": {
+                  "type": "string"
+                },
+                "certifications": {
+                  "type": "string"
+                },
+                "resources": {
+                  "type": "string"
+                },
+                "social": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "main_nav",
+                "expertises",
+                "agencies",
+                "certifications",
+                "resources",
+                "social"
+              ],
+              "additionalProperties": false
+            },
+            "main_nav": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "internal",
+                      "external"
+                    ]
+                  },
+                  "aria_label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href",
+                  "type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "expertises_nav": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "internal",
+                      "external"
+                    ]
+                  },
+                  "aria_label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href",
+                  "type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "agencies_nav": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "internal",
+                      "external"
+                    ]
+                  },
+                  "aria_label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href",
+                  "type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "certifications": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  },
+                  "icon_filename": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "internal",
+                      "external"
+                    ]
+                  },
+                  "aria_label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href",
+                  "icon_filename",
+                  "type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "resources_nav": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "internal",
+                      "external"
+                    ]
+                  },
+                  "aria_label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href",
+                  "type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "social_nav": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  },
+                  "icon_filename": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "internal",
+                      "external"
+                    ]
+                  },
+                  "aria_label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href",
+                  "type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "copyright": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "text"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "contact",
+            "section_titles",
+            "main_nav",
+            "expertises_nav",
+            "agencies_nav",
+            "certifications",
+            "resources_nav",
+            "social_nav",
+            "copyright"
+          ],
+          "additionalProperties": false
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "siteName",
+        "defaultDescription",
+        "logo",
+        "navigation",
+        "footer"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

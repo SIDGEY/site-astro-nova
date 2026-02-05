@@ -1,0 +1,31 @@
+---
+title: "Data Engineering & Fondations"
+description: "Construisez des pipelines de données robustes et une architecture scalable."
+blocks:
+  - type: "hero"
+    title: "La donnée, carburant de votre IA"
+    subtitle: "Sans une donnée propre et accessible, l'IA n'est rien. Nous construisons vos infrastructures Data modernes."
+    ctaText: "Nos technos"
+    ctaLink: "#tech"
+  - type: "stats"
+    items:
+      - label: "Téraoctets gérés"
+        value: "500"
+        suffix: "TB"
+      - label: "Fiabilité"
+        value: "99.9"
+        suffix: "%"
+  - type: "steps"
+    title: "Notre méthodologie"
+    items:
+      - title: "Collecte"
+        text: "Ingestion multi-sources temps réel et batch."
+      - title: "Transformation"
+        text: "Nettoyage, normalisation et enrichissement via dbt."
+      - title: "Stockage"
+        text: "Data Warehouse ou Data Lakehouse selon vos besoins."
+  - type: "cta"
+    title: "Modernisez votre stack data"
+    buttonText: "Audit gratuit"
+    buttonLink: "/parler-ia"
+---

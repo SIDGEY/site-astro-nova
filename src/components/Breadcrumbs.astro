@@ -1,0 +1,44 @@
+---
+interface Props {
+  items: {
+    label: string;
+    href?: string;
+  }[];
+}
+
+const { items } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.label,
+    ...(item.href && { "item": new URL(item.href, Astro.site) })
+  }))
+};
+---
+
+<nav aria-label="Breadcrumb" class="py-4">
+  <ol class="flex flex-wrap items-center text-sm text-gray-500 dark:text-vert-clair">
+    <li class="flex items-center">
+      <a href="/" class="hover:text-corail transition-colors">Accueil</a>
+      <span class="mx-2">/</span>
+    </li>
+    {items.map((item, index) => (
+      <li class="flex items-center">
+        {item.href && index < items.length - 1 ? (
+          <>
+            <a href={item.href} class="hover:text-corail transition-colors">{item.label}</a>
+            <span class="mx-2">/</span>
+          </>
+        ) : (
+          <span class="text-vert-fonce dark:text-rose-pale font-medium" aria-current="page">{item.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />

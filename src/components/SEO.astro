@@ -1,0 +1,124 @@
+---
+import { getEntry } from 'astro:content';
+import { 
+  SITE_NAME, 
+  DEFAULT_OG_IMAGE, 
+  getCanonicalURL, 
+  formatTitle,
+  getOrganizationSchema,
+  getWebSiteSchema,
+  getWebPageSchema,
+  getBreadcrumbSchema,
+  getArticleSchema
+} from '../lib/seo';
+
+const settingsEntry = await getEntry('settings', 'general');
+const siteName = settingsEntry?.data.siteName || SITE_NAME;
+const defaultDesc = settingsEntry?.data.defaultDescription || "";
+
+interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+  index?: boolean;
+  follow?: boolean;
+  articleData?: {
+    datePublished: Date;
+    author: string;
+  };
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const {
+  title,
+  description = defaultDesc,
+  image = DEFAULT_OG_IMAGE,
+  canonicalURL = Astro.props.canonicalURL || getCanonicalURL(Astro.url.pathname || ""),
+  type = 'website',
+  index = true,
+  follow = true,
+  articleData,
+  breadcrumbs
+} = Astro.props;
+
+const formattedTitle = title.includes('|') ? title : `${title} | ${siteName}`;
+const robots = `${index ? 'index' : 'noindex'}, ${follow ? 'follow' : 'nofollow'}`;
+const ogImageURL = image.startsWith('http') ? image : new URL(image, Astro.site);
+
+// JSON-LD Graph construction
+const schemas = [
+  getOrganizationSchema(),
+  getWebSiteSchema(),
+  getWebPageSchema(formattedTitle, description, canonicalURL)
+];
+
+if (breadcrumbs && breadcrumbs.length > 0) {
+  schemas.push(getBreadcrumbSchema(breadcrumbs));
+}
+
+if (type === 'article' && articleData) {
+  schemas.push(getArticleSchema({
+    title,
+    description,
+    url: canonicalURL,
+    image,
+    datePublished: articleData.datePublished,
+    author: articleData.author
+  }));
+}
+
+const jsonLdGraph = {
+  "@context": "https://schema.org",
+  "@graph": schemas
+};
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Robots -->
+<meta name="robots" content={robots} />
+
+<!-- Primary Meta Tags -->
+<title>{formattedTitle}</title>
+<meta name="title" content={formattedTitle} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={formattedTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageURL} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={formattedTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImageURL} />
+
+<!-- Hreflang (FR as default, placeholder for EN) -->
+<link rel="alternate" hreflang="fr" href={canonicalURL} />
+<link rel="alternate" hreflang="x-default" href={canonicalURL} />
+<!-- <link rel="alternate" hreflang="en" href={new URL('/en' + (Astro.url.pathname || ""), Astro.site)} /> -->
+
+<!-- JSON-LD Graph -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLdGraph)} />
+
+<!-- Google Fonts Preconnect (moved from old SEO.astro) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

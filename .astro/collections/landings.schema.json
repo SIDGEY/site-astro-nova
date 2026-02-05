@@ -1,0 +1,789 @@
+{
+  "$ref": "#/definitions/landings",
+  "definitions": {
+    "landings": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "type": "string",
+                    "enum": [
+                      "auto",
+                      "surface",
+                      "surface-2",
+                      "tint-coral",
+                      "tint-blue",
+                      "base",
+                      "alt",
+                      "highlight"
+                    ]
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "hero"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "ctaText": {
+                    "type": "string"
+                  },
+                  "ctaLink": {
+                    "type": "string"
+                  },
+                  "secondaryCtaText": {
+                    "type": "string"
+                  },
+                  "secondaryCtaLink": {
+                    "type": "string"
+                  },
+                  "cta": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "link": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "link"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "logos"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "image"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "logos": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "image"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "benefits"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "icon": {
+                          "type": "string"
+                        },
+                        "link": {
+                          "type": "string"
+                        },
+                        "cta": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "stats"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "suffix": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "ctaText": {
+                    "type": "string"
+                  },
+                  "ctaLink": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "items"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "steps"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "text"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "items"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "why"
+                  },
+                  "whyTitle": {
+                    "type": "string"
+                  },
+                  "whyText": {
+                    "type": "string"
+                  },
+                  "whyBullets": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "whyTitle",
+                  "whyText",
+                  "whyBullets"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "delivery"
+                  },
+                  "deliveryTitle": {
+                    "type": "string"
+                  },
+                  "deliveryText": {
+                    "type": "string"
+                  },
+                  "deliveryDeliverables": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "deliveryCycle": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "text"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "deliveryTitle",
+                  "deliveryText",
+                  "deliveryDeliverables"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "engagementModels"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "intro": {
+                    "type": "string"
+                  },
+                  "engagementModels": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "when": {
+                          "type": "string"
+                        },
+                        "benefit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "when",
+                        "benefit"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "engagementModels"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "testimonials"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "quote": {
+                          "type": "string"
+                        },
+                        "author": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "quote",
+                        "author"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "items"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "faq"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "question": {
+                          "type": "string"
+                        },
+                        "answer": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "question",
+                        "answer"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "items"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "richContent"
+                  },
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "content"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "cta"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "buttonText": {
+                    "type": "string"
+                  },
+                  "buttonLink": {
+                    "type": "string"
+                  },
+                  "footerText": {
+                    "type": "string"
+                  },
+                  "cta": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "link": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "link"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "type",
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "leadForm"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "intro": {
+                    "type": "string"
+                  },
+                  "submitLabel": {
+                    "type": "string",
+                    "default": "Envoyer"
+                  },
+                  "successMessage": {
+                    "type": "string",
+                    "default": "Merci ! Votre demande a été transmise avec succès."
+                  },
+                  "hubspotFormType": {
+                    "type": "string",
+                    "enum": [
+                      "diagnostic",
+                      "contact",
+                      "generic"
+                    ],
+                    "default": "generic"
+                  }
+                },
+                "required": [
+                  "type",
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "diagnosticIA"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "ctaText": {
+                    "type": "string"
+                  },
+                  "ctaLink": {
+                    "type": "string"
+                  },
+                  "footerText": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "commercials"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "agencies": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "expertises": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "sectors": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "selection": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "ctaLabel": {
+                    "type": "string"
+                  },
+                  "ctaLink": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "sectionVariants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+          }
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "blocks"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,64 @@
+---
+import HeroBlock from './blocks/HeroBlock.astro';
+import LogosBlock from './blocks/LogosBlock.astro';
+import BenefitsBlock from './blocks/BenefitsBlock.astro';
+import StatsBlock from './blocks/StatsBlock.astro';
+import StepsBlock from './blocks/StepsBlock.astro';
+import TestimonialsBlock from './blocks/TestimonialsBlock.astro';
+import FaqBlock from './blocks/FaqBlock.astro';
+import RichContentBlock from './blocks/RichContentBlock.astro';
+import CtaBlock from './blocks/CtaBlock.astro';
+import LeadFormBlock from './blocks/LeadFormBlock.astro';
+import DiagnosticIA from './blocks/DiagnosticIA.astro';
+import WhyBlock from './blocks/WhyBlock.astro';
+import DeliveryBlock from './blocks/DeliveryBlock.astro';
+import EngagementModelsBlock from './blocks/EngagementModelsBlock.astro';
+import CommercialsBlock from './blocks/CommercialsBlock.astro';
+import { computeBgVariants } from '../utils/bgHelper';
+
+interface Props {
+  blocks?: any[];
+  sectionVariants?: string[];
+}
+
+const { blocks = [], sectionVariants = [] } = Astro.props;
+const bgVariants = computeBgVariants(blocks, sectionVariants);
+---
+
+{blocks.map((block, index) => {
+  const commonProps = { ...block, bgVariant: bgVariants[index] };
+  switch (block.type) {
+    case 'hero':
+      return <HeroBlock {...commonProps} />;
+    case 'logos':
+      return <LogosBlock {...commonProps} />;
+    case 'benefits':
+      return <BenefitsBlock {...commonProps} />;
+    case 'stats':
+      return <StatsBlock {...commonProps} />;
+    case 'steps':
+      return <StepsBlock {...commonProps} />;
+    case 'testimonials':
+      return <TestimonialsBlock {...commonProps} />;
+    case 'faq':
+      return <FaqBlock {...commonProps} />;
+    case 'richContent':
+      return <RichContentBlock {...commonProps} />;
+    case 'cta':
+      return <CtaBlock {...commonProps} />;
+    case 'leadForm':
+      return <LeadFormBlock {...commonProps} />;
+    case 'diagnosticIA':
+      return <DiagnosticIA {...commonProps} />;
+    case 'why':
+      return <WhyBlock {...commonProps} />;
+    case 'delivery':
+      return <DeliveryBlock {...commonProps} />;
+    case 'engagementModels':
+      return <EngagementModelsBlock {...commonProps} />;
+    case 'commercials':
+      return <CommercialsBlock {...commonProps} />;
+    default:
+      return null;
+  }
+})}

@@ -1,0 +1,373 @@
+local_backend: false
+backend:
+  name: git-gateway
+  branch: main
+
+publish_mode: editorial_workflow
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+locale: 'fr'
+
+collections:
+  - name: "settings"
+    label: "Settings"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "general"
+        label: "Configuration Générale"
+        file: "src/content/settings/general.json"
+        fields:
+          - { label: "Nom du site", name: "siteName", widget: "string" }
+          - { label: "Description SEO par défaut", name: "defaultDescription", widget: "text" }
+          - { label: "Favicon", name: "favicon", widget: "image", required: false }
+          - { label: "Logo", name: "logo", widget: "image" }
+          - { label: "Navigation", name: "navigation", widget: "list", fields: [
+            { label: "Libellé", name: "label", widget: "string" },
+            { label: "Lien", name: "link", widget: "string" }
+          ]}
+          - { label: "Footer", name: "footer", widget: "object", fields: [
+            { label: "Contact", name: "contact", widget: "object", fields: [
+              { label: "Titre", name: "title", widget: "string" },
+              { label: "Adresse", name: "address", widget: "text", required: false },
+              { label: "Email", name: "email", widget: "string" },
+              { label: "Téléphone", name: "phone", widget: "string" },
+              { label: "Libellé CTA", name: "cta_label", widget: "string" },
+              { label: "Lien CTA", name: "cta_link", widget: "string" }
+            ]},
+            { label: "Titres des sections", name: "section_titles", widget: "object", fields: [
+              { label: "Navigation principale", name: "main_nav", widget: "string" },
+              { label: "Expertises", name: "expertises", widget: "string" },
+              { label: "Agences", name: "agencies", widget: "string" },
+              { label: "Certifications", name: "certifications", widget: "string" },
+              { label: "Ressources & support", name: "resources", widget: "string" },
+              { label: "Réseaux & communauté", name: "social", widget: "string" }
+            ]},
+            { label: "Navigation principale", name: "main_nav", widget: "list", fields: [
+              { label: "Libellé", name: "label", widget: "string" },
+              { label: "Lien", name: "href", widget: "string" },
+              { label: "Type", name: "type", widget: "select", options: ["internal", "external"] },
+              { label: "Aria label", name: "aria_label", widget: "string", required: false }
+            ]},
+            { label: "Expertises", name: "expertises_nav", widget: "list", fields: [
+              { label: "Libellé", name: "label", widget: "string" },
+              { label: "Lien", name: "href", widget: "string" },
+              { label: "Type", name: "type", widget: "select", options: ["internal", "external"] },
+              { label: "Aria label", name: "aria_label", widget: "string", required: false }
+            ]},
+            { label: "Agences", name: "agencies_nav", widget: "list", fields: [
+              { label: "Libellé", name: "label", widget: "string" },
+              { label: "Lien", name: "href", widget: "string" },
+              { label: "Type", name: "type", widget: "select", options: ["internal", "external"] },
+              { label: "Aria label", name: "aria_label", widget: "string", required: false }
+            ]},
+            { label: "Engagements & certifications", name: "certifications", widget: "list", fields: [
+              { label: "Libellé", name: "label", widget: "string" },
+              { label: "Lien", name: "href", widget: "string" },
+              { label: "Type", name: "type", widget: "select", options: ["internal", "external"] },
+              { label: "Icône", name: "icon_filename", widget: "image" },
+              { label: "Aria label", name: "aria_label", widget: "string", required: false }
+            ]},
+            { label: "Ressources & support", name: "resources_nav", widget: "list", fields: [
+              { label: "Libellé", name: "label", widget: "string" },
+              { label: "Lien", name: "href", widget: "string" },
+              { label: "Type", name: "type", widget: "select", options: ["internal", "external"] },
+              { label: "Aria label", name: "aria_label", widget: "string", required: false }
+            ]},
+            { label: "Réseaux & communauté", name: "social_nav", widget: "list", fields: [
+              { label: "Libellé", name: "label", widget: "string" },
+              { label: "Lien", name: "href", widget: "string" },
+              { label: "Type", name: "type", widget: "select", options: ["internal", "external"] },
+              { label: "Icône", name: "icon_filename", widget: "image", required: false },
+              { label: "Aria label", name: "aria_label", widget: "string", required: false }
+            ]},
+            { label: "Copyright", name: "copyright", widget: "object", fields: [
+              { label: "Texte", name: "text", widget: "string" }
+            ]}
+          ]}
+
+  - name: "home"
+    label: "Home Page"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "home_page"
+        label: "Home"
+        file: "src/content/pages/home.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description SEO", name: "description", widget: "text" }
+          - { label: "Section Variants", name: "sectionVariants", widget: "list", required: false, field: { label: "Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"] } }
+          - { label: "Blocks", name: "blocks", widget: "list", types: [
+            { label: "Hero", name: "hero", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string" },
+              { label: "Subtitle", name: "subtitle", widget: "text", required: false },
+              { label: "CTA Text", name: "ctaText", widget: "string", required: false },
+              { label: "CTA Link", name: "ctaLink", widget: "string", required: false },
+              { label: "Secondary CTA Text", name: "secondaryCtaText", widget: "string", required: false },
+              { label: "Secondary CTA Link", name: "secondaryCtaLink", widget: "string", required: false }
+            ]},
+            { label: "Pourquoi Atecna existe", name: "why", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Titre", name: "whyTitle", widget: "string" },
+              { label: "Texte", name: "whyText", widget: "text" },
+              { label: "Bullets", name: "whyBullets", widget: "list", field: { label: "Bullet", name: "bullet", widget: "string" } }
+            ]},
+            { label: "Cadrage & Delivery", name: "delivery", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Titre", name: "deliveryTitle", widget: "string" },
+              { label: "Texte", name: "deliveryText", widget: "text" },
+              { label: "Livrables", name: "deliveryDeliverables", widget: "list", field: { label: "Livrable", name: "deliverable", widget: "string" } }
+            ]},
+            { label: "Modèles d'intervention", name: "engagementModels", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Titre", name: "title", widget: "string", required: false },
+              { label: "Intro", name: "intro", widget: "text", required: false },
+              { label: "Modèles", name: "engagementModels", widget: "list", fields: [
+                { label: "Titre", name: "title", widget: "string" },
+                { label: "Quand l'utiliser", name: "when", widget: "text" },
+                { label: "Bénéfice", name: "benefit", widget: "text" }
+              ]}
+            ]},
+            { label: "Logos", name: "logos", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string", required: false },
+              { label: "Logo List", name: "items", widget: "list", fields: [
+                { label: "Name", name: "name", widget: "string" },
+                { label: "Image", name: "image", widget: "image" }
+              ]}
+            ]},
+            { label: "Benefits", name: "benefits", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string", required: false },
+              { label: "Subtitle", name: "subtitle", widget: "text", required: false },
+              { label: "Items", name: "items", widget: "list", required: false, fields: [
+                { label: "Title", name: "title", widget: "string" },
+                { label: "Description", name: "text", widget: "text", required: false },
+                { label: "Icon", name: "icon", widget: "string", required: false },
+                { label: "Link", name: "link", widget: "string", required: false },
+                { label: "CTA Label", name: "cta", widget: "string", required: false }
+              ]}
+            ]},
+            { label: "Stats", name: "stats", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string", required: false },
+              { label: "Subtitle", name: "subtitle", widget: "text", required: false },
+              { label: "Items", name: "items", widget: "list", fields: [
+                { label: "Label", name: "label", widget: "string" },
+                { label: "Value", name: "value", widget: "string" },
+                { label: "Suffix", name: "suffix", widget: "string", required: false },
+                { label: "Description", name: "description", widget: "text", required: false }
+              ]},
+              { label: "CTA Text", name: "ctaText", widget: "string", required: false },
+              { label: "CTA Link", name: "ctaLink", widget: "string", required: false }
+            ]},
+            { label: "Steps", name: "steps", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string", required: false },
+              { label: "Steps List", name: "items", widget: "list", fields: [
+                { label: "Title", name: "title", widget: "string" },
+                { label: "Description", name: "text", widget: "text" }
+              ]}
+            ]},
+            { label: "Testimonials", name: "testimonials", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string", required: false },
+              { label: "Items", name: "items", widget: "list", fields: [
+                { label: "Quote", name: "quote", widget: "text" },
+                { label: "Author", name: "author", widget: "string" },
+                { label: "Role", name: "role", widget: "string" },
+                { label: "Avatar", name: "avatar", widget: "image", required: false }
+              ]}
+            ]},
+            { label: "FAQ", name: "faq", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string", required: false },
+              { label: "Subtitle", name: "subtitle", widget: "text", required: false },
+              { label: "Questions", name: "items", widget: "list", fields: [
+                { label: "Question", name: "question", widget: "string" },
+                { label: "Answer", name: "answer", widget: "text" }
+              ]}
+            ]},
+            { label: "Rich Content", name: "richContent", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Content", name: "content", widget: "markdown" }
+            ]},
+            { label: "CTA", name: "cta", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string" },
+              { label: "Subtitle", name: "subtitle", widget: "text", required: false },
+              { label: "Button Text", name: "buttonText", widget: "string" },
+              { label: "Button Link", name: "buttonLink", widget: "string" }
+            ]},
+            { label: "Diagnostic IA", name: "diagnosticIA", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string" },
+              { label: "Subtitle", name: "subtitle", widget: "text", required: false },
+              { label: "Points clés", name: "items", widget: "list", field: { label: "Point", name: "point", widget: "string" } },
+              { label: "CTA Text", name: "ctaText", widget: "string", required: false },
+              { label: "CTA Link", name: "ctaLink", widget: "string", required: false },
+              { label: "Texte de rassurance", name: "footerText", widget: "string", required: false }
+            ]},
+            { label: "Lead Form", name: "leadForm", widget: "object", fields: [
+              { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+              { label: "Title", name: "title", widget: "string" },
+              { label: "Subtitle", name: "subtitle", widget: "text", required: false },
+              { label: "Introduction", name: "intro", widget: "markdown", required: false },
+              { label: "Label Bouton", name: "submitLabel", widget: "string", default: "Envoyer" },
+              { label: "Message de succès", name: "successMessage", widget: "text", default: "Merci ! Votre demande a été transmise avec succès." },
+              { label: "Type de formulaire HubSpot", name: "hubspotFormType", widget: "select", options: ["diagnostic", "contact", "generic"], default: "generic" }
+            ]}
+          ]}
+
+  - name: "pages"
+    label: "Pages Business"
+    folder: "src/content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description SEO", name: "description", widget: "text" }
+      - { label: "Section Variants", name: "sectionVariants", widget: "list", required: false, field: { label: "Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"] } }
+      - { label: "Blocks", name: "blocks", widget: "list", types: [
+        # Même liste de types que home pour la cohérence
+        { label: "Hero", name: "hero", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "CTA Text", name: "ctaText", widget: "string", required: false }, { label: "CTA Link", name: "ctaLink", widget: "string", required: false }] },
+        { label: "Logos", name: "logos", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Logo List", name: "items", widget: "list", fields: [{ label: "Name", name: "name", widget: "string" }, { label: "Image", name: "image", widget: "image" }] }] },
+        { label: "Benefits", name: "benefits", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Image", name: "image", widget: "image", required: false }, { label: "Items", name: "items", widget: "list", required: false, fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "text", widget: "text", required: false }, { label: "Icon", name: "icon", widget: "string", required: false }, { label: "Link", name: "link", widget: "string", required: false }] }] },
+        { label: "Stats", name: "stats", widget: "object", fields: [{ label: "Items", name: "items", widget: "list", fields: [{ label: "Label", name: "label", widget: "string" }, { label: "Value", name: "value", widget: "string" }, { label: "Suffix", name: "suffix", widget: "string", required: false }] }] },
+        { label: "Steps", name: "steps", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Steps List", name: "items", widget: "list", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "text", widget: "text" }] }] },
+        { label: "Testimonials", name: "testimonials", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Items", name: "items", widget: "list", fields: [{ label: "Quote", name: "quote", widget: "text" }, { label: "Author", name: "author", widget: "string" }, { label: "Role", name: "role", widget: "string" }, { label: "Avatar", name: "avatar", widget: "image", required: false }] }] },
+        { label: "FAQ", name: "faq", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Questions", name: "items", widget: "list", fields: [{ label: "Question", name: "question", widget: "string" }, { label: "Answer", name: "answer", widget: "text" }] }] },
+        { label: "Rich Content", name: "richContent", widget: "object", fields: [{ label: "Content", name: "content", widget: "markdown" }] },
+        { label: "CTA", name: "cta", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Button Text", name: "buttonText", widget: "string" }, { label: "Button Link", name: "buttonLink", widget: "string" }] },
+        { label: "Lead Form", name: "leadForm", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Introduction", name: "intro", widget: "markdown", required: false }, { label: "Label Bouton", name: "submitLabel", widget: "string", default: "Envoyer" }, { label: "Message de succès", name: "successMessage", widget: "text", default: "Merci ! Votre demande a été transmise avec succès." }, { label: "Type de formulaire HubSpot", name: "hubspotFormType", widget: "select", options: ["diagnostic", "contact", "generic"], default: "generic" }] }
+      ]}
+
+  - name: "landings"
+    label: "Landing Pages"
+    folder: "src/content/landings"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description SEO", name: "description", widget: "text" }
+      - { label: "Section Variants", name: "sectionVariants", widget: "list", required: false, field: { label: "Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"] } }
+      - { label: "Blocks", name: "blocks", widget: "list", types: [
+        { label: "Hero", name: "hero", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "CTA Text", name: "ctaText", widget: "string", required: false }, { label: "CTA Link", name: "ctaLink", widget: "string", required: false }] },
+        { label: "Logos", name: "logos", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Logo List", name: "items", widget: "list", fields: [{ label: "Name", name: "name", widget: "string" }, { label: "Image", name: "image", widget: "image" }] }] },
+        { label: "Benefits", name: "benefits", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Image", name: "image", widget: "image", required: false }, { label: "Items", name: "items", widget: "list", required: false, fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "text", widget: "text", required: false }, { label: "Icon", name: "icon", widget: "string", required: false }, { label: "Link", name: "link", widget: "string", required: false }] }] },
+        { label: "Stats", name: "stats", widget: "object", fields: [{ label: "Items", name: "items", widget: "list", fields: [{ label: "Label", name: "label", widget: "string" }, { label: "Value", name: "value", widget: "string" }, { label: "Suffix", name: "suffix", widget: "string", required: false }] }] },
+        { label: "Steps", name: "steps", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Steps List", name: "items", widget: "list", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "text", widget: "text" }] }] },
+        { label: "Testimonials", name: "testimonials", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Items", name: "items", widget: "list", fields: [{ label: "Quote", name: "quote", widget: "text" }, { label: "Author", name: "author", widget: "string" }, { label: "Role", name: "role", widget: "string" }, { label: "Avatar", name: "avatar", widget: "image", required: false }] }] },
+        { label: "FAQ", name: "faq", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Questions", name: "items", widget: "list", fields: [{ label: "Question", name: "question", widget: "string" }, { label: "Answer", name: "answer", widget: "text" }] }] },
+        { label: "Rich Content", name: "richContent", widget: "object", fields: [{ label: "Content", name: "content", widget: "markdown" }] },
+        { label: "CTA", name: "cta", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Button Text", name: "buttonText", widget: "string" }, { label: "Button Link", name: "buttonLink", widget: "string" }] },
+        { label: "Lead Form", name: "leadForm", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Introduction", name: "intro", widget: "markdown", required: false }, { label: "Label Bouton", name: "submitLabel", widget: "string", default: "Envoyer" }, { label: "Message de succès", name: "successMessage", widget: "text", default: "Merci ! Votre demande a été transmise avec succès." }, { label: "Type de formulaire HubSpot", name: "hubspotFormType", widget: "select", options: ["diagnostic", "contact", "generic"], default: "generic" }] }
+      ]}
+
+  - name: "agencies"
+    label: "Agences"
+    folder: "src/content/agencies"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description SEO", name: "description", widget: "text" }
+      - { label: "Ville", name: "city", widget: "string" }
+      - { label: "Adresse", name: "address", widget: "string" }
+      - { label: "Téléphone", name: "phone", widget: "string" }
+      - { label: "Email", name: "email", widget: "string" }
+      - { label: "Lien carte", name: "mapUrl", widget: "string", required: false }
+      - { label: "Section Variants", name: "sectionVariants", widget: "list", required: false, field: { label: "Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"] } }
+      - { label: "Blocks", name: "blocks", widget: "list", types: [
+        { label: "Hero", name: "hero", widget: "object", fields: [
+          { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+          { label: "Title", name: "title", widget: "string" },
+          { label: "Subtitle", name: "subtitle", widget: "text", required: false },
+          { label: "CTA Text", name: "ctaText", widget: "string", required: false },
+          { label: "CTA Link", name: "ctaLink", widget: "string", required: false }
+        ]},
+        { label: "Rich Content", name: "richContent", widget: "object", fields: [
+          { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+          { label: "Content", name: "content", widget: "markdown" }
+        ]},
+        { label: "Bloc commerciaux", name: "commercials", widget: "object", fields: [
+          { label: "Section Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"], default: "auto" },
+          { label: "Title", name: "title", widget: "string", required: false },
+          { label: "Subtitle", name: "subtitle", widget: "text", required: false },
+          { label: "Agences", name: "agencies", widget: "list", required: false, field: { label: "Agence", name: "agency", widget: "select", options: ["lille", "paris", "lyon", "toulouse", "barcelone", "montreal"] } },
+          { label: "Expertises", name: "expertises", widget: "list", required: false, field: { label: "Expertise", name: "expertise", widget: "string" } },
+          { label: "Secteurs", name: "sectors", widget: "list", required: false, field: { label: "Secteur", name: "sector", widget: "string" } },
+          { label: "Sélection", name: "selection", widget: "relation", required: false, collection: "commercials", search_fields: ["firstName", "lastName", "agencies"], value_field: "{{slug}}", display_fields: ["firstName", "lastName", "agencies"], multiple: true },
+          { label: "Libellé CTA", name: "ctaLabel", widget: "string", required: false },
+          { label: "Lien CTA", name: "ctaLink", widget: "string", required: false }
+        ]}
+      ]}
+
+  - name: "commercials"
+    label: "Commerciaux"
+    folder: "src/content/commercials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Prénom", name: "firstName", widget: "string" }
+      - { label: "Nom", name: "lastName", widget: "string" }
+      - { label: "Rôle", name: "role", widget: "string" }
+      - { label: "Téléphone", name: "phone", widget: "string" }
+      - { label: "Email", name: "email", widget: "string" }
+      - { label: "Photo", name: "photo", widget: "image" }
+      - { label: "Agences", name: "agencies", widget: "list", field: { label: "Agence", name: "agency", widget: "select", options: ["lille", "paris", "lyon", "toulouse", "barcelone", "montreal"] } }
+      - { label: "Expertises", name: "expertises", widget: "list", required: false, field: { label: "Expertise", name: "expertise", widget: "string" } }
+      - { label: "Secteurs", name: "sectors", widget: "list", required: false, field: { label: "Secteur", name: "sector", widget: "string" } }
+      - { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
+      - { label: "Bio", name: "bio", widget: "text", required: false }
+
+  - name: "cases"
+    label: "Cas Clients"
+    folder: "src/content/cases"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Client Name", name: "clientName", widget: "string" }
+      - { label: "Sector", name: "sector", widget: "string" }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Problem", name: "problem", widget: "text" }
+      - { label: "Solution", name: "solution", widget: "text" }
+      - { label: "Results", name: "results", widget: "list", fields: [{ label: "Label", name: "label", widget: "string" }, { label: "Value", name: "value", widget: "string" }] }
+      - { label: "Stack", name: "stack", widget: "list", fields: [{ label: "Tech Name", name: "name", widget: "string" }] }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Section Variants", name: "sectionVariants", widget: "list", required: false, field: { label: "Variant", name: "variant", widget: "select", options: ["auto", "surface", "surface-2", "tint-coral", "tint-blue"] } }
+      - { label: "Blocks", name: "blocks", widget: "list", required: false, types: [
+        { label: "Hero", name: "hero", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "CTA Text", name: "ctaText", widget: "string", required: false }, { label: "CTA Link", name: "ctaLink", widget: "string", required: false }] },
+        { label: "Logos", name: "logos", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Logo List", name: "items", widget: "list", fields: [{ label: "Name", name: "name", widget: "string" }, { label: "Image", name: "image", widget: "image" }] }] },
+        { label: "Benefits", name: "benefits", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Image", name: "image", widget: "image", required: false }, { label: "Items", name: "items", widget: "list", required: false, fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "text", widget: "text", required: false }, { label: "Icon", name: "icon", widget: "string", required: false }, { label: "Link", name: "link", widget: "string", required: false }] }] },
+        { label: "Stats", name: "stats", widget: "object", fields: [{ label: "Items", name: "items", widget: "list", fields: [{ label: "Label", name: "label", widget: "string" }, { label: "Value", name: "value", widget: "string" }, { label: "Suffix", name: "suffix", widget: "string", required: false }] }] },
+        { label: "Steps", name: "steps", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Steps List", name: "items", widget: "list", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "text", widget: "text" }] }] },
+        { label: "Testimonials", name: "testimonials", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Items", name: "items", widget: "list", fields: [{ label: "Quote", name: "quote", widget: "text" }, { label: "Author", name: "author", widget: "string" }, { label: "Role", name: "role", widget: "string" }, { label: "Avatar", name: "avatar", widget: "image", required: false }] }] },
+        { label: "FAQ", name: "faq", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Questions", name: "items", widget: "list", fields: [{ label: "Question", name: "question", widget: "string" }, { label: "Answer", name: "answer", widget: "text" }] }] },
+        { label: "Rich Content", name: "richContent", widget: "object", fields: [{ label: "Content", name: "content", widget: "markdown" }] },
+        { label: "CTA", name: "cta", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Button Text", name: "buttonText", widget: "string" }, { label: "Button Link", name: "buttonLink", widget: "string" }] },
+        { label: "Lead Form", name: "leadForm", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Introduction", name: "intro", widget: "markdown", required: false }, { label: "Label Bouton", name: "submitLabel", widget: "string", default: "Envoyer" }, { label: "Message de succès", name: "successMessage", widget: "text", default: "Merci ! Votre demande a été transmise avec succès." }, { label: "Type de formulaire HubSpot", name: "hubspotFormType", widget: "select", options: ["diagnostic", "contact", "generic"], default: "generic" }] }
+      ]}
+
+  - name: "articles"
+    label: "Articles Blog"
+    folder: "src/content/articles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Featured Image", name: "image", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

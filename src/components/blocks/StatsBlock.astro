@@ -1,0 +1,50 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  bgVariant?: BgVariant;
+  items: { 
+    label: string; 
+    value: string; 
+    suffix?: string;
+    description?: string;
+  }[];
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const { title, subtitle, items, bgVariant, ctaText, ctaLink } = Astro.props;
+---
+<Section variant={bgVariant} className="text-center">
+  {title && <h2 class="section-title mb-4">{title}</h2>}
+  {subtitle && <p class="text-xl text-muted max-w-3xl mx-auto mb-16">{subtitle}</p>}
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    {items.map((stat) => (
+      <div class="space-y-4">
+        <div class="text-5xl md:text-6xl font-bold text-primary tracking-tight">
+          {stat.value}{stat.suffix}
+        </div>
+        <div class="text-xs uppercase tracking-[0.2em] text-muted font-bold">
+          {stat.label}
+        </div>
+        {stat.description && (
+          <p class="text-sm text-muted leading-relaxed max-w-[240px] mx-auto">
+            {stat.description}
+          </p>
+        )}
+      </div>
+    ))}
+  </div>
+
+  {ctaText && ctaLink && (
+    <div class="mt-12">
+      <a href={ctaLink} class="btn btn-primary">
+        {ctaText}
+      </a>
+    </div>
+  )}
+</Section>

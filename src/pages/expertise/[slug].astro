@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const businessEntries = await getCollection('business');
+  return businessEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout 
+  title={entry.data.seo?.metaTitle || entry.data.title} 
+  description={entry.data.seo?.metaDescription || entry.data.description}
+>
+  <Breadcrumbs items={[{ label: 'Expertises', href: '/expertise' }, { label: entry.data.title, href: `/expertise/${entry.slug}` }]} />
+  
+  <header class="bg-vert-clair/20 py-20">
+    <div class="container-custom">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-6">{entry.data.title}</h1>
+      <p class="text-xl text-gray-700 max-w-2xl">{entry.data.description}</p>
+    </div>
+  </header>
+
+  <article class="container-custom py-20 prose prose-lg prose-vert max-w-4xl">
+    <Content />
+  </article>
+
+  <section class="bg-rose-pale py-20">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl font-bold mb-8">Besoin d'un accompagnement sur {entry.data.title} ?</h2>
+      <a href="/contact" class="btn btn-primary px-10 py-4 text-lg">Discuter avec un expert</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,65 @@
+---
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import '@fontsource/urbanist/400.css';
+import '@fontsource/urbanist/700.css';
+import '@fontsource/urbanist/800.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  index?: boolean;
+  follow?: boolean;
+  articleData?: {
+    datePublished: Date;
+    author: string;
+  };
+  breadcrumbs?: { name: string; item: string }[];
+  canonicalURL?: string;
+}
+
+const { title, description, image, type, index, follow, articleData, breadcrumbs, canonicalURL } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <link href="admin/config.yml" type="text/yaml" rel="cms-config-url">
+    <SEO 
+      {title} 
+      {description} 
+      {image} 
+      {type} 
+      {index} 
+      {follow} 
+      {articleData} 
+      {breadcrumbs} 
+      {canonicalURL}
+    />
+  </head>
+  <body class="bg-[rgb(var(--bg))] text-[rgb(var(--text))] transition-colors duration-300">
+    <!-- Netlify Identity (needed to handle invite/recovery links that land on the site root) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      // Redirect invite/recovery links to the CMS admin so Decap can complete auth.
+      if (window.location.hash && /(invite_token|recovery_token)=/i.test(window.location.hash)) {
+        window.location.href = "/admin/" + window.location.hash;
+      }
+    </script>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 bg-primary text-primary-contrast p-4 rounded-lg z-[100] font-bold">
+      Passer au contenu principal
+    </a>
+
+    <Header />
+
+    <main id="main-content" class="flex-grow outline-none" tabindex="-1">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

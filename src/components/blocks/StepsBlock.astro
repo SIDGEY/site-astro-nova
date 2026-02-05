@@ -1,0 +1,28 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  title?: string;
+  bgVariant?: BgVariant;
+  items: { title: string; text: string }[];
+}
+
+const { title, items, bgVariant } = Astro.props;
+---
+<Section variant={bgVariant}>
+  {title && <h2 class="section-title block text-center mx-auto mb-16">{title}</h2>}
+  <div class="max-w-4xl mx-auto space-y-16">
+    {items.map((step, index) => (
+      <div class="flex flex-col md:flex-row gap-8 group">
+        <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-primary text-primary-contrast flex items-center justify-center font-bold text-2xl shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
+          {index + 1}
+        </div>
+        <div class="pt-2">
+          <h3 class="text-2xl font-bold mb-4 text-text">{step.title}</h3>
+          <p class="text-muted leading-relaxed text-lg">{step.text}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</Section>

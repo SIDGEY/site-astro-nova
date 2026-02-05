@@ -1,0 +1,30 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  title?: string;
+  bgVariant?: BgVariant;
+  items: { question: string; answer: string }[];
+}
+
+const { title, items, bgVariant } = Astro.props;
+---
+<Section variant={bgVariant} className="!max-w-4xl mx-auto">
+  {title && <h2 class="section-title block text-center mx-auto mb-16">{title}</h2>}
+  <div class="space-y-6">
+    {items.map((item) => (
+      <details class="group bg-surface rounded-2xl border border-border overflow-hidden transition-all duration-300 open:shadow-lg open:border-primary/30">
+        <summary class="flex justify-between items-center p-8 cursor-pointer list-none font-bold text-xl text-text hover:text-primary transition-colors focus:outline-none focus:ring-4 focus:ring-ring focus:ring-inset">
+          {item.question}
+          <span class="text-primary group-open:rotate-180 transition-transform duration-300" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <div class="px-8 pb-8 text-muted leading-relaxed text-lg border-t border-border/50 pt-6">
+          {item.answer}
+        </div>
+      </details>
+    ))}
+  </div>
+</Section>

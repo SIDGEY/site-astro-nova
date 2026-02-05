@@ -1,0 +1,38 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  title?: string;
+  bgVariant?: BgVariant;
+  items: { quote: string; author: string; role: string; avatar?: string }[];
+}
+
+const { title, items, bgVariant } = Astro.props;
+---
+<Section variant={bgVariant}>
+  {title && <h2 class="section-title block text-center mx-auto mb-20">{title}</h2>}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    {items.map((testimonial) => (
+      <div class="card-basic flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300">
+        <blockquote class="text-xl text-text italic mb-10 leading-relaxed relative">
+          <span class="absolute -top-6 -left-4 text-6xl text-primary/10 not-italic select-none">“</span>
+          {testimonial.quote}
+        </blockquote>
+        <div class="flex items-center gap-5 pt-6 border-t border-border/50">
+          {testimonial.avatar ? (
+            <img src={testimonial.avatar} alt={testimonial.author} class="w-14 h-14 rounded-2xl object-cover" />
+          ) : (
+            <div class="w-14 h-14 rounded-2xl bg-primary text-primary-contrast flex items-center justify-center font-bold text-xl">
+              {testimonial.author.charAt(0)}
+            </div>
+          )}
+          <div>
+            <div class="font-bold text-text">{testimonial.author}</div>
+            <div class="text-sm text-muted font-medium">{testimonial.role}</div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</Section>

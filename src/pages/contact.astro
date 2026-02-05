@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'Accueil', item: 'https://atecna-2026.fr/' },
+  { name: 'Contact', item: 'https://atecna-2026.fr/contact' }
+];
+---
+
+<BaseLayout 
+  title="Contact" 
+  description="Contactez les experts IA & Data d'Atecna pour discuter de vos projets."
+  breadcrumbs={breadcrumbs}
+>
+  <section class="py-24 relative overflow-hidden bg-[rgb(var(--bg))]">
+    <div class="container-custom relative z-10">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+          <h1 class="text-5xl md:text-6xl font-extrabold mb-6">Parlons de votre <span class="text-primary">futur.</span></h1>
+          <p class="text-xl text-[rgb(var(--muted))]">Une question, un projet ou simplement envie d'échanger sur l'IA ? Nos experts sont à votre écoute.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-[rgb(var(--surface))] p-8 md:p-12 rounded-[40px] border border-[rgb(var(--border))] shadow-xl">
+          <!-- Formulaire Placeholder -->
+          <form class="space-y-6">
+            <div>
+              <label for="name" class="block text-sm font-bold mb-2">Nom complet</label>
+              <input type="text" id="name" class="input-base" placeholder="Jean Dupont" />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-bold mb-2">Email professionnel</label>
+              <input type="email" id="email" class="input-base" placeholder="jean@entreprise.com" />
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-bold mb-2">Votre projet</label>
+              <textarea id="message" rows="4" class="input-base" placeholder="Dites-nous en plus..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-full btn-lg">Envoyer le message</button>
+          </form>
+
+          <!-- Infos de contact -->
+          <div class="flex flex-col justify-between space-y-12">
+            <div>
+              <h3 class="text-2xl font-bold mb-6">Nos bureaux</h3>
+              <address class="not-italic text-[rgb(var(--muted))] space-y-4">
+                <p><strong>Lille (HQ)</strong><br />123 Allée de l'Innovation<br />59000 Lille, France</p>
+                <p><strong>Paris</strong><br />45 Avenue des Data Scientists<br />75008 Paris, France</p>
+              </address>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold mb-4">Direct</h3>
+              <p class="text-[rgb(var(--muted))]">hello@atecna.fr<br />+33 (0)3 20 00 00 00</p>
+            </div>
+            <div class="p-6 bg-accent-bleu-ciel/30 dark:bg-secondary/10 rounded-2xl border border-accent-bleu-ciel/50 dark:border-secondary/20">
+              <p class="font-bold text-secondary dark:text-accent-bleu-ciel">Rejoindre l'équipe ?</p>
+              <p class="text-sm text-[rgb(var(--muted))] mb-4">Nous cherchons toujours des talents passionnés par la Data et l'IA.</p>
+              <a href="#" class="text-sm font-bold underline hover:text-primary transition-colors">Voir les offres →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Décoration -->
+    <div class="absolute bottom-0 left-0 -z-10 w-64 h-64 bg-accent-rose/50 dark:bg-primary/5 rounded-full blur-3xl"></div>
+  </section>
+</BaseLayout>

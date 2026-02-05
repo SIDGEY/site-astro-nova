@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Styleguide" 
+  description="Guide des styles et composants du site Atecna 2026."
+>
+  <section class="py-24 bg-bg">
+    <div class="container-custom">
+      <h1 class="text-5xl md:text-7xl font-bold mb-16 text-text tracking-tight">Design <span class="text-primary">System.</span></h1>
+      
+      <!-- Tokens Sémantiques -->
+      <div class="mb-32">
+        <h2 class="section-title">Color Tokens</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+          <div class="space-y-3">
+            <div class="h-24 w-full rounded-[24px] bg-bg border border-border shadow-sm"></div>
+            <p class="font-bold text-sm text-text">--bg</p>
+          </div>
+          <div class="space-y-3">
+            <div class="h-24 w-full rounded-[24px] bg-surface border border-border shadow-sm"></div>
+            <p class="font-bold text-sm text-text">--surface</p>
+          </div>
+          <div class="space-y-3">
+            <div class="h-24 w-full rounded-[24px] bg-surface-2 border border-border shadow-sm"></div>
+            <p class="font-bold text-sm text-text">--surface-2</p>
+          </div>
+          <div class="space-y-3">
+            <div class="h-24 w-full rounded-[24px] bg-primary shadow-lg shadow-primary/20"></div>
+            <p class="font-bold text-sm text-text">--primary</p>
+          </div>
+          <div class="space-y-3">
+            <div class="h-24 w-full rounded-[24px] bg-secondary shadow-lg shadow-secondary/20"></div>
+            <p class="font-bold text-sm text-text">--secondary</p>
+          </div>
+          <div class="space-y-3">
+            <div class="h-24 w-full rounded-[24px] bg-text shadow-sm"></div>
+            <p class="font-bold text-sm text-text">--text</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typographie -->
+      <div class="mb-32">
+        <h2 class="section-title">Typography</h2>
+        <div class="space-y-10 max-w-4xl">
+          <div class="space-y-2">
+             <span class="text-xs font-bold text-muted uppercase tracking-widest">Display 1</span>
+             <h1 class="text-5xl md:text-7xl font-bold leading-tight">Innovation is data-driven.</h1>
+          </div>
+          <div class="space-y-2">
+             <span class="text-xs font-bold text-muted uppercase tracking-widest">Heading 2</span>
+             <h2 class="text-4xl md:text-5xl font-bold leading-tight">Crafting the future of AI.</h2>
+          </div>
+          <div class="space-y-2">
+             <span class="text-xs font-bold text-muted uppercase tracking-widest">Body Large</span>
+             <p class="text-xl md:text-2xl text-text leading-relaxed font-medium">L'intelligence artificielle n'est plus une option, c'est un levier de compétitivité majeur pour les entreprises mid-market.</p>
+          </div>
+          <div class="space-y-2">
+             <span class="text-xs font-bold text-muted uppercase tracking-widest">Body Base</span>
+             <p class="text-lg text-text leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons -->
+      <div class="mb-32">
+        <h2 class="section-title">Actions</h2>
+        <div class="flex flex-wrap gap-8 items-center">
+          <button class="btn btn-primary">Primary Action</button>
+          <button class="btn btn-secondary">Secondary CTA</button>
+          <button class="btn btn-outline">Outline Button</button>
+          <button class="btn btn-ghost">Ghost Link</button>
+          <button class="btn btn-link">Link Style</button>
+        </div>
+      </div>
+
+      <!-- Composants UI -->
+      <div class="mb-32">
+        <h2 class="section-title">Components</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+          <div class="card-basic space-y-6">
+            <div class="flex gap-3">
+              <span class="badge">Innovation</span>
+              <span class="badge bg-primary text-primary-contrast">Data</span>
+            </div>
+            <h3 class="text-3xl font-bold text-text leading-tight">Data Strategy Audit</h3>
+            <p class="text-muted leading-relaxed">Nous isolons les processus à forte valeur ajoutée où l'IA peut faire la différence immédiatement dans votre organisation.</p>
+            <div class="pt-4">
+               <button class="btn btn-primary w-full">Démarrer l'audit</button>
+            </div>
+          </div>
+          
+          <div class="space-y-8">
+            <div class="space-y-4">
+              <label class="block text-xs font-bold text-text uppercase tracking-widest">Input Field</label>
+              <input type="text" class="input-base" placeholder="votre@email.com" />
+            </div>
+            <div class="space-y-4">
+              <label class="block text-xs font-bold text-text uppercase tracking-widest">Select Menu</label>
+              <select class="input-base">
+                <option>IA Générative</option>
+                <option>Data Engineering</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accessibility Checklist -->
+      <div class="p-10 md:p-16 bg-surface-2/40 rounded-[48px] border border-border/50">
+        <h2 class="text-3xl font-bold mb-10 text-text">Accessibility Excellence (WCAG 2.2 AA)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <ul class="space-y-6">
+            <li class="flex items-start gap-4 text-text/80">
+              <span class="w-6 h-6 rounded-full bg-green-500/20 text-green-600 flex items-center justify-center flex-shrink-0 mt-1">✓</span> 
+              <span><strong>Contraste:</strong> Tous les textes respectent un ratio >= 4.5:1 sur leurs fonds respectifs.</span>
+            </li>
+            <li class="flex items-start gap-4 text-text/80">
+              <span class="w-6 h-6 rounded-full bg-green-500/20 text-green-600 flex items-center justify-center flex-shrink-0 mt-1">✓</span> 
+              <span><strong>Focus:</strong> Anneau de focus (ring-4) hautement contrasté pour la navigation clavier.</span>
+            </li>
+            <li class="flex items-start gap-4 text-text/80">
+              <span class="w-6 h-6 rounded-full bg-green-500/20 text-green-600 flex items-center justify-center flex-shrink-0 mt-1">✓</span> 
+              <span><strong>Sémantique:</strong> Utilisation stricte des balises HTML5 (main, section, nav, h1-h4).</span>
+            </li>
+          </ul>
+          <ul class="space-y-6">
+             <li class="flex items-start gap-4 text-text/80">
+              <span class="w-6 h-6 rounded-full bg-green-500/20 text-green-600 flex items-center justify-center flex-shrink-0 mt-1">✓</span> 
+              <span><strong>Motion:</strong> <code>prefers-reduced-motion</code> désactive toutes les transitions non essentielles.</span>
+            </li>
+            <li class="flex items-start gap-4 text-text/80">
+              <span class="w-6 h-6 rounded-full bg-green-500/20 text-green-600 flex items-center justify-center flex-shrink-0 mt-1">✓</span> 
+              <span><strong>Interact:</strong> États Hover et Active distincts pour tous les éléments cliquables.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

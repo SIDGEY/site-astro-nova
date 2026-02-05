@@ -1,0 +1,33 @@
+---
+title: "Diagnostic Flash IA"
+description: "Évaluez la maturité IA de votre entreprise en 45 minutes avec nos experts."
+blocks:
+  - type: "hero"
+    title: "Accélérez votre trajectoire IA"
+    subtitle: "Un diagnostic flash de 45 minutes pour identifier vos cas d'usage à fort ROI."
+    ctaText: "Réserver mon créneau"
+    ctaLink: "#lead-generation"
+  - type: "benefits"
+    title: "Pourquoi ce diagnostic ?"
+    items:
+      - title: "Identification"
+        text: "Repérez les processus automatisables via LLM."
+      - title: "Priorisation"
+        text: "Classez vos projets par ROI et faisabilité technique."
+      - title: "Feuille de route"
+        text: "Repartez avec des étapes concrètes d'implémentation."
+  - type: "stats"
+    items:
+      - label: "Durée"
+        value: "45"
+        suffix: "min"
+      - label: "Cas d'usage"
+        value: "3"
+        suffix: "+"
+      - label: "Audit offert"
+        value: "100"
+        suffix: "%"
+  - type: "leadForm"
+    title: "Parlons de votre projet IA"
+    subtitle: "Remplissez ce formulaire et un expert vous recontactera sous 24h."
+---

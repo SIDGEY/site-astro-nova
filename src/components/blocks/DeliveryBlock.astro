@@ -1,0 +1,60 @@
+---
+import Section from '../Section.astro';
+import type { BgVariant } from '../../utils/bgHelper';
+
+interface Props {
+  deliveryTitle: string;
+  deliveryText: string;
+  deliveryDeliverables: string[];
+  deliveryCycle?: Array<{ title: string; text: string }>;
+  bgVariant?: BgVariant;
+}
+
+const { deliveryTitle, deliveryText, deliveryDeliverables, deliveryCycle, bgVariant } = Astro.props;
+---
+
+<Section variant={bgVariant}>
+  <div class="flex flex-col gap-10">
+    <div class="max-w-3xl">
+      <h2 class="section-title">{deliveryTitle}</h2>
+      <p class="text-xl text-muted mb-0">{deliveryText}</p>
+    </div>
+    <div class="grid gap-6 md:grid-cols-3">
+      {deliveryDeliverables.map((deliverable) => (
+        <div class="card-basic">
+          <h3 class="text-xl font-bold">{deliverable}</h3>
+        </div>
+      ))}
+    </div>
+    {deliveryCycle?.length ? (
+      <div class="rounded-2xl border border-slate-200/80 bg-white/70 p-6 shadow-sm">
+        <div class="flex flex-col gap-6">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-muted">Cycle agile</p>
+            <p class="mt-2 text-lg text-slate-700">
+              Des sprints courts, une démonstration régulière et un backlog qui évolue à chaque
+              itération.
+            </p>
+          </div>
+          <div class="grid gap-4 md:grid-cols-4">
+            {deliveryCycle.map((step, index) => (
+              <div class="flex flex-col gap-3 rounded-xl border border-slate-200/70 bg-white p-4">
+                <div class="flex items-center gap-3">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
+                    {index + 1}
+                  </span>
+                  <h3 class="text-base font-semibold text-slate-900">{step.title}</h3>
+                </div>
+                <p class="text-sm text-slate-600">{step.text}</p>
+              </div>
+            ))}
+          </div>
+          <div class="flex items-center gap-3 text-sm text-slate-600">
+            <span class="text-lg">↻</span>
+            <span>On répète le cycle à chaque sprint pour sécuriser la valeur livrée.</span>
+          </div>
+        </div>
+      </div>
+    ) : null}
+  </div>
+</Section>
