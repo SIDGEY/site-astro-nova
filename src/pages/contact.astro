@@ -1,66 +1,124 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const breadcrumbs = [
-  { name: 'Accueil', item: 'https://atecna-2026.fr/' },
-  { name: 'Contact', item: 'https://atecna-2026.fr/contact' }
+  { name: "Accueil", item: "https://play-astronova.com/" },
+  { name: "Contact", item: "https://play-astronova.com/contact" },
 ];
 ---
 
-<BaseLayout 
-  title="Contact" 
-  description="Contactez les experts IA & Data d'Atecna pour discuter de vos projets."
+<BaseLayout
+  title="Contact"
+  description="Contactez l'équipe d'Astro Nova pour toute question ou support."
   breadcrumbs={breadcrumbs}
 >
-  <section class="py-24 relative overflow-hidden bg-[rgb(var(--bg))]">
+  <section class="py-24 relative overflow-hidden bg-slate-900">
     <div class="container-custom relative z-10">
       <div class="max-w-4xl mx-auto">
         <div class="text-center mb-16">
-          <h1 class="text-5xl md:text-6xl font-extrabold mb-6">Parlons de votre <span class="text-primary">futur.</span></h1>
-          <p class="text-xl text-[rgb(var(--muted))]">Une question, un projet ou simplement envie d'échanger sur l'IA ? Nos experts sont à votre écoute.</p>
+          <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-slate-50">
+            Contactez le <span class="text-blue-500">Commandement.</span>
+          </h1>
+          <p class="text-xl text-slate-400">
+            Une question sur le jeu, un bug à signaler ou une demande de
+            partenariat ? Nos fréquences sont ouvertes.
+          </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-[rgb(var(--surface))] p-8 md:p-12 rounded-[40px] border border-[rgb(var(--border))] shadow-xl">
-          <!-- Formulaire Placeholder -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-slate-800/50 p-8 md:p-12 rounded-[40px] border border-slate-700 shadow-xl backdrop-blur-sm"
+        >
+          <!-- Formulaire -->
           <form class="space-y-6">
             <div>
-              <label for="name" class="block text-sm font-bold mb-2">Nom complet</label>
-              <input type="text" id="name" class="input-base" placeholder="Jean Dupont" />
+              <label
+                for="name"
+                class="block text-sm font-bold mb-2 text-slate-300"
+                >Nom du Commandant</label
+              >
+              <input
+                type="text"
+                id="name"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 focus:border-blue-500 outline-none transition-colors"
+                placeholder="Votre pseudo"
+              />
             </div>
             <div>
-              <label for="email" class="block text-sm font-bold mb-2">Email professionnel</label>
-              <input type="email" id="email" class="input-base" placeholder="jean@entreprise.com" />
+              <label
+                for="email"
+                class="block text-sm font-bold mb-2 text-slate-300"
+                >Fréquence (Email)</label
+              >
+              <input
+                type="email"
+                id="email"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 focus:border-blue-500 outline-none transition-colors"
+                placeholder="vous@exemple.com"
+              />
             </div>
             <div>
-              <label for="message" class="block text-sm font-bold mb-2">Votre projet</label>
-              <textarea id="message" rows="4" class="input-base" placeholder="Dites-nous en plus..."></textarea>
+              <label
+                for="message"
+                class="block text-sm font-bold mb-2 text-slate-300"
+                >Transmission</label
+              >
+              <textarea
+                id="message"
+                rows="4"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 focus:border-blue-500 outline-none transition-colors"
+                placeholder="Votre message..."></textarea>
             </div>
-            <button type="submit" class="btn btn-primary w-full btn-lg">Envoyer le message</button>
+            <button
+              type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg shadow-blue-900/20"
+              >Initier la transmission</button
+            >
           </form>
 
           <!-- Infos de contact -->
           <div class="flex flex-col justify-between space-y-12">
             <div>
-              <h3 class="text-2xl font-bold mb-6">Nos bureaux</h3>
-              <address class="not-italic text-[rgb(var(--muted))] space-y-4">
-                <p><strong>Lille (HQ)</strong><br />123 Allée de l'Innovation<br />59000 Lille, France</p>
-                <p><strong>Paris</strong><br />45 Avenue des Data Scientists<br />75008 Paris, France</p>
-              </address>
+              <h3 class="text-2xl font-bold mb-6 text-white">
+                Canaux Officiels
+              </h3>
+              <div class="space-y-4 text-slate-400">
+                <p>
+                  Pour le support rapide et les échanges avec la communauté,
+                  rejoignez notre Discord.
+                </p>
+                <a
+                  href="https://discord.gg/astronova"
+                  class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                >
+                  Rejoindre le Discord →
+                </a>
+              </div>
             </div>
             <div>
-              <h3 class="text-2xl font-bold mb-4">Direct</h3>
-              <p class="text-[rgb(var(--muted))]">hello@atecna.fr<br />+33 (0)3 20 00 00 00</p>
+              <h3 class="text-2xl font-bold mb-4 text-white">Support Direct</h3>
+              <p class="text-slate-400">contact@play-astronova.com</p>
             </div>
-            <div class="p-6 bg-accent-bleu-ciel/30 dark:bg-secondary/10 rounded-2xl border border-accent-bleu-ciel/50 dark:border-secondary/20">
-              <p class="font-bold text-secondary dark:text-accent-bleu-ciel">Rejoindre l'équipe ?</p>
-              <p class="text-sm text-[rgb(var(--muted))] mb-4">Nous cherchons toujours des talents passionnés par la Data et l'IA.</p>
-              <a href="#" class="text-sm font-bold underline hover:text-primary transition-colors">Voir les offres →</a>
+            <div
+              class="p-6 bg-blue-900/20 rounded-2xl border border-blue-500/20"
+            >
+              <p class="font-bold text-blue-400 mb-2">Presse & Créateurs</p>
+              <p class="text-sm text-slate-400 mb-4">
+                Vous souhaitez couvrir la sortie d'Astro Nova ?
+              </p>
+              <a
+                href="#"
+                class="text-sm font-bold text-white underline hover:text-blue-400 transition-colors"
+                >Dossier de presse →</a
+              >
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Décoration -->
-    <div class="absolute bottom-0 left-0 -z-10 w-64 h-64 bg-accent-rose/50 dark:bg-primary/5 rounded-full blur-3xl"></div>
+    <div
+      class="absolute bottom-0 left-0 -z-10 w-96 h-96 bg-blue-900/20 rounded-full blur-[100px]"
+    >
+    </div>
   </section>
 </BaseLayout>

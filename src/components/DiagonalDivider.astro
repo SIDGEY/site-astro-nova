@@ -1,0 +1,71 @@
+---
+interface Props {
+    /**
+     * Direction de la diagonale
+     * top-left: diagonale du haut à gauche vers le bas à droite
+     * top-right: diagonale du haut à droite vers le bas à gauche
+     * bottom-left: diagonale du bas à gauche vers le haut à droite
+     * bottom-right: diagonale du bas à droite vers le haut à gauche
+     */
+    direction?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+    /** Couleur du divider (utilise les classes Tailwind text-*) */
+    color?: string;
+    /** Hauteur du divider */
+    height?: string;
+    /** Classes supplémentaires à appliquer au conteneur */
+    className?: string;
+    /** Marge négative en haut (pour chevaucher le contenu précédent) */
+    negativeMarginTop?: string;
+    /** Z-index pour contrôler les superpositions */
+    zIndex?: number;
+}
+
+const {
+    direction = "top-left",
+    color = "text-slate-900",
+    height = "h-24",
+    className = "",
+    negativeMarginTop = "",
+    zIndex = 10,
+} = Astro.props;
+
+let svgPath = "";
+
+switch (direction) {
+    case "top-left":
+        // Diagonale du haut à gauche vers le bas à droite
+        svgPath = "M0 0H1440V48L0 0Z";
+        break;
+    case "top-right":
+        // Diagonale du haut à droite vers le bas à gauche
+        svgPath = "M1440 0H0V48L1440 0Z";
+        break;
+    case "bottom-left":
+        // Diagonale du bas à gauche vers le haut à droite
+        svgPath = "M0 48H1440V0L0 48Z";
+        break;
+    case "bottom-right":
+        // Diagonale du bas à droite vers le haut à gauche
+        svgPath = "M1440 48H0V0L1440 48Z";
+        break;
+    default:
+        svgPath = "M0 0H1440V48L0 0Z";
+}
+---
+
+<div
+    class={`relative ${height} ${negativeMarginTop}`}
+    style={`z-index: ${zIndex};`}
+>
+    <div class={`absolute inset-0 overflow-hidden ${className}`}>
+        <svg
+            class={`absolute inset-0 w-full h-full ${color}`}
+            viewBox="0 0 1440 48"
+            preserveAspectRatio="none"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d={svgPath} fill="currentColor"></path>
+        </svg>
+    </div>
+</div>

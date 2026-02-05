@@ -1,0 +1,87 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+  sectionTitle: string;
+  description: string;
+  secondaryDescription?: string;
+  discordLink: string;
+  discordButtonText?: string;
+  image: string;
+  imageAlt: string;
+}
+
+const {
+  title,
+  subtitle,
+  sectionTitle,
+  description,
+  secondaryDescription,
+  discordLink,
+  discordButtonText = "Rejoindre le Discord",
+  image,
+  imageAlt,
+} = Astro.props;
+---
+
+<section id="community" class="px-6 bg-slate-900 pt-20 sm:pt-24 md:pt-28 pb-20">
+  <div class="max-w-6xl mx-auto">
+    <!-- Section Title -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-100">
+        {title}
+      </h2>
+      <p class="text-xl text-slate-400 max-w-3xl mx-auto">{subtitle}</p>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="grid md:grid-cols-2 gap-8 md:items-stretch">
+      <!-- Image Column -->
+      <div class="flex justify-center h-full">
+        <div class="bg-slate-700 rounded-xl overflow-hidden w-full h-full">
+          <div class="relative community-image-container">
+            <div class="image-overlay h-full">
+              <img
+                src={image}
+                alt={imageAlt}
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Column -->
+      <div
+        class="bg-slate-900 border border-slate-700/50 p-8 sm:p-8 md:p-12 rounded-xl h-full flex flex-col"
+      >
+        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-slate-200">
+          {sectionTitle}
+        </h3>
+
+        <p class="text-slate-400 mb-4 leading-relaxed">
+          {description}
+        </p>
+
+        {
+          secondaryDescription && (
+            <p class="text-slate-400 leading-relaxed mb-6">
+              {secondaryDescription}
+            </p>
+          )
+        }
+
+        <div class="my-2">
+          <a
+            href={discordLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block py-2 px-6 whitespace-nowrap bg-blue-500 hover:bg-blue-600 rounded-md font-medium transition-colors"
+          >
+            {discordButtonText}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

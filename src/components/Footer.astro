@@ -1,195 +1,35 @@
 ---
-import { getEntry } from 'astro:content';
 
-const settings = await getEntry('settings', 'general');
-if (!settings) return Astro.redirect('/404');
-const { footer } = settings.data;
-
-const linkAttrs = (link: { type: 'internal' | 'external' }) =>
-  link.type === 'external'
-    ? {
-        target: '_blank',
-        rel: 'noopener noreferrer',
-      }
-    : {};
-
-const phoneHref = footer.contact.phone.replace(/[\\s().-]/g, '');
 ---
-<footer class="bg-surface-2 text-text/80 py-24 mt-20 border-t border-border">
-  <div class="container-custom">
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-7 gap-12">
-      <section class="xl:col-span-2 space-y-6" aria-labelledby="footer-contact">
-        <div>
-          <h2 id="footer-contact" class="text-xl font-semibold text-text">{footer.contact.title}</h2>
-          {footer.contact.address && (
-            <address class="not-italic text-sm text-muted mt-3 leading-relaxed">{footer.contact.address}</address>
-          )}
-        </div>
-        {footer.value_proposition && (
-          <div class="space-y-3">
-            <h3 class="text-base font-semibold text-text">{footer.value_proposition.title}</h3>
-            <p class="text-sm text-muted leading-relaxed">{footer.value_proposition.text}</p>
-            {footer.value_proposition.bullets && (
-              <ul class="text-sm text-muted space-y-2 list-disc list-inside">
-                {footer.value_proposition.bullets.map(item => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        )}
-        <div class="space-y-2 text-sm">
-          <a
-            href={`mailto:${footer.contact.email}`}
-            class="block font-medium text-text hover:text-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            aria-label={`Envoyer un email à ${footer.contact.email}`}
-          >
-            {footer.contact.email}
-          </a>
-          <a
-            href={`tel:${phoneHref}`}
-            class="block font-medium text-text hover:text-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            aria-label={`Appeler le ${footer.contact.phone}`}
-          >
-            {footer.contact.phone}
-          </a>
-        </div>
-        <a
-          href={footer.contact.cta_link}
-          class="btn btn-primary inline-flex w-fit"
-        >
-          {footer.contact.cta_label}
-        </a>
-      </section>
 
-      <nav class="space-y-6" aria-labelledby="footer-main-nav">
-        <h3 id="footer-main-nav" class="text-xs uppercase tracking-widest text-primary font-semibold">
-          {footer.section_titles.main_nav}
-        </h3>
-        <ul class="space-y-3 text-sm">
-          {footer.main_nav.map(link => (
-            <li>
-              <a
-                href={link.href}
-                {...linkAttrs(link)}
-                aria-label={link.aria_label}
-                class="hover:text-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <nav class="space-y-6" aria-labelledby="footer-expertises">
-        <h3 id="footer-expertises" class="text-xs uppercase tracking-widest text-primary font-semibold">
-          {footer.section_titles.expertises}
-        </h3>
-        <ul class="space-y-3 text-sm">
-          {footer.expertises_nav.map(link => (
-            <li>
-              <a
-                href={link.href}
-                {...linkAttrs(link)}
-                aria-label={link.aria_label}
-                class="hover:text-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <nav class="space-y-6" aria-labelledby="footer-agencies">
-        <h3 id="footer-agencies" class="text-xs uppercase tracking-widest text-primary font-semibold">
-          {footer.section_titles.agencies}
-        </h3>
-        <ul class="space-y-3 text-sm">
-          {footer.agencies_nav.map(link => (
-            <li>
-              <a
-                href={link.href}
-                {...linkAttrs(link)}
-                aria-label={link.aria_label}
-                class="hover:text-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <section class="space-y-6" aria-labelledby="footer-certifications">
-        <h3 id="footer-certifications" class="text-xs uppercase tracking-widest text-primary font-semibold">
-          {footer.section_titles.certifications}
-        </h3>
-        <ul class="flex flex-wrap gap-4 items-center">
-          {footer.certifications.map(cert => (
-            <li>
-              <a
-                href={cert.href}
-                {...linkAttrs(cert)}
-                aria-label={cert.aria_label ?? cert.label}
-                class="inline-flex items-center gap-3 rounded-xl border border-border px-3 py-2 bg-surface hover:border-primary/50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                <img src={cert.icon_filename} alt={cert.label} class="h-8 w-auto" loading="lazy" />
-                <span class="text-sm font-medium text-text">{cert.label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <div class="space-y-12">
-        <nav class="space-y-6" aria-labelledby="footer-resources">
-          <h3 id="footer-resources" class="text-xs uppercase tracking-widest text-primary font-semibold">
-            {footer.section_titles.resources}
-          </h3>
-          <ul class="space-y-3 text-sm">
-            {footer.resources_nav.map(link => (
-              <li>
-                <a
-                  href={link.href}
-                  {...linkAttrs(link)}
-                  aria-label={link.aria_label}
-                  class="hover:text-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <nav class="space-y-6" aria-labelledby="footer-social">
-          <h3 id="footer-social" class="text-xs uppercase tracking-widest text-primary font-semibold">
-            {footer.section_titles.social}
-          </h3>
-          <ul class="space-y-3 text-sm">
-            {footer.social_nav.map(link => (
-              <li>
-                <a
-                  href={link.href}
-                  {...linkAttrs(link)}
-                  aria-label={link.aria_label ?? link.label}
-                  class="inline-flex items-center gap-2 hover:text-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                >
-                  {link.icon_filename && (
-                    <img src={link.icon_filename} alt="" class="h-4 w-4" loading="lazy" aria-hidden="true" />
-                  )}
-                  <span>{link.label}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-    </div>
-    <div class="border-t border-border mt-20 pt-10 text-sm text-muted">
-      <p>{footer.copyright.text}</p>
+<footer class="bg-slate-900 px-6 pt-8 sm:pt-12 md:pt-16">
+  <div
+    class="flex flex-col md:flex-row justify-between items-center py-6 sm:py-8"
+  >
+    <p class="text-slate-500 text-sm text-center md:text-left">
+      © 2026 Astro Nova. Tous droits réservés.
+    </p>
+    <div
+      class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 md:space-x-6 mt-4 md:mt-0 items-center"
+    >
+      <a
+        href="/legal/privacy"
+        class="text-sm text-slate-500 hover:text-slate-400"
+      >
+        Politique de confidentialité
+      </a>
+      <a
+        href="/legal/terms"
+        class="text-sm text-slate-500 hover:text-slate-400"
+      >
+        Conditions d'utilisation
+      </a>
+      <a
+        href="/legal/cookies"
+        class="text-sm text-slate-500 hover:text-slate-400"
+      >
+        Cookies
+      </a>
     </div>
   </div>
 </footer>

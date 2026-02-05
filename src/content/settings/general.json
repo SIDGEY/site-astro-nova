@@ -1,233 +1,103 @@
 {
-  "siteName": "Astro Nova universe",
-  "defaultDescription": "Astro Nova est un jeu de stratégie 4X spatial immersif qui combine gestion de ressources, exploration, expansion et combat dans un univers dynamique.",
-  "logo": "/uploads/logo_atecna_corail.svg",
+  "siteName": "Astro Nova",
+  "defaultDescription": "Conquérez l'univers dans ce jeu de stratégie 4X spatial immersif. Explorez, colonisez et dominez les étoiles.",
+  "logo": "https://play-astronova.com/logo-horizontal.svg",
   "navigation": [
     {
-      "label": "Caractéristiques Gameplay",
-      "link": "/expertises"
+      "label": "Caractéristiques",
+      "link": "#features"
     },
     {
-      "label": " Communauté",
-      "link": "/approche-methode"
+      "label": "Gameplay",
+      "link": "#gameplay"
     },
     {
-      "label": "Galerie",
-      "link": "/cas-clients"
-    },
-    {
-      "label": "Jouer",
-      "link": "https://play-astronova.com/game"
+      "label": "Communauté",
+      "link": "#community"
     }
   ],
   "footer": {
     "contact": {
-      "title": "Contact",
+      "title": "Astro Nova",
       "address": "",
       "email": "contact@play-astronova.com",
-      "phone": " ",
-      "cta_label": " ",
-      "cta_link": "/parler-ia"
+      "phone": "",
+      "cta_label": "S'inscrire à la bêta",
+      "cta_link": "#"
     },
+    "section_titles": {
+      "main_nav": "Navigation",
+      "expertises": "Jeu",
+      "agencies": "",
+      "certifications": "",
+      "resources": "Légal",
+      "social": "Communauté"
+    },
+    "main_nav": [
+      {
+        "label": "Caractéristiques",
+        "href": "#features",
+        "type": "internal"
+      },
+      {
+        "label": "Gameplay",
+        "href": "#gameplay",
+        "type": "internal"
+      },
+      {
+        "label": "Communauté",
+        "href": "#community",
+        "type": "internal"
+      }
+    ],
     "expertises_nav": [
       {
-        "label": "IA & Data",
-        "href": "/p/ia-data",
-        "type": "internal"
+        "label": "Jouer maintenant",
+        "href": "https://astro-nova-recette.web.app/game",
+        "type": "external"
       },
       {
-        "label": "Produit & Design",
-        "href": "/p/expertises/produit-design",
-        "type": "internal"
-      },
-      {
-        "label": "Technologies & Architecture",
-        "href": "/p/expertises/technologies-architecture",
-        "type": "internal"
-      },
-      {
-        "label": "Performance digitale",
-        "href": "/p/expertises/performance-digitale",
-        "type": "internal"
-      },
-      {
-        "label": "Numérique responsable & accessibilité",
-        "href": "/p/expertises/numerique-responsable",
-        "type": "internal"
-      },
-      {
-        "label": "Conseil & Cadrage / Delivery",
-        "href": "/p/expertises/conseil-accompagnement",
+        "label": "S'inscrire à la bêta",
+        "href": "#",
         "type": "internal"
       }
     ],
-    "agencies_nav": [
-      {
-        "label": "Lille",
-        "href": "/agences/lille",
-        "type": "internal"
-      },
-      {
-        "label": "Paris",
-        "href": "/agences/paris",
-        "type": "internal"
-      },
-      {
-        "label": "Lyon",
-        "href": "/agences/lyon",
-        "type": "internal"
-      },
-      {
-        "label": "Toulouse",
-        "href": "/agences/toulouse",
-        "type": "internal"
-      },
-      {
-        "label": "Barcelone",
-        "href": "/agences/barcelone",
-        "type": "internal"
-      },
-      {
-        "label": "Montréal",
-        "href": "/agences/montreal",
-        "type": "internal"
-      }
-    ],
-    "copyright": {
-      "text": "© Atecna — Tous droits réservés • 2026 • TVA / RCS sur demande"
-    },
-    "value_proposition": {
-      "title": "Ce que vous obtenez avec Atecna",
-      "text": "Une Digital Factory produit, data & IA qui transforme une idée en livrable concret, en production.",
-      "bullets": [
-        "Sites web, applications, plateformes métiers ou produits IA industrialisés",
-        "Cadrage, construction, mise en production et mesure d’impact",
-        "Transfert pour que vos équipes gardent la maîtrise"
-      ]
-    },
+    "agencies_nav": [],
+    "certifications": [],
     "resources_nav": [
-      {
-        "label": "Mentions légales",
-        "href": "/mentions-legales",
-        "type": "internal"
-      },
       {
         "label": "Politique de confidentialité",
         "href": "/politique-confidentialite",
         "type": "internal"
       },
       {
-        "label": "Accessibilité",
-        "href": "/accessibilite",
-        "type": "internal"
-      },
-      {
-        "label": "Conditions générales",
+        "label": "Conditions d'utilisation",
         "href": "/conditions-generales",
         "type": "internal"
       },
       {
-        "label": "FAQ",
-        "href": "/faq",
-        "type": "internal"
-      },
-      {
-        "label": "Plan du site",
-        "href": "/sitemap.xml",
+        "label": "Cookies",
+        "href": "/cookies",
         "type": "internal"
       }
     ],
     "social_nav": [
       {
-        "label": "LinkedIn",
-        "href": "https://linkedin.com/company/atecna",
-        "icon_filename": "/uploads/social/linkedin.svg",
+        "label": "Discord",
+        "href": "https://discord.gg/astronova",
+        "icon_filename": "/uploads/social/discord.svg",
         "type": "external"
       },
       {
         "label": "X / Twitter",
-        "href": "https://twitter.com/atecna",
+        "href": "https://twitter.com/astronova_game",
         "icon_filename": "/uploads/social/x.svg",
         "type": "external"
-      },
-      {
-        "label": "YouTube",
-        "href": "https://www.youtube.com/",
-        "icon_filename": "/uploads/social/youtube.svg",
-        "type": "external"
-      },
-      {
-        "label": "Newsletter",
-        "href": "/newsletter",
-        "icon_filename": "/uploads/social/newsletter.svg",
-        "type": "internal"
       }
     ],
-    "section_titles": {
-      "main_nav": "Navigation principale",
-      "expertises": "Expertises",
-      "agencies": "Nos agences",
-      "certifications": "Nos engagements & certifications",
-      "resources": "Ressources & support",
-      "social": "Nous suivre"
-    },
-    "certifications": [
-      {
-        "label": "Qualiopi",
-        "href": "/p/ia-data",
-        "icon_filename": "/uploads/certifications/qualiopi.svg",
-        "type": "internal"
-      },
-      {
-        "label": "EcoVadis",
-        "href": "/articles/atecna-obtient-le-label-ecovadis-pour-son-engagement-rse/",
-        "icon_filename": "/uploads/certifications/ecovadis.svg",
-        "type": "internal"
-      },
-      {
-        "label": "Greenly",
-        "href": "/articles/atecna-sengage-pour-le-climat/",
-        "icon_filename": "/uploads/certifications/greenly.svg",
-        "type": "internal"
-      }
-    ],
-    "main_nav": [
-      {
-        "label": "À propos",
-        "href": "/p/notre-approche",
-        "type": "internal"
-      },
-      {
-        "label": "Expertises",
-        "href": "/p/expertises",
-        "type": "internal"
-      },
-      {
-        "label": "Cas clients",
-        "href": "/cas-clients",
-        "type": "internal"
-      },
-      {
-        "label": "Approche & méthode",
-        "href": "/p/approche-methode",
-        "type": "internal"
-      },
-      {
-        "label": "Diagnostics (IA / Data)",
-        "href": "/p/ia-data",
-        "type": "internal"
-      },
-      {
-        "label": "Blog / Insights",
-        "href": "/ressources",
-        "type": "internal"
-      },
-      {
-        "label": "Modalités d’intervention",
-        "href": "/p/notre-approche",
-        "type": "internal"
-      }
-    ]
+    "copyright": {
+      "text": "© 2026 Astro Nova — Tous droits réservés"
+    }
   },
   "favicon": "https://play-astronova.com/favicon-32x32.png"
 }

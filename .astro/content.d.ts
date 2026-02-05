@@ -162,63 +162,19 @@ declare module 'astro:content' {
 	};
 
 	type DataEntryMap = {
-		"agencies": Record<string, {
+		"landings": Record<string, {
   id: string;
-  render(): Render[".md"];
-  slug: string;
-  body: string;
-  collection: "agencies";
-  data: InferEntrySchema<"agencies">;
-  rendered?: RenderedContent;
-  filePath?: string;
-}>;
-"articles": Record<string, {
-  id: string;
-  render(): Render[".md"];
-  slug: string;
-  body: string;
-  collection: "articles";
-  data: InferEntrySchema<"articles">;
-  rendered?: RenderedContent;
-  filePath?: string;
-}>;
-"cases": Record<string, {
-  id: string;
-  render(): Render[".md"];
-  slug: string;
-  body: string;
-  collection: "cases";
-  data: InferEntrySchema<"cases">;
-  rendered?: RenderedContent;
-  filePath?: string;
-}>;
-"commercials": Record<string, {
-  id: string;
-  render(): Render[".md"];
-  slug: string;
-  body: string;
-  collection: "commercials";
-  data: InferEntrySchema<"commercials">;
-  rendered?: RenderedContent;
-  filePath?: string;
-}>;
-"landings": Record<string, {
-  id: string;
-  render(): Render[".md"];
-  slug: string;
-  body: string;
+  body?: string;
   collection: "landings";
-  data: InferEntrySchema<"landings">;
+  data: any;
   rendered?: RenderedContent;
   filePath?: string;
 }>;
 "pages": Record<string, {
   id: string;
-  render(): Render[".md"];
-  slug: string;
-  body: string;
+  body?: string;
   collection: "pages";
-  data: InferEntrySchema<"pages">;
+  data: any;
   rendered?: RenderedContent;
   filePath?: string;
 }>;
@@ -226,7 +182,7 @@ declare module 'astro:content' {
   id: string;
   body?: string;
   collection: "settings";
-  data: InferEntrySchema<"settings">;
+  data: any;
   rendered?: RenderedContent;
   filePath?: string;
 }>;
@@ -262,6 +218,6 @@ declare module 'astro:content' {
 		LiveContentConfig['collections'][C]['loader']
 	>;
 
-	export type ContentConfig = typeof import("../src/content/config.js");
+	export type ContentConfig = never;
 	export type LiveContentConfig = never;
 }

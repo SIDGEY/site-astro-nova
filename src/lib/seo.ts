@@ -2,8 +2,8 @@
  * SEO Utilities for Atecna 2026
  */
 
-export const SITE_URL = 'https://atecna-2026.fr';
-export const SITE_NAME = 'Atecna - Experts IA & Data';
+export const SITE_URL = 'https://play-astronova.com';
+export const SITE_NAME = 'Astro Nova - Jeu de stratégie spatiale 4X';
 export const DEFAULT_OG_IMAGE = '/og-default.jpg';
 
 /**
@@ -20,7 +20,7 @@ export function getCanonicalURL(path: string): string {
  */
 export function formatTitle(title: string): string {
   if (title === SITE_NAME) return SITE_NAME;
-  return `${title} | ${SITE_NAME}`;
+  return `${title} | Astro Nova`;
 }
 
 /**
@@ -31,17 +31,17 @@ export function getOrganizationSchema() {
   return {
     "@type": "Organization",
     "@id": `${SITE_URL}/#organization`,
-    "name": "Atecna",
+    "name": "Astro Nova",
     "url": SITE_URL,
     "logo": {
       "@type": "ImageObject",
-      "url": `${SITE_URL}/logo-atecna.png`,
+      "url": `${SITE_URL}/logo-horizontal.svg`,
       "width": "180",
       "height": "60"
     },
     "sameAs": [
-      "https://www.linkedin.com/company/atecna/",
-      "https://twitter.com/atecna"
+      "https://twitter.com/astronova_game",
+      "https://discord.gg/astronova"
     ]
   };
 }
