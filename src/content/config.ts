@@ -272,6 +272,10 @@ const blockGameplaySchema = blockBaseSchema.extend({
   imageAlt: z.string(),
 });
 
+const blockGameGallerySchema = blockBaseSchema.extend({
+  type: z.literal('gameGallery'),
+});
+
 const blockCommunitySchema = blockBaseSchema.extend({
   type: z.literal('community'),
   title: z.string(),
@@ -305,6 +309,7 @@ const blockSchema = z.discriminatedUnion('type', [
   blockGameHeroSchema,
   blockGameFeaturesSchema,
   blockGameplaySchema,
+  blockGameGallerySchema,
   blockCommunitySchema,
   blockImageCardsSchema,
   blockFeatureShowcaseSchema,
