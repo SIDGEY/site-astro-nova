@@ -1,16 +1,16 @@
 ---
-import Section from '../Section.astro';
-import type { BgVariant } from '../../utils/bgHelper';
+import Section from "../Section.astro";
+import type { BgVariant } from "../../utils/bgHelper";
 
 interface Props {
   title?: string;
   subtitle?: string;
   bgVariant?: BgVariant;
-  items: { 
-    title: string; 
-    text?: string; 
-    description?: string; 
-    icon?: string; 
+  items: {
+    title: string;
+    text?: string;
+    description?: string;
+    icon?: string;
     link?: string;
     cta?: string;
   }[];
@@ -18,27 +18,38 @@ interface Props {
 
 const { title, subtitle, items, bgVariant } = Astro.props;
 ---
+
 <Section variant={bgVariant}>
   {title && <h2 class="section-title">{title}</h2>}
   {subtitle && <p class="text-xl text-muted max-w-3xl mb-12">{subtitle}</p>}
   <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-    {items.map((item) => (
-      <div class="card-basic group">
-        {item.icon && (
-          <div class="w-14 h-14 bg-surface-2 text-primary rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-primary group-hover:text-primary-contrast transition-colors duration-300" aria-hidden="true">
-             <span>★</span>
-          </div>
-        )}
-        <h3 class="text-2xl font-bold mb-4">{item.title}</h3>
-        <p class="text-muted leading-relaxed mb-6">{item.text || item.description}</p>
-        
-        {item.link && (
-          <a href={item.link} class="text-primary font-bold inline-flex items-center group-hover:translate-x-2 transition-transform">
-            {item.cta || "Découvrir"}
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
-        )}
-      </div>
-    ))}
+    {
+      items.map((item) => (
+        <div class="card-basic group">
+          {item.icon && (
+            <div
+              class="w-14 h-14 bg-surface-2 text-primary rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-primary group-hover:text-primary-contrast transition-colors duration-300"
+              aria-hidden="true"
+            >
+              <i class="ph ph-star-fill" />
+            </div>
+          )}
+          <h3 class="text-2xl font-bold mb-4">{item.title}</h3>
+          <p class="text-muted leading-relaxed mb-6">
+            {item.text || item.description}
+          </p>
+
+          {item.link && (
+            <a
+              href={item.link}
+              class="text-primary font-bold inline-flex items-center group-hover:translate-x-2 transition-transform"
+            >
+              {item.cta || "Découvrir"}
+              <i class="ph ph-arrow-right ml-2" />
+            </a>
+          )}
+        </div>
+      ))
+    }
   </div>
 </Section>

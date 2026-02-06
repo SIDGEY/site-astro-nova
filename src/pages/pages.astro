@@ -1,38 +1,47 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
 
-const pages = await getCollection('pages');
-const sortedPages = pages.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+const pages = await getCollection("pages");
+const sortedPages = pages.sort(
+  (a, b) => (a.data.order || 99) - (b.data.order || 99),
+);
 
 const breadcrumbs = [
-  { name: 'Accueil', item: 'https://atecna-2026.fr/' },
-  { name: 'Pages', item: 'https://atecna-2026.fr/pages' }
+  { name: "Accueil", item: "https://play-astronova.com/" },
+  { name: "Pages", item: "https://play-astronova.com/pages" },
 ];
 ---
 
-<BaseLayout 
-  title="Toutes nos pages" 
-  description="Explorez l'ensemble des pages de notre expertise IA & Data."
+<BaseLayout
+  title="Toutes nos pages"
+  description="Explorez l'ensemble des pages de présentation."
   breadcrumbs={breadcrumbs}
 >
   <div class="container-custom py-12">
-    <Breadcrumbs items={[{ label: 'Pages' }]} />
-    
+    <Breadcrumbs items={[{ label: "Pages" }]} />
+
     <h1 class="text-4xl font-extrabold mb-12">Toutes nos pages</h1>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {sortedPages.map(page => (
-        <a href={`/p/${page.slug}`} class="group card-basic">
-          <h2 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">{page.data.title}</h2>
-          <p class="text-[rgb(var(--muted))] mb-6">{page.data.description}</p>
-          <span class="text-primary font-bold inline-flex items-center">
-            Découvrir
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a>
-      ))}
+      {
+        sortedPages.map((page) => (
+          <a href={`/p/${page.slug}`} class="group card-basic">
+            <h2 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
+              {page.data.title}
+            </h2>
+            <p class="text-[rgb(var(--muted))] mb-6">{page.data.description}</p>
+            <span class="text-primary font-bold inline-flex items-center">
+              Découvrir
+              <i
+                class="ph ph-arrow-right ml-2 group-hover:translate-x-1 transition-transform"
+                aria-hidden="true"
+              />
+            </span>
+          </a>
+        ))
+      }
     </div>
   </div>
 </BaseLayout>

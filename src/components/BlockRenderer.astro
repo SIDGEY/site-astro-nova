@@ -8,19 +8,19 @@ import TestimonialsBlock from './blocks/TestimonialsBlock.astro';
 import FaqBlock from './blocks/FaqBlock.astro';
 import RichContentBlock from './blocks/RichContentBlock.astro';
 import CtaBlock from './blocks/CtaBlock.astro';
-import LeadFormBlock from './blocks/LeadFormBlock.astro';
-import DiagnosticIA from './blocks/DiagnosticIA.astro';
-import WhyBlock from './blocks/WhyBlock.astro';
-import DeliveryBlock from './blocks/DeliveryBlock.astro';
-import EngagementModelsBlock from './blocks/EngagementModelsBlock.astro';
-import CommercialsBlock from './blocks/CommercialsBlock.astro';
 import ImageCardsBlock from './blocks/ImageCardsBlock.astro';
 import FeatureShowcaseBlock from './blocks/FeatureShowcaseBlock.astro';
-import { computeBgVariants } from '../utils/bgHelper';
+// Astro Nova Game Blocks
+import GameHeroBlock from "./blocks/GameHeroBlock.astro";
+import GameFeaturesBlock from "./blocks/GameFeaturesBlock.astro";
+import GameplayBlock from "./blocks/GameplayBlock.astro";
+import GameGalleryBlock from "./blocks/GameGalleryBlock.astro";
+import CommunityBlock from "./blocks/CommunityBlock.astro";
+import { computeBgVariants } from "../utils/bgHelper";
 
 interface Props {
-  blocks?: any[];
-  sectionVariants?: string[];
+    blocks?: any[];
+    sectionVariants?: string[];
 }
 
 const { blocks = [], sectionVariants = [] } = Astro.props;
@@ -48,22 +48,21 @@ const bgVariants = computeBgVariants(blocks, sectionVariants);
       return <RichContentBlock {...commonProps} />;
     case 'cta':
       return <CtaBlock {...commonProps} />;
-    case 'leadForm':
-      return <LeadFormBlock {...commonProps} />;
-    case 'diagnosticIA':
-      return <DiagnosticIA {...commonProps} />;
-    case 'why':
-      return <WhyBlock {...commonProps} />;
-    case 'delivery':
-      return <DeliveryBlock {...commonProps} />;
-    case 'engagementModels':
-      return <EngagementModelsBlock {...commonProps} />;
-    case 'commercials':
-      return <CommercialsBlock {...commonProps} />;
+
     case 'imageCards':
       return <ImageCardsBlock {...commonProps} />;
     case 'featureShowcase':
       return <FeatureShowcaseBlock {...commonProps} />;
+case "gameHero":
+                return <GameHeroBlock {...commonProps} />;
+            case "gameFeatures":
+                return <GameFeaturesBlock {...commonProps} />;
+            case "gameplay":
+                return <GameplayBlock {...commonProps} />;
+            case "gameGallery":
+                return <GameGalleryBlock {...commonProps} />;
+            case "community":
+                return <CommunityBlock {...commonProps} />;
     default:
       return null;
   }

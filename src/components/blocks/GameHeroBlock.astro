@@ -1,0 +1,132 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  ctaLink: string;
+  secondaryCtaText?: string;
+  secondaryCtaLink?: string;
+  screenshot1?: string;
+  screenshot2?: string;
+}
+
+const {
+  title,
+  subtitle,
+  ctaText,
+  ctaLink,
+  secondaryCtaText = "En savoir plus",
+  secondaryCtaLink = "#features",
+  screenshot1 = "/landing/screenshot1.jpg",
+  screenshot2 = "/landing/screenshot2.jpg",
+} = Astro.props;
+
+import DiagonalDivider from "../DiagonalDivider.astro";
+---
+
+<header
+  class="overflow-hidden relative bg-gradient-to-b from-slate-900 via-slate-800 to-slate-800 py-32 sm:py-24 px-12 md:px-6 min-h-[100dvh] md:min-h-[96dvh] flex items-center"
+>
+  <div class="max-w-6xl mx-auto relative z-20 w-full">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <!-- Colonne de gauche avec le texte -->
+      <div
+        class="flex flex-col items-center md:items-start text-center md:text-left z-10"
+      >
+        <h1
+          class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 text-slate-50"
+        >
+          {title}
+        </h1>
+
+        <p class="text-lg sm:text-xl md:text-2xl text-slate-400 mb-6 sm:mb-8">
+          {subtitle}
+        </p>
+
+        <div class="flex flex-col w-full md:flex-row gap-4">
+          <a
+            href={ctaLink}
+            class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 sm:px-8 rounded-md transition-all duration-300 flex items-center justify-center text-base sm:text-lg w-full md:w-auto"
+          >
+            {ctaText}
+          </a>
+
+          <a
+            href={secondaryCtaLink}
+            class="border border-slate-600 backdrop-blur-xl text-slate-200 font-medium py-3 px-6 sm:px-8 rounded-md transition-all duration-300 flex items-center justify-center text-base sm:text-lg w-full md:w-auto"
+          >
+            {secondaryCtaText}
+          </a>
+        </div>
+      </div>
+
+      <!-- Colonne de droite avec les téléphones se chevauchant -->
+      <div class="flex items-center justify-center relative mt-8 md:mt-0">
+        <div class="relative w-[280px] h-[280px]">
+          <!-- Premier téléphone - monte lentement -->
+          <div
+            class="absolute md:-mt-36 mt-16 transform shadow-xl rounded-3xl z-10 phone-float-up"
+            style="width: 280px; height: 600px;"
+          >
+            <div
+              class="bg-opacity-[0.002] bg-white backdrop-blur-sm border-8 border-slate-950 rounded-3xl overflow-hidden h-full shadow-[0px_238px_95px_rgba(0,0,0,0.01),0px_134px_80px_rgba(0,0,0,0.05),0px_59px_59px_rgba(0,0,0,0.09),0px_15px_33px_rgba(0,0,0,0.1)]"
+            >
+              <div
+                class="relative flex flex-col items-center justify-center h-full overflow-hidden"
+              >
+                <img
+                  src={screenshot2}
+                  alt="Interface de gestion des ressources"
+                  class="w-full h-full object-cover object-center"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Deuxième téléphone - descend lentement -->
+          <div
+            class="absolute md:-mt-36 mt-16 transform rounded-3xl phone-float-down opacity-80"
+            style="width: 280px; height: 600px;"
+          >
+            <div
+              class="bg-opacity-[0.002] bg-white backdrop-blur-sm border-8 border-slate-950 rounded-3xl overflow-hidden h-full shadow-[0px_238px_95px_rgba(0,0,0,0.01),0px_134px_80px_rgba(0,0,0,0.05),0px_59px_59px_rgba(0,0,0,0.09),0px_15px_33px_rgba(0,0,0,0.1)]"
+            >
+              <div
+                class="relative flex flex-col items-center justify-center h-full overflow-hidden"
+              >
+                <img
+                  src={screenshot1}
+                  alt="Interface de la galaxie"
+                  class="w-full h-full object-cover object-center"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-24 left-0 right-0 flex justify-center">
+    <a
+      href="#features"
+      class="animate-bounce text-slate-400 hover:text-blue-300 transition-colors"
+    >
+      <div class="border border-slate-500/50 rounded-full p-2">
+        <i class="ph ph-arrow-right text-2xl transform rotate-90 font-bold"></i>
+      </div>
+    </a>
+  </div>
+</header>
+
+<!-- Divider -->
+<DiagonalDivider
+  direction="bottom-right"
+  color="text-slate-900"
+  negativeMarginTop="-mt-24"
+  zIndex={20}
+/>
+
+<style>
+  /* Les animations floatUp et floatDown sont maintenant définies dans global.css */
+</style>

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Urbanist", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Lexend", ui-sans-serif, system-ui, sans-serif;
 
   /* Semantic Tokens - Mapping to CSS Variables */
   --color-bg: rgb(var(--bg));
@@ -10,16 +10,16 @@
   --color-text: rgb(var(--text));
   --color-muted: rgb(var(--muted));
   --color-border: rgb(var(--border));
-  
+
   --color-primary: rgb(var(--primary));
   --color-primary-contrast: rgb(var(--primary-contrast));
   --color-secondary: rgb(var(--secondary));
   --color-secondary-contrast: rgb(var(--secondary-contrast));
   --color-success: rgb(var(--success));
-  
+
   --color-highlight: rgb(var(--highlight));
   --color-highlight-text: rgb(var(--highlight-text));
-  
+
   --color-ring: rgb(var(--ring));
 }
 
@@ -27,43 +27,64 @@
   :root {
     color-scheme: light;
     /* Light Mode Tokens */
-    --bg: 255 255 255;      /* Blanc pur */
-    --surface: 255 255 255; /* Blanc pur */
-    --surface-2: 249 250 251; /* Gris neutre très léger (Gray 50) */
-    --text: 17 24 39;       /* Gris très foncé (Slate 900) */
-    --muted: 75 85 99;      /* Gris moyen (Gray 600) pour meilleur contraste AA */
-    --border: 243 244 246;  /* Gris très clair (Gray 100) */
-    
-    --primary: 243 104 88;  /* Corail #F36858 (CTA) */
+    --bg: 255 255 255;
+    /* Blanc pur */
+    --surface: 255 255 255;
+    /* Blanc pur */
+    --surface-2: 249 250 251;
+    /* Gris neutre très léger (Gray 50) */
+    --text: 17 24 39;
+    /* Gris très foncé (Slate 900) */
+    --muted: 75 85 99;
+    /* Gris moyen (Gray 600) pour meilleur contraste AA */
+    --border: 243 244 246;
+    /* Gris très clair (Gray 100) */
+
+    --primary: 243 104 88;
+    /* Corail #F36858 (CTA) */
     --primary-contrast: 255 255 255;
-    
-    --secondary: 231 79 64; /* Corail profond pour nuances */
+
+    --secondary: 231 79 64;
+    /* Corail profond pour nuances */
     --secondary-contrast: 255 255 255;
 
-    --success: 0 56 36;     /* Vert foncé Atecna #003824 */
-    
-    --highlight: 254 243 243; /* Rose très pâle (Corail dilué) */
-    --highlight-text: 153 27 27; /* Rouge foncé pour lisibilité sur rose */
-    
-    --ring: 243 104 88;      /* Corail focus */
+    --success: 0 56 36;
+    /* Vert foncé Atecna #003824 */
+
+    --highlight: 254 243 243;
+    /* Rose très pâle (Corail dilué) */
+    --highlight-text: 153 27 27;
+    /* Rouge foncé pour lisibilité sur rose */
+
+    --ring: 243 104 88;
+    /* Corail focus */
   }
 
   :root.dark {
     color-scheme: dark;
     /* Dark Mode Tokens */
-    --bg: 10 14 23;         /* Presque noir profond */
-    --surface: 20 28 47;    /* Gris foncé bleuté */
-    --surface-2: 15 23 42;  /* Entre-deux */
-    --text: 248 250 252;    /* Gris quasi blanc (Slate 50) */
-    --muted: 156 163 175;   /* Gris moyen (Gray 400) */
-    --border: 31 41 55;     /* Gris sombre (Gray 800) */
-    
-    --primary: 243 104 88;  /* Corail #F36858 (CTA) */
-    --secondary: 231 79 64; /* Corail profond pour nuances */
-    
-    --highlight: 243 104 88 / 0.1; /* Corail 10% opacity */
+    --bg: 10 14 23;
+    /* Presque noir profond */
+    --surface: 20 28 47;
+    /* Gris foncé bleuté */
+    --surface-2: 15 23 42;
+    /* Entre-deux */
+    --text: 248 250 252;
+    /* Gris quasi blanc (Slate 50) */
+    --muted: 156 163 175;
+    /* Gris moyen (Gray 400) */
+    --border: 31 41 55;
+    /* Gris sombre (Gray 800) */
+
+    --primary: 243 104 88;
+    /* Corail #F36858 (CTA) */
+    --secondary: 231 79 64;
+    /* Corail profond pour nuances */
+
+    --highlight: 243 104 88 / 0.1;
+    /* Corail 10% opacity */
     --highlight-text: 254 242 242;
-    
+
     --ring: 243 104 88;
   }
 
@@ -73,8 +94,10 @@
 
   body {
     @apply font-sans text-text min-h-screen flex flex-col transition-colors duration-300;
-    line-height: 1.75; /* Line-height généreux */
-    font-size: 1.125rem; /* Base 18px pour le confort B2B */
+    line-height: 1.75;
+    /* Line-height généreux */
+    font-size: 1.125rem;
+    /* Base 18px pour le confort B2B */
     background-color: #000;
   }
 
@@ -82,7 +105,12 @@
     @apply mb-6;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-bold tracking-tight text-text;
     line-height: 1.2;
   }
@@ -91,14 +119,17 @@
   :focus-visible {
     @apply outline-none ring-4 ring-ring ring-offset-2;
   }
-  
+
   .dark :focus-visible {
     @apply ring-offset-bg;
   }
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    *, ::before, ::after {
+
+    *,
+    ::before,
+    ::after {
       animation-delay: -1ms !important;
       animation-duration: 1ms !important;
       animation-iteration-count: 1 !important;
@@ -153,6 +184,7 @@
       width: 0%;
       opacity: 0.5;
     }
+
     100% {
       width: 100%;
       opacity: 1;
@@ -169,10 +201,12 @@
       opacity: 0;
       transform: translate(var(--tx, 0), var(--ty, 0));
     }
+
     20% {
       opacity: 1;
       transform: translate(calc(var(--tx, 0) + 5px), calc(var(--ty, 0) - 10px));
     }
+
     100% {
       opacity: 0;
       transform: translate(calc(var(--tx, 0) + 15px), calc(var(--ty, 0) - 30px));
@@ -203,7 +237,7 @@
     opacity: 1;
     transform: scale(1);
     transition: opacity 300ms ease-out,
-    transform 300ms ease-out;
+      transform 300ms ease-out;
   }
 
   .modal-exit {
@@ -215,7 +249,7 @@
     opacity: 0;
     transform: scale(0.95);
     transition: opacity 300ms ease-out,
-    transform 300ms ease-out;
+      transform 300ms ease-out;
   }
 
   /* Animation de l'arrière-plan */
@@ -259,9 +293,11 @@
     0% {
       box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
     }
+
     70% {
       box-shadow: 0 0 0 12px rgba(59, 130, 246, 0);
     }
+
     100% {
       box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
     }
@@ -269,7 +305,8 @@
 
   .highlight-pulse {
     animation: highlight-pulse 1.5s ease-in-out infinite;
-    border-radius: 0.5rem; /* Correspond au border-radius des cartes */
+    border-radius: 0.5rem;
+    /* Correspond au border-radius des cartes */
     overflow: hidden;
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
   }
@@ -277,10 +314,12 @@
 
 @layer utilities {
   @keyframes twinkle {
+
     0%,
     100% {
       opacity: 0.5;
     }
+
     50% {
       opacity: 1;
     }
@@ -299,7 +338,7 @@
   .section-title {
     @apply text-3xl md:text-4xl font-bold mb-10 relative inline-block;
   }
-  
+
   .section-title::before {
     content: '';
     @apply absolute -left-4 top-0 bottom-0 w-1 bg-primary rounded-full;
@@ -321,11 +360,11 @@
   .btn {
     @apply inline-flex items-center justify-center px-8 py-3 rounded-full font-bold transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 text-base;
   }
-  
+
   .btn-primary {
     @apply bg-primary text-primary-contrast hover:brightness-110 shadow-sm hover:shadow-md;
   }
-  
+
   .btn-secondary {
     @apply bg-secondary text-secondary-contrast hover:brightness-110 shadow-sm hover:shadow-md;
   }
@@ -349,4 +388,154 @@
   .btn-lg {
     @apply px-10 py-4 text-lg;
   }
+}
+
+/* Animation styles for gallery section */
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% / 8 * 4));
+  }
+
+  /* 4 cards exactly */
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(calc(-100% / 8 * 4));
+  }
+
+  /* 4 cards exactly */
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Animations de lévitation pour les téléphones */
+@keyframes floatUp {
+  0% {
+    transform: translateX(-96px) translateY(48px) rotate(-12deg);
+  }
+
+  50% {
+    transform: translateX(-96px) translateY(64px) rotate(-12deg);
+  }
+
+  100% {
+    transform: translateX(-96px) translateY(48px) rotate(-12deg);
+  }
+}
+
+@keyframes floatDown {
+  0% {
+    transform: translateX(96px) translateY(-48px) rotate(12deg);
+  }
+
+  50% {
+    transform: translateX(96px) translateY(-32px) rotate(12deg);
+  }
+
+  100% {
+    transform: translateX(96px) translateY(-48px) rotate(12deg);
+  }
+}
+
+/* Classes pour appliquer les animations */
+.phone-float-up {
+  animation: floatUp 8s ease-in-out infinite;
+  transform: translateX(-96px) translateY(48px) rotate(-12deg);
+}
+
+.phone-float-down {
+  animation: floatDown 8s ease-in-out infinite;
+  animation-delay: 1s;
+  transform: translateX(96px) translateY(-48px) rotate(12deg);
+}
+
+/* Gallery Styles */
+.gallery-container {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(ellipse 75% 125% at 50% 0%, black 20%, rgba(0, 0, 0, 0.3) 50%, transparent 75%);
+  mask-image: radial-gradient(ellipse 75% 125% at 50% 0%, black 20%, rgba(0, 0, 0, 0.3) 50%, transparent 75%);
+}
+
+.scroll-container {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  padding: 1.5rem 0;
+  width: 100%;
+}
+
+.scroll-left {
+  display: flex;
+  animation: scrollLeft 25s linear infinite;
+  min-width: 100%;
+  padding: 0 1rem;
+}
+
+.scroll-right {
+  display: flex;
+  animation: scrollRight 25s linear infinite;
+  min-width: 100%;
+  padding: 0 1rem;
+}
+
+.scroll-left:hover,
+.scroll-right:hover {
+  animation-play-state: paused;
+}
+
+.gallery-card {
+  flex-shrink: 0;
+  width: 380px;
+  position: relative;
+  margin: 0 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.3s ease, z-index 0.01s, box-shadow 0.3s ease;
+}
+
+.gallery-card:hover {
+  z-index: 10;
+  transform: scale(1.1) rotate(-2deg);
+}
+
+@media (max-width: 768px) {
+  .scroll-container {
+    padding: 1rem 0;
+  }
+}
+
+/* Utility classes for layouts */
+.community-image-container::before {
+  content: none;
+  display: block;
+  padding-top: 75%;
+  /* Ratio 4:3 */
+}
+
+@media (max-width: 768px) {
+  .community-image-container::before {
+    padding-top: 56.25%;
+    /* Ratio 16:9 */
+  }
+}
+
+.exploration-image-container::before {
+  content: none;
+  display: block;
+  padding-top: 100%;
+  /* Ratio carré ou adaptée */
 }

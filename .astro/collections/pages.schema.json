@@ -763,6 +763,376 @@
                   "type"
                 ],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "gameHero"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "ctaText": {
+                    "type": "string"
+                  },
+                  "ctaLink": {
+                    "type": "string"
+                  },
+                  "secondaryCtaText": {
+                    "type": "string"
+                  },
+                  "secondaryCtaLink": {
+                    "type": "string"
+                  },
+                  "screenshot1": {
+                    "type": "string"
+                  },
+                  "screenshot2": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "subtitle",
+                  "ctaText",
+                  "ctaLink"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "gameFeatures"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "icon": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "icon",
+                        "title",
+                        "description"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "subtitle",
+                  "items"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "gameplay"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "secondaryDescription": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "imageAlt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "description",
+                  "image",
+                  "imageAlt"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "gameGallery"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "community"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "sectionTitle": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "secondaryDescription": {
+                    "type": "string"
+                  },
+                  "discordLink": {
+                    "type": "string"
+                  },
+                  "discordButtonText": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "imageAlt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "subtitle",
+                  "sectionTitle",
+                  "description",
+                  "discordLink",
+                  "image",
+                  "imageAlt"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "imageCards"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "cards": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "buttonLabel": {
+                          "type": "string"
+                        },
+                        "buttonLink": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "imageAlt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "image"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "cards"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "featureShowcase"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "eyebrow": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "align": {
+                          "type": "string",
+                          "enum": [
+                            "left",
+                            "right"
+                          ],
+                          "default": "left"
+                        },
+                        "backgroundImage": {
+                          "type": "string"
+                        },
+                        "backgroundImageAlt": {
+                          "type": "string"
+                        },
+                        "screens": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "image": {
+                                "type": "string"
+                              },
+                              "imageAlt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "image"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "label": {
+                                "type": "string"
+                              },
+                              "image": {
+                                "type": "string"
+                              },
+                              "imageAlt": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "ctaLabel": {
+                          "type": "string"
+                        },
+                        "ctaLink": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "description",
+                        "backgroundImage"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "items"
+                ],
+                "additionalProperties": false
               }
             ]
           }

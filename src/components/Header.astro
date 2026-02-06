@@ -1,113 +1,165 @@
 ---
-import { getEntry } from 'astro:content';
+import { getEntry } from "astro:content";
 
-const settings = await getEntry('settings', 'general');
-if (!settings) return Astro.redirect('/404');
+const settings = await getEntry("settings", "general");
+if (!settings) return Astro.redirect("/404");
 const { navigation } = settings.data;
 ---
-<nav class="sticky top-0 left-0 right-0 px-6 transition-all duration-300 border-b z-[999] bg-slate-800 border-slate-600/50 py-4">
-  <div class="container-custom flex justify-between items-center h-20">
-    <a href="/" class="text-2xl font-bold text-text tracking-tighter" aria-label="Atecna - Accueil">
-      <img src="https://play-astronova.com/logo-horizontal.svg" alt="Astro Nova" class="h-12 w-auto" />
-    </a>
-    
-    <div class="hidden md:flex space-x-10 items-center">
-      {navigation.map(item => (
-        <a 
-          href={item.link} 
-          class="text-slate-300 hover:text-blue-300 transition-colors"
-          aria-current={(Astro.url.pathname || "") === item.link ? 'page' : undefined}
-        >
-          {item.label}
-        </a>
-      ))}
-      <button onclick="" class="py-2 px-6 whitespace-nowrap bg-blue-500 hover:bg-blue-600 rounded-md font-medium h-10 mr-2">S'inscrire à la bêta</button>
-      <a class="py-2 px-6 whitespace-nowrap border border-slate-600 backdrop-blur-xl text-slate-200 rounded-md font-medium h-10" href="https://astro-nova-recette.web.app/game">Jouer</a>
-    </div>
 
+<nav
+  class="fixed top-0 left-0 right-0 px-6 transition-all duration-300 border-b z-[999] bg-slate-800 border-slate-600/50 py-4"
+>
+  <div class="hidden lg:grid grid-cols-2 items-center h-12">
+    <div class="flex items-center justify-start">
+      <a href="/">
+        <img src="/logo-horizontal.svg" alt="Astro Nova" class="h-12 w-auto" />
+      </a>
+    </div>
+    <div class="flex items-center justify-end space-x-8">
+      {
+        navigation.map((item) => (
+          <a
+            href={item.link}
+            class="text-slate-300 hover:text-blue-300 transition-colors"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <div class="flex items-center space-x-2">
+        <button
+          class="py-2 px-6 whitespace-nowrap bg-blue-500 hover:bg-blue-600 rounded-md font-medium h-10 mr-2"
+        >
+          S'inscrire à la bêta
+        </button>
+        <a
+          class="py-2 px-6 whitespace-nowrap border border-slate-600 backdrop-blur-xl text-slate-200 rounded-md font-medium h-10"
+          href="/game"
+        >
+          Jouer
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lg:hidden flex items-center justify-between relative">
+    <a href="/">
+      <img src="/logo-icon.svg" alt="Astro Nova" class="h-12 w-auto" />
+    </a>
     <button
       id="mobile-menu-toggle"
-      class="md:hidden top-0 right-0 flex items-center justify-center w-12 h-12 rounded-full bg-slate-950 hover:bg-slate-900/90 transition-colors z-[1000] overflow-hidden"
-      aria-label="Menu principal"
-      aria-controls="mobile-menu"
-      aria-expanded="false"
+      class="absolute top-0 right-0 flex items-center justify-center w-12 h-12 rounded-full bg-slate-950 hover:bg-slate-900/90 transition-colors z-[1000] overflow-hidden"
+      aria-label="Ouvrir le menu"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+      <div class="relative w-6 h-6">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="currentColor"
+          viewBox="0 0 256 256"
+          class="absolute inset-0 text-white transition-all duration-300 ease-in-out opacity-100 rotate-0 scale-100"
+          id="icon-menu"
+        >
+          <path
+            d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"
+          ></path>
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="currentColor"
+          viewBox="0 0 256 256"
+          class="absolute inset-0 text-white transition-all duration-300 ease-in-out opacity-0 rotate-90 scale-50"
+          id="icon-close"
+        >
+          <path
+            d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+          ></path>
+        </svg>
+      </div>
     </button>
   </div>
 
-  <div id="mobile-menu" class="md:hidden hidden border-t border-border bg-surface/95 backdrop-blur-md">
-    <div class="container-custom flex flex-col gap-4 py-4">
-      {navigation.map(item => (
-        <a
-          href={item.link}
-          class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full"
-          aria-current={(Astro.url.pathname || "") === item.link ? 'page' : undefined}
-        >
-          {item.label}
-        </a>
-      ))}
-      <a href="/parler-ia" class="btn btn-primary btn-sm w-fit">Parler à un expert</a>
+  <div
+    id="mobile-menu"
+    class="fixed left-0 right-0 bottom-0 backdrop-blur-xl flex items-center justify-center transition-all duration-500 opacity-0 pointer-events-none"
+    style="top: 0px; bottom: 0px; background-color: rgba(30, 41, 59, 0.5);"
+  >
+    <div
+      class="flex flex-col space-y-4 items-center text-center w-full px-12 md:px-6"
+    >
+      {
+        navigation.map((item) => (
+          <a
+            href={item.link}
+            class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full"
+          >
+            {item.label}
+          </a>
+        ))
+      }
       <button
-        id="dark-mode-toggle-mobile"
-        class="w-fit p-2.5 rounded-xl hover:bg-surface-2 transition-colors focus-visible:ring-4 focus-visible:ring-ring group"
-        aria-label="Changer le thème"
+        class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium"
       >
-        <span class="dark:hidden group-hover:scale-110 transition-transform inline-block" aria-hidden="true">🌙</span>
-        <span class="hidden dark:inline group-hover:scale-110 transition-transform inline-block" aria-hidden="true">☀️</span>
-        <span class="sr-only">Passer en mode {Astro.cookies.get('theme')?.value === 'dark' ? 'clair' : 'sombre'}</span>
+        S'inscrire à la bêta
       </button>
+      <a
+        class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium"
+        href="/game"
+      >
+        Jouer
+      </a>
     </div>
   </div>
 </nav>
 
 <script is:inline>
-  const toggle = document.getElementById('dark-mode-toggle');
-  const toggleMobile = document.getElementById('dark-mode-toggle-mobile');
-  const applyTheme = (isDark) => {
-    document.documentElement.classList.toggle('dark', isDark);
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  };
+  const menuToggle = document.getElementById("mobile-menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const iconMenu = document.getElementById("icon-menu");
+  const iconClose = document.getElementById("icon-close");
+  const mobileLinks = mobileMenu?.querySelectorAll("a");
 
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      applyTheme(!document.documentElement.classList.contains('dark'));
-    });
-  }
-
-  if (toggleMobile) {
-    toggleMobile.addEventListener('click', () => {
-      applyTheme(!document.documentElement.classList.contains('dark'));
-    });
-  }
-
-  const menuToggle = document.getElementById('mobile-menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const mobileLinks = mobileMenu?.querySelectorAll('a');
   const setMenuOpen = (isOpen) => {
-    if (!menuToggle || !mobileMenu) return;
-    menuToggle.setAttribute('aria-expanded', String(isOpen));
-    mobileMenu.classList.toggle('hidden', !isOpen);
+    if (!menuToggle || !mobileMenu || !iconMenu || !iconClose) return;
+
+    // Toggle Menu Visibility
+    if (isOpen) {
+      mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+    } else {
+      mobileMenu.classList.add("opacity-0", "pointer-events-none");
+    }
+
+    // Toggle Icons
+    if (isOpen) {
+      iconMenu.classList.add("opacity-0", "rotate-90", "scale-50");
+      iconMenu.classList.remove("opacity-100", "rotate-0", "scale-100");
+
+      iconClose.classList.add("opacity-100", "rotate-0", "scale-100");
+      iconClose.classList.remove("opacity-0", "rotate-90", "scale-50");
+    } else {
+      iconMenu.classList.add("opacity-100", "rotate-0", "scale-100");
+      iconMenu.classList.remove("opacity-0", "rotate-90", "scale-50");
+
+      iconClose.classList.add("opacity-0", "rotate-90", "scale-50");
+      iconClose.classList.remove("opacity-100", "rotate-0", "scale-100");
+    }
+
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
   };
 
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+  if (menuToggle) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
       setMenuOpen(!isOpen);
     });
   }
 
-  if (mobileLinks && menuToggle) {
+  if (mobileLinks) {
     mobileLinks.forEach((link) => {
-      link.addEventListener('click', () => setMenuOpen(false));
+      link.addEventListener("click", () => setMenuOpen(false));
     });
-  }
-
-  // Initial theme setup
-  const theme = localStorage.getItem('theme');
-  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
   }
 </script>

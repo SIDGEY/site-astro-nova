@@ -1,0 +1,181 @@
+---
+// Liste statique des images disponibles dans public/assets/images
+// Basée sur les noms de fichiers observés dans le dépôt de référence
+const leftScrollCards = [
+    {
+        src: "/assets/images/buildings/mine-de-cristal.webp",
+        alt: "Mine de Cristal",
+        description: "Extraction de ressources cristallines",
+    },
+    {
+        src: "/assets/images/ships/chasseur-leger.webp",
+        alt: "Frégate",
+        description: "Vaisseau de combat léger",
+    },
+    {
+        src: "/assets/images/research/science-energetique.webp",
+        alt: "Technologie Énergie",
+        description: "Optimisation énergétique",
+    },
+    {
+        src: "/assets/images/buildings/centrale-solaire.webp",
+        alt: "Centrale Solaire",
+        description: "Production d'énergie propre",
+    },
+    {
+        src: "/assets/images/defense/canon-photonique.webp",
+        alt: "Tourelle Laser",
+        description: "Défense planétaire de base",
+    },
+    {
+        src: "/assets/images/ships/eclaireur.webp",
+        alt: "Éclaireur",
+        description: "Unité d'exploration rapide",
+    },
+    {
+        src: "/assets/images/buildings/mine-de-metal.webp",
+        alt: "Mine de Métal",
+        description: "Extraction de minerai brut",
+    },
+    {
+        src: "/assets/images/research/technologie-laser.webp",
+        alt: "Technologie Laser",
+        description: "Amélioration des armes à énergie",
+    },
+];
+
+const rightScrollCards = [
+    {
+        src: "/assets/images/buildings/condensateur-d-hydrogene.webp",
+        alt: "Synthétiseur de Deutérium",
+        description: "Production de carburant avancé",
+    },
+    {
+        src: "/assets/images/ships/cuirasse.webp",
+        alt: "Croiseur",
+        description: "Vaisseau de ligne polyvalent",
+    },
+    {
+        src: "/assets/images/research/champs-de-protection.webp",
+        alt: "Technologie Bouclier",
+        description: "Protection avancée des vaisseaux",
+    },
+    {
+        src: "/assets/images/facilities/usine-de-robots.webp",
+        alt: "Usine de Robots",
+        description: "Automatisation de la construction",
+    },
+    {
+        src: "/assets/images/defense/lanceur-de-missiles.webp",
+        alt: "Lance-Missiles",
+        description: "Défense lourde sol-espace",
+    },
+    {
+        src: "/assets/images/ships/pionnier-spatial.webp",
+        alt: "Vaisseau de Colonisation",
+        description: "Expansion vers de nouveaux mondes",
+    },
+    {
+        src: "/assets/images/buildings/chantier-spatial.webp",
+        alt: "Chantier Spatial",
+        description: "Construction de flotte",
+    },
+    {
+        src: "/assets/images/research/technologie-hyperespace.webp",
+        alt: "Propulsion Hyperespace",
+        description: "Voyage interstellaire rapide",
+    },
+];
+
+// Duplication pour l'effet infini (x2 suffit généralement si CSS bien fait, mais x4 comme réf pour être sûr)
+const leftCardsInfinite = [
+    ...leftScrollCards,
+    ...leftScrollCards,
+    ...leftScrollCards,
+    ...leftScrollCards,
+];
+const rightCardsInfinite = [
+    ...rightScrollCards,
+    ...rightScrollCards,
+    ...rightScrollCards,
+    ...rightScrollCards,
+];
+---
+<section id="gallery" class="bg-gradient-to-b from-slate-800 via-slate-800 to-slate-900  pt-28 sm:pt-32 md:pt-40 space-y-16 sm:space-y-20 md:space-y-24">
+    <div class="w-full overflow-hidden">
+        <div class="text-center mb-8 sm:mb-12 max-w-6xl mx-auto">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-slate-100">Galerie d'image</h2>
+            <p class="text-base sm:text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
+                Découvrez l'univers d'Astro Nova à travers ces captures d'écran époustouflantes de gameplay, d'interfaces et de vaisseaux spatiaux.
+            </p>
+        </div>
+        <div class="gallery-container">
+            <div class="scroll-container">
+                <div class="scroll-left">
+                    { leftCardsInfinite.map((item, index) => (
+                            <div class="gallery-card bg-slate-800 card-with-border rounded-lg left-card">
+                                <div class="rounded-lg h-full shadow-lg">
+                                    <div class="grid grid-cols-2 gap-6">
+                                        <div class="relative rounded-lg overflow-hidden bg-gray-700">
+                                            <div class="relative"><div class="relative">
+                                                <div class="relative">
+                                                    <picture>
+                                                        <source srcset={item.src} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                                        <img src={item.src} alt="Collaboration Stellaire" class="w-full transition-all duration-200 aspect-[4/5] object-cover" loading="lazy" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                                    </picture>
+                                                </div>
+                                                <div class="absolute inset-0" style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, rgb(67, 76, 96) 100%);"></div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col justify-between pt-5 pb-6 pr-6">
+                                            <div>
+                                                <h3 class="font-bold text-lg">{item.alt}</h3>
+                                                <p class="text-sm text-gray-400 mt-2 line-clamp-4">{item.description}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    ))}
+                </div>
+            </div>
+
+
+
+            <div class="scroll-container">
+                <div class="scroll-right">
+                    { rightCardsInfinite.map((item, index) => (
+                    <div class="gallery-card bg-slate-800 card-with-border rounded-lg right-card">
+                        <div class="rounded-lg h-full shadow-lg">
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="relative rounded-lg overflow-hidden bg-gray-700">
+                                    <div class="relative">
+                                        <div class="relative">
+                                            <div class="relative">
+                                                <picture>
+                                                    <source srcset={item.src} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                                    <img src={item.src} alt={item.alt} class="w-full transition-all duration-200 aspect-[4/5] object-cover" loading="lazy" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                                </picture>
+                                            </div>
+                                            <div class="absolute inset-0" style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, rgb(67, 76, 96) 100%);"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col justify-between pt-5 pb-6 pr-6">
+                                    <div>
+                                        <h3 class="font-bold text-lg">{item.alt}</h3>
+                                        <p class="text-sm text-gray-400 mt-2 line-clamp-4">{item.description}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

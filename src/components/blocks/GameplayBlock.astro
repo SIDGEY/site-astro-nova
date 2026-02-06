@@ -1,0 +1,43 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  secondaryDescription?: string;
+  image: string;
+  imageAlt: string;
+}
+
+const { title, description, secondaryDescription, image, imageAlt } =
+  Astro.props;
+---
+
+<section id="gameplay" class="bg-slate-800 px-6 pt-20 sm:pt-24 md:pt-32 space-y-16 sm:space-y-20 md:space-y-24 pb-20°">
+  <div class="max-w-6xl mx-auto">
+    <!-- Section Title -->
+    <div class="text-center mb-12 ">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-100">
+        Découvrez le gameplay
+      </h2>
+      <p class="text-xl text-slate-400 max-w-3xl mx-auto">
+        Une expérience de stratégie 4X immersive qui combine gestion de
+        ressources, exploration spatiale et diplomatie.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 md:items-stretch" id="section-conquerez">
+      <div class="flex justify-center h-full order-last md:order-1">
+        <div class="bg-slate-700 rounded-xl overflow-hidden w-full h-full">
+          <div class="relative exploration-image-container">
+            <div class="image-overlay h-full">
+              <img src={image} alt={imageAlt} class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-slate-900 p-8 sm:p-8 md:p-12 rounded-xl order-first md:order-0 h-full">
+        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-slate-200">{title}</h3>
+        <p class="text-slate-400 mb-4 leading-relaxed">{description}</p>
+        <p class="text-slate-400 leading-relaxed">{secondaryDescription}</p>
+      </div>
+    </div>
+  </div>
+</section>

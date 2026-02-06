@@ -1,25 +1,24 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import BlockRenderer from '../components/BlockRenderer.astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BlockRenderer from "../components/BlockRenderer.astro";
 
 export async function getStaticPaths() {
-  const pages = await getCollection('pages', ({ id }) => id !== 'home');
-  return pages.map(page => ({
-    params: { slug: page.id.replace(/\.md$/, '').replace(/\.json$/, '') },
+  const pages = await getCollection("pages", ({ id }) => id !== "home");
+  return pages.map((page) => ({
+    params: { slug: page.id.replace(/\.md$/, "").replace(/\.json$/, "") },
     props: { page },
   }));
 }
 
 const { page } = Astro.props;
 const { title, description, blocks, sectionVariants } = page.data;
-const slug = page.id.replace(/\.md$/, '').replace(/\.json$/, '');
+const slug = page.id.replace(/\.md$/, "").replace(/\.json$/, "");
 const canonicalURL = `https://play-astronova.com/${slug}`;
 
 const breadcrumbs = [
-  { name: 'Accueil', item: 'https://play-astronova.com/' },
-  { name: 'Expertises', item: 'https://play-astronova.com/expertises' },
-  { name: title, item: canonicalURL }
+  { name: "Accueil", item: "https://play-astronova.com/" },
+  { name: title, item: canonicalURL },
 ];
 ---
 

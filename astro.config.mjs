@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
     site: 'https://play-astronova.com/',
     integrations: [sitemap()],
+    publicDir: './public',
     vite: {
         plugins: [tailwindcss()],
     },

@@ -238,6 +238,57 @@ const blockCommercialsSchema = blockBaseSchema.extend({
   ctaLink: z.string().optional(),
 });
 
+// --- Astro Nova Game Blocks ---
+
+const blockGameHeroSchema = blockBaseSchema.extend({
+  type: z.literal('gameHero'),
+  title: z.string(),
+  subtitle: z.string(),
+  ctaText: z.string(),
+  ctaLink: z.string(),
+  secondaryCtaText: z.string().optional(),
+  secondaryCtaLink: z.string().optional(),
+  screenshot1: z.string().optional(),
+  screenshot2: z.string().optional(),
+});
+
+const blockGameFeaturesSchema = blockBaseSchema.extend({
+  type: z.literal('gameFeatures'),
+  title: z.string(),
+  subtitle: z.string(),
+  items: z.array(z.object({
+    icon: z.string(),
+    title: z.string(),
+    description: z.string(),
+  })),
+});
+
+const blockGameplaySchema = blockBaseSchema.extend({
+  type: z.literal('gameplay'),
+  title: z.string(),
+  description: z.string(),
+  secondaryDescription: z.string().optional(),
+  image: z.string(),
+  imageAlt: z.string(),
+});
+
+const blockGameGallerySchema = blockBaseSchema.extend({
+  type: z.literal('gameGallery'),
+});
+
+const blockCommunitySchema = blockBaseSchema.extend({
+  type: z.literal('community'),
+  title: z.string(),
+  subtitle: z.string(),
+  sectionTitle: z.string(),
+  description: z.string(),
+  secondaryDescription: z.string().optional(),
+  discordLink: z.string(),
+  discordButtonText: z.string().optional(),
+  image: z.string(),
+  imageAlt: z.string(),
+});
+
 const blockSchema = z.discriminatedUnion('type', [
   blockHeroSchema,
   blockLogosSchema,
@@ -254,9 +305,16 @@ const blockSchema = z.discriminatedUnion('type', [
   blockLeadFormSchema,
   blockDiagnosticIASchema,
   blockCommercialsSchema,
+  // Astro Nova Game Blocks
+  blockGameHeroSchema,
+  blockGameFeaturesSchema,
+  blockGameplaySchema,
+  blockGameGallerySchema,
+  blockCommunitySchema,
   blockImageCardsSchema,
   blockFeatureShowcaseSchema,
 ]);
+
 
 // --- Collections Definition ---
 
@@ -447,8 +505,4 @@ export const collections = {
   'settings': settingsCollection,
   'pages': pagesCollection,
   'landings': landingsCollection,
-  'cases': casesCollection,
-  'articles': articlesCollection,
-  'agencies': agenciesCollection,
-  'commercials': commercialsCollection,
 };

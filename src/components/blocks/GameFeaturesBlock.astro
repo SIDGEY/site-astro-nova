@@ -1,0 +1,72 @@
+---
+interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title: string;
+  subtitle: string;
+  items: Feature[];
+}
+
+const { title, subtitle, items } = Astro.props;
+
+// Map des icônes Phosphor (classes)
+const iconMap: Record<string, string> = {
+  globe: "ph-globe",
+  planet: "ph-planet",
+  rocket: "ph-rocket-launch",
+  users: "ph-users",
+  shield: "ph-shield-check",
+  star: "ph-star",
+};
+
+import DiagonalDivider from "../DiagonalDivider.astro";
+---
+
+<section
+  id="features"
+  class="pt-20 sm:pt-24 sm:pb-0 md:pt-32 md:pb-0 px-0 bg-slate-900 relative"
+>
+  <div class="max-w-6xl mx-auto">
+    <!-- Section Title -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-100">
+        {title}
+      </h2>
+      <p class="text-xl text-slate-400 max-w-3xl mx-auto">{subtitle}</p>
+    </div>
+
+    <!-- Feature Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      {
+        items.map((item, index) => (
+          <div
+            class={`transition-all duration-300 rounded-lg h-full transform hover:-rotate-1 hover:scale-105 ${index >= 4 ? "hidden sm:block" : ""}`}
+          >
+            <div class="card-with-border relative rounded-lg transition-all duration-200 overflow-hidden backdrop-blur-sm bg-slate-900/60 cursor-pointer hover:bg-blue-500/20 group h-full border border-transparent hover:border-blue-500 hover:shadow-[0px_178.2px_71.5px_rgba(0,0,0,0.01),0px_100.1px_60.5px_rgba(0,0,0,0.05),0px_44px_44px_rgba(0,0,0,0.09),0px_11px_24.2px_rgba(0,0,0,0.1)]">
+              <div class="flex flex-col justify-between pt-6 pb-8 px-8 h-full">
+                <div>
+                  <i
+                    class={`ph ${iconMap[item.icon] || "ph-star"} text-4xl mb-4 text-slate-400 group-hover:text-blue-400 transition-all duration-300`}
+                  />
+                  <h3 class="font-bold text-lg text-slate-200">{item.title}</h3>
+                  <p class="text-sm text-gray-400 mt-2 line-clamp-4">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <DiagonalDivider
+    direction="bottom-left"
+    color="text-slate-800"
+    className="absolute bottom-0 left-0 right-0"
+  />
+</section>
