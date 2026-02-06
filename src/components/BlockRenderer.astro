@@ -8,15 +8,8 @@ import TestimonialsBlock from './blocks/TestimonialsBlock.astro';
 import FaqBlock from './blocks/FaqBlock.astro';
 import RichContentBlock from './blocks/RichContentBlock.astro';
 import CtaBlock from './blocks/CtaBlock.astro';
-import LeadFormBlock from './blocks/LeadFormBlock.astro';
-import DiagnosticIA from './blocks/DiagnosticIA.astro';
-import WhyBlock from './blocks/WhyBlock.astro';
-import DeliveryBlock from './blocks/DeliveryBlock.astro';
-import EngagementModelsBlock from './blocks/EngagementModelsBlock.astro';
-import CommercialsBlock from './blocks/CommercialsBlock.astro';
 import ImageCardsBlock from './blocks/ImageCardsBlock.astro';
 import FeatureShowcaseBlock from './blocks/FeatureShowcaseBlock.astro';
-import { computeBgVariants } from '../utils/bgHelper';
 // Astro Nova Game Blocks
 import GameHeroBlock from "./blocks/GameHeroBlock.astro";
 import GameFeaturesBlock from "./blocks/GameFeaturesBlock.astro";
@@ -55,18 +48,7 @@ const bgVariants = computeBgVariants(blocks, sectionVariants);
       return <RichContentBlock {...commonProps} />;
     case 'cta':
       return <CtaBlock {...commonProps} />;
-    case 'leadForm':
-      return <LeadFormBlock {...commonProps} />;
-    case 'diagnosticIA':
-      return <DiagnosticIA {...commonProps} />;
-    case 'why':
-      return <WhyBlock {...commonProps} />;
-    case 'delivery':
-      return <DeliveryBlock {...commonProps} />;
-    case 'engagementModels':
-      return <EngagementModelsBlock {...commonProps} />;
-    case 'commercials':
-      return <CommercialsBlock {...commonProps} />;
+
     case 'imageCards':
       return <ImageCardsBlock {...commonProps} />;
     case 'featureShowcase':

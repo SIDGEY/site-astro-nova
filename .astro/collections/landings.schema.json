@@ -971,6 +971,168 @@
                   "imageAlt"
                 ],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "imageCards"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "cards": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "buttonLabel": {
+                          "type": "string"
+                        },
+                        "buttonLink": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "imageAlt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "image"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "cards"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/landings/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "featureShowcase"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "eyebrow": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "align": {
+                          "type": "string",
+                          "enum": [
+                            "left",
+                            "right"
+                          ],
+                          "default": "left"
+                        },
+                        "backgroundImage": {
+                          "type": "string"
+                        },
+                        "backgroundImageAlt": {
+                          "type": "string"
+                        },
+                        "screens": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "image": {
+                                "type": "string"
+                              },
+                              "imageAlt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "image"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "label": {
+                                "type": "string"
+                              },
+                              "image": {
+                                "type": "string"
+                              },
+                              "imageAlt": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "ctaLabel": {
+                          "type": "string"
+                        },
+                        "ctaLink": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "description",
+                        "backgroundImage"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "items"
+                ],
+                "additionalProperties": false
               }
             ]
           }
