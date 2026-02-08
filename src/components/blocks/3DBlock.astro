@@ -1,0 +1,336 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+}
+
+const {
+  title,
+  subtitle,
+} = Astro.props;
+
+---
+
+<section class="overflow-hidden relative bg-gradient-to-b from-slate-900 to-slate-950 py-24 px-6 min-h-[100dvh] flex items-center">
+  <div class="max-w-4xl mx-auto relative z-20 w-full">
+    <div class="grid gap-8 items-center">
+      <div class="flex flex-col items-center text-center">
+        <h1 class="text-4xl md:text-4xl font-bold mb-6 text-slate-50">{title}</h1>
+        <p class="text-lg md:text-xl text-slate-400 mb-6">{subtitle}</p>
+      </div>
+
+      <div class="relative">
+        <div id="planet-3d" class="w-full h-[360px] md:h-[460px] rounded-2xl bg-slate-950/30 ring-1 ring-white/10 overflow-hidden"></div>
+
+        <div class="mt-4 flex flex-wrap gap-2 justify-center">
+          <button data-biome="normal"  class="biome-btn">Normal</button>
+          <button data-biome="dry"     class="biome-btn">Dry</button>
+          <button data-biome="jungle"  class="biome-btn">Jungle</button>
+          <button data-biome="water"   class="biome-btn">Water</button>
+          <button data-biome="ice"     class="biome-btn">Ice</button>
+          <button data-biome="desert"  class="biome-btn">Desert</button>
+          <!-- Si tu veux aussi gas -->
+          <!-- <button data-biome="gas" class="biome-btn">Gas</button> -->
+          <button data-action="random" class="biome-btn">Random</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .biome-btn{
+    padding: .55rem .85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(2,6,23,.35);
+    color: rgba(226,232,240,.95);
+    font-size: .9rem;
+    line-height: 1;
+    transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  }
+  .biome-btn:hover{ transform: translateY(-1px); background: rgba(2,6,23,.55); border-color: rgba(255,255,255,.22); }
+  .biome-btn[aria-pressed="true"]{ border-color: rgba(255,255,255,.35); background: rgba(15,23,42,.65); }
+</style>
+
+<script type="module">
+  import * as THREE from "three";
+  import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+  import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+
+  /** @typedef {"normal"|"dry"|"jungle"|"water"|"ice"|"desert"|"gas"} PlanetBiome */
+
+  /** @type {Record<PlanetBiome, string[]>} */
+  const planetModelsByBiome = {
+    desert: [
+      "/assets/models/planets/desert/desert_planet_1.glb",
+      "/assets/models/planets/desert/desert_planet_2.glb",
+      "/assets/models/planets/desert/desert_planet_3.glb",
+      "/assets/models/planets/desert/desert_planet_4.glb",
+      "/assets/models/planets/desert/desert_planet_5.glb",
+      "/assets/models/planets/desert/desert_planet_6.glb",
+    ],
+    dry: [
+      "/assets/models/planets/dry/dry_planet_1.glb",
+      "/assets/models/planets/dry/dry_planet_2.glb",
+      "/assets/models/planets/dry/dry_planet_3.glb",
+      "/assets/models/planets/dry/dry_planet_4.glb",
+      "/assets/models/planets/dry/dry_planet_5.glb",
+      "/assets/models/planets/dry/dry_planet_6.glb",
+    ],
+    normal: [
+      "/assets/models/planets/normal/normal_planet_1.glb",
+      "/assets/models/planets/normal/normal_planet_2.glb",
+      "/assets/models/planets/normal/normal_planet_3.glb",
+      "/assets/models/planets/normal/normal_planet_4.glb",
+      "/assets/models/planets/normal/normal_planet_5.glb",
+      "/assets/models/planets/normal/normal_planet_6.glb",
+    ],
+    jungle: [
+      "/assets/models/planets/jungle/jungle_planet_1.glb",
+      "/assets/models/planets/jungle/jungle_planet_2.glb",
+      "/assets/models/planets/jungle/jungle_planet_3.glb",
+      "/assets/models/planets/jungle/jungle_planet_4.glb",
+      "/assets/models/planets/jungle/jungle_planet_5.glb",
+      "/assets/models/planets/jungle/jungle_planet_6.glb",
+    ],
+    water: [
+      "/assets/models/planets/water/water_planet_1.glb",
+      "/assets/models/planets/water/water_planet_2.glb",
+      "/assets/models/planets/water/water_planet_3.glb",
+      "/assets/models/planets/water/water_planet_4.glb",
+      "/assets/models/planets/water/water_planet_5.glb",
+      "/assets/models/planets/water/water_planet_6.glb",
+    ],
+    ice: [
+      "/assets/models/planets/ice/ice_planet_1.glb",
+      "/assets/models/planets/ice/ice_planet_2.glb",
+      "/assets/models/planets/ice/ice_planet_3.glb",
+      "/assets/models/planets/ice/ice_planet_4.glb",
+      "/assets/models/planets/ice/ice_planet_5.glb",
+      "/assets/models/planets/ice/ice_planet_6.glb",
+    ],
+    gas: [
+      "/assets/models/planets/gas/gas_planet_1.glb",
+      "/assets/models/planets/gas/gas_planet_2.glb",
+      "/assets/models/planets/gas/gas_planet_3.glb",
+      "/assets/models/planets/gas/gas_planet_4.glb",
+      "/assets/models/planets/gas/gas_planet_5.glb",
+      "/assets/models/planets/gas/gas_planet_6.glb",
+    ],
+  };
+
+  function pickRandom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function disposeObject3D(root) {
+    root.traverse((obj) => {
+      if (obj.isMesh) {
+        obj.geometry?.dispose?.();
+        const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+        for (const m of mats) {
+          // textures
+          for (const key of Object.keys(m)) {
+            const v = m[key];
+            if (v && v.isTexture) v.dispose();
+          }
+          m.dispose?.();
+        }
+      }
+    });
+  }
+
+  class PlanetViewer {
+    /** @param {{ container: HTMLElement }} options */
+    constructor({ container }) {
+      this.container = container;
+
+      this.scene = new THREE.Scene();
+      this.scene.background = null;
+
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+
+      this.camera = new THREE.PerspectiveCamera(45, w / h, 0.01, 200);
+      this.camera.position.set(0, 0.4, 2.4);
+
+      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      this.renderer.setSize(w, h);
+      this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+      this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      this.renderer.toneMappingExposure = 1.1;
+
+      container.appendChild(this.renderer.domElement);
+
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+      this.controls.enableDamping = true;
+      this.controls.enablePan = false;
+      this.controls.minDistance = 1.6;
+      this.controls.maxDistance = 4.0;
+      this.controls.maxPolarAngle = Math.PI * 0.55;
+
+      // Lights (simple mais efficace)
+      const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+      this.scene.add(ambient);
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+      keyLight.position.set(2.5, 2.0, 2.5);
+      this.scene.add(keyLight);
+
+      const rimLight = new THREE.DirectionalLight(0xffffff, 0.9);
+      rimLight.position.set(-2.5, 0.6, -2.5);
+      this.scene.add(rimLight);
+
+      this.loader = new GLTFLoader();
+
+      this.currentRoot = null;
+      this.currentBiome = "normal";
+      this.isDestroyed = false;
+
+      // Resize (propre)
+      this.ro = new ResizeObserver(() => this.resize());
+      this.ro.observe(container);
+
+      this.clock = new THREE.Clock();
+      this.animate = this.animate.bind(this);
+      requestAnimationFrame(this.animate);
+    }
+
+    resize() {
+      const w = this.container.clientWidth;
+      const h = this.container.clientHeight;
+      if (!w || !h) return;
+      this.camera.aspect = w / h;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(w, h);
+    }
+
+    /** @param {PlanetBiome} biome */
+    async setBiome(biome) {
+      this.currentBiome = biome;
+      const url = pickRandom(planetModelsByBiome[biome]);
+
+      await this.loadModel(url);
+    }
+
+    async randomBiome() {
+      const biomes = /** @type {PlanetBiome[]} */ (Object.keys(planetModelsByBiome));
+      const biome = pickRandom(biomes);
+      await this.setBiome(biome);
+      return biome;
+    }
+
+    async loadModel(url) {
+      // remove previous
+      if (this.currentRoot) {
+        this.scene.remove(this.currentRoot);
+        disposeObject3D(this.currentRoot);
+        this.currentRoot = null;
+      }
+
+      const gltf = await this.loader.loadAsync(url);
+
+      const root = gltf.scene;
+      root.rotation.set(0, 0, 0);
+
+      // Fit scale (si tes GLB n'ont pas une taille homogène)
+      // Option "safe": on centre et on scale pour rentrer dans une sphère de rayon ~1
+      const box = new THREE.Box3().setFromObject(root);
+      const size = new THREE.Vector3();
+      box.getSize(size);
+      const maxDim = Math.max(size.x, size.y, size.z) || 1;
+
+      const target = 1.2; // taille cible dans la scène
+      const scale = target / maxDim;
+      root.scale.setScalar(scale);
+
+      box.setFromObject(root);
+      const center = new THREE.Vector3();
+      box.getCenter(center);
+      root.position.sub(center); // centre au milieu
+
+      // Option perf: shadows off (sinon ça coûte)
+      root.traverse((o) => {
+        if (o.isMesh) {
+          o.castShadow = false;
+          o.receiveShadow = false;
+        }
+      });
+
+      this.currentRoot = root;
+      this.scene.add(root);
+    }
+
+    animate() {
+      if (this.isDestroyed) return;
+
+      const dt = this.clock.getDelta();
+
+      if (this.currentRoot) {
+        this.currentRoot.rotation.y += dt * 0.35; // rotation lente “planète”
+      }
+
+      this.controls.update();
+      this.renderer.render(this.scene, this.camera);
+      requestAnimationFrame(this.animate);
+    }
+
+    destroy() {
+      this.isDestroyed = true;
+      this.ro?.disconnect?.();
+
+      if (this.currentRoot) {
+        this.scene.remove(this.currentRoot);
+        disposeObject3D(this.currentRoot);
+      }
+      this.controls?.dispose?.();
+      this.renderer?.dispose?.();
+      this.renderer?.domElement?.remove?.();
+    }
+  }
+
+  // Boot
+  const container = document.getElementById("planet-3d");
+  if (!container) throw new Error("Missing #planet-3d container");
+
+  const viewer = new PlanetViewer({ container });
+
+  // Load initial
+  viewer.setBiome("normal");
+
+  // Buttons
+  const buttons = Array.from(document.querySelectorAll("button.biome-btn"));
+  function setActive(btn) {
+    for (const b of buttons) b.setAttribute("aria-pressed", String(b === btn));
+  }
+
+  for (const btn of buttons) {
+    btn.addEventListener("click", async () => {
+      const biome = btn.getAttribute("data-biome");
+      const action = btn.getAttribute("data-action");
+
+      try {
+        if (action === "random") {
+          const picked = await viewer.randomBiome();
+          // highlight matching biome button
+          const match = buttons.find(b => b.getAttribute("data-biome") === picked);
+          setActive(match ?? btn);
+          return;
+        }
+
+        if (biome) {
+          setActive(btn);
+          await viewer.setBiome(/** @type {any} */ (biome));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  }
+
+  // Astro navigation cleanup (si tu navigues client-side)
+  // Si tu utilises View Transitions, c’est utile.
+  window.addEventListener("beforeunload", () => viewer.destroy());
+</script>

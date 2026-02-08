@@ -7,15 +7,15 @@ const { navigation } = settings.data;
 ---
 
 <nav
-  class="fixed top-0 left-0 right-0 px-6 transition-all duration-300 border-b z-[999] bg-slate-800 border-slate-600/50 py-4"
+  class="fixed top-0 left-0 right-0 px-6 transition-all duration-300 border-b z-[999] bg-slate-900  py-4"
 >
-  <div class="hidden lg:grid grid-cols-2 items-center h-12">
+  <div class="hidden lg:grid grid-cols-2 items-start h-12">
     <div class="flex items-center justify-start">
       <a href="/">
         <img src="/logo-horizontal.svg" alt="Astro Nova" class="h-12 w-auto" />
       </a>
     </div>
-    <div class="flex items-center justify-end space-x-8">
+    <div class="flex grow items-center justify-end space-x-8">
       {
         navigation.map((item) => (
           <a
@@ -26,19 +26,17 @@ const { navigation } = settings.data;
           </a>
         ))
       }
-      <div class="flex items-center space-x-2">
-        <button
+      <button
           class="py-2 px-6 whitespace-nowrap bg-blue-500 hover:bg-blue-600 rounded-md font-medium h-10 mr-2"
-        >
-          S'inscrire à la bêta
-        </button>
-        <a
+      >
+        S'inscrire à la bêta
+      </button>
+      <a
           class="py-2 px-6 whitespace-nowrap border border-slate-600 backdrop-blur-xl text-slate-200 rounded-md font-medium h-10"
           href="/game"
-        >
-          Jouer
-        </a>
-      </div>
+      >
+        Jouer
+      </a>
     </div>
   </div>
 
@@ -85,7 +83,7 @@ const { navigation } = settings.data;
   <div
     id="mobile-menu"
     class="fixed left-0 right-0 bottom-0 backdrop-blur-xl flex items-center justify-center transition-all duration-500 opacity-0 pointer-events-none"
-    style="top: 0px; bottom: 0px; background-color: rgba(30, 41, 59, 0.5);"
+    style="top: 0; bottom: 0; background-color: rgba(30, 41, 59, 0.5);"
   >
     <div
       class="flex flex-col space-y-4 items-center text-center w-full px-12 md:px-6"

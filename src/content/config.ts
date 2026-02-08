@@ -252,6 +252,12 @@ const blockGameHeroSchema = blockBaseSchema.extend({
   screenshot2: z.string().optional(),
 });
 
+const block3DSchema = blockBaseSchema.extend({
+  type: z.literal('block3D'),
+  title: z.string(),
+  subtitle: z.string()
+});
+
 const blockGameFeaturesSchema = blockBaseSchema.extend({
   type: z.literal('gameFeatures'),
   title: z.string(),
@@ -313,6 +319,7 @@ const blockSchema = z.discriminatedUnion('type', [
   blockCommunitySchema,
   blockImageCardsSchema,
   blockFeatureShowcaseSchema,
+  block3DSchema
 ]);
 
 

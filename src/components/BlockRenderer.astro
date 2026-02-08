@@ -10,6 +10,8 @@ import RichContentBlock from './blocks/RichContentBlock.astro';
 import CtaBlock from './blocks/CtaBlock.astro';
 import ImageCardsBlock from './blocks/ImageCardsBlock.astro';
 import FeatureShowcaseBlock from './blocks/FeatureShowcaseBlock.astro';
+import Block3D from './blocks/3DBlock.astro';
+
 // Astro Nova Game Blocks
 import GameHeroBlock from "./blocks/GameHeroBlock.astro";
 import GameFeaturesBlock from "./blocks/GameFeaturesBlock.astro";
@@ -53,16 +55,18 @@ const bgVariants = computeBgVariants(blocks, sectionVariants);
       return <ImageCardsBlock {...commonProps} />;
     case 'featureShowcase':
       return <FeatureShowcaseBlock {...commonProps} />;
-case "gameHero":
-                return <GameHeroBlock {...commonProps} />;
-            case "gameFeatures":
-                return <GameFeaturesBlock {...commonProps} />;
-            case "gameplay":
-                return <GameplayBlock {...commonProps} />;
-            case "gameGallery":
-                return <GameGalleryBlock {...commonProps} />;
-            case "community":
-                return <CommunityBlock {...commonProps} />;
+    case "gameHero":
+        return <GameHeroBlock {...commonProps} />;
+    case "gameFeatures":
+        return <GameFeaturesBlock {...commonProps} />;
+    case "gameplay":
+        return <GameplayBlock {...commonProps} />;
+    case "gameGallery":
+        return <GameGalleryBlock {...commonProps} />;
+    case "community":
+        return <CommunityBlock {...commonProps} />;
+      case "block3D":
+      return <Block3D {...commonProps} />;
     default:
       return null;
   }

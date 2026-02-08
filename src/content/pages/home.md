@@ -5,12 +5,15 @@ blocks:
   - type: gameHero
     title: Conquérez l'univers avec stratégie
     subtitle: Explorez des galaxies, développez votre civilisation spatiale et affrontez d'autres joueurs dans une expérience de stratégie 4X en temps réel.
-    ctaText: S'inscrire à la bêta
+    ctaText: Commencer à jouer
     ctaLink: "#beta"
     secondaryCtaText: En savoir plus
     secondaryCtaLink: "#features"
     screenshot1: /landing/screenshot1.jpg
     screenshot2: /landing/screenshot2.jpg
+  - type: block3D
+    title: Recherchez des innovations pour prospérer.
+    subtitle: Votre planète est le cœur de votre empire. C'est ici que vous produisez des ressources et développez vos défenses.
   - type: gameFeatures
     title: Caractéristiques principales
     subtitle: Astro Nova combine stratégie profonde, gestion de ressources et exploration spatiale dans une expérience de jeu immersive.

@@ -4,16 +4,20 @@
   "logo": "https://play-astronova.com/logo-horizontal.svg",
   "navigation": [
     {
-      "label": "Caractéristiques",
+      "label": "Le jeu",
       "link": "#features"
     },
     {
-      "label": "Gameplay",
-      "link": "#gameplay"
+      "label": "Blog",
+      "link": "#features"
     },
     {
       "label": "Communauté",
-      "link": "#community"
+      "link": "#features"
+    },
+    {
+      "label": "Roadmap",
+      "link": "#gameplay"
     }
   ],
   "footer": {
