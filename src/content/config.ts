@@ -295,6 +295,18 @@ const blockCommunitySchema = blockBaseSchema.extend({
   imageAlt: z.string(),
 });
 
+const blockResourcesSchema = blockBaseSchema.extend({
+  type: z.literal('gameResources'),
+  title: z.string(),
+  subtitle: z.string(),
+  ctaText: z.string().optional(),
+  ctaLink: z.string().optional(),
+  secondaryCtaText: z.string().optional(),
+  secondaryCtaLink: z.string().optional(),
+  screenshot1: z.string().optional(),
+  screenshot2: z.string().optional(),
+});
+
 const blockSchema = z.discriminatedUnion('type', [
   blockHeroSchema,
   blockLogosSchema,
@@ -313,6 +325,7 @@ const blockSchema = z.discriminatedUnion('type', [
   blockCommercialsSchema,
   // Astro Nova Game Blocks
   blockGameHeroSchema,
+  blockResourcesSchema,
   blockGameFeaturesSchema,
   blockGameplaySchema,
   blockGameGallerySchema,

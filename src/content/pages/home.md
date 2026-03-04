@@ -1,19 +1,22 @@
 ---
-title: Astro Nova | Jeu de stratégie spatiale 4X
+title: Dynasty Nova | Jeu de stratégie spatiale 4X
 description: Conquérez l'univers dans ce jeu de stratégie 4X spatial immersif. Explorez des galaxies, développez votre civilisation et affrontez d'autres joueurs.
 blocks:
   - type: gameHero
-    title: Conquérez l'univers avec stratégie
-    subtitle: Explorez des galaxies, développez votre civilisation spatiale et affrontez d'autres joueurs dans une expérience de stratégie 4X en temps réel.
-    ctaText: Commencer à jouer
+    title: Forgez votre légende au cœur de l’univers
+    subtitle: Explorez l’inconnu, étendez votre empire, exploitez chaque ressource et éliminez vos rivaux. Un jeu de stratégie 4X en temps réel, où chaque décision façonne la galaxie.
+    ctaText: S'inscrire à la bêta
     ctaLink: "#beta"
-    secondaryCtaText: En savoir plus
+    secondaryCtaText: Découvrir le jeu
     secondaryCtaLink: "#features"
     screenshot1: /landing/screenshot1.jpg
     screenshot2: /landing/screenshot2.jpg
   - type: block3D
     title: Recherchez des innovations pour prospérer.
     subtitle: Votre planète est le cœur de votre empire. C'est ici que vous produisez des ressources et développez vos défenses.
+  - type: gameResources
+    title: Gérez vos ressources pour prospérer
+    subtitle: Les ressources sont essentielles dans Astro Nova. Le métal est crucial pour la construction, tandis que le cristal est nécessaire pour les technologies avancées. Une bonne gestion est clé pour progresser.
   - type: gameFeatures
     title: Caractéristiques principales
     subtitle: Astro Nova combine stratégie profonde, gestion de ressources et exploration spatiale dans une expérience de jeu immersive.

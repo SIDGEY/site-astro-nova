@@ -19,6 +19,7 @@ import GameplayBlock from "./blocks/GameplayBlock.astro";
 import GameGalleryBlock from "./blocks/GameGalleryBlock.astro";
 import CommunityBlock from "./blocks/CommunityBlock.astro";
 import { computeBgVariants } from "../utils/bgHelper";
+import GameResourcesBlock from "./blocks/GameResourcesBlock.astro";
 
 interface Props {
     blocks?: any[];
@@ -57,6 +58,8 @@ const bgVariants = computeBgVariants(blocks, sectionVariants);
       return <FeatureShowcaseBlock {...commonProps} />;
     case "gameHero":
         return <GameHeroBlock {...commonProps} />;
+    case "gameResources":
+        return <GameResourcesBlock {...commonProps} />;
     case "gameFeatures":
         return <GameFeaturesBlock {...commonProps} />;
     case "gameplay":

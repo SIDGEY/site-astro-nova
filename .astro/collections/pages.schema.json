@@ -822,6 +822,51 @@
                   },
                   "type": {
                     "type": "string",
+                    "const": "gameResources"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  },
+                  "ctaText": {
+                    "type": "string"
+                  },
+                  "ctaLink": {
+                    "type": "string"
+                  },
+                  "secondaryCtaText": {
+                    "type": "string"
+                  },
+                  "secondaryCtaLink": {
+                    "type": "string"
+                  },
+                  "screenshot1": {
+                    "type": "string"
+                  },
+                  "screenshot2": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "subtitle"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
                     "const": "gameFeatures"
                   },
                   "title": {
@@ -1131,6 +1176,33 @@
                 "required": [
                   "type",
                   "items"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "bgVariant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/bgVariant"
+                  },
+                  "variant": {
+                    "$ref": "#/definitions/pages/properties/blocks/items/anyOf/0/properties/variant"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "block3D"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "subtitle": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "subtitle"
                 ],
                 "additionalProperties": false
               }

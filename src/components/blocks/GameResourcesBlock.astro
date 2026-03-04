@@ -1,9 +1,10 @@
 ---
+import Mobile from "../Mobile.astro";
 interface Props {
   title: string;
   subtitle: string;
-  ctaText: string;
-  ctaLink: string;
+  ctaText?: string;
+  ctaLink?: string;
   secondaryCtaText?: string;
   secondaryCtaLink?: string;
   screenshot1?: string;
@@ -13,30 +14,29 @@ interface Props {
 const {
   title,
   subtitle,
-  ctaText,
-  ctaLink,
+  ctaText="",
+  ctaLink="",
   secondaryCtaText = "En savoir plus",
   secondaryCtaLink = "#features",
   screenshot1 = "/landing/screenshot1.jpg",
   screenshot2 = "/landing/screenshot2.jpg",
 } = Astro.props;
 
-import DiagonalDivider from "../DiagonalDivider.astro";
 ---
 
-<header
-  class="overflow-hidden relative  bg-[#121B2E] py-32 sm:py-24 px-12 md:px-6 min-h-[100dvh] md:min-h-[100dvh] flex items-center "
-
-  style="background-image: url('/bg.svg'); background-repeat: no-repeat; background-position: center right; backobject-fit: cover"
+<section
+    class="overflow-hidden relative  bg-[#121B2E] py-32 sm:py-24 px-12 md:px-6 min-h-[100dvh] md:min-h-[100dvh] flex items-center justify-between "
+    style="background-image: url('/bg-resource.svg'); background-repeat: no-repeat; background-position: center right; object-fit: cover"
 >
-  <div class="max-w-xl  relative z-20 w-full">
+
+  <div class="max-w-xl relative z-20">
     <div class="grid ml-28 md:grid-cols-1 gap-8 items-start">
       <!-- Colonne de gauche avec le texte -->
       <div
-        class="flex flex-col items-start md:items-start text-left md:text-left z-10 "
+          class="flex flex-col items-start md:items-start text-left md:text-left z-10 "
       >
         <h1
-          class="text-4xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-slate-50 text-left"
+            class="text-4xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-slate-50 text-left"
         >
           {title}
         </h1>
@@ -60,21 +60,14 @@ import DiagonalDivider from "../DiagonalDivider.astro";
           </a>
         </div>
       </div>
+
     </div>
+
+
+  </div>
+  <div class="mr-48">
+    <Mobile screenshot="/bg-phone-planet.svg"></Mobile>
+    <Mobile screenshot="/bg-phone-resource-1.svg"></Mobile>
   </div>
 
-  <div class="absolute bottom-12 left-0 right-0 flex justify-center">
-    <a
-      href="#features"
-      class="animate-bounce text-slate-400 hover:text-blue-300 transition-colors"
-    >
-      <div class="border border-slate-500/50 rounded-full w-10 h-10 flex items-center justify-center">
-        <i class="ph ph-mouse text-2xl transform font-bold"></i>
-      </div>
-    </a>
-  </div>
-</header>
-
-<style>
-  /* Les animations floatUp et floatDown sont maintenant définies dans global.css */
-</style>
+</section>
