@@ -1,0 +1,73 @@
+---
+import Mobile from "../Mobile.astro";
+interface Props {
+  title: string;
+  subtitle: string;
+  ctaText?: string;
+  ctaLink?: string;
+  secondaryCtaText?: string;
+  secondaryCtaLink?: string;
+  screenshot1?: string;
+  screenshot2?: string;
+}
+
+const {
+  title,
+  subtitle,
+  ctaText="",
+  ctaLink="",
+  secondaryCtaText = "En savoir plus",
+  secondaryCtaLink = "#features",
+  screenshot1 = "/landing/screenshot1.jpg",
+  screenshot2 = "/landing/screenshot2.jpg",
+} = Astro.props;
+
+---
+
+<section
+    class="overflow-hidden relative  bg-[#121B2E] py-32 sm:py-24 px-12 md:px-6 min-h-[100dvh] md:min-h-[100dvh] flex items-center justify-between "
+    style="background-image: url('/bg-resource.svg'); background-repeat: no-repeat; background-position: center right; object-fit: cover"
+>
+
+  <div class="max-w-xl relative z-20">
+    <div class="grid ml-28 md:grid-cols-1 gap-8 items-start">
+      <!-- Colonne de gauche avec le texte -->
+      <div
+          class="flex flex-col items-start md:items-start text-left md:text-left z-10 "
+      >
+        <h1
+            class="text-4xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-slate-50 text-left"
+        >
+          {title}
+        </h1>
+
+        <p class="text-lg sm:text-xl md:text-xl text-slate-400 mb-6 sm:mb-8 text-left">
+          {subtitle}
+        </p>
+
+        <div class="flex flex-row gap-4 pt-8 items-center ">
+          <a
+              href={ctaLink}
+              class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 sm:px-8 rounded-md transition-all h-12 duration-300 flex items-center justify-center text-base sm:text-lg w-full md:w-auto"
+          >
+            {ctaText}
+          </a>
+          <a
+              class="px-6 whitespace-nowrap border border-slate-600 backdrop-blur-xl text-slate-200 rounded-md font-medium h-12 flex items-center"
+              href="/game"
+          >
+            {secondaryCtaText}
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class="mr-48">
+    <Mobile screenshot="/bg-phone-planet.svg"></Mobile>
+    <Mobile screenshot="/bg-phone-resource-1.svg"></Mobile>
+  </div>
+
+</section>

@@ -6,13 +6,13 @@ if (!settings) return Astro.redirect("/404");
 const { navigation } = settings.data;
 ---
 
-<nav
-  class="fixed top-0 left-0 right-0 px-6 transition-all duration-300 border-b z-[999] bg-slate-900  py-4"
+<nav id="main-nav"
+     class="fixed top-0 left-0 right-0 px-6 transition-all duration-300 border-b z-[999] py-4 bg-transparent"
 >
-  <div class="hidden lg:grid grid-cols-2 items-start h-12">
+  <div class="hidden lg:flex items-start h-12 w-full">
     <div class="flex items-center justify-start">
       <a href="/">
-        <img src="/logo-horizontal.svg" alt="Astro Nova" class="h-12 w-auto" />
+        <img src="/logo.svg" alt="Astro Nova" class="h-12 w-auto" />
       </a>
     </div>
     <div class="flex grow items-center justify-end space-x-8">
@@ -27,12 +27,12 @@ const { navigation } = settings.data;
         ))
       }
       <button
-          class="py-2 px-6 whitespace-nowrap bg-blue-500 hover:bg-blue-600 rounded-md font-medium h-10 mr-2"
+          class="px-6 whitespace-nowrap bg-blue-500 hover:bg-blue-600 rounded-md font-medium h-10 mr-2 text-slate-200"
       >
         S'inscrire à la bêta
       </button>
       <a
-          class="py-2 px-6 whitespace-nowrap border border-slate-600 backdrop-blur-xl text-slate-200 rounded-md font-medium h-10"
+          class="px-6 whitespace-nowrap border border-slate-600 backdrop-blur-xl text-slate-200 rounded-md font-medium h-10 flex items-center"
           href="/game"
       >
         Jouer
@@ -42,7 +42,7 @@ const { navigation } = settings.data;
 
   <div class="lg:hidden flex items-center justify-between relative">
     <a href="/">
-      <img src="/logo-icon.svg" alt="Astro Nova" class="h-12 w-auto" />
+      <img src="/logo.svg" alt="Astro Nova" class="h-12 w-auto" />
     </a>
     <button
       id="mobile-menu-toggle"
@@ -160,4 +160,19 @@ const { navigation } = settings.data;
       link.addEventListener("click", () => setMenuOpen(false));
     });
   }
+
+  const nav = document.getElementById("main-nav");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      // Classes à ajouter au scroll (fond sombre + bordure)
+      nav.classList.add("bg-slate-900", "border-b", "border-slate-800");
+      nav.classList.remove("bg-transparent");
+    } else {
+      // Retour à l'état initial (transparent)
+      nav.classList.remove("bg-slate-900", "border-b", "border-slate-800");
+      nav.classList.add("bg-transparent");
+    }
+  });
+
 </script>

@@ -1,0 +1,27 @@
+---
+interface Props {
+    screenshot?: string;
+}
+
+const { screenshot } = Astro.props;
+---
+
+<div class="relative inline-block w-fit">
+    <!-- Le téléphone (SVG) qui définit la taille du conteneur -->
+    <img
+            src="/tel.svg"
+            alt="Phone Frame"
+            class="relative z-0 w-[232px] h-auto pointer-events-none"
+    />
+
+    <!-- Le screenshot placé derrière le cadre du téléphone -->
+    {screenshot && (
+            <div class="absolute inset-0 z-0 overflow-hidden flex justify-center items-center">
+                <img
+                        src={screenshot}
+                        alt="Screenshot"
+                        class="z-50 w-[92%] h-[96%] object-cover rounded-[2rem] "
+                />
+            </div>
+    )}
+</div>

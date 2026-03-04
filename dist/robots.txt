@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://play-astronova.com/sitemap-index.xml

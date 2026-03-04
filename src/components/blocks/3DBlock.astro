@@ -11,16 +11,17 @@ const {
 
 ---
 
-<section class="overflow-hidden relative bg-gradient-to-b from-slate-900 to-slate-950  px-6 min-h-[100dvh] flex items-center">
-  <div id="planet-3d" class=" absolute top-0 left-0 w-full h-[100dvh] rounded-2xl bg-slate-950/30 ring-1 ring-white/10 overflow-hidden"></div>
-
+<section class="overflow-hidden relative bg-[#0B1120] px-6 min-h-[100dvh] flex items-center"
+  style="background-image: url('/bg.svg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+  <div id="planet-3d" class="absolute top-0 left-0 w-full h-[100dvh] overflow-hidden"></div>
 
   <div class="relative z-20 max-w-5xl mx-auto h-[100dvh] px-6 grid grid-rows-[auto_1fr_auto]">
       <div class="pt-20 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-slate-50">
+        <i class="ph ph-planet text-4xl text-slate-500 mb-4 block"></i>
+        <h1 class="text-3xl md:text-5xl font-bold text-slate-50">
           {title}
         </h1>
-        <p class="mt-4 text-lg md:text-xl text-slate-400">
+        <p class="mt-4 text-base md:text-xl text-slate-400 max-w-2xl mx-auto">
           {subtitle}
         </p>
       </div>
@@ -28,13 +29,13 @@ const {
      <div></div>
       <div class="pb-16">
         <div class="flex flex-wrap gap-3 justify-center">
-          <button data-biome="normal"  class="biome-btn">Normal</button>
-          <button data-biome="dry"     class="biome-btn">Dry</button>
-          <button data-biome="jungle"  class="biome-btn">Jungle</button>
-          <button data-biome="water"   class="biome-btn">Water</button>
-          <button data-biome="ice"     class="biome-btn">Ice</button>
-          <button data-biome="desert"  class="biome-btn">Desert</button>
-          <button data-action="random" class="biome-btn">Random</button>
+          <button data-biome="normal"  class="biome-btn" title="Normal"><i class="ph ph-sun text-xl"></i></button>
+          <button data-biome="dry"     class="biome-btn" title="Dry"><i class="ph ph-wind text-xl"></i></button>
+          <button data-biome="jungle"  class="biome-btn" title="Jungle" aria-pressed="true"><i class="ph ph-globe text-xl"></i></button>
+          <button data-biome="water"   class="biome-btn" title="Water"><i class="ph ph-prohibit text-xl"></i></button>
+          <button data-biome="ice"     class="biome-btn" title="Ice"><i class="ph ph-drop text-xl"></i></button>
+          <button data-biome="desert"  class="biome-btn" title="Desert"><i class="ph ph-snowflake text-xl"></i></button>
+          <button data-action="random" class="biome-btn" title="Random"><i class="ph ph-cloud text-xl"></i></button>
         </div>
       </div>
   </div>
@@ -42,17 +43,19 @@ const {
 
   <style>
     .biome-btn{
-      padding: .55rem .85rem;
-      border-radius: 999px;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
       border: 1px solid rgba(255,255,255,.12);
-      background: rgba(2,6,23,.35);
-      color: rgba(226,232,240,.95);
-      font-size: .9rem;
-      line-height: 1;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      background: rgba(15,23,42,.65);
+      color: rgba(148,163,184,.95);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
     }
-    .biome-btn:hover{ transform: translateY(-1px); background: rgba(2,6,23,.55); border-color: rgba(255,255,255,.22); }
-    .biome-btn[aria-pressed="true"]{ border-color: rgba(255,255,255,.35); background: rgba(15,23,42,.65); }
+    .biome-btn:hover{ transform: translateY(-1px); background: rgba(15,23,42,.85); border-color: rgba(255,255,255,.22); color: rgba(226,232,240,1); }
+    .biome-btn[aria-pressed="true"]{ border-color: rgba(59,130,246,.8); background: rgba(15,23,42,.85); color: rgba(248,250,252,1); }
   </style>
 
   <script>

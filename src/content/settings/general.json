@@ -1,7 +1,7 @@
 {
-  "siteName": "Astro Nova",
+  "siteName": "Dynasty Nova",
   "defaultDescription": "Conquérez l'univers dans ce jeu de stratégie 4X spatial immersif. Explorez, colonisez et dominez les étoiles.",
-  "logo": "https://play-astronova.com/logo-horizontal.svg",
+  "logo": "https://play-astronova.com/logo.svg",
   "navigation": [
     {
       "label": "Le jeu",
@@ -14,6 +14,10 @@
     {
       "label": "Communauté",
       "link": "#features"
+    },
+    {
+      "label": "Galerie",
+      "link": "#gallery"
     },
     {
       "label": "Roadmap",

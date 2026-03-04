@@ -295,6 +295,61 @@ const blockCommunitySchema = blockBaseSchema.extend({
   imageAlt: z.string(),
 });
 
+const blockResourcesSchema = blockBaseSchema.extend({
+  type: z.literal('gameResources'),
+  title: z.string(),
+  subtitle: z.string(),
+  ctaText: z.string().optional(),
+  ctaLink: z.string().optional(),
+  secondaryCtaText: z.string().optional(),
+  secondaryCtaLink: z.string().optional(),
+  screenshot1: z.string().optional(),
+  screenshot2: z.string().optional(),
+});
+
+const blockFeaturePhoneSchema = blockBaseSchema.extend({
+  type: z.literal('featurePhone'),
+  icon: z.string(),
+  title: z.string(),
+  subtitle: z.string(),
+  screenshot1: z.string(),
+  screenshot2: z.string(),
+  backgroundImage: z.string().optional(),
+  reversed: z.boolean().optional(),
+  gallery: z.array(z.object({
+    src: z.string(),
+    alt: z.string().optional(),
+  })).optional(),
+  galleryExtra: z.number().optional(),
+  resourceIcons: z.array(z.object({
+    icon: z.string(),
+    active: z.boolean().optional(),
+  })).optional(),
+});
+
+const blockCarouselSchema = blockBaseSchema.extend({
+  type: z.literal('carousel'),
+  icon: z.string(),
+  title: z.string(),
+  subtitle: z.string(),
+  items: z.array(z.object({
+    image: z.string(),
+    title: z.string(),
+    avatar: z.string().optional(),
+  })),
+});
+
+const blockNewsSchema = blockBaseSchema.extend({
+  type: z.literal('news'),
+  title: z.string(),
+  subtitle: z.string(),
+  items: z.array(z.object({
+    icon: z.string(),
+    title: z.string(),
+    description: z.string(),
+  })),
+});
+
 const blockSchema = z.discriminatedUnion('type', [
   blockHeroSchema,
   blockLogosSchema,
@@ -313,13 +368,17 @@ const blockSchema = z.discriminatedUnion('type', [
   blockCommercialsSchema,
   // Astro Nova Game Blocks
   blockGameHeroSchema,
+  blockResourcesSchema,
   blockGameFeaturesSchema,
   blockGameplaySchema,
   blockGameGallerySchema,
   blockCommunitySchema,
   blockImageCardsSchema,
   blockFeatureShowcaseSchema,
-  block3DSchema
+  block3DSchema,
+  blockFeaturePhoneSchema,
+  blockCarouselSchema,
+  blockNewsSchema,
 ]);
 
 
