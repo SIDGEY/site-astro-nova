@@ -24,60 +24,51 @@ const {
 } = Astro.props;
 ---
 
-<section id="community" class="px-6 bg-slate-900 pt-20 sm:pt-24 md:pt-28 pb-20">
+<section id="community" class="bg-[#0B1120] py-20 md:py-28 px-6">
   <div class="max-w-6xl mx-auto">
     <!-- Section Title -->
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-100">
         {title}
       </h2>
-      <p class="text-xl text-slate-400 max-w-3xl mx-auto">{subtitle}</p>
+      <p class="text-base md:text-lg text-slate-400 max-w-3xl mx-auto">{subtitle}</p>
     </div>
 
-    <!-- Two Column Layout -->
-    <div class="grid md:grid-cols-2 gap-8 md:items-stretch">
+    <!-- Card -->
+    <div class="grid md:grid-cols-2 gap-0 rounded-xl overflow-hidden border border-slate-700/50 bg-slate-900/30">
       <!-- Image Column -->
-      <div class="flex justify-center h-full">
-        <div class="bg-slate-700 rounded-xl overflow-hidden w-full h-full">
-          <div class="relative community-image-container">
-            <div class="image-overlay h-full">
-              <img
-                src={image}
-                alt={imageAlt}
-                class="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
+      <div class="h-64 md:h-auto">
+        <img
+          src={image}
+          alt={imageAlt}
+          class="w-full h-full object-cover"
+        />
       </div>
 
       <!-- Text Column -->
-      <div
-        class="bg-slate-900 border border-slate-700/50 p-8 sm:p-8 md:p-12 rounded-xl h-full flex flex-col"
-      >
-        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-slate-200">
+      <div class="p-8 md:p-12 flex flex-col justify-center">
+        <h3 class="text-xl sm:text-2xl font-bold mb-4 text-slate-200">
           {sectionTitle}
         </h3>
 
-        <p class="text-slate-400 mb-4 leading-relaxed">
+        <p class="text-slate-400 mb-4 leading-relaxed text-sm md:text-base">
           {description}
         </p>
 
-        {
-          secondaryDescription && (
-            <p class="text-slate-400 leading-relaxed mb-6">
-              {secondaryDescription}
-            </p>
-          )
-        }
+        {secondaryDescription && (
+          <p class="text-slate-400 leading-relaxed mb-6 text-sm md:text-base">
+            {secondaryDescription}
+          </p>
+        )}
 
-        <div class="my-2">
+        <div class="mt-2">
           <a
             href={discordLink}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block py-2 px-6 whitespace-nowrap bg-blue-500 hover:bg-blue-600 rounded-md font-medium transition-colors"
+            class="inline-flex items-center gap-2 py-3 px-6 bg-blue-500 hover:bg-blue-600 rounded-md font-medium transition-colors text-white"
           >
+            <i class="ph ph-discord-logo text-xl"></i>
             {discordButtonText}
           </a>
         </div>
