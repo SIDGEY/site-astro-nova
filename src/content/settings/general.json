@@ -9,11 +9,11 @@
     },
     {
       "label": "Blog",
-      "link": "#features"
+      "link": "/articles"
     },
     {
       "label": "Communauté",
-      "link": "#features"
+      "link": "#communauté"
     },
     {
       "label": "Galerie",
@@ -26,7 +26,7 @@
   ],
   "footer": {
     "contact": {
-      "title": "Astro Nova",
+      "title": "Dynasty Nova",
       "address": "",
       "email": "contact@play-astronova.com",
       "phone": "",

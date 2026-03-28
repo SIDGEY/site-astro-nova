@@ -1,5 +1,5 @@
 {
-  "name": "Astro nova",
+  "name": "Dynasty nova",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -11,13 +11,13 @@
     "import:cs": "node --loader ts-node/esm scripts/import-case-studies.ts"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.15",
-    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
     "@fontsource/lexend": "^5.2.11",
     "@phosphor-icons/web": "^2.1.2",
     "@types/axios": "^0.14.4",
-    "astro": "^5.18.0",
-    "axios": "^1.13.4",
+    "astro": "^6.1.1",
+    "axios": "1.13.5",
     "cheerio": "^1.0.0-rc.12",
     "clsx": "^2.1.1",
     "fast-xml-parser": "^5.3.4",

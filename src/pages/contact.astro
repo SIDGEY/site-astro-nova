@@ -1,9 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
+import { SITE_URL } from "../lib/seo";
 const breadcrumbs = [
-  { name: "Accueil", item: "https://play-astronova.com/" },
-  { name: "Contact", item: "https://play-astronova.com/contact" },
+  { name: "Accueil", item: `${SITE_URL}/` },
+  { name: "Contact", item: `${SITE_URL}/contact` },
 ];
 ---
 

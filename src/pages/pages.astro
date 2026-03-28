@@ -2,15 +2,15 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
-
+import { SITE_URL } from "../lib/seo";
 const pages = await getCollection("pages");
 const sortedPages = pages.sort(
   (a, b) => (a.data.order || 99) - (b.data.order || 99),
 );
 
 const breadcrumbs = [
-  { name: "Accueil", item: "https://play-astronova.com/" },
-  { name: "Pages", item: "https://play-astronova.com/pages" },
+  { name: "Accueil", item: `${SITE_URL}/` },
+  { name: "Pages", item: `${SITE_URL}/pages` },
 ];
 ---
 
@@ -27,7 +27,7 @@ const breadcrumbs = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {
         sortedPages.map((page) => (
-          <a href={`/p/${page.slug}`} class="group card-basic">
+          <a href={`/${page.id}`} class="group card-basic">
             <h2 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
               {page.data.title}
             </h2>
