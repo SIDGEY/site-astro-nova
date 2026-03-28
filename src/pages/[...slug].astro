@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlockRenderer from "../components/BlockRenderer.astro";
+import { SITE_URL } from "../lib/seo";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages", ({ id }) => id !== "home");
@@ -14,10 +15,10 @@ export async function getStaticPaths() {
 const { page } = Astro.props;
 const { title, description, blocks, sectionVariants } = page.data;
 const slug = page.id.replace(/\.md$/, "").replace(/\.json$/, "");
-const canonicalURL = `https://play-astronova.com/${slug}`;
+const canonicalURL = `${SITE_URL}/${slug}`;
 
 const breadcrumbs = [
-  { name: "Accueil", item: "https://play-astronova.com/" },
+  { name: "Accueil", item: `${SITE_URL}/` },
   { name: title, item: canonicalURL },
 ];
 ---

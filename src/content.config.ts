@@ -1,4 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 const seoSchema = z.object({
   title: z.string().optional(),
@@ -385,7 +387,7 @@ const blockSchema = z.discriminatedUnion('type', [
 // --- Collections Definition ---
 
 const settingsCollection = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: 'src/content/settings' }),
   schema: z.object({
     siteName: z.string(),
     defaultDescription: z.string(),
@@ -463,7 +465,7 @@ const settingsCollection = defineCollection({
 });
 
 const pagesCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: 'src/content/pages' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -485,7 +487,7 @@ const pagesCollection = defineCollection({
 });
 
 const landingsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: 'src/content/landings' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -495,7 +497,7 @@ const landingsCollection = defineCollection({
 });
 
 const casesCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: 'src/content/cases' }),
   schema: z.object({
     clientName: z.string(),
     sector: z.string(),
@@ -522,7 +524,7 @@ const casesCollection = defineCollection({
 });
 
 const articlesCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: 'src/content/articles' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -536,7 +538,7 @@ const articlesCollection = defineCollection({
 });
 
 const agenciesCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: 'src/content/agencies' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -551,7 +553,7 @@ const agenciesCollection = defineCollection({
 });
 
 const commercialsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: 'src/content/commercials' }),
   schema: z.object({
     firstName: z.string(),
     lastName: z.string(),
@@ -571,4 +573,8 @@ export const collections = {
   'settings': settingsCollection,
   'pages': pagesCollection,
   'landings': landingsCollection,
+  'cases': casesCollection,
+  'articles': articlesCollection,
+  'agencies': agenciesCollection,
+  'commercials': commercialsCollection,
 };

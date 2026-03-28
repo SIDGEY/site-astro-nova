@@ -2,8 +2,8 @@
  * SEO Utilities for Atecna 2026
  */
 
-export const SITE_URL = 'https://play-astronova.com';
-export const SITE_NAME = 'Astro Nova - Jeu de stratégie spatiale 4X';
+export const SITE_URL = 'https://dynastynova.com';
+export const SITE_NAME = 'Dynasty Nova - Jeu de stratégie spatiale 4X';
 export const DEFAULT_OG_IMAGE = '/og-default.jpg';
 
 /**
@@ -31,7 +31,7 @@ export function getOrganizationSchema() {
   return {
     "@type": "Organization",
     "@id": `${SITE_URL}/#organization`,
-    "name": "Astro Nova",
+    "name": "Dynasty Nova",
     "url": SITE_URL,
     "logo": {
       "@type": "ImageObject",
