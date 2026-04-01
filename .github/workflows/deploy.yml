@@ -1,0 +1,93 @@
+name: Deploy to OVH (FTP)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "deploy"
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: "22"
+  ASTRO_DIR: "./"
+  DEPLOY_DIR: "deploy"
+
+jobs:
+  build:
+    name: Build & Assemble Site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: |
+            ${{ env.ASTRO_DIR }}/package-lock.json
+            package-lock.json
+
+      - name: Install dependencies (Astro app)
+        working-directory: ${{ env.ASTRO_DIR }}
+        run: npm install
+
+      - name: Build Astro (static)
+        working-directory: ${{ env.ASTRO_DIR }}
+        run: npm run build
+
+      - name: Assemble deploy/ folder
+        shell: bash
+        run: |
+          set -euxo pipefail
+
+          # Reset deploy folder
+          rm -rf "$DEPLOY_DIR"
+          mkdir -p "$DEPLOY_DIR"
+
+          # 1) Copy Astro build output (dist/) to deploy root
+          if [ ! -d "$ASTRO_DIR/dist" ]; then
+            echo "Build output not found: $ASTRO_DIR/dist" >&2
+            exit 1
+          fi
+          cp -R "$ASTRO_DIR/dist/." "$DEPLOY_DIR/"
+
+          # 5) Sanity checks
+          if [ ! -f "$DEPLOY_DIR/index.html" ]; then
+            echo "ERROR: Missing $DEPLOY_DIR/index.html." >&2
+            exit 2
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-deploy-artifact
+          path: deploy/
+          retention-days: 1
+
+  deploy:
+    name: Publish via FTP
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-deploy-artifact
+          path: deploy-files
+
+      - name: 📂 Sync files (FTP)
+        uses: airvzxf/ftp-deployment-action@latest
+        with:
+          server: ${{ secrets.OVH_HOST }}
+          user: ${{ secrets.OVH_USERNAME }}
+          password: ${{ secrets.OVH_PASSWORD }}
+          local_dir: deploy-files
+          remote_dir: ${{ secrets.OVH_REMOTE_PATH }}
+          delete: true
