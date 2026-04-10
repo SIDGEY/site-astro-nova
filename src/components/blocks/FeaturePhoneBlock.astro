@@ -42,16 +42,24 @@ const {
   <div
     class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-0 items-center"
   >
-    <!-- Phone 1: cols 1-2, aligned right -->
+    <!-- Phone 1 -->
     <div
-      class={`hidden sm:flex md:col-span-2 justify-end relative z-10 ${reversed ? "md:order-3" : "md:order-1"}`}
+      class={`hidden sm:flex relative z-10 ${
+        reversed
+          ? "md:col-span-1 justify-center md:order-2"
+          : "md:col-span-2 justify-end md:order-1"
+      }`}
     >
       <Mobile screenshot={screenshot1} />
     </div>
 
-    <!-- Phone 2: col 3 (central column) -->
+    <!-- Phone 2 -->
     <div
-      class={`hidden sm:flex md:col-span-1 justify-center relative z-0 ${reversed ? "md:order-2" : "md:order-2"}`}
+      class={`hidden sm:flex relative z-0 ${
+        reversed
+          ? "md:col-span-2 justify-start md:order-3"
+          : "md:col-span-1 justify-center md:order-2"
+      }`}
     >
       <Mobile screenshot={screenshot2} />
     </div>
@@ -97,9 +105,11 @@ const {
       }
     </div>
 
-    <!-- Text side: cols 4-5 -->
+    <!-- Text side -->
     <div
-      class={`flex flex-col items-center md:items-start text-center md:text-left z-10 md:col-span-2 md:pl-12 ${reversed ? "md:order-1" : "md:order-3"}`}
+      class={`flex flex-col items-center md:items-start text-center md:text-left z-10 md:col-span-2 ${
+        reversed ? "md:pr-12 md:order-1" : "md:pl-12 md:order-3"
+      }`}
     >
       <i
         class={`ph ph-${icon} mb-6`}
