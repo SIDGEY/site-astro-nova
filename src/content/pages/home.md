@@ -23,7 +23,7 @@ blocks:
     screenshot1: /bg-phone-planet.svg
     screenshot2: /bg-phone-resource-1.svg
     backgroundImage: /bg-resource.svg
-    reversed: false
+    reversed: true
     resourceIcons:
       - icon: circle-half
         active: true

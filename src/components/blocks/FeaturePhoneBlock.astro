@@ -43,15 +43,29 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 <section
-  class="overflow-hidden relative bg-[#0B1120] py-20 md:py-[120px] px-6 md:px-12 lg:px-20 flex items-center"
-  style={backgroundImage
-    ? `background-image: url('${backgroundImage}'); background-repeat: no-repeat; background-position: center; background-size: cover;`
-    : ""}
+  class={`feature-phone-section overflow-hidden relative bg-[#0B1120] py-20 md:py-[120px] px-6 md:px-12 lg:px-20 flex items-center ${reversed ? 'is-reversed' : ''}`}
   id={sectionId}
   data-reversed={reversed.toString()}
 >
+  <!-- Background image layers -->
+  {backgroundImage && (
+    <div class="absolute inset-0 z-[0] pointer-events-none w-full h-full bg-[#121B2E]">
+      <!-- Image 75% width & its overlays -->
+      <div
+        class={`absolute top-0 bottom-0 w-[75%] ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
+        style={`background: linear-gradient(${reversed ? '76.97deg' : '283.03deg'}, #121B2E 18.79%, rgba(22, 32, 50, 0) 83.76%), linear-gradient(${reversed ? '40.96deg' : '319.04deg'}, #121B2E 20%, rgba(22, 32, 50, 0) 100%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: ${reversed ? 'left center' : 'right center'}; background-size: cover;`}
+      ></div>
+
+      <!-- Global Overlay 100% width -->
+      <div
+        class="absolute inset-0 w-full h-full"
+        style={`background: linear-gradient(360deg, rgba(2, 6, 24, 0.5) 0%, rgba(22, 32, 50, 0) 100.04%), linear-gradient(${reversed ? '63.33deg' : '296.67deg'}, #020618 0%, rgba(22, 32, 50, 0) 66.72%);`}
+      ></div>
+    </div>
+  )}
+
   <div
-    class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-0 items-center"
+    class="relative z-[2] max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-0 items-center"
   >
     <!-- Phone 1 -->
     <div
