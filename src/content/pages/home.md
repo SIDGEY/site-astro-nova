@@ -22,7 +22,7 @@ blocks:
     subtitle: "Les ressources sont essentielles dans Astro Nova. Le métal est crucial pour la construction, tandis que le cristal est nécessaire pour les technologies avancées. Une bonne gestion est clé pour progresser."
     screenshot1: /bg-phone-planet.svg
     screenshot2: /bg-phone-resource-1.svg
-    backgroundImage: /bg-resource.svg
+    backgroundImage: /bg-resource.webp
     reversed: true
     resourceIcons:
       - icon: circle-half

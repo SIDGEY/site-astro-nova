@@ -52,7 +52,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     <div class="absolute inset-0 z-[0] pointer-events-none w-full h-full bg-[#121B2E]">
       <!-- Image 75% width & its overlays -->
       <div
-        class={`absolute top-0 bottom-0 w-[75%] ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
+        class={`absolute opacity-80 top-0 bottom-0 w-[75%] ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
         style={`background: linear-gradient(${reversed ? '76.97deg' : '283.03deg'}, #121B2E 18.79%, rgba(22, 32, 50, 0) 83.76%), linear-gradient(${reversed ? '40.96deg' : '319.04deg'}, #121B2E 20%, rgba(22, 32, 50, 0) 100%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: ${reversed ? 'left center' : 'right center'}; background-size: cover;`}
       ></div>
 
@@ -65,34 +65,31 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
   )}
 
   <div
-    class="relative z-[2] max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-0 items-center"
+    class="relative z-[2] max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-5 gap-12 items-center"
   >
-    <!-- Phone 1 -->
+    <!-- Phones side -->
     <div
-      class={`hidden sm:flex relative z-10 ${
+      class={`hidden sm:flex items-center gap-8 relative md:col-span-3 ${
         reversed
-          ? "md:col-span-1 justify-center md:order-2"
-          : "md:col-span-2 justify-end md:order-1"
+          ? "md:order-2 justify-start"
+          : "md:order-1 justify-end"
       }`}
     >
-      <Mobile
-        screenshot={screenshot1}
-        dataRole={reversed ? "active-phone" : "context-phone"}
-      />
-    </div>
+      <!-- Phone 1 (context phone = always closest to center) -->
+      <div class={`relative z-10 ${reversed ? "order-1" : "order-2"}`}>
+        <Mobile
+          screenshot={screenshot1}
+          dataRole={reversed ? "active-phone" : "context-phone"}
+        />
+      </div>
 
-    <!-- Phone 2 -->
-    <div
-      class={`hidden sm:flex relative z-0 ${
-        reversed
-          ? "md:col-span-2 justify-start md:order-3"
-          : "md:col-span-1 justify-center md:order-2"
-      }`}
-    >
-      <Mobile
-        screenshot={screenshot2}
-        dataRole={reversed ? "context-phone" : "active-phone"}
-      />
+      <!-- Phone 2 (active phone = overflows into the empty side) -->
+      <div class={`relative z-0 ${reversed ? "order-2" : "order-1"}`}>
+        <Mobile
+          screenshot={screenshot2}
+          dataRole={reversed ? "context-phone" : "active-phone"}
+        />
+      </div>
     </div>
 
     <!-- Mobile: both phones stacked horizontally -->
