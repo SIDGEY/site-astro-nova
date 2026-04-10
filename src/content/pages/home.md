@@ -27,9 +27,13 @@ blocks:
     resourceIcons:
       - icon: circle-half
         active: true
+        screenshot: /bg-phone-resource-1.svg
       - icon: diamond
+        screenshot: /bg-phone-resource-1.svg
       - icon: drop
+        screenshot: /bg-phone-resource-1.svg
       - icon: lightning
+        screenshot: /bg-phone-resource-1.svg
 
   - type: featurePhone
     icon: buildings

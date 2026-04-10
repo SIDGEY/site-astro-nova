@@ -326,6 +326,7 @@ const blockFeaturePhoneSchema = blockBaseSchema.extend({
   resourceIcons: z.array(z.object({
     icon: z.string(),
     active: z.boolean().optional(),
+    screenshot: z.string().optional(),
   })).optional(),
 });
 

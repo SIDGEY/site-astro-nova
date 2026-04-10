@@ -16,7 +16,7 @@ interface Props {
   reversed?: boolean;
   gallery?: GalleryImage[];
   galleryExtra?: number;
-  resourceIcons?: { icon: string; active?: boolean }[];
+  resourceIcons?: { icon: string; active?: boolean; screenshot?: string }[];
 }
 
 const {
@@ -31,6 +31,15 @@ const {
   galleryExtra = 0,
   resourceIcons = [],
 } = Astro.props;
+
+// Generate a unique ID for this section instance
+const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
+
+// Determine which phone is active (the one whose screenshot changes)
+// Normal: Phone1 = context (center, col-span-2), Phone2 = active (far, col-span-1)
+// Reversed: Phone1 = active (far, col-span-1), Phone2 = context (center, col-span-2)
+// The "context" phone is always the larger one (col-span-2)
+// The "active" phone is always the smaller one (col-span-1)
 ---
 
 <section
@@ -38,6 +47,8 @@ const {
   style={backgroundImage
     ? `background-image: url('${backgroundImage}'); background-repeat: no-repeat; background-position: center; background-size: cover;`
     : ""}
+  id={sectionId}
+  data-reversed={reversed.toString()}
 >
   <div
     class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-0 items-center"
@@ -50,7 +61,10 @@ const {
           : "md:col-span-2 justify-end md:order-1"
       }`}
     >
-      <Mobile screenshot={screenshot1} />
+      <Mobile
+        screenshot={screenshot1}
+        dataRole={reversed ? "active-phone" : "context-phone"}
+      />
     </div>
 
     <!-- Phone 2 -->
@@ -61,13 +75,19 @@ const {
           : "md:col-span-1 justify-center md:order-2"
       }`}
     >
-      <Mobile screenshot={screenshot2} />
+      <Mobile
+        screenshot={screenshot2}
+        dataRole={reversed ? "context-phone" : "active-phone"}
+      />
     </div>
 
     <!-- Mobile: both phones stacked horizontally -->
     <div class="flex sm:hidden justify-center items-center gap-4 relative">
       <div class="relative z-10">
-        <Mobile screenshot={screenshot1} />
+        <Mobile
+          screenshot={screenshot1}
+          dataRole={reversed ? "active-phone-mobile" : "context-phone-mobile"}
+        />
       </div>
 
       <!-- Mobile: floating gallery thumbnails -->
@@ -124,14 +144,17 @@ const {
 
       {
         resourceIcons.length > 0 && (
-          <div class="flex gap-3 mb-6">
-            {resourceIcons.map((ri) => (
+          <div class="flex gap-3 mb-6" data-resource-buttons>
+            {resourceIcons.map((ri, index) => (
               <button
-                class={`w-12 h-12 rounded-lg flex items-center justify-center transition-all ${
+                class={`resource-btn w-12 h-12 rounded-lg flex items-center justify-center transition-all ${
                   ri.active
                     ? "border-2 border-blue-500 bg-slate-900/80 text-white"
                     : "border border-slate-700 bg-slate-900/50 text-slate-400 hover:border-slate-500"
                 }`}
+                data-index={index}
+                data-screenshot={ri.screenshot || ""}
+                data-active={ri.active ? "true" : "false"}
               >
                 <i class={`ph ph-${ri.icon} text-xl`} />
               </button>
@@ -167,3 +190,64 @@ const {
     </div>
   </div>
 </section>
+
+<script define:vars={{ sectionId }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const buttons = section.querySelectorAll('.resource-btn[data-screenshot]');
+    if (buttons.length === 0) return;
+
+    // Find the active phone (the "far" one that should change)
+    const activePhone = section.querySelector('[data-role="active-phone"]');
+    const activePhoneMobile = section.querySelector('[data-role="active-phone-mobile"]');
+
+    function setActiveButton(clickedBtn) {
+      // Update button styles
+      buttons.forEach((btn) => {
+        btn.classList.remove('border-2', 'border-blue-500', 'bg-slate-900/80', 'text-white');
+        btn.classList.add('border', 'border-slate-700', 'bg-slate-900/50', 'text-slate-400');
+        btn.dataset.active = 'false';
+      });
+
+      clickedBtn.classList.remove('border', 'border-slate-700', 'bg-slate-900/50', 'text-slate-400');
+      clickedBtn.classList.add('border-2', 'border-blue-500', 'bg-slate-900/80', 'text-white');
+      clickedBtn.dataset.active = 'true';
+
+      // Update the active phone screenshot
+      const screenshot = clickedBtn.dataset.screenshot;
+      if (screenshot) {
+        // Find the screenshot img inside the active phone container
+        if (activePhone) {
+          const img = activePhone.querySelector('img[alt="Screenshot"]');
+          if (img) {
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+              img.src = screenshot;
+              img.style.opacity = '1';
+            }, 150);
+          }
+        }
+        if (activePhoneMobile) {
+          const imgMobile = activePhoneMobile.querySelector('img[alt="Screenshot"]');
+          if (imgMobile) {
+            imgMobile.style.opacity = '0';
+            imgMobile.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+              imgMobile.src = screenshot;
+              imgMobile.style.opacity = '1';
+            }, 150);
+          }
+        }
+      }
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        setActiveButton(btn);
+      });
+    });
+  });
+</script>

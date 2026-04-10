@@ -1,12 +1,13 @@
 ---
 interface Props {
     screenshot?: string;
+    dataRole?: string;
 }
 
-const { screenshot } = Astro.props;
+const { screenshot, dataRole } = Astro.props;
 ---
 
-<div class="relative inline-block w-fit">
+<div class="relative inline-block w-fit" data-role={dataRole}>
     <!-- Le téléphone (SVG) qui définit la taille du conteneur -->
     <img
         src="/tel.svg"
@@ -27,3 +28,4 @@ const { screenshot } = Astro.props;
         )
     }
 </div>
+
