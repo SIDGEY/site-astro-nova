@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const articles = await getCollection('articles', ({ data }) => {
+    return data.draft !== true;
+});
+
+// Tri par date décroissante
+articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Blog - Astro Nova" description="Découvrez les dernières actualités d'Astro Nova">
+    <section class="py-20 px-6 bg-[#0B1120]">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-12">Actualités</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {articles.map(article => (
+                        <a href={`/blog/${article.id}`} class="group">
+                            <article class="bg-slate-900/50 rounded-2xl overflow-hidden border border-slate-800 hover:border-blue-500 transition-all">
+                                {article.data.image && <img src={article.data.image} alt={article.data.title} class="w-full h-48 object-cover" />}
+                                <div class="p-6">
+                                    <h2 class="text-xl font-bold text-white group-hover:text-blue-400 mb-2">{article.data.title}</h2>
+                                    <p class="text-slate-400 text-sm line-clamp-3">{article.data.description}</p>
+                                </div>
+                            </article>
+                        </a>
+                ))}
+            </div>
+        </div>
+    </section>
+</BaseLayout>

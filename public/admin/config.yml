@@ -283,3 +283,19 @@ collections:
         { label: "Image Cards", name: "imageCards", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Cards", name: "cards", widget: "list", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Description", name: "description", widget: "text", required: false }, { label: "Button Label", name: "buttonLabel", widget: "string", required: false }, { label: "Button Link", name: "buttonLink", widget: "string", required: false }, { label: "Image", name: "image", widget: "image" }, { label: "Image Alt", name: "imageAlt", widget: "string", required: false }] }] },
          { label: "Feature Showcase", name: "featureShowcase", widget: "object", fields: [{ label: "Title", name: "title", widget: "string", required: false }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Items", name: "items", widget: "list", fields: [{ label: "Eyebrow", name: "eyebrow", widget: "string", required: false }, { label: "Title", name: "title", widget: "string" }, { label: "Description", name: "description", widget: "text" }, { label: "Alignement", name: "align", widget: "select", options: ["left", "right"], default: "left", required: false }, { label: "Image de fond", name: "backgroundImage", widget: "image" }, { label: "Alt image de fond", name: "backgroundImageAlt", widget: "string", required: false }, { label: "Écrans", name: "screens", widget: "list", required: false, fields: [{ label: "Image", name: "image", widget: "image" }, { label: "Texte alternatif", name: "imageAlt", widget: "string", required: false }] }, { label: "Tags", name: "tags", widget: "list", required: false, fields: [{ label: "Label", name: "label", widget: "string", required: false }, { label: "Image", name: "image", widget: "image", required: false }, { label: "Texte alternatif", name: "imageAlt", widget: "string", required: false }] }, { label: "CTA Label", name: "ctaLabel", widget: "string", required: false }, { label: "CTA Link", name: "ctaLink", widget: "string", required: false }] }] }, { label: "Lead Form", name: "leadForm", widget: "object", fields: [{ label: "Title", name: "title", widget: "string" }, { label: "Subtitle", name: "subtitle", widget: "text", required: false }, { label: "Introduction", name: "intro", widget: "markdown", required: false }, { label: "Label Bouton", name: "submitLabel", widget: "string", default: "Envoyer" }, { label: "Message de succès", name: "successMessage", widget: "text", default: "Merci ! Votre demande a été transmise avec succès." }, { label: "Type de formulaire HubSpot", name: "hubspotFormType", widget: "select", options: ["diagnostic", "contact", "generic"], default: "generic" }] }
       ]}
+
+  - name: "articles"
+    label: "Blog (Articles)"
+    folder: "src/content/articles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Description SEO", name: "description", widget: "text" }
+      - { label: "Date de publication", name: "date", widget: "datetime" }
+      - { label: "Auteur", name: "author", widget: "string" }
+      - { label: "Co-auteurs", name: "coAuthors", widget: "list", required: false, field: { label: "Nom", name: "name", widget: "string" } }
+      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" } }
+      - { label: "Image de couverture", name: "image", widget: "image", required: false }
+      - { label: "Brouillon", name: "draft", widget: "boolean", default: false }
+      - { label: "Contenu", name: "body", widget: "markdown" }
