@@ -53,7 +53,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
       <!-- Image 75% width & its overlays -->
       <div
         class={`absolute opacity-80 top-0 bottom-0 w-[75%] ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
-        style={`background: linear-gradient(${reversed ? '76.97deg' : '283.03deg'}, #121B2E 18.79%, rgba(22, 32, 50, 0) 83.76%), linear-gradient(${reversed ? '40.96deg' : '319.04deg'}, #121B2E 20%, rgba(22, 32, 50, 0) 100%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: ${reversed ? 'left center' : 'right center'}; background-size: cover;`}
+        style={`background: linear-gradient(${reversed ? '76.97deg' : '283.03deg'}, #121B2E 18.79%, rgba(22, 32, 50, 0) 83.76%), linear-gradient(${reversed ? '40.96deg' : '319.04deg'}, #121B2E 20%, rgba(22, 32, 50, 0) 100%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: center center; background-size: cover;`}
       ></div>
 
       <!-- Global Overlay 100% width -->
@@ -79,15 +79,15 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
       <div class={`relative z-10 ${reversed ? "order-1" : "order-2"}`}>
         <Mobile
           screenshot={screenshot1}
-          dataRole={reversed ? "active-phone" : "context-phone"}
+          dataRole="context-phone"
         />
       </div>
 
-      <!-- Phone 2 (active phone = overflows into the empty side) -->
+      <!-- Phone 2 (active phone = changes on button click, overflows into empty side) -->
       <div class={`relative z-0 ${reversed ? "order-2" : "order-1"}`}>
         <Mobile
           screenshot={screenshot2}
-          dataRole={reversed ? "context-phone" : "active-phone"}
+          dataRole="active-phone"
         />
       </div>
     </div>
