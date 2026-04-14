@@ -8,7 +8,7 @@ const { title, subtitle } = Astro.props;
 ---
 
 <section
-  class="overflow-hidden relative bg-slate-950 px-6 h-screen flex items-center"
+  class="overflow-hidden relative bg-slate-950 px-6 py-20 md:py-[120px] flex items-center"
 >
   <!-- Gradient overlay -->
   <div
@@ -21,23 +21,31 @@ const { title, subtitle } = Astro.props;
     style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.5' clip-path='url(%23clip0_2381_9933)'%3E%3Cpath d='M0 13.3335H80' stroke='%230F172B'/%3E%3Cpath d='M0 40H80' stroke='%230F172B'/%3E%3Cpath d='M0 66.6665H80' stroke='%230F172B'/%3E%3Cpath d='M13.333 0L13.333 80' stroke='%230F172B'/%3E%3Cpath d='M40 0L40 80' stroke='%230F172B'/%3E%3Cpath d='M66.667 0V80' stroke='%230F172B'/%3E%3C/g%3E%3Cg clip-path='url(%23clip1_2381_9933)'%3E%3Cpath d='M37 40H43' stroke='%231D293D'/%3E%3Cpath d='M40 37V43' stroke='%231D293D'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_2381_9933'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3CclipPath id='clip1_2381_9933'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E&quot;); background-repeat: repeat;"
   >
   </div>
-  <div id="planet-3d" class="absolute inset-0 overflow-hidden"></div>
 
   <div
-    class="relative z-20 max-w-5xl mx-auto h-full px-6 grid grid-rows-[auto_1fr_auto]"
+    class="relative z-20 max-w-5xl mx-auto px-6 flex flex-col items-center gap-12"
   >
-    <div class="pt-20 text-center">
-      <i class="ph ph-planet text-4xl text-slate-500 mb-4 block"></i>
-      <h1 class="text-3xl md:text-5xl font-bold text-slate-50">
+    <div class="flex flex-col text-center gap-4 max-w-3xl">
+      <i
+        class="ph ph-globe-hemisphere-east block opacity-40"
+        style="font-size: 48px; background: linear-gradient(180deg, #90A1B9 0%, rgba(248, 250, 252, 0.2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      ></i>
+      <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-50">
         {title}
       </h1>
-      <p class="mt-4 text-base md:text-xl text-slate-400 max-w-2xl mx-auto">
+      <p class="text-base md:text-xl text-slate-400 mb-0">
         {subtitle}
       </p>
     </div>
 
-    <div></div>
-    <div class="pb-16">
+    <!-- Planet in the flow -->
+    <div
+      id="planet-3d"
+      class="w-full h-[320px] md:h-[480px] relative overflow-hidden"
+    >
+    </div>
+
+    <div>
       <div class="flex flex-wrap justify-center">
         <button data-biome="desert" class="biome-btn" title="Desert"
           ><i class="ph ph-bold ph-sun text-2xl"></i></button
@@ -296,7 +304,7 @@ const { title, subtitle } = Astro.props;
     };
 
     const earth = new THREE.Mesh(
-      new THREE.SphereGeometry(30, 32, 32),
+      new THREE.SphereGeometry(60, 32, 32),
       planetMat,
     );
     scene.add(earth);
@@ -339,7 +347,7 @@ const { title, subtitle } = Astro.props;
     });
 
     const atmosphere = new THREE.Mesh(
-      new THREE.SphereGeometry(30 * 1.15, 32, 32),
+      new THREE.SphereGeometry(60 * 1.15, 32, 32),
       atmMat,
     );
     scene.add(atmosphere);
@@ -352,7 +360,7 @@ const { title, subtitle } = Astro.props;
     let dragRotX = 0,
       dragRotY = 0;
     const DRAG_SPEED = 1 / 300;
-    const RETURN_SPEED = 0.02; // lerp factor per frame to return to neutral
+    const RETURN_SPEED = 0.08; // lerp factor per frame to return to neutral
 
     renderer.domElement.addEventListener("mousedown", (e) => {
       mouseDown = true;
@@ -468,8 +476,10 @@ const { title, subtitle } = Astro.props;
     function animate() {
       requestAnimationFrame(animate);
 
-      // Auto-rotate
-      baseRotY += 0.001;
+      // Auto-rotate only when NOT dragging
+      if (!mouseDown) {
+        baseRotY += 0.001;
+      }
 
       // When not dragging, lerp drag offsets back to 0
       if (!mouseDown) {
