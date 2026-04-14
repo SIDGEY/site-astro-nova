@@ -16,45 +16,71 @@ const { icon, title, subtitle, items } = Astro.props;
 const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<section class="overflow-hidden relative bg-slate-950 py-20 md:py-28 px-0">
-
+<section class="overflow-hidden relative bg-slate-950 py-20 md:py-[120px] px-0">
   <!-- Gradient overlay -->
-  <div class="absolute inset-0 bg-gradient-to-b from-slate-900/25 to-slate-950/25"></div>
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-slate-900/25 to-slate-950/25"
+  >
+  </div>
   <!-- Grid pattern -->
-  <div class="absolute inset-0" style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.5' clip-path='url(%23clip0_2381_9933)'%3E%3Cpath d='M0 13.3335H80' stroke='%230F172B'/%3E%3Cpath d='M0 40H80' stroke='%230F172B'/%3E%3Cpath d='M0 66.6665H80' stroke='%230F172B'/%3E%3Cpath d='M13.333 0L13.333 80' stroke='%230F172B'/%3E%3Cpath d='M40 0L40 80' stroke='%230F172B'/%3E%3Cpath d='M66.667 0V80' stroke='%230F172B'/%3E%3C/g%3E%3Cg clip-path='url(%23clip1_2381_9933)'%3E%3Cpath d='M37 40H43' stroke='%231D293D'/%3E%3Cpath d='M40 37V43' stroke='%231D293D'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_2381_9933'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3CclipPath id='clip1_2381_9933'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E&quot;); background-repeat: repeat;"></div>
+  <div
+    class="absolute inset-0"
+    style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.5' clip-path='url(%23clip0_2381_9933)'%3E%3Cpath d='M0 13.3335H80' stroke='%230F172B'/%3E%3Cpath d='M0 40H80' stroke='%230F172B'/%3E%3Cpath d='M0 66.6665H80' stroke='%230F172B'/%3E%3Cpath d='M13.333 0L13.333 80' stroke='%230F172B'/%3E%3Cpath d='M40 0L40 80' stroke='%230F172B'/%3E%3Cpath d='M66.667 0V80' stroke='%230F172B'/%3E%3C/g%3E%3Cg clip-path='url(%23clip1_2381_9933)'%3E%3Cpath d='M37 40H43' stroke='%231D293D'/%3E%3Cpath d='M40 37V43' stroke='%231D293D'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_2381_9933'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3CclipPath id='clip1_2381_9933'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E&quot;); background-repeat: repeat;"
+  >
+  </div>
 
-  <div class="relative z-10 text-center mb-12 px-6">
-    <i class={`ph ph-${icon} text-4xl text-slate-500 mb-4 block`}></i>
-    <h2 class="text-3xl md:text-5xl font-bold text-slate-50 mb-4">
-      {title}
-    </h2>
-    <p class="text-base md:text-lg text-slate-400 max-w-2xl mx-auto">
-      {subtitle}
-    </p>
+  <div class="relative z-20 w-full flex flex-col items-center mb-12 px-6">
+    <div class="flex flex-col text-center gap-4 max-w-3xl">
+      <i
+        class={`ph ph-${icon} block opacity-40`}
+        style="font-size: 48px; background: linear-gradient(180deg, #90A1B9 0%, rgba(248, 250, 252, 0.2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      ></i>
+      <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-50">
+        {title}
+      </h2>
+      <p class="text-base md:text-xl text-slate-400 mb-0">
+        {subtitle}
+      </p>
+    </div>
   </div>
 
   <div class="relative z-10">
-    <div id={carouselId} class="carousel-track flex gap-4 md:gap-6 overflow-x-auto scroll-smooth px-6 pb-4 snap-x snap-mandatory scrollbar-hide">
-      {items.map((item) => (
-        <div class="carousel-card flex-shrink-0 w-[200px] md:w-[220px] snap-center">
-          <div class="relative rounded-xl overflow-hidden border border-slate-700/50 bg-slate-900/50 aspect-[3/4]">
-            <img src={item.image} alt={item.title} class="w-full h-full object-cover" />
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 flex flex-col items-center">
-              {item.avatar && (
-                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-slate-500 mb-2">
-                  <img src={item.avatar} alt="" class="w-full h-full object-cover" />
-                </div>
-              )}
-              <p class="text-white text-sm font-medium text-center">{item.title}</p>
+    <div
+      id={carouselId}
+      class="carousel-track flex gap-4 md:gap-6 overflow-x-auto scroll-smooth px-6 snap-x snap-mandatory scrollbar-hide"
+    >
+      {
+        items.map((item) => (
+          <div class="carousel-card flex-shrink-0 w-[200px] md:w-[220px] snap-center">
+            <div class="relative rounded-xl overflow-hidden border border-slate-700/50 bg-slate-900/50 aspect-[3/4]">
+              <img
+                src={item.image}
+                alt={item.title}
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 flex flex-col items-center">
+                {item.avatar && (
+                  <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-slate-500 mb-2">
+                    <img
+                      src={item.avatar}
+                      alt=""
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <p class="text-white text-sm font-medium text-center">
+                  {item.title}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 
   <!-- Dots -->
-  <div class="relative z-10 flex justify-center gap-2 mt-6">
+  <div class="relative z-10 flex justify-center gap-2 my-12">
     <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
     <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
     <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
