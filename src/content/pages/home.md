@@ -17,7 +17,7 @@ blocks:
     subtitle: Votre planète est le cœur de votre empire. C'est ici que vous produisez des ressources et développez vos défenses.
 
   - type: featurePhone
-    icon: gear-six
+    icon: nut
     title: Gérez vos ressources pour prospérer
     subtitle: "Les ressources sont essentielles dans Astro Nova. Le métal est crucial pour la construction, tandis que le cristal est nécessaire pour les technologies avancées. Une bonne gestion est clé pour progresser."
     screenshot1: /bg-phone-planet.svg
@@ -25,10 +25,10 @@ blocks:
     backgroundImage: /landing/backgrounds/bg-resource.webp
     reversed: true
     resourceIcons:
-      - icon: circle-half
+      - icon: nut
         active: true
         screenshot: /bg-phone-resource-1.svg
-      - icon: diamond
+      - icon: diamonds-four
         screenshot: /bg-phone-resource-1.svg
       - icon: drop
         screenshot: /bg-phone-resource-1.svg
