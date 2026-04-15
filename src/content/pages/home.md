@@ -20,20 +20,20 @@ blocks:
     icon: nut
     title: Gérez vos ressources pour prospérer
     subtitle: "Les ressources sont essentielles dans Astro Nova. Le métal est crucial pour la construction, tandis que le cristal est nécessaire pour les technologies avancées. Une bonne gestion est clé pour progresser."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
+    screenshot1: /landing/screens/resource.webp
+    screenshot2: /landing/screens/resource-metal.webp
     backgroundImage: /landing/backgrounds/bg-resource.webp
     reversed: true
     resourceIcons:
       - icon: nut
         active: true
-        screenshot: /bg-phone-resource-1.svg
+        screenshot: /landing/screens/resource-metal.webp
       - icon: diamonds-four
-        screenshot: /bg-phone-resource-1.svg
+        screenshot: /landing/screens/resource-crystal.webp
       - icon: drop
-        screenshot: /bg-phone-resource-1.svg
+        screenshot: /landing/screens/resource-hydrogen.webp
       - icon: lightning
-        screenshot: /bg-phone-resource-1.svg
+        screenshot: /landing/screens/resource-energy.webp
 
   - type: featurePhone
     icon: buildings
