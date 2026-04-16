@@ -45,11 +45,18 @@ const { title, subtitle } = Astro.props;
     >
     </div>
 
-    <!-- Biomes Selector -->
+    <!-- Biomes Selector - 3 layer structure -->
     <div class="flex flex-col items-center w-full relative h-[72px]">
+      <!-- Layer 3: Active background (fixed, behind buttons) -->
+      <div
+        id="active-bg"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-lg bg-slate-900 pointer-events-none z-0"
+      ></div>
+
+      <!-- Layer 2: Buttons (scrollable) -->
       <div
         id="biome-list"
-        class="flex flex-nowrap items-center gap-0 absolute top-1/2 left-1/2 transition-transform duration-500 ease-out w-max"
+        class="flex flex-nowrap items-center gap-0 absolute top-1/2 left-1/2 transition-transform duration-500 ease-out w-max z-10"
         style="transform: translate(0px, -50%);"
       >
         <button data-biome="desert" class="biome-btn shrink-0" title="Desert"
@@ -74,6 +81,12 @@ const { title, subtitle } = Astro.props;
           ><i class="ph ph-bold ph-cloud text-2xl"></i></button
         >
       </div>
+
+      <!-- Layer 1: Active border (fixed, above buttons) -->
+      <div
+        id="active-border"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-lg border-2 border-blue-500 pointer-events-none z-20"
+      ></div>
     </div>
   </div>
 
@@ -98,12 +111,10 @@ const { title, subtitle } = Astro.props;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .biome-btn:hover {
-      transform: translateY(-2px);
       opacity: 0.8;
+      color: #cbd5e1;
     }
     .biome-btn[aria-pressed="true"] {
-      border-color: #3b82f6;
-      background: #0f172a;
       color: #f8fafc;
       opacity: 1;
     }
