@@ -7,36 +7,60 @@ const { navigation } = settings.data;
 ---
 
 <nav id="main-nav"
-     class="fixed top-0 left-0 right-0 px-6 transition-all duration-300 border-b z-[999] py-4 bg-transparent"
+     class="fixed top-0 left-0 right-0 px-6 lg:px-8 transition-all duration-300 z-[999] py-5 bg-transparent"
 >
-  <div class="hidden lg:flex items-start h-12 w-full">
+  <div class="hidden lg:flex items-center justify-between h-10 w-full mx-auto">
     <div class="flex items-center justify-start">
       <a href="/">
         <img src="/logo.svg" alt="Astro Nova" class="h-12 w-auto" />
       </a>
     </div>
-    <div class="flex grow items-center justify-end space-x-8">
-      {
-        navigation.map((item) => (
-          <a
-            href={item.link}
-            class="text-slate-300 hover:text-blue-300 transition-colors"
-          >
-            {item.label}
-          </a>
-        ))
-      }
-      <button
-          class="px-6 whitespace-nowrap bg-blue-500 hover:bg-blue-600 rounded-md font-medium h-10 mr-2 text-slate-200"
-      >
-        S'inscrire à la bêta
-      </button>
-      <a
-          class="px-6 whitespace-nowrap border border-slate-600 backdrop-blur-xl text-slate-200 rounded-md font-medium h-10 flex items-center"
+    <div class="flex items-center justify-end gap-8">
+      <!-- Navigation links with gap-8 (32px) -->
+      <div class="flex items-center text-base gap-8">
+        <!-- Dropdown: Le jeu -->
+        <div class="relative group">
+          <button class="flex items-center gap-2 text-slate-300 hover:text-slate-200 transition-colors py-2">
+            <span>Le jeu</span>
+            <i class="ph ph-bold ph-caret-down text-slate-300 text-base opacity-50"></i>
+          </button>
+          <!-- Dropdown menu -->
+          <div class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div class="bg-slate-800 border border-slate-700 rounded-md shadow-xl py-2 min-w-[200px]">
+              <a href="#planets" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                Planète & Galaxie
+              </a>
+              <a href="#resources" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                Ressources & Bâtiments
+              </a>
+              <a href="#laboratory" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                Laboratoire & Technologies
+              </a>
+              <a href="#defenses" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                Défenses & Vaisseaux
+              </a>
+            </div>
+          </div>
+        </div>
+        <a href="#blog" class="text-slate-300 hover:text-slate-200 transition-colors py-2">Blog</a>
+        <a href="#community" class="text-slate-300 hover:text-slate-200 transition-colors py-2">Communauté</a>
+        <a href="#gallery" class="text-slate-300 hover:text-slate-200 transition-colors py-2">Galerie</a>
+        <a href="#roadmap" class="text-slate-300 hover:text-slate-200 transition-colors py-2">Roadmap</a>
+      </div>
+      <!-- Buttons with gap-4 (16px) -->
+      <div class="flex items-center gap-4">
+        <button
+          class="px-4 py-2 whitespace-nowrap bg-blue-600 hover:bg-blue-500 text-slate-50 rounded-md font-semibold text-base transition-colors h-10"
+        >
+          S'inscrire à la bêta
+        </button>
+        <a
+          class="px-4 py-2 whitespace-nowrap border border-slate-600 text-slate-50 rounded-md font-semibold text-base transition-colors h-10 flex items-center hover:border-slate-500"
           href="/game"
-      >
-        Jouer
-      </a>
+        >
+          Jouer
+        </a>
+      </div>
     </div>
   </div>
 
@@ -88,16 +112,18 @@ const { navigation } = settings.data;
     <div
       class="flex flex-col space-y-4 items-center text-center w-full px-12 md:px-6"
     >
-      {
-        navigation.map((item) => (
-          <a
-            href={item.link}
-            class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full"
-          >
-            {item.label}
-          </a>
-        ))
-      }
+      <!-- Le jeu section with submenu -->
+      <div class="text-slate-200 py-4 text-2xl font-medium w-full">Le jeu</div>
+      <div class="flex flex-col space-y-2 items-center text-center w-full">
+        <a href="#planets" class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg">Planète & Galaxie</a>
+        <a href="#resources" class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg">Ressources & Bâtiments</a>
+        <a href="#laboratory" class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg">Laboratoire & Technologies</a>
+        <a href="#defenses" class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg">Défenses & Vaisseaux</a>
+      </div>
+      <a href="#blog" class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full">Blog</a>
+      <a href="#community" class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full">Communauté</a>
+      <a href="#gallery" class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full">Galerie</a>
+      <a href="#roadmap" class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full">Roadmap</a>
       <button
         class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium"
       >

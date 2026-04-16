@@ -43,7 +43,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 <section
-  class={`feature-phone-section overflow-hidden relative bg-[#0B1120] py-20 md:py-[120px] px-6 md:px-12 lg:px-20 flex items-center ${reversed ? 'is-reversed' : ''}`}
+  class={`feature-phone-section overflow-hidden relative bg-[#0B1120] py-20 md:py-[128px] px-6 md:px-12 lg:px-20 flex items-center ${reversed ? 'is-reversed' : ''}`}
   id={sectionId}
   data-reversed={reversed.toString()}
 >
@@ -87,7 +87,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
           <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-slate-50">
             {title}
           </h2>
-          <p class="text-base md:text-lg text-slate-400 mb-8 leading-relaxed">
+          <p class="text-base md:text-lg text-slate-400 mb-16 leading-relaxed">
             {subtitle}
           </p>
           {
@@ -112,22 +112,37 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
           }
           {
             gallery.length > 0 && (
-              <div class="flex gap-2 mt-2">
+              <div class="flex gap-3 h-[68px] items-center" data-gallery-buttons>
                 {gallery.map((img, i) => (
-                  <div
-                    class={`w-14 h-14 rounded-lg overflow-hidden border ${
-                      i === 0 ? "border-blue-500" : "border-slate-700/50"
-                    } ${i === 0 ? "" : "opacity-50"}`}
+                  <button
+                    class={`gallery-btn relative w-auto aspect-[4/5] h-16 rounded-md transition-all hover:opacity-60 ${
+                      i === 0 ? "" : "opacity-40"
+                    }`}
+                    style="background: radial-gradient(100% 145.8% at 100% 0%, rgba(30, 41, 59, 0.5) 0%, rgba(30, 41, 59, 0.1) 100%); backdrop-filter: blur(1px);"
+                    data-index={i}
+                    data-screenshot={img.src}
+                    data-active={i === 0 ? "true" : "false"}
                   >
                     <img
                       src={img.src}
                       alt={img.alt || ""}
                       class="w-full h-full object-cover"
                     />
-                  </div>
+                    {/* Gradient overlay - from game */}
+                    <div
+                      class="absolute inset-0 pointer-events-none"
+                      style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, #434C60 100%);"
+                    ></div>
+                    {/* Border overlay for inactive */}
+                    <div class="absolute inset-0 border-2 border-slate-900 rounded-sm pointer-events-none"></div>
+                    {/* Active border overlay - outside using outline */}
+                    <div
+                      class={`gallery-active-overlay absolute -inset-[2px] border-2 border-blue-500 rounded-md pointer-events-none transition-opacity ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+                    ></div>
+                  </button>
                 ))}
                 {galleryExtra > 0 && (
-                  <div class="w-14 h-14 rounded-lg border border-slate-700/50 flex items-center justify-center text-slate-400 text-sm bg-slate-900/50">
+                  <div class="w-14 h-16 rounded-md border border-slate-800 flex items-center justify-center text-slate-500 text-base font-medium bg-slate-900/50">
                     +{galleryExtra}
                   </div>
                 )}
@@ -139,7 +154,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
         <!-- Normal: active phone on the left -->
         <div class="relative z-0">
           <Mobile
-            screenshot={screenshot2}
+            screenshot={gallery.length > 0 ? gallery[0].src : screenshot2}
             dataRole="active-phone"
           />
         </div>
@@ -166,7 +181,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
         <!-- Reversed: active phone on the right -->
         <div class="relative z-0">
           <Mobile
-            screenshot={screenshot2}
+            screenshot={gallery.length > 0 ? gallery[0].src : screenshot2}
             dataRole="active-phone"
           />
         </div>
@@ -180,7 +195,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
           <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-slate-50">
             {title}
           </h2>
-          <p class="text-base md:text-lg text-slate-400 mb-8 leading-relaxed">
+          <p class="text-base md:text-lg text-slate-400 mb-16 leading-relaxed">
             {subtitle}
           </p>
           {
@@ -205,22 +220,37 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
           }
           {
             gallery.length > 0 && (
-              <div class="flex gap-2 mt-2">
+              <div class="flex gap-3 h-[68px] items-center" data-gallery-buttons>
                 {gallery.map((img, i) => (
-                  <div
-                    class={`w-14 h-14 rounded-lg overflow-hidden border ${
-                      i === 0 ? "border-blue-500" : "border-slate-700/50"
-                    } ${i === 0 ? "" : "opacity-50"}`}
+                  <button
+                    class={`gallery-btn relative w-auto aspect-[4/5] h-16 rounded-md transition-all hover:opacity-60 ${
+                      i === 0 ? "" : "opacity-40"
+                    }`}
+                    style="background: radial-gradient(100% 145.8% at 100% 0%, rgba(30, 41, 59, 0.5) 0%, rgba(30, 41, 59, 0.1) 100%); backdrop-filter: blur(1px);"
+                    data-index={i}
+                    data-screenshot={img.src}
+                    data-active={i === 0 ? "true" : "false"}
                   >
                     <img
                       src={img.src}
                       alt={img.alt || ""}
                       class="w-full h-full object-cover"
                     />
-                  </div>
+                    {/* Gradient overlay - from game */}
+                    <div
+                      class="absolute inset-0 pointer-events-none"
+                      style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, #434C60 100%);"
+                    ></div>
+                    {/* Border overlay for inactive */}
+                    <div class="absolute inset-0 border-2 border-slate-900 rounded-sm pointer-events-none"></div>
+                    {/* Active border overlay - outside */}
+                    <div
+                      class={`gallery-active-overlay absolute -inset-[2px] border-2 border-blue-500 rounded-md pointer-events-none transition-opacity ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+                    ></div>
+                  </button>
                 ))}
                 {galleryExtra > 0 && (
-                  <div class="w-14 h-14 rounded-lg border border-slate-700/50 flex items-center justify-center text-slate-400 text-sm bg-slate-900/50">
+                  <div class="w-14 h-16 rounded-md border border-slate-800 flex items-center justify-center text-slate-500 text-base font-medium bg-slate-900/50">
                     +{galleryExtra}
                   </div>
                 )}
@@ -283,14 +313,42 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     if (!section) return;
 
     const buttons = section.querySelectorAll('.resource-btn[data-screenshot]');
-    if (buttons.length === 0) return;
+    const galleryButtons = section.querySelectorAll('.gallery-btn[data-screenshot]');
+    if (buttons.length === 0 && galleryButtons.length === 0) return;
 
     // Find the active phone (the "far" one that should change)
     const activePhone = section.querySelector('[data-role="active-phone"]');
     const activePhoneMobile = section.querySelector('[data-role="active-phone-mobile"]');
 
+    function updatePhoneScreenshot(screenshot) {
+      if (!screenshot) return;
+      // Find the screenshot img inside the active phone container
+      if (activePhone) {
+        const img = activePhone.querySelector('img[alt="Screenshot"]');
+        if (img) {
+          img.style.opacity = '0';
+          img.style.transition = 'opacity 0.3s ease';
+          setTimeout(() => {
+            img.src = screenshot;
+            img.style.opacity = '1';
+          }, 150);
+        }
+      }
+      if (activePhoneMobile) {
+        const imgMobile = activePhoneMobile.querySelector('img[alt="Screenshot"]');
+        if (imgMobile) {
+          imgMobile.style.opacity = '0';
+          imgMobile.style.transition = 'opacity 0.3s ease';
+          setTimeout(() => {
+            imgMobile.src = screenshot;
+            imgMobile.style.opacity = '1';
+          }, 150);
+        }
+      }
+    }
+
     function setActiveButton(clickedBtn) {
-      // Update button styles
+      // Update resource button styles
       buttons.forEach((btn) => {
         btn.classList.remove('border-2', 'border-blue-500', 'bg-slate-900', 'text-slate-50');
         btn.classList.add('opacity-50', 'text-slate-400');
@@ -301,38 +359,44 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
       clickedBtn.classList.add('border-2', 'border-blue-500', 'bg-slate-900', 'text-slate-50');
       clickedBtn.dataset.active = 'true';
 
-      // Update the active phone screenshot
-      const screenshot = clickedBtn.dataset.screenshot;
-      if (screenshot) {
-        // Find the screenshot img inside the active phone container
-        if (activePhone) {
-          const img = activePhone.querySelector('img[alt="Screenshot"]');
-          if (img) {
-            img.style.opacity = '0';
-            img.style.transition = 'opacity 0.3s ease';
-            setTimeout(() => {
-              img.src = screenshot;
-              img.style.opacity = '1';
-            }, 150);
-          }
-        }
-        if (activePhoneMobile) {
-          const imgMobile = activePhoneMobile.querySelector('img[alt="Screenshot"]');
-          if (imgMobile) {
-            imgMobile.style.opacity = '0';
-            imgMobile.style.transition = 'opacity 0.3s ease';
-            setTimeout(() => {
-              imgMobile.src = screenshot;
-              imgMobile.style.opacity = '1';
-            }, 150);
-          }
-        }
-      }
+      updatePhoneScreenshot(clickedBtn.dataset.screenshot);
+    }
+
+    function setActiveGalleryButton(clickedBtn) {
+      // Get the parent container to only update buttons in the same group
+      const container = clickedBtn.closest('[data-gallery-buttons]');
+      if (!container) return;
+
+      const groupButtons = container.querySelectorAll('.gallery-btn');
+      groupButtons.forEach((btn) => {
+        // Reset button opacity
+        btn.classList.add('opacity-40');
+        btn.dataset.active = 'false';
+        // Hide overlay
+        const overlay = btn.querySelector('.gallery-active-overlay');
+        if (overlay) overlay.classList.add('opacity-0');
+        if (overlay) overlay.classList.remove('opacity-100');
+      });
+
+      clickedBtn.classList.remove('opacity-40');
+      clickedBtn.dataset.active = 'true';
+      // Show overlay for active button
+      const activeOverlay = clickedBtn.querySelector('.gallery-active-overlay');
+      if (activeOverlay) activeOverlay.classList.remove('opacity-0');
+      if (activeOverlay) activeOverlay.classList.add('opacity-100');
+
+      updatePhoneScreenshot(clickedBtn.dataset.screenshot);
     }
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
         setActiveButton(btn);
+      });
+    });
+
+    galleryButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        setActiveGalleryButton(btn);
       });
     });
   });
