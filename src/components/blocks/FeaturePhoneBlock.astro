@@ -112,38 +112,40 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
           }
           {
             gallery.length > 0 && (
-              <div class="flex gap-3 h-[68px] items-center" data-gallery-buttons>
+              <div class="relative flex gap-3 h-[68px] items-center" data-gallery-buttons>
+                {/* Border indicator — moves via JS, sits outside overflow-hidden buttons */}
+                <div
+                  data-gallery-indicator
+                  class="absolute w-[51px] h-16 rounded-md outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
+                  style="left: 0px;"
+                ></div>
                 {gallery.map((img, i) => (
                   <button
-                    class={`gallery-btn relative w-auto aspect-[4/5] h-16 rounded-md transition-all hover:opacity-60 ${
-                      i === 0 ? "" : "opacity-40"
-                    }`}
-                    style="background: radial-gradient(100% 145.8% at 100% 0%, rgba(30, 41, 59, 0.5) 0%, rgba(30, 41, 59, 0.1) 100%); backdrop-filter: blur(1px);"
+                    class={`gallery-btn w-[51px] h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${i === 0 ? "" : "opacity-50"}`}
                     data-index={i}
                     data-screenshot={img.src}
                     data-active={i === 0 ? "true" : "false"}
                   >
-                    <img
-                      src={img.src}
-                      alt={img.alt || ""}
-                      class="w-full h-full object-cover"
-                    />
-                    {/* Gradient overlay - from game */}
-                    <div
-                      class="absolute inset-0 pointer-events-none"
-                      style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, #434C60 100%);"
-                    ></div>
-                    {/* Border overlay for inactive */}
-                    <div class="absolute inset-0 border-2 border-slate-900 rounded-sm pointer-events-none"></div>
-                    {/* Active border overlay - outside using outline */}
-                    <div
-                      class={`gallery-active-overlay absolute -inset-[2px] border-2 border-blue-500 rounded-md pointer-events-none transition-opacity ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
-                    ></div>
+                    <div class="relative w-full h-full">
+                      <img
+                        src={img.src}
+                        alt={img.alt || ""}
+                        class={`w-full h-full object-cover transition-all duration-200 ${i === 0 ? "" : "grayscale"}`}
+                      />
+                      <div
+                        class="absolute inset-0 pointer-events-none"
+                        style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, #434C60 100%);"
+                      ></div>
+                      <div class="absolute inset-0 rounded-md border border-slate-600/50 pointer-events-none"></div>
+                    </div>
                   </button>
                 ))}
                 {galleryExtra > 0 && (
-                  <div class="w-14 h-16 rounded-md border border-slate-800 flex items-center justify-center text-slate-500 text-base font-medium bg-slate-900/50">
-                    +{galleryExtra}
+                  <div class="w-[51px] h-16 rounded-md overflow-hidden opacity-50 cursor-default transition-all duration-300">
+                    <div class="relative w-full h-full bg-slate-900/20 flex items-center justify-center">
+                      <span class="text-slate-400 text-sm font-medium">+{galleryExtra}</span>
+                      <div class="absolute inset-0 rounded-md border border-slate-700 pointer-events-none"></div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -220,38 +222,40 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
           }
           {
             gallery.length > 0 && (
-              <div class="flex gap-3 h-[68px] items-center" data-gallery-buttons>
+              <div class="relative flex gap-3 h-[68px] items-center" data-gallery-buttons>
+                {/* Border indicator — moves via JS, sits outside overflow-hidden buttons */}
+                <div
+                  data-gallery-indicator
+                  class="absolute w-[51px] h-16 rounded-md outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
+                  style="left: 0px;"
+                ></div>
                 {gallery.map((img, i) => (
                   <button
-                    class={`gallery-btn relative w-auto aspect-[4/5] h-16 rounded-md transition-all hover:opacity-60 ${
-                      i === 0 ? "" : "opacity-40"
-                    }`}
-                    style="background: radial-gradient(100% 145.8% at 100% 0%, rgba(30, 41, 59, 0.5) 0%, rgba(30, 41, 59, 0.1) 100%); backdrop-filter: blur(1px);"
+                    class={`gallery-btn w-[51px] h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${i === 0 ? "" : "opacity-50"}`}
                     data-index={i}
                     data-screenshot={img.src}
                     data-active={i === 0 ? "true" : "false"}
                   >
-                    <img
-                      src={img.src}
-                      alt={img.alt || ""}
-                      class="w-full h-full object-cover"
-                    />
-                    {/* Gradient overlay - from game */}
-                    <div
-                      class="absolute inset-0 pointer-events-none"
-                      style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, #434C60 100%);"
-                    ></div>
-                    {/* Border overlay for inactive */}
-                    <div class="absolute inset-0 border-2 border-slate-900 rounded-sm pointer-events-none"></div>
-                    {/* Active border overlay - outside */}
-                    <div
-                      class={`gallery-active-overlay absolute -inset-[2px] border-2 border-blue-500 rounded-md pointer-events-none transition-opacity ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
-                    ></div>
+                    <div class="relative w-full h-full">
+                      <img
+                        src={img.src}
+                        alt={img.alt || ""}
+                        class={`w-full h-full object-cover transition-all duration-200 ${i === 0 ? "" : "grayscale"}`}
+                      />
+                      <div
+                        class="absolute inset-0 pointer-events-none"
+                        style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, #434C60 100%);"
+                      ></div>
+                      <div class="absolute inset-0 rounded-md border border-slate-600/50 pointer-events-none"></div>
+                    </div>
                   </button>
                 ))}
                 {galleryExtra > 0 && (
-                  <div class="w-14 h-16 rounded-md border border-slate-800 flex items-center justify-center text-slate-500 text-base font-medium bg-slate-900/50">
-                    +{galleryExtra}
+                  <div class="w-[51px] h-16 rounded-md overflow-hidden opacity-50 cursor-default transition-all duration-300">
+                    <div class="relative w-full h-full bg-slate-900/20 flex items-center justify-center">
+                      <span class="text-slate-400 text-sm font-medium">+{galleryExtra}</span>
+                      <div class="absolute inset-0 rounded-md border border-slate-700 pointer-events-none"></div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -284,7 +288,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
               <img
                 src={img.src}
                 alt={img.alt || ""}
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover rounded-md"
               />
             </div>
           ))}
@@ -306,6 +310,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     }
   </div>
 </section>
+
 
 <script define:vars={{ sectionId }}>
   document.addEventListener('DOMContentLoaded', () => {
@@ -363,27 +368,26 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     }
 
     function setActiveGalleryButton(clickedBtn) {
-      // Get the parent container to only update buttons in the same group
       const container = clickedBtn.closest('[data-gallery-buttons]');
       if (!container) return;
 
-      const groupButtons = container.querySelectorAll('.gallery-btn');
-      groupButtons.forEach((btn) => {
-        // Reset button opacity
-        btn.classList.add('opacity-40');
+      // Move indicator to clicked button
+      const indicator = container.querySelector('[data-gallery-indicator]');
+      if (indicator) indicator.style.left = clickedBtn.offsetLeft + 'px';
+
+      // Reset all buttons to inactive state (opacity-50 + grayscale on img)
+      container.querySelectorAll('.gallery-btn').forEach((btn) => {
+        btn.classList.add('opacity-50');
         btn.dataset.active = 'false';
-        // Hide overlay
-        const overlay = btn.querySelector('.gallery-active-overlay');
-        if (overlay) overlay.classList.add('opacity-0');
-        if (overlay) overlay.classList.remove('opacity-100');
+        const img = btn.querySelector('img');
+        if (img) img.classList.add('grayscale');
       });
 
-      clickedBtn.classList.remove('opacity-40');
+      // Set clicked button to active state
+      clickedBtn.classList.remove('opacity-50');
       clickedBtn.dataset.active = 'true';
-      // Show overlay for active button
-      const activeOverlay = clickedBtn.querySelector('.gallery-active-overlay');
-      if (activeOverlay) activeOverlay.classList.remove('opacity-0');
-      if (activeOverlay) activeOverlay.classList.add('opacity-100');
+      const activeImg = clickedBtn.querySelector('img');
+      if (activeImg) activeImg.classList.remove('grayscale');
 
       updatePhoneScreenshot(clickedBtn.dataset.screenshot);
     }

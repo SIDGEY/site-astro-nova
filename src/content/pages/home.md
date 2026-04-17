@@ -44,13 +44,13 @@ blocks:
     backgroundImage: /landing/backgrounds/bg-building.webp
     reversed: false
     gallery:
-      - src: /landing/screen/resource.png
+      - src: /landing/thumbs/buildings-thumb-metal.jpg
         alt: Excavateur minéral
-      - src: /landing/screen/resource.png
+      - src: /landing/thumbs/buildings-thumb-cristal.jpg
         alt: Mine de cristal
-      - src: /landing/screen/resource.png
+      - src: /landing/thumbs/buildings-thumb-hydrogen.jpg
         alt: Raffinerie
-      - src: /landing/screen/resource.png
+      - src: /landing/thumbs/buildings-thumb-energy.jpg
         alt: Entrepôt
     galleryExtra: 8
 
