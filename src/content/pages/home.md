@@ -46,12 +46,16 @@ blocks:
     gallery:
       - src: /landing/thumbs/buildings-thumb-metal.jpg
         alt: Excavateur minéral
+        screenshot: /landing/screens/resource-metal.webp
       - src: /landing/thumbs/buildings-thumb-cristal.jpg
         alt: Mine de cristal
+        screenshot: /landing/screens/resource-cristal.webp
       - src: /landing/thumbs/buildings-thumb-hydrogen.jpg
         alt: Raffinerie
+        screenshot: /landing/screens/resource-hydrogen.webp
       - src: /landing/thumbs/buildings-thumb-energy.jpg
         alt: Entrepôt
+        screenshot: /landing/screens/resource-energy.webp
     galleryExtra: 8
 
   - type: featurePhone

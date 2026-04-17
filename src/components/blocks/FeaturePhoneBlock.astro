@@ -4,6 +4,7 @@ import Mobile from "../Mobile.astro";
 interface GalleryImage {
   src: string;
   alt?: string;
+  screenshot?: string;
 }
 
 interface Props {
@@ -123,7 +124,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
                   <button
                     class={`gallery-btn w-[51px] h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${i === 0 ? "" : "opacity-50"}`}
                     data-index={i}
-                    data-screenshot={img.src}
+                    data-screenshot={img.screenshot || img.src}
                     data-active={i === 0 ? "true" : "false"}
                   >
                     <div class="relative w-full h-full">
@@ -156,7 +157,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
         <!-- Normal: active phone on the left -->
         <div class="relative z-0">
           <Mobile
-            screenshot={gallery.length > 0 ? gallery[0].src : screenshot2}
+            screenshot={gallery.length > 0 ? (gallery[0].screenshot || gallery[0].src) : screenshot2}
             dataRole="active-phone"
           />
         </div>
@@ -183,7 +184,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
         <!-- Reversed: active phone on the right -->
         <div class="relative z-0">
           <Mobile
-            screenshot={gallery.length > 0 ? gallery[0].src : screenshot2}
+            screenshot={gallery.length > 0 ? (gallery[0].screenshot || gallery[0].src) : screenshot2}
             dataRole="active-phone"
           />
         </div>
@@ -233,7 +234,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
                   <button
                     class={`gallery-btn w-[51px] h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${i === 0 ? "" : "opacity-50"}`}
                     data-index={i}
-                    data-screenshot={img.src}
+                    data-screenshot={img.screenshot || img.src}
                     data-active={i === 0 ? "true" : "false"}
                   >
                     <div class="relative w-full h-full">
