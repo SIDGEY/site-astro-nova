@@ -39,46 +39,46 @@ blocks:
     icon: buildings
     title: Optimisez l'extraction de vos ressources
     subtitle: "Les mines sont vos sources de ressources. La mine de métal produit du métal, et la mine de cristal produit du cristal. Améliorez vos mines pour augmenter leur production."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
+    screenshot1: /landing/screens/resource.webp
+    screenshot2: /landing/screens/resource-metal.webp
     backgroundImage: /landing/backgrounds/bg-building.webp
     reversed: false
     gallery:
       - src: /landing/thumbs/buildings-metal.webp
         alt: Excavateur minéral
-        screenshot: /landing/screens/building-TODO.webp
+        screenshot: /landing/screens/resource-metal.webp
       - src: /landing/thumbs/buildings-cristal.webp
         alt: Mine de cristal
-        screenshot: /landing/screens/building-TODO.webp
+        screenshot: /landing/screens/resource-metal.webp
       - src: /landing/thumbs/buildings-hydrogen.webp
         alt: Raffinerie
-        screenshot: /landing/screens/building-TODO.webp
+        screenshot: /landing/screens/resource-metal.webp
       - src: /landing/thumbs/buildings-energy.webp
         alt: Entrepôt
-        screenshot: /landing/screens/building-TODO.webp
+        screenshot: /landing/screens/resource-metal.webp
     galleryExtra: 8
 
   - type: featurePhone
     icon: factory
     title: Maîtrisez les ressources de vos planètes
     subtitle: "Les bâtiments sont essentiels. Le centre de commandement gère la colonie, le laboratoire développe des technologies, et l'usine de robots accélère la construction."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
+    screenshot1: /landing/screens/resource.webp
+    screenshot2: /landing/screens/resource-metal.webp
     backgroundImage: /landing/backgrounds/bg-installation.webp
     reversed: true
     gallery:
       - src: /landing/thumbs/installation-dock-orbital.webp
         alt: Excavateur minéral
-        screenshot: /landing/screens/building-TODO.webp
+        screenshot: /landing/screens/resource-metal.webp
       - src: /landing/thumbs/installation-centre-innovation.webp
         alt: Mine de cristal
-        screenshot: /landing/screens/building-TODO.webp
+        screenshot: /landing/screens/resource-metal.webp
       - src: /landing/thumbs/installation-modulateur-planetaire.webp
         alt: Raffinerie
-        screenshot: /landing/screens/building-TODO.webp
+        screenshot: /landing/screens/resource-metal.webp
       - src: /landing/thumbs/installation-fabrique-automates.webp
         alt: Entrepôt
-        screenshot: /landing/screens/building-TODO.webp
+        screenshot: /landing/screens/resource-metal.webp
     galleryExtra: 8
 
   - type: carousel
