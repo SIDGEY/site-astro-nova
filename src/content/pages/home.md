@@ -44,18 +44,18 @@ blocks:
     backgroundImage: /landing/backgrounds/bg-building.webp
     reversed: false
     gallery:
-      - src: /landing/thumbs/buildings-thumb-metal.jpg
+      - src: /landing/thumbs/buildings-metal.webp
         alt: Excavateur minéral
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/buildings-thumb-cristal.jpg
+        screenshot: /landing/screens/building-TODO.webp
+      - src: /landing/thumbs/buildings-cristal.webp
         alt: Mine de cristal
-        screenshot: /landing/screens/resource-cristal.webp
-      - src: /landing/thumbs/buildings-thumb-hydrogen.jpg
+        screenshot: /landing/screens/building-TODO.webp
+      - src: /landing/thumbs/buildings-hydrogen.webp
         alt: Raffinerie
-        screenshot: /landing/screens/resource-hydrogen.webp
-      - src: /landing/thumbs/buildings-thumb-energy.jpg
+        screenshot: /landing/screens/building-TODO.webp
+      - src: /landing/thumbs/buildings-energy.webp
         alt: Entrepôt
-        screenshot: /landing/screens/resource-energy.webp
+        screenshot: /landing/screens/building-TODO.webp
     galleryExtra: 8
 
   - type: featurePhone
@@ -67,14 +67,18 @@ blocks:
     backgroundImage: /landing/backgrounds/bg-installation.webp
     reversed: true
     gallery:
-      - src: /landing/screenshot1.jpg
-        alt: Centre de commandement
-      - src: /landing/screenshot2.jpg
-        alt: Laboratoire
-      - src: /landing/screenshot1.jpg
-        alt: Usine de robots
-      - src: /landing/screenshot2.jpg
-        alt: Hangar
+      - src: /landing/thumbs/installation-dock-orbital.webp
+        alt: Excavateur minéral
+        screenshot: /landing/screens/building-TODO.webp
+      - src: /landing/thumbs/installation-centre-innovation.webp
+        alt: Mine de cristal
+        screenshot: /landing/screens/building-TODO.webp
+      - src: /landing/thumbs/installation-modulateur-planetaire.webp
+        alt: Raffinerie
+        screenshot: /landing/screens/building-TODO.webp
+      - src: /landing/thumbs/installation-fabrique-automates.webp
+        alt: Entrepôt
+        screenshot: /landing/screens/building-TODO.webp
     galleryExtra: 8
 
   - type: carousel

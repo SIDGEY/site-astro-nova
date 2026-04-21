@@ -93,13 +93,16 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
           </p>
           {
             resourceIcons.length > 0 && (
-              <div class="flex mb-6" data-resource-buttons>
+              <div class="relative flex gap-3 h-14 items-center mb-6" data-resource-buttons>
+                <div
+                  data-resource-indicator
+                  class="absolute w-14 h-14 rounded-lg outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
+                  style="left: 0px;"
+                ></div>
                 {resourceIcons.map((ri, index) => (
                   <button
-                    class={`resource-btn w-14 h-14 rounded-lg flex items-center justify-center transition-all hover:-translate-y-0.5 hover:opacity-80 ${
-                      ri.active
-                        ? "border-2 border-blue-500 bg-slate-900 text-slate-50"
-                        : "opacity-50 text-slate-400"
+                    class={`resource-btn w-14 h-14 rounded-lg flex items-center justify-center transition-all cursor-pointer hover:text-slate-50 text-slate-300 ${
+                      ri.active ? "bg-slate-900" : "opacity-50"
                     }`}
                     data-index={index}
                     data-screenshot={ri.screenshot || ""}
@@ -203,13 +206,16 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
           </p>
           {
             resourceIcons.length > 0 && (
-              <div class="flex mb-6" data-resource-buttons>
+              <div class="relative flex gap-3 h-14 items-center mb-6" data-resource-buttons>
+                <div
+                  data-resource-indicator
+                  class="absolute w-14 h-14 rounded-lg outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
+                  style="left: 0px;"
+                ></div>
                 {resourceIcons.map((ri, index) => (
                   <button
-                    class={`resource-btn w-14 h-14 rounded-lg flex items-center justify-center transition-all hover:-translate-y-0.5 hover:opacity-80 ${
-                      ri.active
-                        ? "border-2 border-blue-500 bg-slate-900 text-slate-50"
-                        : "opacity-50 text-slate-400"
+                    class={`resource-btn w-14 h-14 rounded-lg flex items-center justify-center transition-all cursor-pointer hover:text-slate-50 text-slate-300 ${
+                      ri.active ? "bg-slate-900" : "opacity-50"
                     }`}
                     data-index={index}
                     data-screenshot={ri.screenshot || ""}
@@ -354,15 +360,20 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     }
 
     function setActiveButton(clickedBtn) {
-      // Update resource button styles
-      buttons.forEach((btn) => {
-        btn.classList.remove('border-2', 'border-blue-500', 'bg-slate-900', 'text-slate-50');
-        btn.classList.add('opacity-50', 'text-slate-400');
+      const container = clickedBtn.closest('[data-resource-buttons]');
+      if (!container) return;
+
+      const indicator = container.querySelector('[data-resource-indicator]');
+      if (indicator) indicator.style.left = clickedBtn.offsetLeft + 'px';
+
+      container.querySelectorAll('.resource-btn').forEach((btn) => {
+        btn.classList.add('opacity-50');
+        btn.classList.remove('bg-slate-900');
         btn.dataset.active = 'false';
       });
 
-      clickedBtn.classList.remove('opacity-50', 'text-slate-400');
-      clickedBtn.classList.add('border-2', 'border-blue-500', 'bg-slate-900', 'text-slate-50');
+      clickedBtn.classList.remove('opacity-50');
+      clickedBtn.classList.add('bg-slate-900');
       clickedBtn.dataset.active = 'true';
 
       updatePhoneScreenshot(clickedBtn.dataset.screenshot);
@@ -392,6 +403,13 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 
       updatePhoneScreenshot(clickedBtn.dataset.screenshot);
     }
+
+    // Init resource indicator to the initially active button
+    section.querySelectorAll('[data-resource-buttons]').forEach((container) => {
+      const activeBtn = container.querySelector('.resource-btn[data-active="true"]');
+      const indicator = container.querySelector('[data-resource-indicator]');
+      if (activeBtn && indicator) indicator.style.left = activeBtn.offsetLeft + 'px';
+    });
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
