@@ -39,23 +39,23 @@ blocks:
     icon: buildings
     title: Optimisez l'extraction de vos ressources
     subtitle: "Les mines sont vos sources de ressources. La mine de métal produit du métal, et la mine de cristal produit du cristal. Améliorez vos mines pour augmenter leur production."
-    screenshot1: /landing/screens/resource.webp
-    screenshot2: /landing/screens/resource-metal.webp
+    screenshot1: /landing/screens/building.webp
+    screenshot2: /landing/screens/building-metal.webp
     backgroundImage: /landing/backgrounds/bg-building.webp
     reversed: false
     gallery:
       - src: /landing/thumbs/buildings-metal.webp
         alt: Excavateur minéral
-        screenshot: /landing/screens/resource-metal.webp
+        screenshot: /landing/screens/building-metal.webp
       - src: /landing/thumbs/buildings-cristal.webp
         alt: Mine de cristal
-        screenshot: /landing/screens/resource-metal.webp
+        screenshot: /landing/screens/building-cristal.webp
       - src: /landing/thumbs/buildings-hydrogen.webp
         alt: Raffinerie
-        screenshot: /landing/screens/resource-metal.webp
+        screenshot: /landing/screens/building-hydrogen.webp
       - src: /landing/thumbs/buildings-energy.webp
         alt: Entrepôt
-        screenshot: /landing/screens/resource-metal.webp
+        screenshot: /landing/screens/building-energy.webp
     galleryExtra: 8
 
   - type: featurePhone
