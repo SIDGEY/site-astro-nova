@@ -1,27 +1,30 @@
 ---
 interface Props {
     screenshot?: string;
+    dataRole?: string;
 }
 
-const { screenshot } = Astro.props;
+const { screenshot, dataRole } = Astro.props;
 ---
 
-<div class="relative inline-block w-fit">
+<div class="relative inline-block w-fit drop-shadow-2xl" data-role={dataRole}>
     <!-- Le téléphone (SVG) qui définit la taille du conteneur -->
     <img
-            src="/tel.svg"
-            alt="Phone Frame"
-            class="relative z-0 w-[232px] h-auto pointer-events-none"
+        src="/tel.svg"
+        alt="Phone Frame"
+        class="relative z-0 w-[232px] md:h-[480px] h-auto pointer-events-none z-10"
     />
 
     <!-- Le screenshot placé derrière le cadre du téléphone -->
-    {screenshot && (
-            <div class="absolute inset-0 z-0 overflow-hidden flex justify-center items-center">
+    {
+        screenshot && (
+            <div class="absolute inset-0 z-0 bg-[#0F141E] rounded-[2.5rem] overflow-hidden flex justify-center items-center">
                 <img
-                        src={screenshot}
-                        alt="Screenshot"
-                        class="z-50 w-[92%] h-[96%] object-cover rounded-[2rem] "
+                    src={screenshot}
+                    alt="Screenshot"
+                    class="z-50 w-[216px] h-[466px] object-cover rounded-[1rem] "
                 />
             </div>
-    )}
+        )
+    }
 </div>

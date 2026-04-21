@@ -8,6 +8,7 @@ interface Props {
   secondaryCtaLink?: string;
   screenshot1?: string;
   screenshot2?: string;
+  backgroundImage?: string;
 }
 
 const {
@@ -17,34 +18,40 @@ const {
   ctaLink,
   secondaryCtaText = "Découvrir le jeu",
   secondaryCtaLink = "#features",
+  backgroundImage = '/landing/backgrounds/bg-hero.webp',
 } = Astro.props;
 ---
 
 <header
-  class="overflow-hidden relative bg-[#0B1120] min-h-[100dvh] flex items-center"
-  style="background-image: url('/bg.svg'); background-repeat: no-repeat; background-position: center right; background-size: cover;"
+  class="overflow-hidden relative bg-[#121B2E] min-h-[90dvh] flex items-center"
 >
-  <div class="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-24">
-    <div class="max-w-2xl">
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+  <!-- Background image layers (reversed style: image on right) -->
+  <div class="absolute inset-0 z-[0] pointer-events-none w-full h-full bg-[#121B2E]">
+    <!-- Image 75% width & its overlays (aligned right like reversed) -->
+    <div
+      class="absolute opacity-80 top-0 bottom-0 w-[75%] right-0 left-auto"
+      style={`background: linear-gradient(76.97deg, #121B2E 18.79%, rgba(22, 32, 50, 0) 83.76%), linear-gradient(40.96deg, #121B2E 20%, rgba(22, 32, 50, 0) 100%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: center center; background-size: cover;`}
+    ></div>
+  </div>
+  <div class="relative z-20 w-full max-w-7xl mx-auto py-24">
+    <div class="max-w-2xl px-12 pt-4">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8">
         {title}
       </h1>
 
-      <p class="text-lg md:text-xl text-slate-400 mb-10 leading-relaxed max-w-xl">
+      <p class="text-lg md:text-2xl text-slate-400 mb-12 max-w-xl">
         {subtitle}
       </p>
 
       <div class="flex flex-wrap gap-4 items-center">
         <a
           href={ctaLink}
-          class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-8 rounded-md transition-all duration-300 text-base sm:text-lg"
-        >
+          class="flex items-center justify-center h-12 px-6 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-lg rounded-lg transition-colors">
           {ctaText}
         </a>
         <a
-          class="px-6 py-3 whitespace-nowrap border border-slate-600 backdrop-blur-xl text-slate-200 rounded-md font-medium hover:border-slate-400 transition-colors"
           href={secondaryCtaLink}
-        >
+          class="flex items-center justify-center h-12 px-6 border border-slate-600 backdrop-blur-xl text-slate-200 hover:text-white hover:border-slate-500 font-semibold text-lg rounded-lg transition-colors">
           {secondaryCtaText}
         </a>
       </div>
@@ -54,10 +61,10 @@ const {
   <div class="absolute bottom-8 left-0 right-0 flex justify-center">
     <a
       href="#features"
-      class="animate-bounce text-slate-400 hover:text-blue-300 transition-colors"
+      class="animate-bounce text-slate-400 hover:text-slate-300 transition-colors"
     >
-      <div class="border border-slate-500/50 rounded-full w-10 h-10 flex items-center justify-center">
-        <i class="ph ph-mouse text-2xl"></i>
+      <div class="w-12 h-12 flex items-center justify-center">
+        <i class="ph ph-bold ph-mouse-simple text-2xl"></i>
       </div>
     </a>
   </div>

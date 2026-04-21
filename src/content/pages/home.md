@@ -17,54 +17,68 @@ blocks:
     subtitle: Votre planète est le cœur de votre empire. C'est ici que vous produisez des ressources et développez vos défenses.
 
   - type: featurePhone
-    icon: gear-six
+    icon: nut
     title: Gérez vos ressources pour prospérer
     subtitle: "Les ressources sont essentielles dans Astro Nova. Le métal est crucial pour la construction, tandis que le cristal est nécessaire pour les technologies avancées. Une bonne gestion est clé pour progresser."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
-    backgroundImage: /bg-resource.svg
-    reversed: false
+    screenshot1: /landing/screens/resource.webp
+    screenshot2: /landing/screens/resource-metal.webp
+    backgroundImage: /landing/backgrounds/bg-resource.webp
+    reversed: true
     resourceIcons:
-      - icon: circle-half
+      - icon: nut
         active: true
-      - icon: diamond
+        screenshot: /landing/screens/resource-metal.webp
+      - icon: diamonds-four
+        screenshot: /landing/screens/resource-crystal.webp
       - icon: drop
+        screenshot: /landing/screens/resource-hydrogen.webp
       - icon: lightning
+        screenshot: /landing/screens/resource-energy.webp
 
   - type: featurePhone
     icon: buildings
     title: Optimisez l'extraction de vos ressources
     subtitle: "Les mines sont vos sources de ressources. La mine de métal produit du métal, et la mine de cristal produit du cristal. Améliorez vos mines pour augmenter leur production."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
-    reversed: true
+    screenshot1: /landing/screens/building.webp
+    screenshot2: /landing/screens/building-metal.webp
+    backgroundImage: /landing/backgrounds/bg-building.webp
+    reversed: false
     gallery:
-      - src: /landing/screenshot1.jpg
+      - src: /landing/thumbs/buildings-metal.webp
         alt: Excavateur minéral
-      - src: /landing/screenshot2.jpg
+        screenshot: /landing/screens/building-metal.webp
+      - src: /landing/thumbs/buildings-cristal.webp
         alt: Mine de cristal
-      - src: /landing/screenshot1.jpg
+        screenshot: /landing/screens/building-cristal.webp
+      - src: /landing/thumbs/buildings-hydrogen.webp
         alt: Raffinerie
-      - src: /landing/screenshot2.jpg
+        screenshot: /landing/screens/building-hydrogen.webp
+      - src: /landing/thumbs/buildings-energy.webp
         alt: Entrepôt
+        screenshot: /landing/screens/building-energy.webp
     galleryExtra: 8
 
   - type: featurePhone
     icon: factory
     title: Maîtrisez les ressources de vos planètes
     subtitle: "Les bâtiments sont essentiels. Le centre de commandement gère la colonie, le laboratoire développe des technologies, et l'usine de robots accélère la construction."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
-    reversed: false
+    screenshot1: /landing/screens/resource.webp
+    screenshot2: /landing/screens/resource-metal.webp
+    backgroundImage: /landing/backgrounds/bg-installation.webp
+    reversed: true
     gallery:
-      - src: /landing/screenshot1.jpg
-        alt: Centre de commandement
-      - src: /landing/screenshot2.jpg
-        alt: Laboratoire
-      - src: /landing/screenshot1.jpg
-        alt: Usine de robots
-      - src: /landing/screenshot2.jpg
-        alt: Hangar
+      - src: /landing/thumbs/installation-dock-orbital.webp
+        alt: Excavateur minéral
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/installation-centre-innovation.webp
+        alt: Mine de cristal
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/installation-modulateur-planetaire.webp
+        alt: Raffinerie
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/installation-fabrique-automates.webp
+        alt: Entrepôt
+        screenshot: /landing/screens/resource-metal.webp
     galleryExtra: 8
 
   - type: carousel
@@ -91,36 +105,46 @@ blocks:
     icon: shield-star
     title: Protégez votre empire des attaques ennemie
     subtitle: "Un bon système de défense protège votre empire. Les lance-missiles et canons à ions sont efficaces contre les vaisseaux. Une défense diversifiée est clé."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
-    reversed: true
+    screenshot1: /landing/screens/resource.webp
+    screenshot2: /landing/screens/resource-metal.webp
+    backgroundImage: /landing/backgrounds/bg-defense.webp
+    reversed: false
     gallery:
-      - src: /landing/screenshot1.jpg
-        alt: Projecteur balistique
-      - src: /landing/screenshot2.jpg
-        alt: Canon photonique
-      - src: /landing/screenshot1.jpg
-        alt: Bouclier ionique
-      - src: /landing/screenshot2.jpg
-        alt: Tourelle laser
+      - src: /landing/thumbs/defense-lanceur-de-missiles.webp
+        alt: Excavateur minéral
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/defense-laser-leger.webp
+        alt: Mine de cristal
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/defense-laser-lourd.webp
+        alt: Raffinerie
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/defense-canon-de-gauss.webp
+        alt: Entrepôt
+        screenshot: /landing/screens/resource-metal.webp
     galleryExtra: 8
 
   - type: featurePhone
     icon: rocket-launch
     title: Développez votre flotte pour dominer.
     subtitle: "Les vaisseaux sont essentiels. Les chasseurs sont rapides, les lourds résistants, les croiseurs polyvalents, et les vaisseaux de colonisation créent des colonies."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
-    reversed: false
+    screenshot1: /landing/screens/resource.webp
+    screenshot2: /landing/screens/resource-metal.webp
+    backgroundImage: /landing/backgrounds/bg-fleet.webp
+    reversed: true
     gallery:
-      - src: /landing/screenshot1.jpg
-        alt: Intercepteur
-      - src: /landing/screenshot2.jpg
-        alt: Assaillant
-      - src: /landing/screenshot1.jpg
-        alt: Croiseur
-      - src: /landing/screenshot2.jpg
-        alt: Vaisseau colonie
+      - src: /landing/thumbs/fleet-chasseur-leger.webp
+        alt: Excavateur minéral
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/fleet-chasseur-lourd.webp
+        alt: Mine de cristal
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/fleet-croiseur.webp
+        alt: Raffinerie
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/fleet-vaisseau-de-bataille.webp
+        alt: Entrepôt
+        screenshot: /landing/screens/resource-metal.webp
     galleryExtra: 8
 
   - type: featurePhone
@@ -129,7 +153,8 @@ blocks:
     subtitle: "Notre boutique respecte l'intégrité de la compétition. Aucun avantage ne s'achète : l'arène est le domaine de la stratégie. Choisissez des options Pay-to-Fast pour accélérer votre développement ou explorez nos avatars exclusifs."
     screenshot1: /bg-phone-planet.svg
     screenshot2: /bg-phone-resource-1.svg
-    reversed: true
+    backgroundImage: /landing/backgrounds/bg-store.webp
+    reversed: false
 
   - type: carousel
     icon: user-circle

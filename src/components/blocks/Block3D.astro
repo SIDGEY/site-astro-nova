@@ -4,363 +4,567 @@ interface Props {
   subtitle: string;
 }
 
-const {
-  title,
-  subtitle,
-} = Astro.props;
-
+const { title, subtitle } = Astro.props;
 ---
 
-<section class="overflow-hidden relative bg-[#0B1120] px-6 min-h-[100dvh] flex items-center"
-  style="background-image: url('/bg.svg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
-  <div id="planet-3d" class="absolute top-0 left-0 w-full h-[100dvh] overflow-hidden"></div>
-
-  <div class="relative z-20 max-w-5xl mx-auto h-[100dvh] px-6 grid grid-rows-[auto_1fr_auto]">
-      <div class="pt-20 text-center">
-        <i class="ph ph-planet text-4xl text-slate-500 mb-4 block"></i>
-        <h1 class="text-3xl md:text-5xl font-bold text-slate-50">
-          {title}
-        </h1>
-        <p class="mt-4 text-base md:text-xl text-slate-400 max-w-2xl mx-auto">
-          {subtitle}
-        </p>
-      </div>
-
-     <div></div>
-      <div class="pb-16">
-        <div class="flex flex-wrap gap-3 justify-center">
-          <button data-biome="normal"  class="biome-btn" title="Normal"><i class="ph ph-sun text-xl"></i></button>
-          <button data-biome="dry"     class="biome-btn" title="Dry"><i class="ph ph-wind text-xl"></i></button>
-          <button data-biome="jungle"  class="biome-btn" title="Jungle" aria-pressed="true"><i class="ph ph-globe text-xl"></i></button>
-          <button data-biome="water"   class="biome-btn" title="Water"><i class="ph ph-prohibit text-xl"></i></button>
-          <button data-biome="ice"     class="biome-btn" title="Ice"><i class="ph ph-drop text-xl"></i></button>
-          <button data-biome="desert"  class="biome-btn" title="Desert"><i class="ph ph-snowflake text-xl"></i></button>
-          <button data-action="random" class="biome-btn" title="Random"><i class="ph ph-cloud text-xl"></i></button>
-        </div>
-      </div>
+<section
+  class="overflow-hidden relative bg-slate-950 px-6 py-20 md:py-[128px] flex items-center"
+>
+  <!-- Gradient overlay -->
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-slate-900/25 to-slate-950/25"
+  >
+  </div>
+  <!-- Grid pattern -->
+  <div
+    class="absolute inset-0"
+    style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.5' clip-path='url(%23clip0_2381_9933)'%3E%3Cpath d='M0 13.3335H80' stroke='%230F172B'/%3E%3Cpath d='M0 40H80' stroke='%230F172B'/%3E%3Cpath d='M0 66.6665H80' stroke='%230F172B'/%3E%3Cpath d='M13.333 0L13.333 80' stroke='%230F172B'/%3E%3Cpath d='M40 0L40 80' stroke='%230F172B'/%3E%3Cpath d='M66.667 0V80' stroke='%230F172B'/%3E%3C/g%3E%3Cg clip-path='url(%23clip1_2381_9933)'%3E%3Cpath d='M37 40H43' stroke='%231D293D'/%3E%3Cpath d='M40 37V43' stroke='%231D293D'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_2381_9933'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3CclipPath id='clip1_2381_9933'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E&quot;); background-repeat: repeat;"
+  >
   </div>
 
+  <div
+    class="relative z-20 max-w-5xl mx-auto px-6 flex flex-col items-center gap-12"
+  >
+    <div class="flex flex-col text-center gap-4 max-w-3xl">
+      <i
+        class="ph ph-globe-hemisphere-east block opacity-40"
+        style="font-size: 48px; background: linear-gradient(180deg, #90A1B9 0%, rgba(248, 250, 252, 0.2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      ></i>
+      <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-50">
+        {title}
+      </h1>
+      <p class="text-base md:text-xl text-slate-400 mb-0">
+        {subtitle}
+      </p>
+    </div>
+
+    <!-- Planet in the flow -->
+    <div
+      id="planet-3d"
+      class="w-full h-[320px] md:h-[480px] relative overflow-hidden"
+    >
+    </div>
+
+    <!-- Biomes Selector - 3 layer structure -->
+    <div class="flex flex-col items-center w-full relative h-[72px]">
+      <!-- Layer 3: Active background (fixed, behind buttons) -->
+      <div
+        id="active-bg"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-lg bg-slate-900 pointer-events-none z-0"
+      ></div>
+
+      <!-- Layer 2: Buttons (scrollable) -->
+      <div
+        id="biome-list"
+        class="flex flex-nowrap items-center gap-0 absolute top-1/2 left-1/2 transition-transform duration-500 ease-out w-max z-10"
+        style="transform: translate(0px, -50%);"
+      >
+        <button data-biome="desert" class="biome-btn shrink-0" title="Desert"
+          ><i class="ph ph-bold ph-sun text-2xl"></i></button
+        >
+        <button data-biome="dry" class="biome-btn shrink-0" title="Dry"
+          ><i class="ph ph-bold ph-wind text-2xl"></i></button
+        >
+        <button data-biome="normal" class="biome-btn shrink-0" title="Normal"
+          ><i class="ph ph-bold ph-globe-simple text-2xl"></i></button
+        >
+        <button data-biome="jungle" class="biome-btn shrink-0" title="Jungle"
+          ><i class="ph ph-bold ph-leaf text-2xl"></i></button
+        >
+        <button data-biome="water" class="biome-btn shrink-0" title="Water"
+          ><i class="ph ph-bold ph-drop text-2xl"></i></button
+        >
+        <button data-biome="ice" class="biome-btn shrink-0" title="Ice"
+          ><i class="ph ph-bold ph-snowflake text-2xl"></i></button
+        >
+        <button data-biome="gas" class="biome-btn shrink-0" title="Gas"
+          ><i class="ph ph-bold ph-cloud text-2xl"></i></button
+        >
+      </div>
+
+      <!-- Layer 1: Active border (fixed, above buttons) -->
+      <div
+        id="active-border"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-lg border-2 border-blue-500 pointer-events-none z-20"
+      ></div>
+    </div>
+  </div>
 
   <style>
-    .biome-btn{
-      width: 3rem;
-      height: 3rem;
+    /* Ensure the Three.js canvas never overflows its container */
+    #planet-3d canvas {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .biome-btn {
+      width: 3.5rem;
+      height: 3.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 0.5rem;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(15,23,42,.65);
-      color: rgba(148,163,184,.95);
-      transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
+      border: 2px solid transparent;
+      background: transparent;
+      color: #94a3b8;
+      opacity: 0.5;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .biome-btn:hover{ transform: translateY(-1px); background: rgba(15,23,42,.85); border-color: rgba(255,255,255,.22); color: rgba(226,232,240,1); }
-    .biome-btn[aria-pressed="true"]{ border-color: rgba(59,130,246,.8); background: rgba(15,23,42,.85); color: rgba(248,250,252,1); }
+    .biome-btn:hover {
+      opacity: 0.8;
+      color: #cbd5e1;
+    }
+    .biome-btn[aria-pressed="true"] {
+      color: #f8fafc;
+      opacity: 1;
+    }
+    .biome-btn[aria-pressed="true"]:hover {
+      opacity: 1;
+    }
   </style>
 
   <script>
+    // @ts-nocheck
     import * as THREE from "three";
-    import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-    import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-    import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
-    /** @typedef {"normal"|"dry"|"jungle"|"water"|"ice"|"desert"|"gas"} PlanetBiome */
+    // ── Constants ──
+    const BIOMES = ["normal", "dry", "jungle", "water", "ice", "desert", "gas"];
+    const VARIANTS = 6;
+    const SUN_POS = new THREE.Vector3(-250, 50, 350);
+    const DEFAULT_ATM = new THREE.Color(0.8, 0.8, 0.8);
 
-    /** @type {Record<PlanetBiome, string[]>} */
-    const planetModelsByBiome = {
-      desert: [
-        "/assets/models/planets/desert/desert_planet_1.glb",
-        "/assets/models/planets/desert/desert_planet_2.glb",
-        "/assets/models/planets/desert/desert_planet_3.glb",
-        "/assets/models/planets/desert/desert_planet_4.glb",
-        "/assets/models/planets/desert/desert_planet_5.glb",
-        "/assets/models/planets/desert/desert_planet_6.glb",
-      ],
-      dry: [
-        "/assets/models/planets/dry/dry_planet_1.glb",
-        "/assets/models/planets/dry/dry_planet_2.glb",
-        "/assets/models/planets/dry/dry_planet_3.glb",
-        "/assets/models/planets/dry/dry_planet_4.glb",
-        "/assets/models/planets/dry/dry_planet_5.glb",
-        "/assets/models/planets/dry/dry_planet_6.glb",
-      ],
-      normal: [
-        "/assets/models/planets/normal/normal_planet_1.glb",
-        "/assets/models/planets/normal/normal_planet_2.glb",
-        "/assets/models/planets/normal/normal_planet_3.glb",
-        "/assets/models/planets/normal/normal_planet_4.glb",
-        "/assets/models/planets/normal/normal_planet_5.glb",
-        "/assets/models/planets/normal/normal_planet_6.glb",
-      ],
-      jungle: [
-        "/assets/models/planets/jungle/jungle_planet_1.glb",
-        "/assets/models/planets/jungle/jungle_planet_2.glb",
-        "/assets/models/planets/jungle/jungle_planet_3.glb",
-        "/assets/models/planets/jungle/jungle_planet_4.glb",
-        "/assets/models/planets/jungle/jungle_planet_5.glb",
-        "/assets/models/planets/jungle/jungle_planet_6.glb",
-      ],
-      water: [
-        "/assets/models/planets/water/water_planet_1.glb",
-        "/assets/models/planets/water/water_planet_2.glb",
-        "/assets/models/planets/water/water_planet_3.glb",
-        "/assets/models/planets/water/water_planet_4.glb",
-        "/assets/models/planets/water/water_planet_5.glb",
-        "/assets/models/planets/water/water_planet_6.glb",
-      ],
-      ice: [
-        "/assets/models/planets/ice/ice_planet_1.glb",
-        "/assets/models/planets/ice/ice_planet_2.glb",
-        "/assets/models/planets/ice/ice_planet_3.glb",
-        "/assets/models/planets/ice/ice_planet_4.glb",
-        "/assets/models/planets/ice/ice_planet_5.glb",
-        "/assets/models/planets/ice/ice_planet_6.glb",
-      ],
-      gas: [
-        "/assets/models/planets/gas/gas_planet_1.glb",
-        "/assets/models/planets/gas/gas_planet_2.glb",
-        "/assets/models/planets/gas/gas_planet_3.glb",
-        "/assets/models/planets/gas/gas_planet_4.glb",
-        "/assets/models/planets/gas/gas_planet_5.glb",
-        "/assets/models/planets/gas/gas_planet_6.glb",
-      ],
-    };
+    // 1×1 placeholder textures
+    const blackPixel = new THREE.DataTexture(
+      new Uint8Array([0, 0, 0, 255]),
+      1,
+      1,
+      THREE.RGBAFormat,
+    );
+    blackPixel.needsUpdate = true;
+    const whitePixel = new THREE.DataTexture(
+      new Uint8Array([204, 204, 204, 255]),
+      1,
+      1,
+      THREE.RGBAFormat,
+    );
+    whitePixel.needsUpdate = true;
+
+    // ── Compute dominant color from texture (identical to original) ──
+    function computeAverageColor(image) {
+      if (!image) return DEFAULT_ATM.clone();
+      const canvas = document.createElement("canvas");
+      canvas.width = 16;
+      canvas.height = 16;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      try {
+        ctx.drawImage(image, 0, 0, 16, 16);
+        const data = ctx.getImageData(0, 0, 16, 16).data;
+        let r = 0,
+          g = 0,
+          b = 0,
+          count = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          const bright = data[i] + data[i + 1] + data[i + 2];
+          if (bright > 30) {
+            r += data[i];
+            g += data[i + 1];
+            b += data[i + 2];
+            count++;
+          }
+        }
+        if (count === 0) return DEFAULT_ATM.clone();
+        const hsl = {};
+        new THREE.Color(
+          r / count / 255,
+          g / count / 255,
+          b / count / 255,
+        ).getHSL(hsl);
+        const c = new THREE.Color();
+        c.setHSL(
+          hsl.h,
+          Math.min(1, hsl.s * 1.5),
+          Math.min(1, Math.max(0.4, hsl.l * 1.5)),
+        );
+        return c;
+      } catch {
+        return DEFAULT_ATM.clone();
+      }
+    }
 
     function pickRandom(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    function disposeObject3D(root) {
-      root.traverse((obj) => {
-        if (obj.isMesh) {
-          obj.geometry?.dispose?.();
-          const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
-          for (const m of mats) {
-            // textures
-            for (const key of Object.keys(m)) {
-              const v = m[key];
-              if (v && v.isTexture) v.dispose();
-            }
-            m.dispose?.();
-          }
-        }
-      });
+    function variantFolder(biome, v) {
+      const pad = v < 10 ? "0" + v : "" + v;
+      return `/assets/textures/${biome}/${biome}-${pad}`;
     }
 
-    class PlanetViewer {
-      /** @param {{ container: HTMLElement }} options */
-      constructor({ container }) {
-        this.container = container;
+    // Disable r182 color management to match r150 rendering
+    THREE.ColorManagement.enabled = false;
 
-        this.scene = new THREE.Scene();
-        this.scene.background = null;
-
-        const w = container.clientWidth;
-        const h = container.clientHeight;
-
-        this.camera = new THREE.PerspectiveCamera(45, w / h, 0.01, 200);
-        this.camera.position.set(0, 0.4, 2.4);
-
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        this.renderer.setSize(w, h);
-        this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-        this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        this.renderer.toneMappingExposure = 1.1;
-
-        container.appendChild(this.renderer.domElement);
-
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.enableDamping = true;
-        this.controls.enablePan = false;
-        this.controls.minDistance = 1.6;
-        this.controls.maxDistance = 4.0;
-        this.controls.maxPolarAngle = Math.PI * 0.55;
-
-        // Lights (simple mais efficace)
-        const ambient = new THREE.AmbientLight(0xffffff, 0.8);
-        this.scene.add(ambient);
-
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
-        keyLight.position.set(2.5, 2.0, 2.5);
-        this.scene.add(keyLight);
-
-        const rimLight = new THREE.DirectionalLight(0xffffff, 0.9);
-        rimLight.position.set(-2.5, 0.6, -2.5);
-        this.scene.add(rimLight);
-
-        this.loader = new GLTFLoader();
-        this.dracoLoader = new DRACOLoader();
-        this.dracoLoader.setDecoderPath("/draco/"); // on va mettre les fichiers decoder ici
-        this.loader.setDRACOLoader(this.dracoLoader);
-
-        this.currentRoot = null;
-        this.currentBiome = "normal";
-        this.isDestroyed = false;
-
-        // Resize (propre)
-        this.ro = new ResizeObserver(() => this.resize());
-        this.ro.observe(container);
-
-        this.clock = new THREE.Clock();
-        this.animate = this.animate.bind(this);
-        requestAnimationFrame(this.animate);
-      }
-
-      resize() {
-        const w = this.container.clientWidth;
-        const h = this.container.clientHeight;
-        if (!w || !h) return;
-        this.camera.aspect = w / h;
-        this.camera.updateProjectionMatrix();
-        this.renderer.setSize(w, h);
-      }
-
-      /** @param {PlanetBiome} biome */
-      async setBiome(biome) {
-        this.currentBiome = biome;
-        const url = pickRandom(planetModelsByBiome[biome]);
-
-        await this.loadModel(url);
-      }
-
-      async randomBiome() {
-        const biomes = /** @type {PlanetBiome[]} */ (Object.keys(planetModelsByBiome));
-        const biome = pickRandom(biomes);
-        await this.setBiome(biome);
-        return biome;
-      }
-
-      async loadModel(url) {
-        // remove previous
-        if (this.currentRoot) {
-          this.scene.remove(this.currentRoot);
-          disposeObject3D(this.currentRoot);
-          this.currentRoot = null;
-        }
-
-        //const gltf = await this.loader.loadAsync(url);
-
-        console.log("[planet] loading", url);
-        const gltf = await this.loader.loadAsync(url);
-        console.log("[planet] loaded", url);
-
-        const root = gltf.scene;
-        root.rotation.set(0, 0, 0);
-
-        // Fit scale (si tes GLB n'ont pas une taille homogène)
-        // Option "safe": on centre et on scale pour rentrer dans une sphère de rayon ~1
-        const box = new THREE.Box3().setFromObject(root);
-        const size = new THREE.Vector3();
-        box.getSize(size);
-        const maxDim = Math.max(size.x, size.y, size.z) || 1;
-
-        const target = 1.2; // taille cible dans la scène
-        const scale = target / maxDim;
-        root.scale.setScalar(scale);
-
-        box.setFromObject(root);
-        const center = new THREE.Vector3();
-        box.getCenter(center);
-        root.position.sub(center); // centre au milieu
-
-        // Option perf: shadows off (sinon ça coûte)
-        root.traverse((o) => {
-          if (o.isMesh) {
-            o.castShadow = false;
-            o.receiveShadow = false;
-          }
-        });
-
-        this.currentRoot = root;
-        this.scene.add(root);
-      }
-
-      animate() {
-        if (this.isDestroyed) return;
-
-        const dt = this.clock.getDelta();
-
-        if (this.currentRoot) {
-          this.currentRoot.rotation.y += dt * 0.35; // rotation lente “planète”
-        }
-
-        this.controls.update();
-        this.renderer.render(this.scene, this.camera);
-        requestAnimationFrame(this.animate);
-      }
-
-      destroy() {
-        this.isDestroyed = true;
-        this.ro?.disconnect?.();
-
-        if (this.currentRoot) {
-          this.scene.remove(this.currentRoot);
-          disposeObject3D(this.currentRoot);
-        }
-        this.dracoLoader?.dispose?.();
-        this.controls?.dispose?.();
-        this.renderer?.dispose?.();
-        this.renderer?.domElement?.remove?.();
-      }
-    }
-
-    // Boot
+    // ── Scene setup ──
     const container = document.getElementById("planet-3d");
     if (!container) throw new Error("Missing #planet-3d container");
 
-    function waitForNonZeroSize(el) {
+    function waitForSize(el) {
       return new Promise((resolve) => {
-        const check = () => {
-          const w = el.clientWidth;
-          const h = el.clientHeight;
-          if (w > 0 && h > 0) return resolve({ w, h });
-          requestAnimationFrame(check);
-        };
+        const check = () =>
+          el.clientWidth > 0 && el.clientHeight > 0
+            ? resolve()
+            : requestAnimationFrame(check);
         check();
       });
     }
+    await waitForSize(container);
 
-    await waitForNonZeroSize(container);
-    console.log("[planet] container size", container.clientWidth, container.clientHeight);
+    const W = container.clientWidth;
+    const H = container.clientHeight;
 
-    // Optionnel mais utile : voir si le GLB répond
-    fetch("/assets/models/planets/normal/normal_planet_1.glb")
-        .then(r => console.log("[planet] test glb status", r.status))
-        .catch(e => console.error("[planet] test glb fetch error", e));
+    const scene = new THREE.Scene();
 
-    const viewer = new PlanetViewer({ container });
+    const camera = new THREE.PerspectiveCamera(45, W / H, 1, 1000);
+    camera.position.z = 160;
 
-    // log si le loader plante
-    viewer.loader.manager.onError = (url) => {
-      console.error("[planet] loading error:", url);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+    renderer.toneMapping = THREE.NoToneMapping;
+    renderer.setClearColor(0x000000, 0);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(W, H);
+    container.appendChild(renderer.domElement);
+
+    // Lights — identical to original
+    // Scale ambient intensity by Math.PI to match legacy r150 brightness
+    const ambientLight = new THREE.AmbientLight(0x050505, Math.PI);
+    scene.add(ambientLight);
+
+    // Scale point light by Math.PI to match legacy point light brightness
+    const pointLight = new THREE.PointLight(0xffffff, 1.2 * Math.PI);
+    pointLight.decay = 0;
+    pointLight.position.copy(SUN_POS);
+    scene.add(pointLight);
+
+    // ── Planet material with shader injection ──
+    // Start with a dummy map so USE_MAP is defined and vMapUv is available in the shader
+    let earthShader = null;
+    let currentNightMap = null;
+    let currentAtmColor = DEFAULT_ATM.clone();
+
+    const planetMat = new THREE.MeshPhongMaterial({
+      map: whitePixel,
+      normalScale: new THREE.Vector2(0.8, 0.8),
+      shininess: 40,
+    });
+
+    planetMat.onBeforeCompile = (shader) => {
+      earthShader = shader;
+      shader.uniforms.nightMap = { value: currentNightMap || blackPixel };
+      shader.uniforms.nightIntensity = { value: 1.8 };
+      shader.uniforms.progressLevel = { value: 4.0 };
+      shader.uniforms.sunPosition = { value: SUN_POS.clone() };
+      shader.uniforms.atmosphereColor = { value: currentAtmColor.clone() };
+
+      // ── Vertex: pass world position & normal ──
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        `#include <common>
+        varying vec3 vWorldPos;
+        varying vec3 vWorldNorm;`,
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <fog_vertex>",
+        `#include <fog_vertex>
+        vWorldPos  = (modelMatrix * vec4(transformed, 1.0)).xyz;
+        vWorldNorm = normalize(mat3(modelMatrix) * objectNormal);`,
+      );
+
+      // ── Fragment: uniforms + varyings ──
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        `#include <common>
+        uniform sampler2D nightMap;
+        uniform float nightIntensity;
+        uniform float progressLevel;
+        uniform vec3 sunPosition;
+        uniform vec3 atmosphereColor;
+        varying vec3 vWorldPos;
+        varying vec3 vWorldNorm;`,
+      );
+
+      // ── Fragment: inject effects before dithering ──
+      // In Three.js r182, the map UV varying is called vMapUv (not vUv)
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <dithering_fragment>",
+        `// Saturation boost for more vivid albedo
+        float lum = dot(gl_FragColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+        gl_FragColor.rgb = mix(vec3(lum), gl_FragColor.rgb, 1.3);
+
+        // Night lights — only on the dark hemisphere
+        vec3 nightColor = texture2D(nightMap, vMapUv).rgb;
+        float nightPixelBrightness = max(nightColor.r, max(nightColor.g, nightColor.b));
+        float threshold = 1.0 - (progressLevel / 4.0);
+        float pixelVisible = smoothstep(threshold, threshold + 0.15, nightPixelBrightness);
+
+        vec3 lightDir = normalize(sunPosition - vWorldPos);
+        float NdotL = dot(normalize(vWorldNorm), lightDir);
+        float nightMask = 1.0 - smoothstep(-0.6, 0.15, NdotL);
+        gl_FragColor.rgb += nightColor * pixelVisible * nightMask * nightIntensity;
+
+        // Fresnel / Atmospheric Rim Light on the lit side
+        vec3 viewDir = normalize(cameraPosition - vWorldPos);
+        float NdotV = dot(normalize(vWorldNorm), viewDir);
+        float rimFactor = 1.0 - smoothstep(0.0, 1.0, NdotV);
+        float litRimFactor = smoothstep(-0.3, 0.6, NdotL) * pow(rimFactor, 2.0);
+        gl_FragColor.rgb += atmosphereColor * litRimFactor * 0.8;
+
+        #include <dithering_fragment>`,
+      );
     };
 
-    viewer.setBiome("normal");
+    const earth = new THREE.Mesh(
+      new THREE.SphereGeometry(60, 32, 32),
+      planetMat,
+    );
+    scene.add(earth);
 
-    // Buttons
-    const buttons = Array.from(document.querySelectorAll("button.biome-btn"));
-    function setActive(btn) {
-      for (const b of buttons) b.setAttribute("aria-pressed", String(b === btn));
+    // ── Atmosphere glow (outer shell) — identical shader to original ──
+    const atmMat = new THREE.ShaderMaterial({
+      uniforms: {
+        atmosphereColor: { value: DEFAULT_ATM.clone() },
+        sunPosition: { value: SUN_POS.clone() },
+      },
+      vertexShader: `
+        varying vec3 vNormal;
+        varying vec3 vWorldPos;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          vec4 wp = modelMatrix * vec4(position, 1.0);
+          vWorldPos = wp.xyz;
+          gl_Position = projectionMatrix * viewMatrix * wp;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 atmosphereColor;
+        uniform vec3 sunPosition;
+        varying vec3 vNormal;
+        varying vec3 vWorldPos;
+        void main() {
+          vec3 viewDir = normalize(cameraPosition - vWorldPos);
+          float NdotV = dot(vNormal, viewDir);
+          float intensity = pow(max(0.0, -NdotV), 2.5) * 1.5;
+          vec3 lightDir = normalize(sunPosition - vWorldPos);
+          float NdotL = dot(vNormal, lightDir);
+          float lightIntensity = smoothstep(-0.2, 0.8, NdotL);
+          gl_FragColor = vec4(atmosphereColor, 1.0) * intensity * lightIntensity;
+        }
+      `,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide,
+      transparent: true,
+      depthWrite: false,
+    });
+
+    const atmosphere = new THREE.Mesh(
+      new THREE.SphereGeometry(60 * 1.15, 32, 32),
+      atmMat,
+    );
+    scene.add(atmosphere);
+
+    // ── Manual drag rotation (matches original) ──
+    let mouseDown = false,
+      mouseX = 0,
+      mouseY = 0;
+    // Extra rotation from drag, will lerp back to 0
+    let dragRotX = 0,
+      dragRotY = 0;
+    const DRAG_SPEED = 1 / 300;
+    const RETURN_SPEED = 0.08; // lerp factor per frame to return to neutral
+
+    renderer.domElement.addEventListener("mousedown", (e) => {
+      mouseDown = true;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    window.addEventListener("mouseup", () => {
+      mouseDown = false;
+    });
+    window.addEventListener("mousemove", (e) => {
+      if (!mouseDown) return;
+      dragRotY += (e.clientX - mouseX) * DRAG_SPEED;
+      dragRotX += (e.clientY - mouseY) * DRAG_SPEED;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    renderer.domElement.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) {
+        mouseDown = true;
+        mouseX = e.touches[0].clientX;
+        mouseY = e.touches[0].clientY;
+      }
+    });
+    window.addEventListener("touchend", () => {
+      mouseDown = false;
+    });
+    window.addEventListener("touchmove", (e) => {
+      if (!mouseDown || e.touches.length !== 1) return;
+      dragRotY += (e.touches[0].clientX - mouseX) * DRAG_SPEED;
+      dragRotX += (e.touches[0].clientY - mouseY) * DRAG_SPEED;
+      mouseX = e.touches[0].clientX;
+      mouseY = e.touches[0].clientY;
+    });
+
+    // ── Resize ──
+    const ro = new ResizeObserver(() => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (!w || !h) return;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    });
+    ro.observe(container);
+
+    // ── Texture loader ──
+    const loader = new THREE.TextureLoader();
+    let loadedTextures = [];
+
+    function loadTex(url) {
+      return new Promise((resolve, reject) =>
+        loader.load(
+          url,
+          (tex) => {
+            // Prevent r182 GPU sRGB→linear decode (r150 read textures as-is)
+            tex.colorSpace = THREE.NoColorSpace;
+            resolve(tex);
+          },
+          undefined,
+          reject,
+        ),
+      );
+    }
+    function loadTexOpt(url) {
+      return loadTex(url).catch(() => null);
     }
 
+    async function loadBiome(biome) {
+      const v = 1;
+      const folder = variantFolder(biome, v);
+
+      // Dispose previous textures
+      for (const t of loadedTextures) t.dispose();
+      loadedTextures = [];
+
+      const albedo = await loadTex(`${folder}/albedo.jpg`);
+      loadedTextures.push(albedo);
+
+      // Compute atmosphere color from albedo image (same as original)
+      const atmColor = computeAverageColor(albedo.image);
+
+      const [normalTex, specularTex, nightTex] = await Promise.all([
+        loadTexOpt(`${folder}/normal.jpg`),
+        loadTexOpt(`${folder}/specular.jpg`),
+        loadTexOpt(`${folder}/night.jpg`),
+      ]);
+      for (const t of [normalTex, specularTex, nightTex])
+        if (t) loadedTextures.push(t);
+
+      planetMat.map = albedo;
+      planetMat.normalMap = normalTex ?? null;
+      planetMat.specularMap = specularTex ?? null;
+      planetMat.needsUpdate = true;
+
+      // Persist current values (used by onBeforeCompile on recompilation)
+      currentNightMap = nightTex;
+      currentAtmColor.copy(atmColor);
+
+      // Update atmosphere color + night map in shader
+      atmMat.uniforms.atmosphereColor.value.copy(atmColor);
+      if (earthShader) {
+        earthShader.uniforms.atmosphereColor.value.copy(atmColor);
+        earthShader.uniforms.nightMap.value = nightTex || blackPixel;
+      }
+
+      return biome;
+    }
+
+    // ── Animate — rotation speed matches original (0.001/frame) ──
+    // Base Y rotation accumulator (auto-spin)
+    let baseRotY = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Auto-rotate only when NOT dragging
+      if (!mouseDown) {
+        baseRotY += 0.001;
+      }
+
+      // When not dragging, lerp drag offsets back to 0
+      if (!mouseDown) {
+        dragRotX *= 1 - RETURN_SPEED;
+        dragRotY *= 1 - RETURN_SPEED;
+        // Snap to 0 when close enough
+        if (Math.abs(dragRotX) < 0.0001) dragRotX = 0;
+        if (Math.abs(dragRotY) < 0.0001) dragRotY = 0;
+      }
+
+      earth.rotation.x = dragRotX;
+      earth.rotation.y = baseRotY + dragRotY;
+
+      renderer.render(scene, camera);
+    }
+
+    // ── Init — start rendering immediately, load textures async ──
+    animate();
+
+    const buttons = Array.from(document.querySelectorAll("button.biome-btn"));
+    const biomeList = document.getElementById("biome-list");
+
+    function setActive(btn) {
+      for (const b of buttons) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      }
+      
+      if (biomeList && btn) {
+        const btnCenter = btn.offsetLeft + btn.offsetWidth / 2;
+        biomeList.style.transform = `translate(-${btnCenter}px, -50%)`;
+      }
+    }
+
+    window.addEventListener("resize", () => {
+      const activeBtn = buttons.find((b) => b.getAttribute("aria-pressed") === "true");
+      if (activeBtn) setActive(activeBtn);
+    });
+
+    try {
+      await loadBiome("jungle");
+    } catch (e) {
+      console.error("[planet] initial load failed", e);
+    }
+
+    const initialBtn = buttons.find(
+      (b) => b.getAttribute("data-biome") === "jungle",
+    );
+    if (initialBtn) setActive(initialBtn);
+
+    // ── Button events ──
     for (const btn of buttons) {
       btn.addEventListener("click", async () => {
         const biome = btn.getAttribute("data-biome");
         const action = btn.getAttribute("data-action");
-
         try {
           if (action === "random") {
-            const picked = await viewer.randomBiome();
-            // highlight matching biome button
-            const match = buttons.find(b => b.getAttribute("data-biome") === picked);
+            const picked = await loadBiome(pickRandom(BIOMES));
+            const match = buttons.find(
+              (b) => b.getAttribute("data-biome") === picked,
+            );
             setActive(match ?? btn);
             return;
           }
-
           if (biome) {
             setActive(btn);
-            await viewer.setBiome(/** @type {any} */ (biome));
+            await loadBiome(biome);
           }
         } catch (e) {
           console.error(e);
@@ -368,8 +572,10 @@ const {
       });
     }
 
-    // Astro navigation cleanup (si tu navigues client-side)
-    // Si tu utilises View Transitions, c’est utile.
-    window.addEventListener("beforeunload", () => viewer.destroy());
+    window.addEventListener("beforeunload", () => {
+      ro.disconnect();
+      for (const t of loadedTextures) t.dispose();
+      renderer.dispose();
+    });
   </script>
 </section>
