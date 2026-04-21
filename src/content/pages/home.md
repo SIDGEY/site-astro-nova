@@ -105,38 +105,46 @@ blocks:
     icon: shield-star
     title: Protégez votre empire des attaques ennemie
     subtitle: "Un bon système de défense protège votre empire. Les lance-missiles et canons à ions sont efficaces contre les vaisseaux. Une défense diversifiée est clé."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
+    screenshot1: /landing/screens/resource.webp
+    screenshot2: /landing/screens/resource-metal.webp
     backgroundImage: /landing/backgrounds/bg-defense.webp
     reversed: false
     gallery:
-      - src: /landing/screenshot1.jpg
-        alt: Projecteur balistique
-      - src: /landing/screenshot2.jpg
-        alt: Canon photonique
-      - src: /landing/screenshot1.jpg
-        alt: Bouclier ionique
-      - src: /landing/screenshot2.jpg
-        alt: Tourelle laser
+      - src: /landing/thumbs/defense-lanceur-de-missiles.webp
+        alt: Excavateur minéral
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/defense-laser-leger.webp
+        alt: Mine de cristal
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/defense-laser-lourd.webp
+        alt: Raffinerie
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/defense-canon-de-gauss.webp
+        alt: Entrepôt
+        screenshot: /landing/screens/resource-metal.webp
     galleryExtra: 8
 
   - type: featurePhone
     icon: rocket-launch
     title: Développez votre flotte pour dominer.
     subtitle: "Les vaisseaux sont essentiels. Les chasseurs sont rapides, les lourds résistants, les croiseurs polyvalents, et les vaisseaux de colonisation créent des colonies."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
+    screenshot1: /landing/screens/resource.webp
+    screenshot2: /landing/screens/resource-metal.webp
     backgroundImage: /landing/backgrounds/bg-fleet.webp
     reversed: true
     gallery:
-      - src: /landing/screenshot1.jpg
-        alt: Intercepteur
-      - src: /landing/screenshot2.jpg
-        alt: Assaillant
-      - src: /landing/screenshot1.jpg
-        alt: Croiseur
-      - src: /landing/screenshot2.jpg
-        alt: Vaisseau colonie
+      - src: /landing/thumbs/fleet-chasseur-leger.webp
+        alt: Excavateur minéral
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/fleet-chasseur-lourd.webp
+        alt: Mine de cristal
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/fleet-croiseur.webp
+        alt: Raffinerie
+        screenshot: /landing/screens/resource-metal.webp
+      - src: /landing/thumbs/fleet-vaisseau-de-bataille.webp
+        alt: Entrepôt
+        screenshot: /landing/screens/resource-metal.webp
     galleryExtra: 8
 
   - type: featurePhone
