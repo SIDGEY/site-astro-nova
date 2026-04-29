@@ -189,27 +189,42 @@ blocks:
     title: Incarnez l'élite de la galaxie
     subtitle: "Trouvez un avatar qui vous ressemble. C'est l'âme de votre empire. Forgez votre réputation et imposez votre présence."
     items:
-      - image: /landing/screenshot1.jpg
-        title: Commandant Zara
-        avatar: /landing/screenshot1.jpg
-      - image: /landing/screenshot2.jpg
-        title: Amiral Kael
-        avatar: /landing/screenshot2.jpg
-      - image: /landing/screenshot1.jpg
-        title: Général Thane
-        avatar: /landing/screenshot1.jpg
-      - image: /landing/screenshot2.jpg
-        title: Oracle Lyra
-        avatar: /landing/screenshot2.jpg
-      - image: /landing/screenshot1.jpg
-        title: Impératrice Nova
-        avatar: /landing/screenshot1.jpg
-      - image: /landing/screenshot2.jpg
-        title: Sage Aldric
-        avatar: /landing/screenshot2.jpg
-      - image: /landing/screenshot1.jpg
-        title: Navigateur Rex
-        avatar: /landing/screenshot1.jpg
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
 
   - type: news
     title: Actualités

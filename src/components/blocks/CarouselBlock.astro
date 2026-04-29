@@ -14,6 +14,9 @@ interface Props {
 
 const { icon, title, subtitle, items } = Astro.props;
 const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
+
+// Detect if this is an avatar carousel (at least one item has an avatar field)
+const isAvatarCarousel = items.some((item) => item.avatar);
 ---
 
 <section class="overflow-hidden relative bg-slate-950 py-20 md:py-[128px] px-0">
@@ -50,30 +53,75 @@ const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
       class="carousel-track flex gap-4 md:gap-6 overflow-x-auto scroll-smooth px-6 snap-x snap-mandatory scrollbar-hide"
     >
       {
-        items.map((item) => (
-          <div class="carousel-card flex-shrink-0 w-[180px] md:w-[200px] snap-center transition-all duration-300 rounded-lg">
-            <div class="relative rounded-lg transition-all duration-200 overflow-hidden cursor-pointer border border-slate-700/50">
-              <div class="relative rounded-lg overflow-hidden bg-slate-800">
-                <div class="relative overflow-hidden w-full aspect-[4/5] transition-all duration-200">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    class="w-full h-full object-cover"
-                  />
+        items.map((item) =>
+          isAvatarCarousel ? (
+            /* ===== AVATAR CARD (lightweight — same base as tech, no title, simple avatar circle) ===== */
+            <div class="carousel-card flex-shrink-0 w-[180px] md:w-[200px] snap-center transition-all duration-300 rounded-lg">
+              <div class="avatar-card-border relative pb-8 rounded-lg transition-all duration-200 overflow-hidden cursor-pointer">
+                <div class="relative rounded-lg overflow-hidden bg-slate-900">
+                  <div class="relative opacity-80 overflow-hidden w-full aspect-[4/5] transition-all duration-200">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
                   <div
-                    class="absolute inset-0 pointer-events-none"
+                    class="absolute opacity-20 inset-0 pointer-events-none"
                     style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, rgb(67, 76, 96) 100%);"
                   />
                 </div>
-              </div>
-              <div class="flex flex-col justify-between pt-2 pb-2.5 px-4 bg-slate-900/80">
-                <h3 class="font-medium text-sm text-slate-100 line-clamp-1 break-words">
-                  {item.title}
-                </h3>
+                {/* 3 nested overlay gradients (bottom to top) + avatar inside */}
+                <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-slate-900/50 to-slate-900/0">
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-slate-900/0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-slate-900/0">
+                      <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-slate-900/0">
+                        {item.avatar && (
+                          <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 pointer-events-auto">
+                            <div class="flex flex-col items-center p-[1px] bg-gradient-to-b from-slate-800/80 to-slate-800 rounded-full">
+                              <div class="flex flex-col items-center rounded-full p-[2px] bg-gradient-to-b from-slate-900/80 to-slate-950/80">
+                                <img
+                                  src={item.avatar}
+                                  alt={`Avatar ${item.title}`}
+                                  class="w-18 h-18 rounded-full object-cover"
+                                  loading="lazy"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        ))
+          ) : (
+            /* ===== TECH CARD (original design) ===== */
+            <div class="carousel-card flex-shrink-0 w-[180px] md:w-[200px] snap-center transition-all duration-300 rounded-lg">
+              <div class="relative rounded-lg transition-all duration-200 overflow-hidden cursor-pointer border border-slate-700/50">
+                <div class="relative rounded-lg overflow-hidden bg-slate-800">
+                  <div class="relative overflow-hidden w-full aspect-[4/5] transition-all duration-200">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      class="w-full h-full object-cover"
+                    />
+                    <div
+                      class="absolute inset-0 pointer-events-none"
+                      style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, rgb(67, 76, 96) 100%);"
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-col justify-between pt-2 pb-2.5 px-4 bg-slate-900/80">
+                  <h3 class="font-medium text-sm text-slate-100 line-clamp-1 break-words">
+                    {item.title}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          ),
+        )
       }
     </div>
   </div>
@@ -85,13 +133,3 @@ const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
     <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
   </div>
 </section>
-
-<style>
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
