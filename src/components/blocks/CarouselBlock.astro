@@ -51,26 +51,25 @@ const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
     >
       {
         items.map((item) => (
-          <div class="carousel-card flex-shrink-0 w-[200px] md:w-[220px] snap-center">
-            <div class="relative rounded-xl overflow-hidden border border-slate-700/50 bg-slate-900/50 aspect-[3/4]">
-              <img
-                src={item.image}
-                alt={item.title}
-                class="w-full h-full object-cover"
-              />
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 flex flex-col items-center">
-                {item.avatar && (
-                  <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-slate-500 mb-2">
-                    <img
-                      src={item.avatar}
-                      alt=""
-                      class="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <p class="text-white text-sm font-medium text-center">
+          <div class="carousel-card flex-shrink-0 w-[180px] md:w-[200px] snap-center transition-all duration-300 rounded-lg">
+            <div class="relative rounded-lg transition-all duration-200 overflow-hidden cursor-pointer border border-slate-700/50">
+              <div class="relative rounded-lg overflow-hidden bg-slate-800">
+                <div class="relative overflow-hidden w-full aspect-[4/5] transition-all duration-200">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    class="w-full h-full object-cover"
+                  />
+                  <div
+                    class="absolute inset-0 pointer-events-none"
+                    style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, rgb(67, 76, 96) 100%);"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-col justify-between pt-2 pb-2.5 px-4 bg-slate-900/80">
+                <h3 class="font-medium text-sm text-slate-100 line-clamp-1 break-words">
                   {item.title}
-                </p>
+                </h3>
               </div>
             </div>
           </div>

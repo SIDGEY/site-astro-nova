@@ -86,20 +86,48 @@ blocks:
     title: Débloquez des technologies
     subtitle: "Développez votre arbre technologique pour débloquer de nouvelles capacités. Recherchez des innovations qui transformeront votre civilisation."
     items:
-      - image: /landing/screenshot1.jpg
+      - image: /landing/technologies/systemes-photoniques.webp
         title: Systèmes Photoniques
-      - image: /landing/screenshot2.jpg
+      - image: /landing/technologies/manipulation-ionique.webp
         title: Manipulation Ionique
-      - image: /landing/screenshot1.jpg
+      - image: /landing/technologies/pliage-spatial.webp
         title: Pliage Spatial
-      - image: /landing/screenshot2.jpg
+      - image: /landing/technologies/maitrise-du-plasma.webp
         title: Maîtrise du Plasma
-      - image: /landing/screenshot1.jpg
+      - image: /landing/technologies/propulseur-chimique.webp
         title: Propulseur Chimique
-      - image: /landing/screenshot2.jpg
+      - image: /landing/technologies/moteur-magnetique.webp
         title: Moteur Magnétique
-      - image: /landing/screenshot1.jpg
-        title: Navigation Stellaire
+      - image: /landing/technologies/navigation-transdimensionnelle.webp
+        title: Navigation Transdimensionnelle
+      - image: /landing/technologies/propulsion-hyperespace.webp
+        title: Propulsion Hyperespace
+      - image: /landing/technologies/manipulation-gravitationnelle.webp
+        title: Manipulation Gravitationnelle
+      - image: /landing/technologies/science-energetique.webp
+        title: Science Énergétique
+      - image: /landing/technologies/calcul-quantique.webp
+        title: Calcul Quantique
+      - image: /landing/technologies/astrophysique.webp
+        title: Astrophysique
+      - image: /landing/technologies/metallurgie-avancee.webp
+        title: Métallurgie Avancée
+      - image: /landing/technologies/systemes-offensifs.webp
+        title: Systèmes Offensifs
+      - image: /landing/technologies/champs-de-protection.webp
+        title: Champs de Protection
+      - image: /landing/technologies/renseignement-tactique.webp
+        title: Renseignement Tactique
+      - image: /landing/technologies/reacteur-a-combustion.webp
+        title: Réacteur à Combustion
+      - image: /landing/technologies/reacteur-a-impulsion.webp
+        title: Réacteur à Impulsion
+      - image: /landing/technologies/cosmologie-appliquee.webp
+        title: Cosmologie Appliquée
+      - image: /landing/technologies/reseau-de-recherche-intergalactique.webp
+        title: Réseau de Recherche Intergalactique
+      - image: /landing/technologies/collaboration-stellaire.webp
+        title: Collaboration Stellaire
 
   - type: featurePhone
     icon: shield-star
