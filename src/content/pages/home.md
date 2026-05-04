@@ -192,39 +192,78 @@ blocks:
       - image: /landing/avatars/background/bg-avatar-01.png
         title: Commandant Nova
         avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-02.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-02.png
+      - image: /landing/avatars/background/bg-avatar-03.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-03.png
+      - image: /landing/avatars/background/bg-avatar-04.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-04.png
+      - image: /landing/avatars/background/bg-avatar-05.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-05.png
+      - image: /landing/avatars/background/bg-avatar-06.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-06.png
+      - image: /landing/avatars/background/bg-avatar-07.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-07.png
+      - image: /landing/avatars/background/bg-avatar-08.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-08.png
+      - image: /landing/avatars/background/bg-avatar-09.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-09.png
+      - image: /landing/avatars/background/bg-avatar-10.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-10.png
+      - image: /landing/avatars/background/bg-avatar-11.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-11.png
+      - image: /landing/avatars/background/bg-avatar-12.png
         title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
+        avatar: /landing/avatars/avatar/avatar-12.png
+      - image: /landing/avatars/background/bg-avatar-13.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-13.png
+      - image: /landing/avatars/background/bg-avatar-14.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-14.png
+      - image: /landing/avatars/background/bg-avatar-15.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-15.png
+      - image: /landing/avatars/background/bg-avatar-16.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-16.png
+      - image: /landing/avatars/background/bg-avatar-16.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-16.png
+      - image: /landing/avatars/background/bg-avatar-17.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-17.png
+      - image: /landing/avatars/background/bg-avatar-18.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-18.png
+      - image: /landing/avatars/background/bg-avatar-19.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-19.png
+      - image: /landing/avatars/background/bg-avatar-20.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-20.png
+      - image: /landing/avatars/background/bg-avatar-21.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-21.png
+      - image: /landing/avatars/background/bg-avatar-22.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-22.png
+      - image: /landing/avatars/background/bg-avatar-23.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-23.png
+      - image: /landing/avatars/background/bg-avatar-24.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-24.png
 
   - type: news
     title: Actualités
