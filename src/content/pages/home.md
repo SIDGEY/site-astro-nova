@@ -86,20 +86,48 @@ blocks:
     title: Débloquez des technologies
     subtitle: "Développez votre arbre technologique pour débloquer de nouvelles capacités. Recherchez des innovations qui transformeront votre civilisation."
     items:
-      - image: /landing/screenshot1.jpg
+      - image: /landing/technologies/systemes-photoniques.webp
         title: Systèmes Photoniques
-      - image: /landing/screenshot2.jpg
+      - image: /landing/technologies/manipulation-ionique.webp
         title: Manipulation Ionique
-      - image: /landing/screenshot1.jpg
+      - image: /landing/technologies/pliage-spatial.webp
         title: Pliage Spatial
-      - image: /landing/screenshot2.jpg
+      - image: /landing/technologies/maitrise-du-plasma.webp
         title: Maîtrise du Plasma
-      - image: /landing/screenshot1.jpg
+      - image: /landing/technologies/propulseur-chimique.webp
         title: Propulseur Chimique
-      - image: /landing/screenshot2.jpg
+      - image: /landing/technologies/moteur-magnetique.webp
         title: Moteur Magnétique
-      - image: /landing/screenshot1.jpg
-        title: Navigation Stellaire
+      - image: /landing/technologies/navigation-transdimensionnelle.webp
+        title: Navigation Transdimensionnelle
+      - image: /landing/technologies/propulsion-hyperespace.webp
+        title: Propulsion Hyperespace
+      - image: /landing/technologies/manipulation-gravitationnelle.webp
+        title: Manipulation Gravitationnelle
+      - image: /landing/technologies/science-energetique.webp
+        title: Science Énergétique
+      - image: /landing/technologies/calcul-quantique.webp
+        title: Calcul Quantique
+      - image: /landing/technologies/astrophysique.webp
+        title: Astrophysique
+      - image: /landing/technologies/metallurgie-avancee.webp
+        title: Métallurgie Avancée
+      - image: /landing/technologies/systemes-offensifs.webp
+        title: Systèmes Offensifs
+      - image: /landing/technologies/champs-de-protection.webp
+        title: Champs de Protection
+      - image: /landing/technologies/renseignement-tactique.webp
+        title: Renseignement Tactique
+      - image: /landing/technologies/reacteur-a-combustion.webp
+        title: Réacteur à Combustion
+      - image: /landing/technologies/reacteur-a-impulsion.webp
+        title: Réacteur à Impulsion
+      - image: /landing/technologies/cosmologie-appliquee.webp
+        title: Cosmologie Appliquée
+      - image: /landing/technologies/reseau-de-recherche-intergalactique.webp
+        title: Réseau de Recherche Intergalactique
+      - image: /landing/technologies/collaboration-stellaire.webp
+        title: Collaboration Stellaire
 
   - type: featurePhone
     icon: shield-star
@@ -161,27 +189,78 @@ blocks:
     title: Incarnez l'élite de la galaxie
     subtitle: "Trouvez un avatar qui vous ressemble. C'est l'âme de votre empire. Forgez votre réputation et imposez votre présence."
     items:
-      - image: /landing/screenshot1.jpg
-        title: Commandant Zara
-        avatar: /landing/screenshot1.jpg
-      - image: /landing/screenshot2.jpg
-        title: Amiral Kael
-        avatar: /landing/screenshot2.jpg
-      - image: /landing/screenshot1.jpg
-        title: Général Thane
-        avatar: /landing/screenshot1.jpg
-      - image: /landing/screenshot2.jpg
-        title: Oracle Lyra
-        avatar: /landing/screenshot2.jpg
-      - image: /landing/screenshot1.jpg
-        title: Impératrice Nova
-        avatar: /landing/screenshot1.jpg
-      - image: /landing/screenshot2.jpg
-        title: Sage Aldric
-        avatar: /landing/screenshot2.jpg
-      - image: /landing/screenshot1.jpg
-        title: Navigateur Rex
-        avatar: /landing/screenshot1.jpg
+      - image: /landing/avatars/background/bg-avatar-01.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-01.png
+      - image: /landing/avatars/background/bg-avatar-02.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-02.png
+      - image: /landing/avatars/background/bg-avatar-03.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-03.png
+      - image: /landing/avatars/background/bg-avatar-04.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-04.png
+      - image: /landing/avatars/background/bg-avatar-05.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-05.png
+      - image: /landing/avatars/background/bg-avatar-06.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-06.png
+      - image: /landing/avatars/background/bg-avatar-07.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-07.png
+      - image: /landing/avatars/background/bg-avatar-08.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-08.png
+      - image: /landing/avatars/background/bg-avatar-09.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-09.png
+      - image: /landing/avatars/background/bg-avatar-10.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-10.png
+      - image: /landing/avatars/background/bg-avatar-11.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-11.png
+      - image: /landing/avatars/background/bg-avatar-12.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-12.png
+      - image: /landing/avatars/background/bg-avatar-13.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-13.png
+      - image: /landing/avatars/background/bg-avatar-14.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-14.png
+      - image: /landing/avatars/background/bg-avatar-15.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-15.png
+      - image: /landing/avatars/background/bg-avatar-16.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-16.png
+      - image: /landing/avatars/background/bg-avatar-17.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-17.png
+      - image: /landing/avatars/background/bg-avatar-18.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-18.png
+      - image: /landing/avatars/background/bg-avatar-19.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-19.png
+      - image: /landing/avatars/background/bg-avatar-20.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-20.png
+      - image: /landing/avatars/background/bg-avatar-21.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-21.png
+      - image: /landing/avatars/background/bg-avatar-22.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-22.png
+      - image: /landing/avatars/background/bg-avatar-23.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-23.png
+      - image: /landing/avatars/background/bg-avatar-24.png
+        title: Commandant Nova
+        avatar: /landing/avatars/avatar/avatar-24.png
 
   - type: news
     title: Actualités

@@ -14,6 +14,9 @@ interface Props {
 
 const { icon, title, subtitle, items } = Astro.props;
 const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
+
+// Detect if this is an avatar carousel (at least one item has an avatar field)
+const isAvatarCarousel = items.some((item) => item.avatar);
 ---
 
 <section class="overflow-hidden relative bg-slate-950 py-20 md:py-[128px] px-0">
@@ -50,49 +53,217 @@ const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
       class="carousel-track flex gap-4 md:gap-6 overflow-x-auto scroll-smooth px-6 snap-x snap-mandatory scrollbar-hide"
     >
       {
-        items.map((item) => (
-          <div class="carousel-card flex-shrink-0 w-[200px] md:w-[220px] snap-center">
-            <div class="relative rounded-xl overflow-hidden border border-slate-700/50 bg-slate-900/50 aspect-[3/4]">
-              <img
-                src={item.image}
-                alt={item.title}
-                class="w-full h-full object-cover"
-              />
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 flex flex-col items-center">
-                {item.avatar && (
-                  <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-slate-500 mb-2">
+        items.map((item) =>
+          isAvatarCarousel ? (
+            /* ===== AVATAR CARD (lightweight — same base as tech, no title, simple avatar circle) ===== */
+            <div class="carousel-card flex-shrink-0 w-[180px] md:w-[200px] snap-center transition-all duration-300 rounded-lg">
+              <div class="avatar-card-border relative pb-8 rounded-lg transition-all duration-200 overflow-hidden cursor-pointer">
+                <div class="relative rounded-lg overflow-hidden bg-slate-900">
+                  <div class="relative opacity-80 overflow-hidden w-full aspect-[4/5] transition-all duration-200">
                     <img
-                      src={item.avatar}
-                      alt=""
+                      src={item.image}
+                      alt={item.title}
                       class="w-full h-full object-cover"
                     />
                   </div>
-                )}
-                <p class="text-white text-sm font-medium text-center">
-                  {item.title}
-                </p>
+                  <div
+                    class="absolute opacity-20 inset-0 pointer-events-none"
+                    style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, rgb(67, 76, 96) 100%);"
+                  />
+                </div>
+                {/* 3 nested overlay gradients (bottom to top) + avatar inside */}
+                <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-slate-900/50 to-slate-900/0">
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-slate-900/0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-slate-900/0">
+                      <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-slate-900/0">
+                        {item.avatar && (
+                          <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 pointer-events-auto">
+                            <div class="flex flex-col items-center p-[1px] bg-gradient-to-b from-slate-800/80 to-slate-800 rounded-full">
+                              <div class="flex flex-col items-center rounded-full p-[2px] bg-gradient-to-b from-slate-900/80 to-slate-950/80">
+                                <img
+                                  src={item.avatar}
+                                  alt={`Avatar ${item.title}`}
+                                  class="w-18 h-18 rounded-full object-cover"
+                                  loading="lazy"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        ))
+          ) : (
+            /* ===== TECH CARD (original design) ===== */
+            <div class="carousel-card flex-shrink-0 w-[180px] md:w-[200px] snap-center transition-all duration-300 rounded-lg">
+              <div class="relative rounded-lg transition-all duration-200 overflow-hidden cursor-pointer border border-slate-700/50 bg-slate-900/80">
+                <div class="relative rounded-lg overflow-hidden bg-slate-800">
+                  <div class="relative overflow-hidden w-full aspect-[4/5] transition-all duration-200">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      class="w-full h-full object-cover"
+                    />
+                    <div
+                      class="absolute inset-0 pointer-events-none"
+                      style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, rgb(67, 76, 96) 100%);"
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-col justify-between pt-2 pb-2.5 px-4">
+                  <h3 class="font-medium text-sm text-slate-100 line-clamp-1 break-words">
+                    {item.title}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          ),
+        )
       }
     </div>
   </div>
 
   <!-- Dots -->
-  <div class="relative z-10 flex justify-center gap-2 my-12">
-    <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
-    <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
-    <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+  <div class="carousel-dots relative z-10 flex justify-center gap-0 my-12">
   </div>
 </section>
 
-<style>
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
+<script>
+  document
+    .querySelectorAll<HTMLElement>('[id^="carousel-"]')
+    .forEach((track) => {
+      const section = track.closest("section");
+      const dotsContainer =
+        section?.querySelector<HTMLElement>(".carousel-dots");
+      const cards = Array.from(
+        track.querySelectorAll<HTMLElement>(".carousel-card"),
+      );
+
+      if (!cards.length || !dotsContainer) return;
+
+      let currentPage = 0;
+      let dots: HTMLButtonElement[] = [];
+      let lastVisibleCount = 0;
+
+      // ── Helpers ──────────────────────────────────────────────────────────────
+
+      function getVisibleCount(): number {
+        const style = getComputedStyle(track);
+        const gap = parseFloat(style.gap) || 0;
+        const pl = parseFloat(style.paddingLeft) || 0;
+        const pr = parseFloat(style.paddingRight) || 0;
+        const availableWidth = track.clientWidth - pl - pr;
+        return Math.max(
+          1,
+          Math.floor((availableWidth + gap) / (cards[0].offsetWidth + gap)),
+        );
+      }
+
+      function getPageCount(): number {
+        return Math.ceil(cards.length / getVisibleCount());
+      }
+
+      function nearestPage(): number {
+        if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 2) {
+          return getPageCount() - 1;
+        }
+        if (track.scrollLeft <= 2) {
+          return 0;
+        }
+        const visibleCount = getVisibleCount();
+        const center = track.scrollLeft + track.clientWidth / 2;
+        let closest = 0;
+        let minDist = Infinity;
+        cards.forEach((card, i) => {
+          const dist = Math.abs(
+            card.offsetLeft + card.clientWidth / 2 - center,
+          );
+          if (dist < minDist) {
+            minDist = dist;
+            closest = i;
+          }
+        });
+        return Math.floor(closest / visibleCount);
+      }
+
+      function buildDots() {
+        const visibleCount = getVisibleCount();
+        const pageCount = getPageCount();
+        if (visibleCount === lastVisibleCount && dots.length === pageCount) return;
+        lastVisibleCount = visibleCount;
+
+        dotsContainer!.innerHTML = "";
+        dots = Array.from({ length: pageCount }, (_, i) => {
+          const btn = document.createElement("button");
+          btn.className =
+            "p-1.5 cursor-pointer flex items-center justify-center";
+          btn.setAttribute("aria-label", `Page ${i + 1}`);
+
+          const dot = document.createElement("span");
+          dot.className =
+            "w-1.5 h-1.5 rounded-full transition-all duration-300 block " +
+            (i === 0
+              ? "bg-slate-200 ring-2 ring-slate-200"
+              : "bg-slate-400/40");
+
+          btn.appendChild(dot);
+          btn.addEventListener("click", () => goToPage(i));
+          dotsContainer!.appendChild(btn);
+          return btn;
+        });
+
+        if (currentPage >= pageCount) currentPage = pageCount - 1;
+        setActiveDot(currentPage);
+      }
+
+      function setActiveDot(page: number) {
+        currentPage = page;
+        dots.forEach((btn, i) => {
+          const dot = btn.querySelector("span")!;
+          dot.className =
+            "w-1.5 h-1.5 rounded-full transition-all duration-300 block " +
+            (i === page
+              ? "bg-slate-200 ring-2 ring-slate-200"
+              : "bg-slate-400/40");
+        });
+      }
+
+      function snapToPage(page: number) {
+        setActiveDot(page);
+        if (page >= getPageCount() - 1) {
+          track.scrollTo({ left: track.scrollWidth, behavior: "smooth" });
+          return;
+        }
+        const card = cards[page * getVisibleCount()];
+        if (!card) return;
+        const offset =
+          card.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
+        track.scrollTo({ left: Math.max(0, offset), behavior: "smooth" });
+      }
+
+      function goToPage(page: number) {
+        snapToPage(page);
+      }
+
+      // ── Scroll sync ───────────────────────────────────────────────────────────
+
+      track.addEventListener(
+        "scroll",
+        () => {
+          const page = nearestPage();
+          if (page !== currentPage) setActiveDot(page);
+        },
+        { passive: true },
+      );
+
+      // ── Init ──────────────────────────────────────────────────────────────────
+
+      const resizeObserver = new ResizeObserver(buildDots);
+      resizeObserver.observe(track);
+
+      buildDots();
+    });
+</script>
