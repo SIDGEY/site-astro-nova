@@ -237,9 +237,6 @@ blocks:
       - image: /landing/avatars/background/bg-avatar-16.png
         title: Commandant Nova
         avatar: /landing/avatars/avatar/avatar-16.png
-      - image: /landing/avatars/background/bg-avatar-16.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-16.png
       - image: /landing/avatars/background/bg-avatar-17.png
         title: Commandant Nova
         avatar: /landing/avatars/avatar/avatar-17.png
