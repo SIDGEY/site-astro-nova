@@ -62,23 +62,23 @@ blocks:
     icon: factory
     title: Maîtrisez les ressources de vos planètes
     subtitle: "Les bâtiments sont essentiels. Le centre de commandement gère la colonie, le laboratoire développe des technologies, et l'usine de robots accélère la construction."
-    screenshot1: /landing/screens/resource.webp
-    screenshot2: /landing/screens/resource-metal.webp
+    screenshot1: /landing/screens/installation.webp
+    screenshot2: /landing/screens/installation-centre-innovation.webp
     backgroundImage: /landing/backgrounds/bg-installation.webp
     reversed: true
     gallery:
-      - src: /landing/thumbs/installation-dock-orbital.webp
-        alt: Excavateur minéral
-        screenshot: /landing/screens/resource-metal.webp
       - src: /landing/thumbs/installation-centre-innovation.webp
-        alt: Mine de cristal
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/installation-modulateur-planetaire.webp
-        alt: Raffinerie
-        screenshot: /landing/screens/resource-metal.webp
+        alt: Centre d'innovation
+        screenshot: /landing/screens/installation-centre-innovation.webp
       - src: /landing/thumbs/installation-fabrique-automates.webp
-        alt: Entrepôt
-        screenshot: /landing/screens/resource-metal.webp
+        alt: Fabrique d'automates
+        screenshot: /landing/screens/installation-fabrique-automates.webp
+      - src: /landing/thumbs/installation-dock-orbital.webp
+        alt: Dock orbital
+        screenshot: /landing/screens/installation-dock-orbital.webp
+      - src: /landing/thumbs/installation-modulateur-planetaire.webp
+        alt: Modulateur planétaire
+        screenshot: /landing/screens/installation-modulateur-planetaire.webp
     galleryExtra: 8
 
   - type: carousel
@@ -86,48 +86,38 @@ blocks:
     title: Débloquez des technologies
     subtitle: "Développez votre arbre technologique pour débloquer de nouvelles capacités. Recherchez des innovations qui transformeront votre civilisation."
     items:
-      - image: /landing/technologies/systemes-photoniques.webp
-        title: Systèmes Photoniques
-      - image: /landing/technologies/manipulation-ionique.webp
-        title: Manipulation Ionique
-      - image: /landing/technologies/pliage-spatial.webp
-        title: Pliage Spatial
-      - image: /landing/technologies/maitrise-du-plasma.webp
-        title: Maîtrise du Plasma
-      - image: /landing/technologies/propulseur-chimique.webp
-        title: Propulseur Chimique
-      - image: /landing/technologies/moteur-magnetique.webp
-        title: Moteur Magnétique
-      - image: /landing/technologies/navigation-transdimensionnelle.webp
-        title: Navigation Transdimensionnelle
-      - image: /landing/technologies/propulsion-hyperespace.webp
-        title: Propulsion Hyperespace
-      - image: /landing/technologies/manipulation-gravitationnelle.webp
-        title: Manipulation Gravitationnelle
-      - image: /landing/technologies/science-energetique.webp
+      - image: /assets/images/research/science-energetique.webp
         title: Science Énergétique
-      - image: /landing/technologies/calcul-quantique.webp
-        title: Calcul Quantique
-      - image: /landing/technologies/astrophysique.webp
-        title: Astrophysique
-      - image: /landing/technologies/metallurgie-avancee.webp
-        title: Métallurgie Avancée
-      - image: /landing/technologies/systemes-offensifs.webp
-        title: Systèmes Offensifs
-      - image: /landing/technologies/champs-de-protection.webp
-        title: Champs de Protection
-      - image: /landing/technologies/renseignement-tactique.webp
+      - image: /assets/images/research/systemes-photoniques.webp
+        title: Systèmes Photoniques
+      - image: /assets/images/research/manipulation-ionique.webp
+        title: Manipulation Ionique
+      - image: /assets/images/research/pliage-spatial.webp
+        title: Pliage Spatial
+      - image: /assets/images/research/maitrise-du-plasma.webp
+        title: Maîtrise du Plasma
+      - image: /assets/images/research/propulseur-chimique.webp
+        title: Propulseur Chimique
+      - image: /assets/images/research/moteur-magnetique.webp
+        title: Moteur Magnétique
+      - image: /assets/images/research/navigation-transdimensionnelle.webp
+        title: Navigation Transdimensionnelle
+      - image: /assets/images/research/renseignement-tactique.webp
         title: Renseignement Tactique
-      - image: /landing/technologies/reacteur-a-combustion.webp
-        title: Réacteur à Combustion
-      - image: /landing/technologies/reacteur-a-impulsion.webp
-        title: Réacteur à Impulsion
-      - image: /landing/technologies/cosmologie-appliquee.webp
+      - image: /assets/images/research/calcul-quantique.webp
+        title: Calcul Quantique
+      - image: /assets/images/research/cosmologie-appliquee.webp
         title: Cosmologie Appliquée
-      - image: /landing/technologies/reseau-de-recherche-intergalactique.webp
-        title: Réseau de Recherche Intergalactique
-      - image: /landing/technologies/collaboration-stellaire.webp
+      - image: /assets/images/research/collaboration-stellaire.webp
         title: Collaboration Stellaire
+      - image: /assets/images/research/manipulation-gravitationnelle.webp
+        title: Manipulation Gravitationnelle
+      - image: /assets/images/research/systemes-offensifs.webp
+        title: Systèmes Offensifs
+      - image: /assets/images/research/champs-de-protection.webp
+        title: Champs de Protection
+      - image: /assets/images/research/metallurgie-avancee.webp
+        title: Métallurgie Avancée
 
   - type: featurePhone
     icon: shield-star
