@@ -123,23 +123,23 @@ blocks:
     icon: shield-star
     title: Protégez votre empire des attaques ennemie
     subtitle: "Un bon système de défense protège votre empire. Les lance-missiles et canons à ions sont efficaces contre les vaisseaux. Une défense diversifiée est clé."
-    screenshot1: /landing/screens/resource.webp
-    screenshot2: /landing/screens/resource-metal.webp
+    screenshot1: /landing/screens/defense.webp
+    screenshot2: /landing/screens/defense-projecteur-balistique.webp
     backgroundImage: /landing/backgrounds/bg-defense.webp
     reversed: false
     gallery:
-      - src: /landing/thumbs/defense-lanceur-de-missiles.webp
+      - src: /landing/thumbs/defense-projecteur-balistique.webp
         alt: Excavateur minéral
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/defense-laser-leger.webp
+        screenshot: /landing/screens/defense-projecteur-balistique.webp
+      - src: /landing/thumbs/defense-canon-photonique.webp
         alt: Mine de cristal
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/defense-laser-lourd.webp
+        screenshot: /landing/screens/defense-canon-photonique.webp
+      - src: /landing/thumbs/defense-emetteur-a-haute-energie.webp
         alt: Raffinerie
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/defense-canon-de-gauss.webp
+        screenshot: /landing/screens/defense-emetteur-a-haute-energie.webp
+      - src: /landing/thumbs/defense-accelerateur-magnetique.webp
         alt: Entrepôt
-        screenshot: /landing/screens/resource-metal.webp
+        screenshot: /landing/screens/defense-accelerateur-magnetique.webp
     galleryExtra: 8
 
   - type: featurePhone
