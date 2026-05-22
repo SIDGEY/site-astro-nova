@@ -146,23 +146,23 @@ blocks:
     icon: rocket-launch
     title: Développez votre flotte pour dominer.
     subtitle: "Les vaisseaux sont essentiels. Les chasseurs sont rapides, les lourds résistants, les croiseurs polyvalents, et les vaisseaux de colonisation créent des colonies."
-    screenshot1: /landing/screens/resource.webp
-    screenshot2: /landing/screens/resource-metal.webp
+    screenshot1: /landing/screens/fleet.webp
+    screenshot2: /landing/screens/fleet-intercepteur.webp
     backgroundImage: /landing/backgrounds/bg-fleet.webp
     reversed: true
     gallery:
-      - src: /landing/thumbs/fleet-chasseur-leger.webp
+      - src: /landing/thumbs/fleet-intercepteur.webp
         alt: Excavateur minéral
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/fleet-chasseur-lourd.webp
+        screenshot: /landing/screens/fleet-intercepteur.webp
+      - src: /landing/thumbs/fleet-assaillant.webp
         alt: Mine de cristal
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/fleet-croiseur.webp
+        screenshot: /landing/screens/fleet-assaillant.webp
+      - src: /landing/thumbs/fleet-corvette.webp
         alt: Raffinerie
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/fleet-vaisseau-de-bataille.webp
+        screenshot: /landing/screens/fleet-corvette.webp
+      - src: /landing/thumbs/fleet-cuirasse.webp
         alt: Entrepôt
-        screenshot: /landing/screens/resource-metal.webp
+        screenshot: /landing/screens/fleet-cuirasse.webp
     galleryExtra: 8
 
   - type: featurePhone
