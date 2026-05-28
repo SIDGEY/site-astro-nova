@@ -580,6 +580,16 @@
   opacity: 0.8;
 }
 
+/* Overlay gradient for images */
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%),
+    linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, #434C60 100%);
+}
+
 /* Gradient border for avatar cards */
 .avatar-card-border {
   position: relative;

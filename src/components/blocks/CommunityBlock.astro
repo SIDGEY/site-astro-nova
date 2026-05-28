@@ -24,29 +24,39 @@ const {
 } = Astro.props;
 ---
 
-<section id="community" class="bg-[#0B1120] py-20 md:py-28 px-6">
-  <div class="max-w-6xl mx-auto">
+<section
+  id="community"
+  class="relative bg-slate-900 py-20 md:py-[128px] px-6 md:px-12 lg:px-20 flex items-center"
+>
+  <div
+    class="relative z-[2] max-w-7xl mx-auto w-full hidden sm:grid items-center"
+  >
     <!-- Section Title -->
     <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-100">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-50 mb-4">
         {title}
       </h2>
-      <p class="text-base md:text-lg text-slate-400 max-w-3xl mx-auto">{subtitle}</p>
+      <p class="text-base md:text-xl text-slate-400 mb-0 max-w-2xl mx-auto">
+        {subtitle}
+      </p>
     </div>
 
     <!-- Card -->
-    <div class="grid md:grid-cols-2 gap-0 rounded-xl overflow-hidden border border-slate-700/50 bg-slate-900/30">
+    <div
+      class="grid card-with-border md:grid-cols-2 gap-0 rounded-xl overflow-hidden bg-slate-900/30"
+    >
       <!-- Image Column -->
-      <div class="h-64 md:h-auto">
+      <div class="relative aspect-[4/3] md:h-full rounded-xl overflow-hidden">
         <img
           src={image}
           alt={imageAlt}
-          class="w-full h-full object-cover"
+          class="w-full h-full object-cover opacity-80"
         />
+        <div class="image-overlay"></div>
       </div>
 
       <!-- Text Column -->
-      <div class="p-8 md:p-12 flex flex-col justify-center">
+      <div class="p-8 md:p-16 flex flex-col">
         <h3 class="text-xl sm:text-2xl font-bold mb-4 text-slate-200">
           {sectionTitle}
         </h3>
@@ -55,20 +65,43 @@ const {
           {description}
         </p>
 
-        {secondaryDescription && (
-          <p class="text-slate-400 leading-relaxed mb-6 text-sm md:text-base">
-            {secondaryDescription}
-          </p>
-        )}
+        {
+          secondaryDescription && (
+            <p class="text-slate-400 leading-relaxed mb-6 text-sm md:text-base">
+              {secondaryDescription}
+            </p>
+          )
+        }
 
         <div class="mt-2">
           <a
             href={discordLink}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 py-3 px-6 bg-blue-500 hover:bg-blue-600 rounded-md font-medium transition-colors text-white"
+            class="inline-flex items-center justify-center gap-2 h-12 px-6 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-lg rounded-lg transition-colors"
           >
-            <i class="ph ph-discord-logo text-xl"></i>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_2413_8954)">
+                <path
+                  d="M17.2481 5.5293C17.0316 5.91382 16.8371 6.31162 16.6603 6.71824C14.9807 6.46631 13.2702 6.46631 11.5862 6.71824C11.4139 6.31162 11.215 5.91382 10.9984 5.5293C9.42052 5.79891 7.88236 6.27184 6.42382 6.93924C3.5332 11.2221 2.75089 15.3945 3.13984 19.5094C4.83268 20.7602 6.7288 21.715 8.7487 22.3249C9.20392 21.715 9.60616 21.0652 9.95092 20.389C9.29674 20.1459 8.6647 19.8409 8.05918 19.4873C8.2183 19.3724 8.37298 19.253 8.52328 19.1381C12.0725 20.8088 16.1829 20.8088 19.7365 19.1381C19.8868 19.2619 20.0415 19.3813 20.2006 19.4873C19.5951 19.8453 18.963 20.1459 18.3045 20.3934C18.6492 21.0697 19.0514 21.7193 19.5067 22.3293C21.5266 21.7193 23.4227 20.7691 25.1156 19.5182C25.5752 14.7448 24.3288 10.6078 21.8227 6.94368C20.3686 6.27626 18.8304 5.80333 17.2526 5.53814L17.2481 5.5293ZM10.4459 16.9768C9.35422 16.9768 8.4481 15.9868 8.4481 14.7625C8.4481 13.5382 9.31882 12.5437 10.4415 12.5437C11.5641 12.5437 12.4569 13.5425 12.4393 14.7625C12.4216 15.9823 11.5598 16.9768 10.4459 16.9768ZM17.8095 16.9768C16.7133 16.9768 15.8161 15.9868 15.8161 14.7625C15.8161 13.5382 16.6868 12.5437 17.8095 12.5437C18.9321 12.5437 19.8205 13.5425 19.8028 14.7625C19.7852 15.9823 18.9233 16.9768 17.8095 16.9768Z"
+                  fill="white"></path>
+              </g>
+              <defs>
+                <clipPath id="clip0_2413_8954">
+                  <rect
+                    width="23"
+                    height="18"
+                    fill="white"
+                    transform="translate(2.5 5)"></rect>
+                </clipPath>
+              </defs>
+            </svg>
             {discordButtonText}
           </a>
         </div>

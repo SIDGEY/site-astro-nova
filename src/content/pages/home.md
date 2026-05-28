@@ -274,6 +274,6 @@ blocks:
     secondaryDescription: Échangez, collaborez et imposez votre marque dans cet univers en constante évolution.
     discordLink: https://discord.gg/dVXdVqw5d5
     discordButtonText: Rejoindre le Discord
-    image: /landing/features/community.jpg
+    image: /landing/features/bg-community.webp
     imageAlt: Communauté Astro Nova
 ---
