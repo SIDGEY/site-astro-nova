@@ -169,8 +169,8 @@ blocks:
     icon: storefront
     title: "Progressez à votre rythme, brillez par style"
     subtitle: "Notre boutique respecte l'intégrité de la compétition. Aucun avantage ne s'achète : l'arène est le domaine de la stratégie. Choisissez des options Pay-to-Fast pour accélérer votre développement ou explorez nos avatars exclusifs."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
+    screenshot1: /landing/screens/shop-credit.webp
+    screenshot2: /landing/screens/shop-avatar.webp
     backgroundImage: /landing/backgrounds/bg-store.webp
     reversed: false
 
