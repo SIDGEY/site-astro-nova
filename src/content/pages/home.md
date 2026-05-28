@@ -146,31 +146,31 @@ blocks:
     icon: rocket-launch
     title: Développez votre flotte pour dominer.
     subtitle: "Les vaisseaux sont essentiels. Les chasseurs sont rapides, les lourds résistants, les croiseurs polyvalents, et les vaisseaux de colonisation créent des colonies."
-    screenshot1: /landing/screens/resource.webp
-    screenshot2: /landing/screens/resource-metal.webp
+    screenshot1: /landing/screens/fleet.webp
+    screenshot2: /landing/screens/fleet-intercepteur.webp
     backgroundImage: /landing/backgrounds/bg-fleet.webp
     reversed: true
     gallery:
-      - src: /landing/thumbs/fleet-chasseur-leger.webp
+      - src: /landing/thumbs/fleet-intercepteur.webp
         alt: Excavateur minéral
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/fleet-chasseur-lourd.webp
+        screenshot: /landing/screens/fleet-intercepteur.webp
+      - src: /landing/thumbs/fleet-assaillant.webp
         alt: Mine de cristal
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/fleet-croiseur.webp
+        screenshot: /landing/screens/fleet-assaillant.webp
+      - src: /landing/thumbs/fleet-corvette.webp
         alt: Raffinerie
-        screenshot: /landing/screens/resource-metal.webp
-      - src: /landing/thumbs/fleet-vaisseau-de-bataille.webp
+        screenshot: /landing/screens/fleet-corvette.webp
+      - src: /landing/thumbs/fleet-cuirasse.webp
         alt: Entrepôt
-        screenshot: /landing/screens/resource-metal.webp
+        screenshot: /landing/screens/fleet-cuirasse.webp
     galleryExtra: 8
 
   - type: featurePhone
     icon: storefront
     title: "Progressez à votre rythme, brillez par style"
     subtitle: "Notre boutique respecte l'intégrité de la compétition. Aucun avantage ne s'achète : l'arène est le domaine de la stratégie. Choisissez des options Pay-to-Fast pour accélérer votre développement ou explorez nos avatars exclusifs."
-    screenshot1: /bg-phone-planet.svg
-    screenshot2: /bg-phone-resource-1.svg
+    screenshot1: /landing/screens/shop-credit.webp
+    screenshot2: /landing/screens/shop-avatar.webp
     backgroundImage: /landing/backgrounds/bg-store.webp
     reversed: false
 
@@ -274,6 +274,6 @@ blocks:
     secondaryDescription: Échangez, collaborez et imposez votre marque dans cet univers en constante évolution.
     discordLink: https://discord.gg/dVXdVqw5d5
     discordButtonText: Rejoindre le Discord
-    image: /landing/features/community.jpg
+    image: /landing/features/bg-community.webp
     imageAlt: Communauté Astro Nova
 ---

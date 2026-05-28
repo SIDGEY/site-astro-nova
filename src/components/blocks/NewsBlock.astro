@@ -14,29 +14,72 @@ interface Props {
 const { title, subtitle, items = [] } = Astro.props;
 ---
 
-<section class="bg-[#0B1120] py-20 md:py-28 px-6">
-  <div class="max-w-6xl mx-auto">
+<section
+  class="relative bg-slate-900 pt-20 md:pt-[128px] px-6 md:px-12 lg:px-20 flex items-center"
+>
+  <div
+    class="relative z-[2] max-w-7xl mx-auto w-full hidden sm:grid items-center"
+  >
     <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-5xl font-bold text-slate-50 mb-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-50 mb-4">
         {title}
       </h2>
-      <p class="text-base md:text-lg text-slate-400 max-w-2xl mx-auto">
+      <p class="text-base md:text-xl text-slate-400 mb-0 max-w-2xl mx-auto">
         {subtitle}
       </p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {items.map((item) => (
-        <div class="rounded-xl border border-slate-700/50 bg-slate-900/30 overflow-hidden hover:border-slate-600 transition-colors">
-          <div class="aspect-[4/3] bg-slate-800/50 flex items-center justify-center">
-            <i class={`ph ph-${item.icon} text-5xl text-slate-600`}></i>
+      {
+        items.map((item) => (
+          <div class="card-with-border group rounded-xl overflow-hidden transition-colors">
+            <div class="aspect-[5/3] rounded-xl w-full flex shrink-0 items-center justify-center overflow-hidden border bg-slate-800 border-slate-700/50 transition-colors">
+              <div class="relative w-full h-full flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div
+                    class="absolute rounded-full"
+                    style="width:400px;height:400px;padding:1px;opacity:0.2;background:linear-gradient(to bottom, #334155, #1e293b);-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
+                  />
+                  <div
+                    class="absolute rounded-full"
+                    style="width:300px;height:300px;padding:1px;opacity:0.4;background:linear-gradient(to bottom, #334155, #1e293b);-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
+                  />
+                  <div
+                    class="absolute rounded-full"
+                    style="width:225px;height:225px;padding:1px;opacity:0.6;background:linear-gradient(to bottom, #334155, #1e293b);-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
+                  />
+                  <div
+                    class="absolute rounded-full"
+                    style="width:150px;height:150px;padding:1px;opacity:0.8;background:linear-gradient(to bottom, #334155, #1e293b);-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
+                  />
+                </div>
+                <div class="relative z-10">
+                  <svg
+                    width="58"
+                    height="64"
+                    viewBox="0 0 58 64"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M57.6 44.2556L57.2486 44.2333C52.4991 43.6195 47.702 43.157 42.8625 42.8514L28.8 64L14.7375 42.8514C9.89795 43.157 5.10092 43.6195 0.351389 44.2333L0 44.2556L28.8 0L57.6 44.2556ZM17.3736 34.975L22.6486 37.5917L28.8 46.8417L34.9514 37.5917L40.225 34.975L28.8 17.4167L17.3736 34.975Z"
+                      fill="#314158"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="px-8 pt-6 pb-8">
+              <h3 class="text-2xl font-semibold text-slate-100 mb-3">
+                {item.title}
+              </h3>
+              <p class="text-base text-slate-400 leading-relaxed mb-0">
+                {item.description}
+              </p>
+            </div>
           </div>
-          <div class="p-6">
-            <h3 class="text-lg font-bold text-slate-100 mb-2">{item.title}</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">{item.description}</p>
-          </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>

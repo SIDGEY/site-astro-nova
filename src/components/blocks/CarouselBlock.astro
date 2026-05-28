@@ -66,10 +66,7 @@ const isAvatarCarousel = items.some((item) => item.avatar);
                       class="w-full h-full object-cover"
                     />
                   </div>
-                  <div
-                    class="absolute opacity-20 inset-0 pointer-events-none"
-                    style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, rgb(67, 76, 96) 100%);"
-                  />
+                  <div class="image-overlay opacity-20" />
                 </div>
                 {/* 3 nested overlay gradients (bottom to top) + avatar inside */}
                 <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-slate-900/50 to-slate-900/0">
@@ -107,10 +104,7 @@ const isAvatarCarousel = items.some((item) => item.avatar);
                       alt={item.title}
                       class="w-full h-full object-cover"
                     />
-                    <div
-                      class="absolute inset-0 pointer-events-none"
-                      style="background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%), linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, rgb(67, 76, 96) 100%);"
-                    />
+                    <div class="image-overlay" />
                   </div>
                 </div>
                 <div class="flex flex-col justify-between pt-2 pb-2.5 px-4">
