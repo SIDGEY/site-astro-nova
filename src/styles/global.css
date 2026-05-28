@@ -556,6 +556,30 @@
   background-image: radial-gradient(100% 145.8% at 100.01% 0%, rgba(30, 41, 59, 0.5), rgba(30, 41, 59, 0));
 }
 
+.card-with-border::before {
+  content: '';
+  z-index: 1;
+  position: absolute;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(235.55deg, #334155 -0.01%, rgba(51, 65, 85, 0.5) 70.34%);
+  transition: opacity 0.2s;
+  pointer-events: none;
+  inset: 0;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.card-with-border:hover::before {
+  opacity: 0.8;
+}
+
 /* Gradient border for avatar cards */
 .avatar-card-border {
   position: relative;
