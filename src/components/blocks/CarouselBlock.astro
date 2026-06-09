@@ -121,7 +121,7 @@ const isAvatarCarousel = items.some((item) => item.avatar);
   </div>
 
   <!-- Dots -->
-  <div class="carousel-dots relative z-10 flex justify-center gap-0 my-12">
+  <div class="carousel-dots relative z-10 flex justify-center gap-0 my-12 overflow-hidden">
   </div>
 </section>
 
@@ -183,6 +183,63 @@ const isAvatarCarousel = items.some((item) => item.avatar);
         return Math.floor(closest / visibleCount);
       }
 
+      // Mobile breakpoint (matches Tailwind md: 768px)
+      const mq = window.matchMedia("(max-width: 767px)");
+      const isMobile = () => mq.matches;
+
+      // Instagram-style (mobile only)
+      const WIN = 5;
+      const DOT_PX      = [6, 5, 4];   // dist=0 active, ±1, ±2 edge
+      const DOT_OPACITY = [1, 0.4, 0.2]; // same white, decreasing opacity
+      const DOT_COLOR   = "rgb(226,232,240)";
+
+      function winStart(page: number, total: number): number {
+        const w = Math.min(WIN, total);
+        return Math.max(0, Math.min(page - Math.floor(w / 2), total - w));
+      }
+
+      function applyDots(page: number) {
+        const total = dots.length;
+
+        if (isMobile()) {
+          // Instagram-style sliding window
+          const ws = winStart(page, total);
+          const we = ws + Math.min(WIN, total);
+
+          dots.forEach((btn, i) => {
+            const dot = btn.querySelector<HTMLSpanElement>("span")!;
+            const inWin = i >= ws && i < we;
+            const dist  = Math.abs(i - page);
+
+            if (!inWin) {
+              btn.style.width   = "0";
+              btn.style.padding = "0";
+            } else {
+              const idx = Math.min(dist, DOT_PX.length - 1);
+              btn.style.width   = "";
+              btn.style.padding = "4px";
+              dot.style.width           = DOT_PX[idx] + "px";
+              dot.style.height          = DOT_PX[idx] + "px";
+              dot.style.backgroundColor = DOT_COLOR;
+              dot.style.opacity         = String(DOT_OPACITY[idx]);
+              dot.style.boxShadow       = idx === 0 ? `0 0 0 2px ${DOT_COLOR}` : "";
+            }
+          });
+        } else {
+          // Desktop: all dots visible, active gets a ring
+          dots.forEach((btn, i) => {
+            const dot = btn.querySelector<HTMLSpanElement>("span")!;
+            btn.style.width   = "";
+            btn.style.padding = "6px";
+            dot.style.width           = "6px";
+            dot.style.height          = "6px";
+            dot.style.backgroundColor = i === page ? "rgb(226,232,240)" : "rgba(148,163,184,0.4)";
+            dot.style.opacity         = "1";
+            dot.style.boxShadow       = i === page ? "0 0 0 2px rgb(226,232,240)" : "";
+          });
+        }
+      }
+
       function buildDots() {
         const visibleCount = getVisibleCount();
         const pageCount = getPageCount();
@@ -192,16 +249,15 @@ const isAvatarCarousel = items.some((item) => item.avatar);
         dotsContainer!.innerHTML = "";
         dots = Array.from({ length: pageCount }, (_, i) => {
           const btn = document.createElement("button");
-          btn.className =
-            "p-1.5 cursor-pointer flex items-center justify-center";
+          btn.style.cssText =
+            "display:flex;align-items:center;justify-content:center;" +
+            "cursor:pointer;transition:width 300ms ease,padding 300ms ease;overflow:hidden;";
           btn.setAttribute("aria-label", `Page ${i + 1}`);
 
           const dot = document.createElement("span");
-          dot.className =
-            "w-1.5 h-1.5 rounded-full transition-all duration-300 block " +
-            (i === 0
-              ? "bg-slate-200 ring-2 ring-slate-200"
-              : "bg-slate-400/40");
+          dot.style.cssText =
+            "display:block;border-radius:9999px;" +
+            "transition:width 300ms ease,height 300ms ease,background-color 300ms ease,box-shadow 300ms ease;";
 
           btn.appendChild(dot);
           btn.addEventListener("click", () => goToPage(i));
@@ -210,20 +266,19 @@ const isAvatarCarousel = items.some((item) => item.avatar);
         });
 
         if (currentPage >= pageCount) currentPage = pageCount - 1;
-        setActiveDot(currentPage);
+        applyDots(currentPage);
       }
 
       function setActiveDot(page: number) {
         currentPage = page;
-        dots.forEach((btn, i) => {
-          const dot = btn.querySelector("span")!;
-          dot.className =
-            "w-1.5 h-1.5 rounded-full transition-all duration-300 block " +
-            (i === page
-              ? "bg-slate-200 ring-2 ring-slate-200"
-              : "bg-slate-400/40");
-        });
+        applyDots(page);
       }
+
+      // Rebuild dots when crossing the mobile/desktop breakpoint
+      mq.addEventListener("change", () => {
+        lastVisibleCount = 0; // force rebuild
+        buildDots();
+      });
 
       function snapToPage(page: number) {
         setActiveDot(page);
