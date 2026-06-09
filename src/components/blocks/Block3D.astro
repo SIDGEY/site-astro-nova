@@ -224,7 +224,22 @@ const { title, subtitle } = Astro.props;
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(45, W / H, 1, 1000);
-    camera.position.z = 160;
+
+    // Ensure the atmosphere sphere (radius ~69) always fits within the horizontal frustum.
+    // On narrow mobile viewports the horizontal FOV is smaller than the vertical FOV,
+    // so we push the camera back as needed while keeping z=160 on wider screens.
+    function fitCameraToContainer(w, h) {
+      const aspect = w / h;
+      const halfFovV = (45 / 2) * (Math.PI / 180);
+      const halfFovH = Math.atan(aspect * Math.tan(halfFovV));
+      const atmRadius = 60 * 1.15; // matches atmosphere SphereGeometry radius
+      const minZ = atmRadius / Math.tan(halfFovH) + 8; // +8 units safety margin
+      camera.position.z = Math.max(minZ, 160);
+      camera.aspect = aspect;
+      camera.updateProjectionMatrix();
+    }
+
+    fitCameraToContainer(W, H);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
@@ -421,8 +436,7 @@ const { title, subtitle } = Astro.props;
       const w = container.clientWidth;
       const h = container.clientHeight;
       if (!w || !h) return;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
+      fitCameraToContainer(w, h);
       renderer.setSize(w, h);
     });
     ro.observe(container);
