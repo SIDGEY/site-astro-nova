@@ -267,48 +267,65 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     </div>
   </div>
 
-  <!-- Mobile layout: phones stacked horizontally -->
-  <div class="flex sm:hidden justify-center items-center gap-4 relative z-[2]">
-    <div class="relative z-10">
-      <Mobile
-        screenshot={screenshot1}
-        dataRole={reversed ? "active-phone-mobile" : "context-phone-mobile"}
-      />
+  <!-- Mobile layout: text above, media below -->
+  <div class="flex sm:hidden flex-col items-center gap-10 relative z-[2] w-full">
+
+    <!-- Text zone (centered) -->
+    <div class="flex flex-col items-center text-center">
+      <i
+        class={`ph ph-regular ph-${icon} mb-5 opacity-80`}
+        style="font-size: 40px; background: linear-gradient(180deg, #90A1B9 0%, rgba(248, 250, 252, 0.2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      ></i>
+      <h2 class="text-2xl font-bold mb-3 text-slate-50">{title}</h2>
+      <p class="text-base text-slate-400 leading-relaxed">{subtitle}</p>
     </div>
 
-    <!-- Mobile: floating gallery thumbnails -->
-    {
-      gallery.length > 0 && (
-        <div class="absolute -bottom-4 left-0 right-0 flex gap-2 justify-center">
-          {gallery.slice(0, 2).map((img, i) => (
+    <!-- Media zone: gallery mode — phone centered with 2 overlapping cards -->
+    {gallery.length > 0 && (
+      <div class="relative w-full flex justify-center">
+        {/* Left card — behind the phone */}
+        <div class="absolute bottom-4 left-4 z-0 w-24 h-24 rounded-2xl overflow-hidden border-2 border-blue-500 shadow-2xl">
+          <img src={gallery[0].src} alt={gallery[0].alt || ""} class="w-full h-full object-cover" />
+          <div class="image-overlay"></div>
+        </div>
+        {/* Phone */}
+        <div class="relative z-10">
+          <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+        </div>
+        {/* Right card — in front of the phone */}
+        {gallery.length > 1 && (
+          <div class="absolute bottom-0 right-4 z-20 w-24 h-24 rounded-2xl overflow-hidden border-2 border-slate-700/50 shadow-2xl">
+            <img src={gallery[1].src} alt={gallery[1].alt || ""} class="w-full h-full object-cover" />
+            <div class="image-overlay"></div>
+          </div>
+        )}
+      </div>
+    )}
+
+    <!-- Media zone: resource icons mode — phone + icon row below -->
+    {resourceIcons.length > 0 && gallery.length === 0 && (
+      <div class="flex flex-col items-center gap-6 w-full">
+        <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+        <div class="flex gap-3 justify-center flex-wrap">
+          {resourceIcons.map((ri) => (
             <div
-              class={`w-20 h-20 rounded-xl overflow-hidden border-2 shadow-lg ${
-                i === 0 ? "border-blue-500" : "border-slate-700/50"
+              class={`w-14 h-14 rounded-xl flex items-center justify-center border transition-all ${
+                ri.active
+                  ? "bg-slate-800 border-blue-500/60"
+                  : "bg-slate-900/80 border-slate-700/50 opacity-50"
               }`}
             >
-              <img
-                src={img.src}
-                alt={img.alt || ""}
-                class="w-full h-full object-cover rounded-md"
-              />
+              <i class={`ph ph-fill ph-${ri.icon} text-2xl text-slate-300`} />
             </div>
           ))}
         </div>
-      )
-    }
+      </div>
+    )}
 
-    <!-- Mobile: floating resource icons -->
-    {
-      resourceIcons.length > 0 && (
-        <div class="absolute -bottom-4 left-4 right-4 flex gap-3 justify-center">
-          {resourceIcons.slice(0, 2).map((ri) => (
-            <div class="w-20 h-20 rounded-xl border-2 border-slate-700/50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center shadow-lg">
-              <i class={`ph ph-fill ph-${ri.icon} text-3xl text-slate-300`} />
-            </div>
-          ))}
-        </div>
-      )
-    }
+    <!-- Media zone: default (no gallery, no resource icons) -->
+    {gallery.length === 0 && resourceIcons.length === 0 && (
+      <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+    )}
   </div>
 </section>
 
