@@ -41,7 +41,7 @@ const { title, subtitle } = Astro.props;
     <!-- Planet in the flow -->
     <div
       id="planet-3d"
-      class="w-full h-[320px] md:h-[480px] relative overflow-hidden"
+      class="w-full aspect-square md:aspect-auto md:h-[480px] relative overflow-hidden"
     >
     </div>
 
@@ -51,7 +51,8 @@ const { title, subtitle } = Astro.props;
       <div
         id="active-bg"
         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-lg bg-slate-900 pointer-events-none z-0"
-      ></div>
+      >
+      </div>
 
       <!-- Layer 2: Buttons (scrollable) -->
       <div
@@ -86,7 +87,8 @@ const { title, subtitle } = Astro.props;
       <div
         id="active-border"
         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-lg border-2 border-blue-500 pointer-events-none z-20"
-      ></div>
+      >
+      </div>
     </div>
   </div>
 
@@ -411,25 +413,33 @@ const { title, subtitle } = Astro.props;
       mouseX = e.clientX;
       mouseY = e.clientY;
     });
-    renderer.domElement.addEventListener("touchstart", (e) => {
-      if (e.touches.length === 1) {
-        e.preventDefault();
-        mouseDown = true;
-        mouseX = e.touches[0].clientX;
-        mouseY = e.touches[0].clientY;
-      }
-    }, { passive: false });
+    renderer.domElement.addEventListener(
+      "touchstart",
+      (e) => {
+        if (e.touches.length === 1) {
+          e.preventDefault();
+          mouseDown = true;
+          mouseX = e.touches[0].clientX;
+          mouseY = e.touches[0].clientY;
+        }
+      },
+      { passive: false },
+    );
     window.addEventListener("touchend", () => {
       mouseDown = false;
     });
-    renderer.domElement.addEventListener("touchmove", (e) => {
-      if (!mouseDown || e.touches.length !== 1) return;
-      e.preventDefault();
-      dragRotY += (e.touches[0].clientX - mouseX) * DRAG_SPEED;
-      dragRotX += (e.touches[0].clientY - mouseY) * DRAG_SPEED;
-      mouseX = e.touches[0].clientX;
-      mouseY = e.touches[0].clientY;
-    }, { passive: false });
+    renderer.domElement.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!mouseDown || e.touches.length !== 1) return;
+        e.preventDefault();
+        dragRotY += (e.touches[0].clientX - mouseX) * DRAG_SPEED;
+        dragRotX += (e.touches[0].clientY - mouseY) * DRAG_SPEED;
+        mouseX = e.touches[0].clientX;
+        mouseY = e.touches[0].clientY;
+      },
+      { passive: false },
+    );
 
     // ── Resize ──
     const ro = new ResizeObserver(() => {
@@ -541,7 +551,7 @@ const { title, subtitle } = Astro.props;
       for (const b of buttons) {
         b.setAttribute("aria-pressed", String(b === btn));
       }
-      
+
       if (biomeList && btn) {
         const btnCenter = btn.offsetLeft + btn.offsetWidth / 2;
         biomeList.style.transform = `translate(-${btnCenter}px, -50%)`;
@@ -549,7 +559,9 @@ const { title, subtitle } = Astro.props;
     }
 
     window.addEventListener("resize", () => {
-      const activeBtn = buttons.find((b) => b.getAttribute("aria-pressed") === "true");
+      const activeBtn = buttons.find(
+        (b) => b.getAttribute("aria-pressed") === "true",
+      );
       if (activeBtn) setActive(activeBtn);
     });
 
