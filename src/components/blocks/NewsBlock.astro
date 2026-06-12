@@ -18,7 +18,7 @@ const { title, subtitle, items = [] } = Astro.props;
   class="relative bg-slate-900 pt-20 md:pt-[128px] px-6 md:px-12 lg:px-20 flex items-center"
 >
   <div
-    class="relative z-[2] max-w-7xl mx-auto w-full hidden sm:grid items-center"
+    class="relative z-[2] max-w-7xl mx-auto w-full grid items-center"
   >
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold text-slate-50 mb-4">
@@ -29,10 +29,12 @@ const { title, subtitle, items = [] } = Astro.props;
       </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div
+      class="news-track flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0 sm:gap-6 sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-3"
+    >
       {
         items.map((item) => (
-          <div class="card-with-border group rounded-xl overflow-hidden transition-colors">
+          <div class="news-card card-with-border group flex-shrink-0 w-[87%] snap-center sm:w-auto rounded-xl overflow-hidden transition-colors">
             <div class="aspect-[5/3] rounded-xl w-full flex shrink-0 items-center justify-center overflow-hidden border bg-slate-800 border-slate-700/50 transition-colors">
               <div class="relative w-full h-full flex items-center justify-center overflow-hidden">
                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -81,5 +83,128 @@ const { title, subtitle, items = [] } = Astro.props;
         ))
       }
     </div>
+
+    <!-- Dots (mobile only) -->
+    <div
+      class="news-dots flex sm:hidden justify-center gap-0 my-12 overflow-hidden"
+    >
+    </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".news-track").forEach((track) => {
+    const section = track.closest("section");
+    const dotsContainer = section?.querySelector<HTMLElement>(".news-dots");
+    const cards = Array.from(
+      track.querySelectorAll<HTMLElement>(".news-card"),
+    );
+
+    if (!cards.length || !dotsContainer) return;
+
+    let currentPage = 0;
+    let dots: HTMLButtonElement[] = [];
+
+    // Instagram-style sliding window (same constants as CarouselBlock)
+    const WIN = 5;
+    const DOT_PX = [6, 5, 4];
+    const DOT_OPACITY = [1, 0.4, 0.2];
+    const DOT_COLOR = "rgb(226,232,240)";
+
+    function winStart(page: number, total: number): number {
+      const w = Math.min(WIN, total);
+      return Math.max(0, Math.min(page - Math.floor(w / 2), total - w));
+    }
+
+    function applyDots(page: number) {
+      const total = dots.length;
+      const ws = winStart(page, total);
+      const we = ws + Math.min(WIN, total);
+
+      dots.forEach((btn, i) => {
+        const dot = btn.querySelector<HTMLSpanElement>("span")!;
+        const inWin = i >= ws && i < we;
+        const dist = Math.abs(i - page);
+
+        if (!inWin) {
+          btn.style.width = "0";
+          btn.style.padding = "0";
+        } else {
+          const idx = Math.min(dist, DOT_PX.length - 1);
+          btn.style.width = "";
+          btn.style.padding = "4px";
+          dot.style.width = DOT_PX[idx] + "px";
+          dot.style.height = DOT_PX[idx] + "px";
+          dot.style.backgroundColor = DOT_COLOR;
+          dot.style.opacity = String(DOT_OPACITY[idx]);
+          dot.style.boxShadow = idx === 0 ? `0 0 0 2px ${DOT_COLOR}` : "";
+        }
+      });
+    }
+
+    function nearestPage(): number {
+      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 2) {
+        return cards.length - 1;
+      }
+      if (track.scrollLeft <= 2) {
+        return 0;
+      }
+      const center = track.scrollLeft + track.clientWidth / 2;
+      let closest = 0;
+      let minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.offsetLeft + card.clientWidth / 2 - center);
+        if (dist < minDist) {
+          minDist = dist;
+          closest = i;
+        }
+      });
+      return closest;
+    }
+
+    function goToPage(page: number) {
+      currentPage = page;
+      applyDots(page);
+      const card = cards[page];
+      const offset =
+        card.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
+      track.scrollTo({ left: Math.max(0, offset), behavior: "smooth" });
+    }
+
+    function buildDots() {
+      dotsContainer!.innerHTML = "";
+      dots = cards.map((_, i) => {
+        const btn = document.createElement("button");
+        btn.style.cssText =
+          "display:flex;align-items:center;justify-content:center;" +
+          "cursor:pointer;transition:width 300ms ease,padding 300ms ease;overflow:hidden;";
+        btn.setAttribute("aria-label", `Page ${i + 1}`);
+
+        const dot = document.createElement("span");
+        dot.style.cssText =
+          "display:block;border-radius:9999px;" +
+          "transition:width 300ms ease,height 300ms ease,background-color 300ms ease,box-shadow 300ms ease;";
+
+        btn.appendChild(dot);
+        btn.addEventListener("click", () => goToPage(i));
+        dotsContainer!.appendChild(btn);
+        return btn;
+      });
+      applyDots(currentPage);
+    }
+
+    track.addEventListener(
+      "scroll",
+      () => {
+        const page = nearestPage();
+        if (page !== currentPage) {
+          currentPage = page;
+          applyDots(page);
+        }
+      },
+      { passive: true },
+    );
+
+    buildDots();
+  });
+</script>
