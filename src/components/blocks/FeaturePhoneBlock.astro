@@ -44,7 +44,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 <section
-  class={`feature-phone-section overflow-hidden relative bg-[#0B1120] py-20 md:py-[128px] px-6 md:px-12 lg:px-20 flex items-center ${reversed ? 'is-reversed' : ''}`}
+  class={`feature-phone-section overflow-hidden relative bg-[#0B1120] pt-20 pb-0 md:py-[128px] px-6 md:px-12 lg:px-20 flex items-center ${reversed ? 'is-reversed' : ''}`}
   id={sectionId}
   data-reversed={reversed.toString()}
 >
@@ -53,7 +53,7 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     <div class="absolute inset-0 z-[0] pointer-events-none w-full h-full bg-[#121B2E]">
       <!-- Image 75% width & its overlays -->
       <div
-        class={`absolute opacity-80 top-0 bottom-0 w-[75%] ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
+        class={`absolute opacity-80 top-0 bottom-0 w-full sm:w-[75%] ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
         style={`background: linear-gradient(${reversed ? '76.97deg' : '283.03deg'}, #121B2E 18.79%, rgba(22, 32, 50, 0) 83.76%), linear-gradient(${reversed ? '40.96deg' : '319.04deg'}, #121B2E 20%, rgba(22, 32, 50, 0) 100%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: center center; background-size: cover;`}
       ></div>
 
@@ -281,20 +281,22 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     </div>
 
     <!-- Media zone: gallery mode — phone centered with 2 overlapping cards -->
+    <!-- The phone crop wrapper keeps the phone's width and shows 3/4 of its
+         height (phone aspect is 232/480, so 3/4 visible = aspect 232/360) -->
     {gallery.length > 0 && (
-      <div class="relative w-full flex justify-center">
+      <div class="relative w-full flex justify-center items-start">
         {/* Left card — behind the phone */}
         <div class="absolute bottom-4 left-4 z-0 w-24 h-24 rounded-2xl overflow-hidden border-2 border-blue-500 shadow-2xl">
           <img src={gallery[0].src} alt={gallery[0].alt || ""} class="w-full h-full object-cover" />
           <div class="image-overlay"></div>
         </div>
         {/* Phone */}
-        <div class="relative z-10">
+        <div class="relative z-10 w-fit aspect-[232/360] overflow-hidden opacity-40 blur-[1px]">
           <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
         </div>
         {/* Right card — in front of the phone */}
         {gallery.length > 1 && (
-          <div class="absolute bottom-0 right-4 z-20 w-24 h-24 rounded-2xl overflow-hidden border-2 border-slate-700/50 shadow-2xl">
+          <div class="absolute bottom-10 right-4 z-20 w-24 h-24 rounded-2xl overflow-hidden border-2 border-slate-700/50 shadow-2xl">
             <img src={gallery[1].src} alt={gallery[1].alt || ""} class="w-full h-full object-cover" />
             <div class="image-overlay"></div>
           </div>
@@ -305,7 +307,9 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     <!-- Media zone: resource icons mode — phone + icon row below -->
     {resourceIcons.length > 0 && gallery.length === 0 && (
       <div class="flex flex-col items-center gap-6 w-full">
-        <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+        <div class="w-fit aspect-[232/360] overflow-hidden opacity-40 blur-[1px]">
+          <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+        </div>
         <div class="flex gap-3 justify-center flex-wrap">
           {resourceIcons.map((ri) => (
             <div
@@ -324,7 +328,9 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 
     <!-- Media zone: default (no gallery, no resource icons) -->
     {gallery.length === 0 && resourceIcons.length === 0 && (
-      <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+      <div class="w-fit aspect-[232/360] overflow-hidden opacity-40 blur-[1px]">
+        <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+      </div>
     )}
   </div>
 </section>
