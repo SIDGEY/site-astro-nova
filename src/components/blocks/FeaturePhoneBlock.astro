@@ -17,7 +17,8 @@ interface Props {
   reversed?: boolean;
   gallery?: GalleryImage[];
   galleryExtra?: number;
-  resourceIcons?: { icon: string; active?: boolean; screenshot?: string }[];
+  resourceIcons?: { icon: string; active?: boolean; screenshot?: string; src?: string }[];
+  mobileCards?: { src: string; alt?: string }[];
 }
 
 const {
@@ -31,6 +32,7 @@ const {
   gallery = [],
   galleryExtra = 0,
   resourceIcons = [],
+  mobileCards = [],
 } = Astro.props;
 
 // Generate a unique ID for this section instance
@@ -44,22 +46,32 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 <section
-  class={`feature-phone-section overflow-hidden relative bg-[#0B1120] py-20 md:py-[128px] px-6 md:px-12 lg:px-20 flex items-center ${reversed ? 'is-reversed' : ''}`}
+  class={`feature-phone-section overflow-hidden relative bg-[#0B1120] pt-20 pb-0 md:py-[128px] px-6 md:px-12 lg:px-20 flex items-center ${reversed ? 'is-reversed' : ''}`}
   id={sectionId}
   data-reversed={reversed.toString()}
 >
   <!-- Background image layers -->
   {backgroundImage && (
     <div class="absolute inset-0 z-[0] pointer-events-none w-full h-full bg-[#121B2E]">
-      <!-- Image 75% width & its overlays -->
+      <!-- Image mobile: full width, vertical gradient -->
       <div
-        class={`absolute opacity-80 top-0 bottom-0 w-[75%] ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
+        class={`absolute sm:hidden opacity-40 top-0 bottom-0 w-full ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
+        style={`background: linear-gradient(0deg, #121B2E 40.01%, rgba(18, 27, 46, 0) 100.04%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: center center; background-size: cover;`}
+      ></div>
+      <!-- Image desktop: 75% width, angular gradients -->
+      <div
+        class={`absolute hidden sm:block opacity-80 top-0 bottom-0 w-[75%] ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
         style={`background: linear-gradient(${reversed ? '76.97deg' : '283.03deg'}, #121B2E 18.79%, rgba(22, 32, 50, 0) 83.76%), linear-gradient(${reversed ? '40.96deg' : '319.04deg'}, #121B2E 20%, rgba(22, 32, 50, 0) 100%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: center center; background-size: cover;`}
       ></div>
 
-      <!-- Global Overlay 100% width -->
+      <!-- Global Overlay mobile -->
       <div
-        class="absolute inset-0 w-full h-full"
+        class="absolute inset-0 w-full h-full sm:hidden"
+        style="background: linear-gradient(17.94deg, #020618 -0.04%, rgba(22, 32, 50, 0) 100%);"
+      ></div>
+      <!-- Global Overlay desktop -->
+      <div
+        class="absolute inset-0 w-full h-full hidden sm:block"
         style={`background: linear-gradient(360deg, rgba(2, 6, 24, 0.5) 0%, rgba(22, 32, 50, 0) 100.04%), linear-gradient(${reversed ? '63.33deg' : '296.67deg'}, #020618 0%, rgba(22, 32, 50, 0) 66.72%);`}
       ></div>
     </div>
@@ -267,48 +279,149 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     </div>
   </div>
 
-  <!-- Mobile layout: phones stacked horizontally -->
-  <div class="flex sm:hidden justify-center items-center gap-4 relative z-[2]">
-    <div class="relative z-10">
-      <Mobile
-        screenshot={screenshot1}
-        dataRole={reversed ? "active-phone-mobile" : "context-phone-mobile"}
-      />
+  <!-- Mobile layout: text above, media below -->
+  <div class="flex sm:hidden flex-col items-center gap-10 relative z-[2] w-full">
+
+    <!-- Text zone (centered) -->
+    <div class="flex flex-col items-center text-center">
+      <i
+        class={`ph ph-regular ph-${icon} mb-5 opacity-80`}
+        style="font-size: 40px; background: linear-gradient(180deg, #90A1B9 0%, rgba(248, 250, 252, 0.2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      ></i>
+      <h2 class="text-2xl font-bold mb-3 text-slate-50">{title}</h2>
+      <p class="text-base text-slate-400 leading-relaxed">{subtitle}</p>
     </div>
 
-    <!-- Mobile: floating gallery thumbnails -->
-    {
-      gallery.length > 0 && (
-        <div class="absolute -bottom-4 left-0 right-0 flex gap-2 justify-center">
-          {gallery.slice(0, 2).map((img, i) => (
-            <div
-              class={`w-20 h-20 rounded-xl overflow-hidden border-2 shadow-lg ${
-                i === 0 ? "border-blue-500" : "border-slate-700/50"
-              }`}
-            >
-              <img
-                src={img.src}
-                alt={img.alt || ""}
-                class="w-full h-full object-cover rounded-md"
-              />
-            </div>
-          ))}
-        </div>
-      )
-    }
+    <!-- Media zone: gallery mode — phone centered with 2 overlapping cards -->
+    <!-- The phone crop wrapper keeps the phone's width and shows 3/4 of its
+         height (phone aspect is 232/480, so 3/4 visible = aspect 232/360) -->
+    {gallery.length > 0 && (
+      <div class="relative w-full flex justify-center">
+        {/* Phone + cards wrapper — cards are positioned relative to this */}
+        <div class="relative w-[232px]">
+          {/* Phone */}
+          <div class="aspect-[232/360] overflow-hidden opacity-30 blur-[1px] relative z-10">
+            <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+          </div>
 
-    <!-- Mobile: floating resource icons -->
-    {
-      resourceIcons.length > 0 && (
-        <div class="absolute -bottom-4 left-4 right-4 flex gap-3 justify-center">
-          {resourceIcons.slice(0, 2).map((ri) => (
-            <div class="w-20 h-20 rounded-xl border-2 border-slate-700/50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center shadow-lg">
-              <i class={`ph ph-fill ph-${ri.icon} text-3xl text-slate-300`} />
+          {/* Card 1: always left, top if reversed / bottom if not */}
+          <div
+            class="absolute z-20 w-[104px] aspect-[4/5] left-2 -translate-x-1/2"
+            style={reversed ? "top: 48px" : "top: calc(48px + 65px)"}
+          >
+            <div class="float-1 w-full h-full rounded-lg overflow-hidden shadow-2xl">
+              <div class="card-with-border rounded-lg w-full h-full">
+                <img src={gallery[0].src} alt={gallery[0].alt || ""} class="w-full h-full object-cover" />
+                <div class="image-overlay"></div>
+              </div>
             </div>
-          ))}
+          </div>
+
+          {/* Card 2: always right, bottom if reversed / top if not */}
+          {gallery.length > 1 && (
+            <div
+              class="absolute z-20 w-[104px] aspect-[4/5] right-2 translate-x-1/2"
+              style={reversed ? "top: calc(48px + 65px)" : "top: 48px"}
+            >
+              <div class="float-2 w-full h-full rounded-lg overflow-hidden shadow-2xl">
+                <div class="card-with-border rounded-lg w-full h-full">
+                  <img src={gallery[1].src} alt={gallery[1].alt || ""} class="w-full h-full object-cover" />
+                  <div class="image-overlay"></div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )
-    }
+      </div>
+    )}
+
+    <!-- Media zone: resource icons mode — same visual layout as gallery -->
+    {resourceIcons.length > 0 && gallery.length === 0 && (
+      <div class="relative w-full flex justify-center">
+        <div class="relative w-[232px]">
+          {/* Phone */}
+          <div class="aspect-[232/360] overflow-hidden opacity-30 blur-[1px] relative z-10">
+            <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+          </div>
+
+          {/* Card métal: always left, top if reversed / bottom if not */}
+          {(resourceIcons[0]?.src || resourceIcons[0]?.screenshot) && (
+            <div
+              class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center left-2 -translate-x-1/2"
+              style={reversed ? "top: 48px" : "top: calc(48px + 65px)"}
+            >
+              <div class="float-1">
+                <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
+                  <img src={resourceIcons[0].src || resourceIcons[0].screenshot} alt="" class="w-full h-full object-cover" />
+                  <div class="image-overlay"></div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Card cristal: always right, bottom if reversed / top if not */}
+          {(resourceIcons[1]?.src || resourceIcons[1]?.screenshot) && (
+            <div
+              class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center right-2 translate-x-1/2"
+              style={reversed ? "top: calc(48px + 65px)" : "top: 48px"}
+            >
+              <div class="float-2">
+                <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
+                  <img src={resourceIcons[1].src || resourceIcons[1].screenshot} alt="" class="w-full h-full object-cover" />
+                  <div class="image-overlay"></div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+
+    <!-- Media zone: mobileCards only (no gallery, no resourceIcons) — desktop shows nothing extra -->
+    {gallery.length === 0 && resourceIcons.length === 0 && mobileCards.length > 0 && (
+      <div class="relative w-full flex justify-center">
+        <div class="relative w-[232px]">
+          <div class="aspect-[232/360] overflow-hidden opacity-30 blur-[1px] relative z-10">
+            <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+          </div>
+
+          {/* Card 1: always left, top if reversed / bottom if not */}
+          <div
+            class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center left-2 -translate-x-1/2"
+            style={reversed ? "top: 48px" : "top: calc(48px + 65px)"}
+          >
+            <div class="float-1">
+              <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
+                <img src={mobileCards[0].src} alt={mobileCards[0].alt || ""} class="w-full h-full object-cover" />
+                <div class="image-overlay"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: always right, bottom if reversed / top if not */}
+          {mobileCards.length > 1 && (
+            <div
+              class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center right-2 translate-x-1/2"
+              style={reversed ? "top: calc(48px + 65px)" : "top: 48px"}
+            >
+              <div class="float-2">
+                <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
+                  <img src={mobileCards[1].src} alt={mobileCards[1].alt || ""} class="w-full h-full object-cover" />
+                  <div class="image-overlay"></div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+
+    <!-- Media zone: default (no gallery, no resourceIcons, no mobileCards) -->
+    {gallery.length === 0 && resourceIcons.length === 0 && mobileCards.length === 0 && (
+      <div class="w-fit aspect-[232/360] overflow-hidden opacity-40 blur-[1px]">
+        <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
+      </div>
+    )}
   </div>
 </section>
 
@@ -418,3 +531,22 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     });
   });
 </script>
+
+<style is:global>
+  @keyframes mobile-card-float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-7px); }
+  }
+
+  .float-1 {
+    animation: mobile-card-float 3.5s ease-in-out infinite;
+  }
+
+  .float-2 {
+    animation: mobile-card-float 3.5s ease-in-out infinite 1.75s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .float-1, .float-2 { animation: none; }
+  }
+</style>

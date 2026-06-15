@@ -1,9 +1,9 @@
-# Checklist SEO Astro Nova
+# Checklist SEO Dynasty Nova
 
 Cette checklist répertorie les éléments SEO implémentés et à vérifier pour la landing page et les pages publiques du jeu.
 
 ## 1. Meta-données de base
-- [x] **Title Tag** : Format `Titre de la Page | Astro Nova - Jeu de Stratégie Spatiale`.
+- [x] **Title Tag** : Format `Titre de la Page | Dynasty Nova - Jeu de Stratégie Spatiale`.
 - [x] **Meta Description** : Unique, entre 140 et 160 caractères, incitant au jeu.
 - [x] **Canonical URL** : URL absolue pointant vers la version de référence de la page.
 - [x] **Robots Meta** : Par défaut `index, follow`. `noindex` pour les pages de jeu authentifiées.

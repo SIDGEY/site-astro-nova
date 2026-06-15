@@ -1,4 +1,4 @@
-# Modèles de Contenu - Astro Nova
+# Modèles de Contenu - Dynasty Nova
 
 Ce document décrit les différentes structures de données utilisées pour le contenu du jeu et de la landing page.
 

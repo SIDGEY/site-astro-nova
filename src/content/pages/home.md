@@ -19,7 +19,7 @@ blocks:
   - type: featurePhone
     icon: nut
     title: Gérez vos ressources pour prospérer
-    subtitle: "Les ressources sont essentielles dans Astro Nova. Le métal est crucial pour la construction, tandis que le cristal est nécessaire pour les technologies avancées. Une bonne gestion est clé pour progresser."
+    subtitle: "Les ressources sont essentielles dans Dynasty Nova. Le métal est crucial pour la construction, tandis que le cristal est nécessaire pour les technologies avancées. Une bonne gestion est clé pour progresser."
     screenshot1: /landing/screens/resource.webp
     screenshot2: /landing/screens/resource-metal.webp
     backgroundImage: /landing/backgrounds/bg-resource.webp
@@ -28,8 +28,10 @@ blocks:
       - icon: nut
         active: true
         screenshot: /landing/screens/resource-metal.webp
+        src: /landing/thumbs/thumb-metal.webp
       - icon: diamonds-four
         screenshot: /landing/screens/resource-crystal.webp
+        src: /landing/thumbs/thumb-crystal.webp
       - icon: drop
         screenshot: /landing/screens/resource-hydrogen.webp
       - icon: lightning
@@ -173,6 +175,11 @@ blocks:
     screenshot2: /landing/screens/shop-avatar.webp
     backgroundImage: /landing/backgrounds/bg-store.webp
     reversed: false
+    mobileCards:
+      - src: /landing/thumbs/thumb-small-pack.webp
+        alt: Petit pack
+      - src: /landing/thumbs/thumb-big-pack.webp
+        alt: Grand pack
 
   - type: carousel
     icon: user-circle
@@ -275,5 +282,5 @@ blocks:
     discordLink: https://discord.gg/dVXdVqw5d5
     discordButtonText: Rejoindre le Discord
     image: /landing/features/bg-community.webp
-    imageAlt: Communauté Astro Nova
+    imageAlt: Communauté Dynasty Nova
 ---

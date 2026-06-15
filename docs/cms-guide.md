@@ -1,10 +1,10 @@
-# Guide de Gestion du Contenu - Astro Nova
+# Guide de Gestion du Contenu - Dynasty Nova
 
 Ce document décrit comment gérer et modifier le contenu du jeu et de la landing page.
 
 ## 1. Architecture du Contenu
 
-Astro Nova utilise une approche **code-first** pour la gestion du contenu :
+Dynasty Nova utilise une approche **code-first** pour la gestion du contenu :
 
 - **Données de jeu** : Fichiers TypeScript dans `src/data/`
 - **Traductions** : Fichiers JSON dans `src/locales/`

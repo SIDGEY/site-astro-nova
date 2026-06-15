@@ -17,7 +17,7 @@ Cette charte sert à :
 
 ### Phrase mère (référence absolue)
 
-> **Astro Nova est un jeu de stratégie spatiale où les joueurs bâtissent leur empire interstellaire,
+> **Dynasty Nova est un jeu de stratégie spatiale où les joueurs bâtissent leur empire interstellaire,
 > en gérant ressources, technologies et flottes,
 > pour explorer, conquérir et dominer la galaxie.**
 
@@ -197,7 +197,7 @@ L'accessibilité n'est pas qu'un sujet design.
 
 ## 1️⃣1️⃣ CHECKLIST AVANT PUBLICATION
 
-Avant de publier un contenu Astro Nova, vérifier :
+Avant de publier un contenu Dynasty Nova, vérifier :
 
 * [ ] Est-ce cohérent avec l'univers du jeu ?
 * [ ] Est-ce compréhensible pour un nouveau joueur ?
