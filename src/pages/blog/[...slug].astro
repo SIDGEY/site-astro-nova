@@ -50,53 +50,34 @@ const relatedArticles = allArticles
     >
     </div>
 
-    <div class="relative z-10 w-full max-w-[1440px] px-36 py-24">
-      <div class="flex flex-col gap-6 items-start max-w-[960px]">
+    <div
+      class="relative z-10 w-full max-w-[1440px] px-6 md:px-12 lg:px-36 py-12 md:py-24"
+    >
+      <div class="flex flex-col gap-6 items-start">
         <!-- Back -->
         <a
           href="/blog"
           class="flex items-center gap-3 text-[#62748e] hover:text-slate-300 transition-colors group"
         >
           <span
-            class="flex items-center justify-center w-10 h-10 rounded-full border border-[#314158] group-hover:border-slate-500 transition-colors shrink-0"
+            class="flex items-center justify-center w-8 h-8 rounded-full border border-slate-700 group-hover:border-slate-500 transition-colors shrink-0"
           >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.5 2L3.5 6L7.5 10"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"></path>
-            </svg>
+            <i class="ph ph-caret-left ph-bold text-sm text-slate-500"></i>
           </span>
-          <span class="text-base font-medium">Retour</span>
+          <span class="text-sm text-slate-400">Retour</span>
         </a>
 
         <!-- Title -->
-        <h1 class="text-[60px] font-bold text-slate-50 leading-[60px]">
+        <h1
+          class="text-4xl md:text-5xl lg:text-[60px] font-bold text-slate-50 leading-tight md:leading-[60px]"
+        >
           {article.data.title}
         </h1>
 
         <!-- Meta -->
         <div class="flex items-center gap-6">
-          <div class="flex items-center gap-1.5 text-[#90a1b9] text-sm">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2H11V1H10V2H6V1H5V2H4C3.45 2 3 2.45 3 3V13C3 13.55 3.45 14 4 14H12C12.55 14 13 13.55 13 13V3C13 2.45 12.55 2 12 2ZM12 13H4V6H12V13ZM12 5H4V3H5V4H6V3H10V4H11V3H12V5Z"
-                fill="currentColor"></path>
-            </svg>
+          <div class="flex items-center gap-1.5 text-slate-400 text-sm">
+            <i class="ph ph-calendar-blank ph-bold text-base"></i>
             <time
               >{
                 article.data.date.toLocaleDateString("fr-FR", {
@@ -107,18 +88,8 @@ const relatedArticles = allArticles
               }</time
             >
           </div>
-          <div class="flex items-center gap-1.5 text-[#90a1b9] text-sm">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8 1C4.13 1 1 4.13 1 8C1 11.87 4.13 15 8 15C11.87 15 15 11.87 15 8C15 4.13 11.87 1 8 1ZM8 14C4.69 14 2 11.31 2 8C2 4.69 4.69 2 8 2C11.31 2 14 4.69 14 8C14 11.31 11.31 14 8 14ZM8.5 4H7.5V8.5L11.25 10.75L11.75 9.91L8.5 7.94V4Z"
-                fill="currentColor"></path>
-            </svg>
+          <div class="flex items-center gap-1.5 text-slate-400 text-sm">
+            <i class="ph ph-clock-countdown ph-bold text-base"></i>
             <span>{readTime} min de lecture</span>
           </div>
         </div>
@@ -127,7 +98,7 @@ const relatedArticles = allArticles
   </div>
 
   <!-- Diagonal separator -->
-  <div class="relative w-full h-24 shrink-0">
+  <div class="relative w-full h-12 md:h-24 shrink-0">
     <svg
       class="absolute inset-0 w-full h-full"
       fill="none"
@@ -142,7 +113,7 @@ const relatedArticles = allArticles
   <!-- Article content + TOC -->
   <section class="bg-[#0f172b] w-full">
     <div
-      class="max-w-[1440px] mx-auto px-36 py-24 flex gap-16 items-start justify-center"
+      class="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-36 py-12 md:py-24 flex gap-16 items-start justify-center"
     >
       <!-- Main content -->
       <div
@@ -189,11 +160,11 @@ const relatedArticles = allArticles
               Vous pourriez également être intéressé
             </h2>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+          <div class="related-track flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0 sm:gap-x-8 sm:gap-y-16 sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-3">
             {relatedArticles.map((rel) => (
               <a
                 href={`/blog/${rel.id}`}
-                class="related-card card-with-border group rounded-xl overflow-hidden no-underline"
+                class="related-card card-with-border group flex-shrink-0 w-[87%] snap-center sm:w-auto rounded-xl overflow-hidden no-underline"
               >
                 <div class="aspect-[5/3] rounded-xl w-full relative flex shrink-0 items-center justify-center overflow-hidden border bg-slate-800 border-slate-700/50">
                   <img
@@ -252,11 +223,88 @@ const relatedArticles = allArticles
               </a>
             ))}
           </div>
+          <div class="related-dots flex sm:hidden justify-center gap-0 mt-8 overflow-hidden"></div>
         </div>
       </section>
     )
   }
 </BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".related-track").forEach((track) => {
+    const section = track.closest("section");
+    const dotsContainer = section?.querySelector<HTMLElement>(".related-dots");
+    const cards = Array.from(track.querySelectorAll<HTMLElement>(".related-card"));
+    if (!cards.length || !dotsContainer) return;
+
+    let currentPage = 0;
+    let dots: HTMLButtonElement[] = [];
+    const WIN = 5;
+    const DOT_PX = [6, 5, 4];
+    const DOT_OPACITY = [1, 0.4, 0.2];
+    const DOT_COLOR = "rgb(226,232,240)";
+
+    function winStart(page: number, total: number) {
+      const w = Math.min(WIN, total);
+      return Math.max(0, Math.min(page - Math.floor(w / 2), total - w));
+    }
+    function applyDots(page: number) {
+      const total = dots.length;
+      const ws = winStart(page, total);
+      const we = ws + Math.min(WIN, total);
+      dots.forEach((btn, i) => {
+        const dot = btn.querySelector<HTMLSpanElement>("span")!;
+        const inWin = i >= ws && i < we;
+        const dist = Math.abs(i - page);
+        if (!inWin) { btn.style.width = "0"; btn.style.padding = "0"; }
+        else {
+          const idx = Math.min(dist, DOT_PX.length - 1);
+          btn.style.width = ""; btn.style.padding = "4px";
+          dot.style.width = DOT_PX[idx] + "px"; dot.style.height = DOT_PX[idx] + "px";
+          dot.style.backgroundColor = DOT_COLOR; dot.style.opacity = String(DOT_OPACITY[idx]);
+          dot.style.boxShadow = idx === 0 ? `0 0 0 2px ${DOT_COLOR}` : "";
+        }
+      });
+    }
+    function nearestPage() {
+      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 2) return cards.length - 1;
+      if (track.scrollLeft <= 2) return 0;
+      const center = track.scrollLeft + track.clientWidth / 2;
+      let closest = 0, minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.offsetLeft + card.clientWidth / 2 - center);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      return closest;
+    }
+    function goToPage(page: number) {
+      currentPage = page; applyDots(page);
+      const card = cards[page];
+      const offset = card.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
+      track.scrollTo({ left: Math.max(0, offset), behavior: "smooth" });
+    }
+    function buildDots() {
+      dotsContainer!.innerHTML = "";
+      dots = cards.map((_, i) => {
+        const btn = document.createElement("button");
+        btn.style.cssText = "display:flex;align-items:center;justify-content:center;cursor:pointer;transition:width 300ms ease,padding 300ms ease;overflow:hidden;";
+        btn.setAttribute("aria-label", `Page ${i + 1}`);
+        const dot = document.createElement("span");
+        dot.style.cssText = "display:block;border-radius:9999px;transition:width 300ms ease,height 300ms ease,background-color 300ms ease,box-shadow 300ms ease;";
+        btn.appendChild(dot);
+        btn.addEventListener("click", () => goToPage(i));
+        dotsContainer!.appendChild(btn);
+        return btn;
+      });
+      applyDots(currentPage);
+    }
+    track.addEventListener("scroll", () => {
+      const page = nearestPage();
+      if (page !== currentPage) { currentPage = page; applyDots(page); }
+    }, { passive: true });
+    buildDots();
+  });
+</script>
 
 <style>
   .article-content :global(h2) {
@@ -381,7 +429,7 @@ const relatedArticles = allArticles
     transition:
       opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
       transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: 0.07s;
+    transition-delay: 0s;
   }
   .rel-ring-3 {
     opacity: 0.16;
@@ -389,7 +437,7 @@ const relatedArticles = allArticles
     transition:
       opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
       transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: 0.14s;
+    transition-delay: 0s;
   }
   .rel-ring-4 {
     opacity: 0.25;
@@ -397,7 +445,7 @@ const relatedArticles = allArticles
     transition:
       opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
       transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: 0.21s;
+    transition-delay: 0s;
   }
 
   .related-card:hover .rel-ring-4 {
