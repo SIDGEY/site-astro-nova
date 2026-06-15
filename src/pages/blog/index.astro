@@ -1,32 +1,256 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getArticleIcon, LOGO_ICON } from "../../utils/articleIcon";
 
-const articles = await getCollection('articles', ({ data }) => {
-    return data.draft !== true;
-});
-
-// Tri par date décroissante
+const articles = await getCollection(
+  "articles",
+  ({ data }) => data.draft !== true,
+);
 articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const COVERS = Array.from(
+  { length: 27 },
+  (_, i) => `/uploads/blog/covers/cover-${i + 1}.webp`,
+);
+function getFallbackCover(slug: string): string {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++)
+    hash = (hash * 31 + slug.charCodeAt(i)) >>> 0;
+  return COVERS[hash % COVERS.length];
+}
 ---
 
-<BaseLayout title="Blog - Dynasty Nova" description="Découvrez les dernières actualités d'Dynasty Nova">
-    <section class="py-20 px-6 bg-[#0B1120]">
-        <div class="max-w-6xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-12">Actualités</h1>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {articles.map(article => (
-                        <a href={`/blog/${article.id}`} class="group">
-                            <article class="bg-slate-900/50 rounded-2xl overflow-hidden border border-slate-800 hover:border-blue-500 transition-all">
-                                {article.data.image && <img src={article.data.image} alt={article.data.title} class="w-full h-48 object-cover" />}
-                                <div class="p-6">
-                                    <h2 class="text-xl font-bold text-white group-hover:text-blue-400 mb-2">{article.data.title}</h2>
-                                    <p class="text-slate-400 text-sm line-clamp-3">{article.data.description}</p>
-                                </div>
-                            </article>
-                        </a>
-                ))}
-            </div>
-        </div>
-    </section>
+<BaseLayout
+  title="Blog - Dynasty Nova"
+  description="Guides, actualités et conseils stratégiques pour devenir un maître de la galaxie."
+>
+  <!-- Hero header -->
+  <div class="bg-[#1d293d] relative flex flex-col items-center w-full pt-20">
+    <div
+      class="absolute bg-gradient-to-b from-[#0f172b] h-72 left-0 right-0 to-[#1d293d] top-0 pointer-events-none"
+    >
+    </div>
+    <div
+      class="relative z-10 px-36 py-24 w-full max-w-[1440px] flex items-center justify-center"
+    >
+      <div class="flex flex-col gap-6 items-center w-full text-center">
+        <h1 class="text-[60px] font-bold text-slate-50 leading-[1.1]">
+          Blog Dynasty Nova
+        </h1>
+        <p class="text-2xl text-[#90a1b9] font-normal leading-[1.3] max-w-2xl">
+          Guides, actualités et conseils stratégiques pour devenir un maître de
+          la galaxie.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diagonal separator -->
+  <div class="relative w-full h-24 shrink-0">
+    <svg
+      class="absolute inset-0 w-full h-full"
+      fill="none"
+      preserveAspectRatio="none"
+      viewBox="0 0 1440 96"
+    >
+      <rect width="1440" height="96" fill="#1D293D"></rect>
+      <path d="M0 0L1440 96V96H0V0Z" fill="#0F172B"></path>
+    </svg>
+  </div>
+
+  <!-- Articles grid -->
+  <section
+    class="relative bg-slate-900 py-20 md:py-[128px] px-6 md:px-12 lg:px-20 flex items-center"
+  >
+    <div class="relative z-[2] max-w-7xl mx-auto w-full grid items-center">
+      <div
+        class="news-track flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0 sm:gap-x-8 sm:gap-y-16 sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {
+          articles.map((article) => (
+            <a
+              href={`/blog/${article.id}`}
+              class="news-card card-with-border group flex-shrink-0 w-[87%] snap-center sm:w-auto rounded-xl overflow-hidden no-underline"
+            >
+              <div class="aspect-[5/3] rounded-xl w-full relative flex shrink-0 items-center justify-center overflow-hidden border bg-slate-800 border-slate-700/50 transition-colors">
+                <img
+                  src={article.data.image ?? getFallbackCover(article.id)}
+                  alt={article.data.title}
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-slate-900/60" />
+                <div class="card-rings absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div class="ring ring-1 absolute rounded-full" style="width:340px;height:340px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude" />
+                  <div class="ring ring-2 absolute rounded-full" style="width:250px;height:250px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude" />
+                  <div class="ring ring-3 absolute rounded-full" style="width:175px;height:175px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude" />
+                  <div class="ring ring-4 absolute rounded-full" style="width:110px;height:110px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude" />
+                  {getArticleIcon(article.data.tags, article.data.icon) ===
+                  LOGO_ICON ? (
+                    <svg
+                      class="relative z-10 text-slate-200"
+                      width="48"
+                      height="53"
+                      viewBox="0 0 58 64"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M57.6 44.2556L57.2486 44.2333C52.4991 43.6195 47.702 43.157 42.8625 42.8514L28.8 64L14.7375 42.8514C9.89795 43.157 5.10092 43.6195 0.351389 44.2333L0 44.2556L28.8 0L57.6 44.2556ZM17.3736 34.975L22.6486 37.5917L28.8 46.8417L34.9514 37.5917L40.225 34.975L28.8 17.4167L17.3736 34.975Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  ) : (
+                    <i
+                      class={`ph ${getArticleIcon(article.data.tags, article.data.icon)} relative z-10 text-5xl text-slate-200`}
+                    />
+                  )}
+                </div>
+              </div>
+              <div class="px-8 pt-6 pb-8">
+                <h2 class="text-xl font-semibold text-slate-100 mb-3 line-clamp-2">
+                  {article.data.title}
+                </h2>
+                <p class="text-base text-slate-400 leading-relaxed mb-0 line-clamp-3">
+                  {article.data.description}
+                </p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+
+      <div
+        class="news-dots flex sm:hidden justify-center gap-0 my-12 overflow-hidden"
+      >
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".news-track").forEach((track) => {
+    const section = track.closest("section");
+    const dotsContainer = section?.querySelector<HTMLElement>(".news-dots");
+    const cards = Array.from(track.querySelectorAll<HTMLElement>(".news-card"));
+
+    if (!cards.length || !dotsContainer) return;
+
+    let currentPage = 0;
+    let dots: HTMLButtonElement[] = [];
+
+    const WIN = 5;
+    const DOT_PX = [6, 5, 4];
+    const DOT_OPACITY = [1, 0.4, 0.2];
+    const DOT_COLOR = "rgb(226,232,240)";
+
+    function winStart(page: number, total: number): number {
+      const w = Math.min(WIN, total);
+      return Math.max(0, Math.min(page - Math.floor(w / 2), total - w));
+    }
+
+    function applyDots(page: number) {
+      const total = dots.length;
+      const ws = winStart(page, total);
+      const we = ws + Math.min(WIN, total);
+      dots.forEach((btn, i) => {
+        const dot = btn.querySelector<HTMLSpanElement>("span")!;
+        const inWin = i >= ws && i < we;
+        const dist = Math.abs(i - page);
+        if (!inWin) {
+          btn.style.width = "0";
+          btn.style.padding = "0";
+        } else {
+          const idx = Math.min(dist, DOT_PX.length - 1);
+          btn.style.width = "";
+          btn.style.padding = "4px";
+          dot.style.width = DOT_PX[idx] + "px";
+          dot.style.height = DOT_PX[idx] + "px";
+          dot.style.backgroundColor = DOT_COLOR;
+          dot.style.opacity = String(DOT_OPACITY[idx]);
+          dot.style.boxShadow = idx === 0 ? `0 0 0 2px ${DOT_COLOR}` : "";
+        }
+      });
+    }
+
+    function nearestPage(): number {
+      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 2)
+        return cards.length - 1;
+      if (track.scrollLeft <= 2) return 0;
+      const center = track.scrollLeft + track.clientWidth / 2;
+      let closest = 0,
+        minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.offsetLeft + card.clientWidth / 2 - center);
+        if (dist < minDist) {
+          minDist = dist;
+          closest = i;
+        }
+      });
+      return closest;
+    }
+
+    function goToPage(page: number) {
+      currentPage = page;
+      applyDots(page);
+      const card = cards[page];
+      const offset =
+        card.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
+      track.scrollTo({ left: Math.max(0, offset), behavior: "smooth" });
+    }
+
+    function buildDots() {
+      dotsContainer!.innerHTML = "";
+      dots = cards.map((_, i) => {
+        const btn = document.createElement("button");
+        btn.style.cssText =
+          "display:flex;align-items:center;justify-content:center;cursor:pointer;transition:width 300ms ease,padding 300ms ease;overflow:hidden;";
+        btn.setAttribute("aria-label", `Page ${i + 1}`);
+        const dot = document.createElement("span");
+        dot.style.cssText =
+          "display:block;border-radius:9999px;transition:width 300ms ease,height 300ms ease,background-color 300ms ease,box-shadow 300ms ease;";
+        btn.appendChild(dot);
+        btn.addEventListener("click", () => goToPage(i));
+        dotsContainer!.appendChild(btn);
+        return btn;
+      });
+      applyDots(currentPage);
+    }
+
+    track.addEventListener(
+      "scroll",
+      () => {
+        const page = nearestPage();
+        if (page !== currentPage) {
+          currentPage = page;
+          applyDots(page);
+        }
+      },
+      { passive: true },
+    );
+
+    buildDots();
+  });
+</script>
+
+<style>
+  .news-card {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .news-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px 0px rgba(0, 0, 0, 0.18);
+  }
+
+  /* Repos — hover-out : de l'extérieur vers l'intérieur */
+  .ring-1 { opacity: 0.06; transform: scale(1); transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: 0s; }
+  .ring-2 { opacity: 0.10; transform: scale(1); transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: 0.07s; }
+  .ring-3 { opacity: 0.16; transform: scale(1); transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: 0.14s; }
+  .ring-4 { opacity: 0.25; transform: scale(1); transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: 0.21s; }
+
+  /* Hover-in : du centre vers l'extérieur */
+  .news-card:hover .ring-4 { opacity: 0.55; transform: scale(1.07); transition-delay: 0s; }
+  .news-card:hover .ring-3 { opacity: 0.35; transform: scale(1.07); transition-delay: 0.07s; }
+  .news-card:hover .ring-2 { opacity: 0.22; transform: scale(1.07); transition-delay: 0.14s; }
+  .news-card:hover .ring-1 { opacity: 0.14; transform: scale(1.07); transition-delay: 0.21s; }
+</style>

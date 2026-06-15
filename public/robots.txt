@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://play-astronova.com/sitemap-index.xml
+Sitemap: https://dynastynova.com/sitemap-index.xml

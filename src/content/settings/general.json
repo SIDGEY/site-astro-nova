@@ -1,7 +1,7 @@
 {
   "siteName": "Dynasty Nova",
   "defaultDescription": "Conquérez l'univers dans ce jeu de stratégie 4X spatial immersif. Explorez, colonisez et dominez les étoiles.",
-  "logo": "https://play-astronova.com/logo.svg",
+  "logo": "https://dynastynova.com/logo.svg",
   "navigation": [
     {
       "label": "Le jeu",
@@ -28,7 +28,7 @@
     "contact": {
       "title": "Dynasty Nova",
       "address": "",
-      "email": "contact@play-astronova.com",
+      "email": "contact@dynastynova.com",
       "phone": "",
       "cta_label": "S'inscrire à la bêta",
       "cta_link": "#"
@@ -92,13 +92,13 @@
     "social_nav": [
       {
         "label": "Discord",
-        "href": "https://discord.gg/astronova",
+        "href": "https://discord.gg/dynastynova",
         "icon_filename": "/uploads/social/discord.svg",
         "type": "external"
       },
       {
         "label": "X / Twitter",
-        "href": "https://twitter.com/astronova_game",
+        "href": "https://twitter.com/dynastynova",
         "icon_filename": "/uploads/social/x.svg",
         "type": "external"
       }
@@ -107,5 +107,5 @@
       "text": "© 2026 Dynasty Nova — Tous droits réservés"
     }
   },
-  "favicon": "https://play-astronova.com/favicon-32x32.png"
+  "favicon": "https://dynastynova.com/favicon-32x32.png"
 }

@@ -352,11 +352,13 @@ const blockNewsSchema = blockBaseSchema.extend({
   type: z.literal('news'),
   title: z.string(),
   subtitle: z.string(),
+  ctaText: z.string().optional(),
+  ctaLink: z.string().optional(),
   items: z.array(z.object({
     icon: z.string(),
     title: z.string(),
     description: z.string(),
-  })),
+  })).optional(),
 });
 
 const blockSchema = z.discriminatedUnion('type', [
@@ -541,6 +543,7 @@ const articlesCollection = defineCollection({
     tags: z.array(z.string()),
     draft: z.boolean().default(false),
     image: z.string().optional(),
+    icon: z.string().optional(),
   }),
 });
 

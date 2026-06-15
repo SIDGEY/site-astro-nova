@@ -40,8 +40,8 @@ export function getOrganizationSchema() {
       "height": "60"
     },
     "sameAs": [
-      "https://twitter.com/astronova_game",
-      "https://discord.gg/astronova"
+      "https://twitter.com/dynastynova",
+      "https://discord.gg/dynastynova"
     ]
   };
 }
