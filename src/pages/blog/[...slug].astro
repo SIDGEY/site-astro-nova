@@ -1,29 +1,323 @@
 ---
-import { getCollection, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-    const articles = await getCollection('articles');
-    return articles.map(article => ({
-        params: { slug: article.id },
-        props: { article },
-    }));
+  const articles = await getCollection("articles");
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
 }
 
 const { article } = Astro.props;
-const { Content } = await render(article);
+const { Content, headings } = await render(article);
+
+const tocHeadings = headings.filter((h) => h.depth === 2);
+
+const wordCount = (article.body ?? "").split(/\s+/).length;
+const readTime = Math.max(1, Math.round(wordCount / 200));
+
+const category = article.data.tags[0] ?? "Article";
 ---
 
 <BaseLayout title={article.data.title} description={article.data.description}>
-    <article class="py-20 px-6 max-w-3xl mx-auto text-slate-200 prose prose-invert prose-blue">
-        <header class="mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">{article.data.title}</h1>
-            <div class="flex gap-4 text-slate-400 text-sm">
-                <span>Par {article.data.author}</span>
-                <span>•</span>
-                <time>{article.data.date.toLocaleDateString('fr-FR')}</time>
-            </div>
-        </header>
+  <!-- Hero header -->
+  <div class="bg-[#1d293d] relative flex flex-col items-center w-full pt-20">
+    <div
+      class="absolute bg-gradient-to-b from-[#0f172b] h-72 left-0 right-0 to-[#1d293d] top-0 pointer-events-none"
+    >
+    </div>
+
+    <div class="relative z-10 w-full max-w-[1440px] px-36 py-24">
+      <div class="flex flex-col gap-6 items-start max-w-[960px]">
+        <!-- Back -->
+        <a
+          href="/blog"
+          class="flex items-center gap-3 text-[#62748e] hover:text-slate-300 transition-colors group"
+        >
+          <span
+            class="flex items-center justify-center w-10 h-10 rounded-full border border-[#314158] group-hover:border-slate-500 transition-colors shrink-0"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.5 2L3.5 6L7.5 10"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <span class="text-base font-medium">Retour</span>
+        </a>
+
+        <!-- Title -->
+        <h1 class="text-[60px] font-bold text-slate-50 leading-[60px]">
+          {article.data.title}
+        </h1>
+
+        <!-- Meta -->
+        <div class="flex items-center gap-6">
+          <div class="flex items-center gap-1.5 text-[#90a1b9] text-sm">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8C1.5 11.59 4.41 14.5 8 14.5C11.59 14.5 14.5 11.59 14.5 8C14.5 4.41 11.59 1.5 8 1.5ZM8 2.5C11.04 2.5 13.5 4.96 13.5 8C13.5 11.04 11.04 13.5 8 13.5C4.96 13.5 2.5 11.04 2.5 8C2.5 4.96 4.96 2.5 8 2.5ZM7.5 4V8.31L10.59 10.71L11.19 9.91L8.5 7.81V4H7.5Z"
+                fill="currentColor"></path>
+            </svg>
+            <span>{article.data.author}</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-[#90a1b9] text-sm">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2H11V1H10V2H6V1H5V2H4C3.45 2 3 2.45 3 3V13C3 13.55 3.45 14 4 14H12C12.55 14 13 13.55 13 13V3C13 2.45 12.55 2 12 2ZM12 13H4V6H12V13ZM12 5H4V3H5V4H6V3H10V4H11V3H12V5Z"
+                fill="currentColor"></path>
+            </svg>
+            <time
+              >{
+                article.data.date.toLocaleDateString("fr-FR", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })
+              }</time
+            >
+          </div>
+          <div class="flex items-center gap-1.5 text-[#90a1b9] text-sm">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 1C4.13 1 1 4.13 1 8C1 11.87 4.13 15 8 15C11.87 15 15 11.87 15 8C15 4.13 11.87 1 8 1ZM8 14C4.69 14 2 11.31 2 8C2 4.69 4.69 2 8 2C11.31 2 14 4.69 14 8C14 11.31 11.31 14 8 14ZM8.5 4H7.5V8.5L11.25 10.75L11.75 9.91L8.5 7.94V4Z"
+                fill="currentColor"></path>
+            </svg>
+            <span>{readTime} min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diagonal separator -->
+  <div class="relative w-full h-24 shrink-0">
+    <svg
+      class="absolute inset-0 w-full h-full"
+      fill="none"
+      preserveAspectRatio="none"
+      viewBox="0 0 1440 96"
+    >
+      <rect width="1440" height="96" fill="#1D293D"></rect>
+      <path d="M0 0L1440 96V96H0V0Z" fill="#0F172B"></path>
+    </svg>
+  </div>
+
+  <!-- Article content + TOC -->
+  <section class="bg-[#0f172b] w-full">
+    <div
+      class="max-w-[1440px] mx-auto px-36 py-24 flex gap-16 items-start justify-center"
+    >
+      <!-- Main content -->
+      <div
+        id="article-content"
+        class="flex flex-col gap-16 items-start max-w-[768px] w-full shrink-0 article-content"
+      >
         <Content />
-    </article>
+      </div>
+
+      <!-- TOC sidebar -->
+      {
+        tocHeadings.length > 0 && (
+          <aside
+            id="toc-sidebar"
+            class="w-[320px] shrink-0 sticky top-8 hidden xl:flex flex-col gap-0"
+          >
+            {tocHeadings.map((heading) => (
+              <a
+                href={`#${heading.slug}`}
+                data-toc-link={heading.slug}
+                class="toc-link relative w-full border-l border-[#1d293d] flex items-start pl-6 py-2 no-underline transition-colors duration-200 hover:border-[#51a2ff]"
+              >
+                <span class="toc-label text-base leading-[26px] font-normal text-[#62748e] transition-colors duration-200">
+                  {heading.text}
+                </span>
+              </a>
+            ))}
+          </aside>
+        )
+      }
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .article-content :global(h2) {
+    font-size: 36px;
+    font-weight: 700;
+    color: #e2e8f0;
+    line-height: 40px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .article-content :global(h3) {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e2e8f0;
+    line-height: 28px;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .article-content :global(p) {
+    font-size: 16px;
+    color: #94a3b8;
+    line-height: 26px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .article-content :global(strong) {
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    color: #94a3b8;
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .article-content :global(li) {
+    list-style: disc;
+  }
+
+  .article-content :global(blockquote) {
+    border-left: 3px solid #334155;
+    padding-left: 24px;
+    color: #64748b;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .article-content :global(img) {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow:
+      0 10px 15px -3px rgba(15, 23, 42, 0.5),
+      0 4px 6px -4px rgba(15, 23, 42, 0.5);
+  }
+
+  .article-content :global(hr) {
+    border-color: #1e293b;
+    margin: 0;
+  }
+
+  .article-content :global(em) {
+    font-style: normal;
+    font-size: 14px;
+    color: #64748b;
+    display: block;
+    text-align: center;
+    margin-top: -20px;
+  }
+
+  .article-content :global(> *) {
+    width: 100%;
+  }
+
+  .article-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .toc-link.active {
+    border-left-color: #51a2ff;
+  }
+
+  .toc-link.active .toc-label {
+    color: #e2e8f0;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  const tocLinks =
+    document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]");
+
+  if (tocLinks.length > 0) {
+    const headingEls = Array.from(tocLinks)
+      .map((link) => {
+        const slug = link.dataset.tocLink!;
+        return document.getElementById(slug);
+      })
+      .filter((el): el is HTMLElement => el !== null);
+
+    let activeSlug = headingEls[0]?.id ?? "";
+
+    function setActive(slug: string) {
+      if (slug === activeSlug) return;
+      activeSlug = slug;
+      tocLinks.forEach((link) => {
+        const isActive = link.dataset.tocLink === slug;
+        link.classList.toggle("active", isActive);
+      });
+    }
+
+    // Activate first item by default
+    if (tocLinks[0]) tocLinks[0].classList.add("active");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the topmost heading currently intersecting
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+        if (visible.length > 0) {
+          setActive(visible[0].target.id);
+          return;
+        }
+
+        // When scrolling past headings (none intersecting), find the last one above viewport
+        const above = headingEls
+          .filter((el) => el.getBoundingClientRect().top < 0)
+          .at(-1);
+
+        if (above) setActive(above.id);
+      },
+      { rootMargin: "0px 0px -60% 0px", threshold: 0 },
+    );
+
+    headingEls.forEach((el) => observer.observe(el));
+  }
+</script>

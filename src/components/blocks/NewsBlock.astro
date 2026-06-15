@@ -1,17 +1,26 @@
 ---
-interface NewsItem {
-  icon: string;
-  title: string;
-  description: string;
-}
+import { getCollection } from 'astro:content';
+import { getArticleIcon, LOGO_ICON } from '../../utils/articleIcon';
 
 interface Props {
   title: string;
   subtitle: string;
-  items: NewsItem[];
+  ctaText?: string;
+  ctaLink?: string;
 }
 
-const { title, subtitle, items = [] } = Astro.props;
+const { title, subtitle, ctaText, ctaLink } = Astro.props;
+
+const COVERS = Array.from({ length: 27 }, (_, i) => `/uploads/blog/covers/cover-${i + 1}.webp`);
+function getFallbackCover(slug: string): string {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) hash = (hash * 31 + slug.charCodeAt(i)) >>> 0;
+  return COVERS[hash % COVERS.length];
+}
+
+const allArticles = await getCollection('articles', ({ data }) => data.draft !== true);
+allArticles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const articles = allArticles.slice(0, 3);
 ---
 
 <section
@@ -33,56 +42,55 @@ const { title, subtitle, items = [] } = Astro.props;
       class="news-track flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0 sm:gap-6 sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-3"
     >
       {
-        items.map((item) => (
-          <div class="news-card card-with-border group flex-shrink-0 w-[87%] snap-center sm:w-auto rounded-xl overflow-hidden transition-colors">
-            <div class="aspect-[5/3] rounded-xl w-full flex shrink-0 items-center justify-center overflow-hidden border bg-slate-800 border-slate-700/50 transition-colors">
-              <div class="relative w-full h-full flex items-center justify-center overflow-hidden">
-                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div
-                    class="absolute rounded-full"
-                    style="width:400px;height:400px;padding:1px;opacity:0.2;background:linear-gradient(to bottom, #334155, #1e293b);-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
-                  />
-                  <div
-                    class="absolute rounded-full"
-                    style="width:300px;height:300px;padding:1px;opacity:0.4;background:linear-gradient(to bottom, #334155, #1e293b);-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
-                  />
-                  <div
-                    class="absolute rounded-full"
-                    style="width:225px;height:225px;padding:1px;opacity:0.6;background:linear-gradient(to bottom, #334155, #1e293b);-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
-                  />
-                  <div
-                    class="absolute rounded-full"
-                    style="width:150px;height:150px;padding:1px;opacity:0.8;background:linear-gradient(to bottom, #334155, #1e293b);-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
-                  />
-                </div>
-                <div class="relative z-10">
-                  <svg
-                    width="58"
-                    height="64"
-                    viewBox="0 0 58 64"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M57.6 44.2556L57.2486 44.2333C52.4991 43.6195 47.702 43.157 42.8625 42.8514L28.8 64L14.7375 42.8514C9.89795 43.157 5.10092 43.6195 0.351389 44.2333L0 44.2556L28.8 0L57.6 44.2556ZM17.3736 34.975L22.6486 37.5917L28.8 46.8417L34.9514 37.5917L40.225 34.975L28.8 17.4167L17.3736 34.975Z"
-                      fill="#314158"
-                    />
+        articles.map((article) => (
+          <a href={`/blog/${article.id}`} class="news-card card-with-border group flex-shrink-0 w-[87%] snap-center sm:w-auto rounded-xl overflow-hidden">
+            <div class="aspect-[5/3] rounded-xl w-full relative flex shrink-0 items-center justify-center overflow-hidden border bg-slate-800 border-slate-700/50 transition-colors">
+              <!-- Cover image -->
+              <img
+                src={article.data.image ?? getFallbackCover(article.id)}
+                alt={article.data.title}
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+              <!-- Dark overlay -->
+              <div class="absolute inset-0 bg-slate-900/60" />
+              <!-- Concentric circles + icon -->
+              <div class="card-rings absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="ring ring-1 absolute rounded-full" style="width:340px;height:340px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude" />
+                <div class="ring ring-2 absolute rounded-full" style="width:250px;height:250px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude" />
+                <div class="ring ring-3 absolute rounded-full" style="width:175px;height:175px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude" />
+                <div class="ring ring-4 absolute rounded-full" style="width:110px;height:110px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude" />
+                {getArticleIcon(article.data.tags, article.data.icon) === LOGO_ICON ? (
+                  <svg class="relative z-10 text-slate-200" width="48" height="53" viewBox="0 0 58 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M57.6 44.2556L57.2486 44.2333C52.4991 43.6195 47.702 43.157 42.8625 42.8514L28.8 64L14.7375 42.8514C9.89795 43.157 5.10092 43.6195 0.351389 44.2333L0 44.2556L28.8 0L57.6 44.2556ZM17.3736 34.975L22.6486 37.5917L28.8 46.8417L34.9514 37.5917L40.225 34.975L28.8 17.4167L17.3736 34.975Z" fill="currentColor"/>
                   </svg>
-                </div>
+                ) : (
+                  <i class={`ph ${getArticleIcon(article.data.tags, article.data.icon)} relative z-10 text-5xl text-slate-200`} />
+                )}
               </div>
             </div>
             <div class="px-8 pt-6 pb-8">
-              <h3 class="text-xl font-semibold text-slate-100 mb-3">
-                {item.title}
+              <h3 class="text-xl font-semibold text-slate-100 mb-3 line-clamp-2">
+                {article.data.title}
               </h3>
-              <p class="text-base text-slate-400 leading-relaxed mb-0">
-                {item.description}
+              <p class="text-base text-slate-400 leading-relaxed mb-0 line-clamp-3">
+                {article.data.description}
               </p>
             </div>
-          </div>
+          </a>
         ))
       }
     </div>
+
+    {(ctaText && ctaLink) && (
+      <div class="text-center mt-12">
+        <a href={ctaLink} class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-medium transition-colors">
+          {ctaText}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    )}
 
     <!-- Dots (mobile only) -->
     <div
@@ -91,6 +99,26 @@ const { title, subtitle, items = [] } = Astro.props;
     </div>
   </div>
 </section>
+
+<style>
+  .news-card {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .news-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px 0px rgba(0, 0, 0, 0.18);
+  }
+
+  .ring-1 { opacity: 0.06; transform: scale(1); transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: 0s; }
+  .ring-2 { opacity: 0.10; transform: scale(1); transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: 0.07s; }
+  .ring-3 { opacity: 0.16; transform: scale(1); transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: 0.14s; }
+  .ring-4 { opacity: 0.25; transform: scale(1); transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: 0.21s; }
+
+  .news-card:hover .ring-4 { opacity: 0.55; transform: scale(1.07); transition-delay: 0s; }
+  .news-card:hover .ring-3 { opacity: 0.35; transform: scale(1.07); transition-delay: 0.07s; }
+  .news-card:hover .ring-2 { opacity: 0.22; transform: scale(1.07); transition-delay: 0.14s; }
+  .news-card:hover .ring-1 { opacity: 0.14; transform: scale(1.07); transition-delay: 0.21s; }
+</style>
 
 <script>
   document.querySelectorAll<HTMLElement>(".news-track").forEach((track) => {

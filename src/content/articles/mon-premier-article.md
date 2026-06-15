@@ -5,8 +5,8 @@ description: "Découvrez les coulisses du développement de Dynasty Nova, notre 
 author: "BoGosseDu69"
 coAuthors: ["BoGosseDu59"]
 tags: ["Annonce", "Développement", "Espace"]
-image: "/uploads/blog/premier-article-cover.jpg"
 draft: false
+icon: "ph-newspaper"
 ---
 
 ## Bienvenue, Commandants !
@@ -33,6 +33,6 @@ Le développement d'un jeu de cette envergure est une aventure humaine. Nous vou
 
 ### Rejoignez la discussion
 
-N'oubliez pas de rejoindre notre [Discord](https://discord.gg/astronova) pour discuter de cet article et partager vos idées pour le futur du jeu. L'espace est vaste, mais nous ne sommes pas seuls dans cette aventure.
+N'oubliez pas de rejoindre notre [Discord](https://discord.gg/dynasty nova) pour discuter de cet article et partager vos idées pour le futur du jeu. L'espace est vaste, mais nous ne sommes pas seuls dans cette aventure.
 
 **À très vite dans les étoiles !**
