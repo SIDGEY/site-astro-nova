@@ -28,8 +28,10 @@ blocks:
       - icon: nut
         active: true
         screenshot: /landing/screens/resource-metal.webp
+        src: /landing/thumbs/thumb-metal.webp
       - icon: diamonds-four
         screenshot: /landing/screens/resource-crystal.webp
+        src: /landing/thumbs/thumb-crystal.webp
       - icon: drop
         screenshot: /landing/screens/resource-hydrogen.webp
       - icon: lightning
@@ -173,6 +175,11 @@ blocks:
     screenshot2: /landing/screens/shop-avatar.webp
     backgroundImage: /landing/backgrounds/bg-store.webp
     reversed: false
+    mobileCards:
+      - src: /landing/thumbs/thumb-small-pack.webp
+        alt: Petit pack
+      - src: /landing/thumbs/thumb-big-pack.webp
+        alt: Grand pack
 
   - type: carousel
     icon: user-circle

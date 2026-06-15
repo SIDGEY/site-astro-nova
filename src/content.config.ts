@@ -328,6 +328,11 @@ const blockFeaturePhoneSchema = blockBaseSchema.extend({
     icon: z.string(),
     active: z.boolean().optional(),
     screenshot: z.string().optional(),
+    src: z.string().optional(),
+  })).optional(),
+  mobileCards: z.array(z.object({
+    src: z.string(),
+    alt: z.string().optional(),
   })).optional(),
 });
 
