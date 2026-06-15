@@ -240,7 +240,7 @@ const blockCommercialsSchema = blockBaseSchema.extend({
   ctaLink: z.string().optional(),
 });
 
-// --- Astro Nova Game Blocks ---
+// --- Dynasty Nova Game Blocks ---
 
 const blockGameHeroSchema = blockBaseSchema.extend({
   type: z.literal('gameHero'),
@@ -375,7 +375,7 @@ const blockSchema = z.discriminatedUnion('type', [
   blockLeadFormSchema,
   blockDiagnosticIASchema,
   blockCommercialsSchema,
-  // Astro Nova Game Blocks
+  // Dynasty Nova Game Blocks
   blockGameHeroSchema,
   blockResourcesSchema,
   blockGameFeaturesSchema,

@@ -1,4 +1,4 @@
-# Design System Astro Nova
+# Design System Dynasty Nova
 
 Ce document définit les principes visuels, les tokens sémantiques et les règles d'accessibilité appliqués au jeu.
 

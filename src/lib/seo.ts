@@ -20,7 +20,7 @@ export function getCanonicalURL(path: string): string {
  */
 export function formatTitle(title: string): string {
   if (title === SITE_NAME) return SITE_NAME;
-  return `${title} | Astro Nova`;
+  return `${title} | Dynasty Nova`;
 }
 
 /**
