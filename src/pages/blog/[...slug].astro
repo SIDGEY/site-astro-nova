@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getArticleIcon, LOGO_ICON } from "../../utils/articleIcon";
 
 export async function getStaticPaths() {
   const articles = await getCollection("articles");
@@ -19,6 +20,26 @@ const wordCount = (article.body ?? "").split(/\s+/).length;
 const readTime = Math.max(1, Math.round(wordCount / 200));
 
 const category = article.data.tags[0] ?? "Article";
+
+const COVERS = Array.from(
+  { length: 27 },
+  (_, i) => `/uploads/blog/covers/cover-${i + 1}.webp`,
+);
+function getFallbackCover(slug: string): string {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++)
+    hash = (hash * 31 + slug.charCodeAt(i)) >>> 0;
+  return COVERS[hash % COVERS.length];
+}
+
+const allArticles = await getCollection(
+  "articles",
+  ({ data }) => data.draft !== true,
+);
+allArticles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const relatedArticles = allArticles
+  .filter((a) => a.id !== article.id)
+  .slice(0, 3);
 ---
 
 <BaseLayout title={article.data.title} description={article.data.description}>
@@ -73,20 +94,6 @@ const category = article.data.tags[0] ?? "Article";
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8C1.5 11.59 4.41 14.5 8 14.5C11.59 14.5 14.5 11.59 14.5 8C14.5 4.41 11.59 1.5 8 1.5ZM8 2.5C11.04 2.5 13.5 4.96 13.5 8C13.5 11.04 11.04 13.5 8 13.5C4.96 13.5 2.5 11.04 2.5 8C2.5 4.96 4.96 2.5 8 2.5ZM7.5 4V8.31L10.59 10.71L11.19 9.91L8.5 7.81V4H7.5Z"
-                fill="currentColor"></path>
-            </svg>
-            <span>{article.data.author}</span>
-          </div>
-          <div class="flex items-center gap-1.5 text-[#90a1b9] text-sm">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
                 d="M12 2H11V1H10V2H6V1H5V2H4C3.45 2 3 2.45 3 3V13C3 13.55 3.45 14 4 14H12C12.55 14 13 13.55 13 13V3C13 2.45 12.55 2 12 2ZM12 13H4V6H12V13ZM12 5H4V3H5V4H6V3H10V4H11V3H12V5Z"
                 fill="currentColor"></path>
             </svg>
@@ -112,7 +119,7 @@ const category = article.data.tags[0] ?? "Article";
                 d="M8 1C4.13 1 1 4.13 1 8C1 11.87 4.13 15 8 15C11.87 15 15 11.87 15 8C15 4.13 11.87 1 8 1ZM8 14C4.69 14 2 11.31 2 8C2 4.69 4.69 2 8 2C11.31 2 14 4.69 14 8C14 11.31 11.31 14 8 14ZM8.5 4H7.5V8.5L11.25 10.75L11.75 9.91L8.5 7.94V4Z"
                 fill="currentColor"></path>
             </svg>
-            <span>{readTime} min</span>
+            <span>{readTime} min de lecture</span>
           </div>
         </div>
       </div>
@@ -150,7 +157,7 @@ const category = article.data.tags[0] ?? "Article";
         tocHeadings.length > 0 && (
           <aside
             id="toc-sidebar"
-            class="w-[320px] shrink-0 sticky top-8 hidden xl:flex flex-col gap-0"
+            class="w-[320px] shrink-0 sticky top-28 hidden xl:flex flex-col gap-0"
           >
             {tocHeadings.map((heading) => (
               <a
@@ -168,6 +175,87 @@ const category = article.data.tags[0] ?? "Article";
       }
     </div>
   </section>
+
+  <!-- Related articles -->
+  {
+    relatedArticles.length > 0 && (
+      <section class="bg-slate-900 py-20 md:py-[128px] px-6 lg:px-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto w-full">
+          <div class="text-center mb-12">
+            <p class="text-xs uppercase tracking-widest text-slate-500 mb-3">
+              Plus d'articles
+            </p>
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-50 mb-0">
+              Vous pourriez également être intéressé
+            </h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            {relatedArticles.map((rel) => (
+              <a
+                href={`/blog/${rel.id}`}
+                class="related-card card-with-border group rounded-xl overflow-hidden no-underline"
+              >
+                <div class="aspect-[5/3] rounded-xl w-full relative flex shrink-0 items-center justify-center overflow-hidden border bg-slate-800 border-slate-700/50">
+                  <img
+                    src={rel.data.image ?? getFallbackCover(rel.id)}
+                    alt={rel.data.title}
+                    class="rel-image absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div class="rel-overlay absolute inset-0" />
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div
+                      class="rel-ring rel-ring-1 absolute rounded-full"
+                      style="width:340px;height:340px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
+                    />
+                    <div
+                      class="rel-ring rel-ring-2 absolute rounded-full"
+                      style="width:250px;height:250px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
+                    />
+                    <div
+                      class="rel-ring rel-ring-3 absolute rounded-full"
+                      style="width:175px;height:175px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
+                    />
+                    <div
+                      class="rel-ring rel-ring-4 absolute rounded-full"
+                      style="width:110px;height:110px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude"
+                    />
+                    {getArticleIcon(rel.data.tags, rel.data.icon) ===
+                    LOGO_ICON ? (
+                      <svg
+                        class="relative z-10 text-slate-200"
+                        width="48"
+                        height="53"
+                        viewBox="0 0 58 64"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M57.6 44.2556L57.2486 44.2333C52.4991 43.6195 47.702 43.157 42.8625 42.8514L28.8 64L14.7375 42.8514C9.89795 43.157 5.10092 43.6195 0.351389 44.2333L0 44.2556L28.8 0L57.6 44.2556ZM17.3736 34.975L22.6486 37.5917L28.8 46.8417L34.9514 37.5917L40.225 34.975L28.8 17.4167L17.3736 34.975Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    ) : (
+                      <i
+                        class={`ph ${getArticleIcon(rel.data.tags, rel.data.icon)} relative z-10 text-4xl text-slate-200`}
+                      />
+                    )}
+                  </div>
+                </div>
+                <div class="px-8 pt-6 pb-8">
+                  <h3 class="text-xl font-semibold text-slate-100 mb-3 line-clamp-2">
+                    {rel.data.title}
+                  </h3>
+                  <p class="text-base text-slate-400 leading-relaxed mb-0 line-clamp-3">
+                    {rel.data.description}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
@@ -268,6 +356,85 @@ const category = article.data.tags[0] ?? "Article";
     color: #e2e8f0;
     font-weight: 500;
   }
+
+  .related-card {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .related-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px 0px rgba(0, 0, 0, 0.18);
+  }
+
+  .rel-ring-1 {
+    opacity: 0.06;
+    transform: scale(1);
+    transition:
+      opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 0s;
+  }
+  .rel-ring-2 {
+    opacity: 0.1;
+    transform: scale(1);
+    transition:
+      opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 0.07s;
+  }
+  .rel-ring-3 {
+    opacity: 0.16;
+    transform: scale(1);
+    transition:
+      opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 0.14s;
+  }
+  .rel-ring-4 {
+    opacity: 0.25;
+    transform: scale(1);
+    transition:
+      opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 0.21s;
+  }
+
+  .related-card:hover .rel-ring-4 {
+    opacity: 0.55;
+    transform: scale(1.07);
+    transition-delay: 0s;
+  }
+  .related-card:hover .rel-ring-3 {
+    opacity: 0.35;
+    transform: scale(1.07);
+    transition-delay: 0.07s;
+  }
+  .related-card:hover .rel-ring-2 {
+    opacity: 0.22;
+    transform: scale(1.07);
+    transition-delay: 0.14s;
+  }
+  .related-card:hover .rel-ring-1 {
+    opacity: 0.14;
+    transform: scale(1.07);
+    transition-delay: 0.21s;
+  }
+
+  .related-card .rel-image {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .related-card:hover .rel-image {
+    transform: scale(1.05);
+  }
+
+  .related-card .rel-overlay {
+    background-color: rgba(15, 23, 42, 0.4);
+    transition: background-color 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .related-card:hover .rel-overlay {
+    background-color: rgba(15, 23, 42, 0.2);
+  }
 </style>
 
 <script>
@@ -296,6 +463,8 @@ const category = article.data.tags[0] ?? "Article";
     // Activate first item by default
     if (tocLinks[0]) tocLinks[0].classList.add("active");
 
+    const HEADER_HEIGHT = 80; // matches pt-20 / fixed header
+
     const observer = new IntersectionObserver(
       (entries) => {
         // Find the topmost heading currently intersecting
@@ -308,14 +477,14 @@ const category = article.data.tags[0] ?? "Article";
           return;
         }
 
-        // When scrolling past headings (none intersecting), find the last one above viewport
+        // When scrolling past headings (none intersecting), find the last one above the header bottom
         const above = headingEls
-          .filter((el) => el.getBoundingClientRect().top < 0)
+          .filter((el) => el.getBoundingClientRect().top < HEADER_HEIGHT)
           .at(-1);
 
         if (above) setActive(above.id);
       },
-      { rootMargin: "0px 0px -60% 0px", threshold: 0 },
+      { rootMargin: `-${HEADER_HEIGHT}px 0px -55% 0px`, threshold: 0 },
     );
 
     headingEls.forEach((el) => observer.observe(el));

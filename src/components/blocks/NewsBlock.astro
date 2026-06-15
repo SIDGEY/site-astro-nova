@@ -49,10 +49,10 @@ const articles = allArticles.slice(0, 3);
               <img
                 src={article.data.image ?? getFallbackCover(article.id)}
                 alt={article.data.title}
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                class="card-image absolute inset-0 w-full h-full object-cover"
               />
               <!-- Dark overlay -->
-              <div class="absolute inset-0 bg-slate-900/60" />
+              <div class="overlay absolute inset-0" />
               <!-- Concentric circles + icon -->
               <div class="card-rings absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div class="ring ring-1 absolute rounded-full" style="width:340px;height:340px;padding:1px;background:linear-gradient(to bottom, white, rgba(255,255,255,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude" />
@@ -64,7 +64,7 @@ const articles = allArticles.slice(0, 3);
                     <path d="M57.6 44.2556L57.2486 44.2333C52.4991 43.6195 47.702 43.157 42.8625 42.8514L28.8 64L14.7375 42.8514C9.89795 43.157 5.10092 43.6195 0.351389 44.2333L0 44.2556L28.8 0L57.6 44.2556ZM17.3736 34.975L22.6486 37.5917L28.8 46.8417L34.9514 37.5917L40.225 34.975L28.8 17.4167L17.3736 34.975Z" fill="currentColor"/>
                   </svg>
                 ) : (
-                  <i class={`ph ${getArticleIcon(article.data.tags, article.data.icon)} relative z-10 text-5xl text-slate-200`} />
+                  <i class={`ph ${getArticleIcon(article.data.tags, article.data.icon)} relative z-10 text-4xl text-slate-200`} />
                 )}
               </div>
             </div>
@@ -118,6 +118,21 @@ const articles = allArticles.slice(0, 3);
   .news-card:hover .ring-3 { opacity: 0.35; transform: scale(1.07); transition-delay: 0.07s; }
   .news-card:hover .ring-2 { opacity: 0.22; transform: scale(1.07); transition-delay: 0.14s; }
   .news-card:hover .ring-1 { opacity: 0.14; transform: scale(1.07); transition-delay: 0.21s; }
+
+  .news-card .card-image {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .news-card:hover .card-image {
+    transform: scale(1.05);
+  }
+
+  .news-card .overlay {
+    background-color: rgba(15, 23, 42, 0.4);
+    transition: background-color 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .news-card:hover .overlay {
+    background-color: rgba(15, 23, 42, 0.2);
+  }
 </style>
 
 <script>
