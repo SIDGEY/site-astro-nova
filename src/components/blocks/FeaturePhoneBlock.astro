@@ -306,24 +306,28 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 
           {/* Card 1: always left, top if reversed / bottom if not */}
           <div
-            class="absolute z-20 w-[104px] aspect-[4/5] rounded-lg overflow-hidden shadow-2xl left-2 -translate-x-1/2"
+            class="absolute z-20 w-[104px] aspect-[4/5] left-2 -translate-x-1/2"
             style={reversed ? "top: 48px" : "top: calc(48px + 65px)"}
           >
-            <div class="card-with-border rounded-lg w-full h-full">
-              <img src={gallery[0].src} alt={gallery[0].alt || ""} class="w-full h-full object-cover" />
-              <div class="image-overlay"></div>
+            <div class="float-1 w-full h-full rounded-lg overflow-hidden shadow-2xl">
+              <div class="card-with-border rounded-lg w-full h-full">
+                <img src={gallery[0].src} alt={gallery[0].alt || ""} class="w-full h-full object-cover" />
+                <div class="image-overlay"></div>
+              </div>
             </div>
           </div>
 
           {/* Card 2: always right, bottom if reversed / top if not */}
           {gallery.length > 1 && (
             <div
-              class="absolute z-20 w-[104px] aspect-[4/5] rounded-lg overflow-hidden shadow-2xl right-2 translate-x-1/2"
+              class="absolute z-20 w-[104px] aspect-[4/5] right-2 translate-x-1/2"
               style={reversed ? "top: calc(48px + 65px)" : "top: 48px"}
             >
-              <div class="card-with-border rounded-lg w-full h-full">
-                <img src={gallery[1].src} alt={gallery[1].alt || ""} class="w-full h-full object-cover" />
-                <div class="image-overlay"></div>
+              <div class="float-2 w-full h-full rounded-lg overflow-hidden shadow-2xl">
+                <div class="card-with-border rounded-lg w-full h-full">
+                  <img src={gallery[1].src} alt={gallery[1].alt || ""} class="w-full h-full object-cover" />
+                  <div class="image-overlay"></div>
+                </div>
               </div>
             </div>
           )}
@@ -346,9 +350,11 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
               class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center left-2 -translate-x-1/2"
               style={reversed ? "top: 48px" : "top: calc(48px + 65px)"}
             >
-              <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
-                <img src={resourceIcons[0].src || resourceIcons[0].screenshot} alt="" class="w-full h-full object-cover" />
-                <div class="image-overlay"></div>
+              <div class="float-1">
+                <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
+                  <img src={resourceIcons[0].src || resourceIcons[0].screenshot} alt="" class="w-full h-full object-cover" />
+                  <div class="image-overlay"></div>
+                </div>
               </div>
             </div>
           )}
@@ -359,9 +365,11 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
               class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center right-2 translate-x-1/2"
               style={reversed ? "top: calc(48px + 65px)" : "top: 48px"}
             >
-              <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
-                <img src={resourceIcons[1].src || resourceIcons[1].screenshot} alt="" class="w-full h-full object-cover" />
-                <div class="image-overlay"></div>
+              <div class="float-2">
+                <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
+                  <img src={resourceIcons[1].src || resourceIcons[1].screenshot} alt="" class="w-full h-full object-cover" />
+                  <div class="image-overlay"></div>
+                </div>
               </div>
             </div>
           )}
@@ -382,9 +390,11 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
             class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center left-2 -translate-x-1/2"
             style={reversed ? "top: 48px" : "top: calc(48px + 65px)"}
           >
-            <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <img src={mobileCards[0].src} alt={mobileCards[0].alt || ""} class="w-full h-full object-cover" />
-              <div class="image-overlay"></div>
+            <div class="float-1">
+              <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
+                <img src={mobileCards[0].src} alt={mobileCards[0].alt || ""} class="w-full h-full object-cover" />
+                <div class="image-overlay"></div>
+              </div>
             </div>
           </div>
 
@@ -394,9 +404,11 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
               class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center right-2 translate-x-1/2"
               style={reversed ? "top: calc(48px + 65px)" : "top: 48px"}
             >
-              <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
-                <img src={mobileCards[1].src} alt={mobileCards[1].alt || ""} class="w-full h-full object-cover" />
-                <div class="image-overlay"></div>
+              <div class="float-2">
+                <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
+                  <img src={mobileCards[1].src} alt={mobileCards[1].alt || ""} class="w-full h-full object-cover" />
+                  <div class="image-overlay"></div>
+                </div>
               </div>
             </div>
           )}
@@ -519,3 +531,22 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     });
   });
 </script>
+
+<style is:global>
+  @keyframes mobile-card-float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-7px); }
+  }
+
+  .float-1 {
+    animation: mobile-card-float 3.5s ease-in-out infinite;
+  }
+
+  .float-2 {
+    animation: mobile-card-float 3.5s ease-in-out infinite 1.75s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .float-1, .float-2 { animation: none; }
+  }
+</style>
