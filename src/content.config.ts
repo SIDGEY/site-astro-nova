@@ -364,6 +364,26 @@ const blockNewsSchema = blockBaseSchema.extend({
   })).optional(),
 });
 
+const blockRoadmapSchema = blockBaseSchema.extend({
+  type: z.literal('roadmap'),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  sectionId: z.string().optional(),
+  groups: z.array(z.object({
+    year: z.string(),
+    entries: z.array(z.object({
+      month: z.string(),
+      side: z.enum(['left', 'right']).default('left'),
+      current: z.boolean().optional(),
+      cards: z.array(z.object({
+        icon: z.string().optional(),
+        title: z.string(),
+        description: z.string().optional(),
+      })),
+    })),
+  })),
+});
+
 const blockSchema = z.discriminatedUnion('type', [
   blockHeroSchema,
   blockLogosSchema,
@@ -393,6 +413,7 @@ const blockSchema = z.discriminatedUnion('type', [
   blockFeaturePhoneSchema,
   blockCarouselSchema,
   blockNewsSchema,
+  blockRoadmapSchema,
 ]);
 
 
