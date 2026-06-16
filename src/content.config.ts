@@ -257,7 +257,8 @@ const blockGameHeroSchema = blockBaseSchema.extend({
 const block3DSchema = blockBaseSchema.extend({
   type: z.literal('block3D'),
   title: z.string(),
-  subtitle: z.string()
+  subtitle: z.string(),
+  sectionId: z.string().optional(),
 });
 
 const blockGameFeaturesSchema = blockBaseSchema.extend({
@@ -334,6 +335,7 @@ const blockFeaturePhoneSchema = blockBaseSchema.extend({
     src: z.string(),
     alt: z.string().optional(),
   })).optional(),
+  sectionId: z.string().optional(),
 });
 
 const blockCarouselSchema = blockBaseSchema.extend({
@@ -346,6 +348,7 @@ const blockCarouselSchema = blockBaseSchema.extend({
     title: z.string(),
     avatar: z.string().optional(),
   })),
+  sectionId: z.string().optional(),
 });
 
 const blockNewsSchema = blockBaseSchema.extend({

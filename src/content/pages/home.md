@@ -13,10 +13,12 @@ blocks:
     screenshot2: /landing/screenshot2.jpg
 
   - type: block3D
+    sectionId: planets
     title: Recherchez des innovations pour prospérer.
     subtitle: Votre planète est le cœur de votre empire. C'est ici que vous produisez des ressources et développez vos défenses.
 
   - type: featurePhone
+    sectionId: resources
     icon: nut
     title: Gérez vos ressources pour prospérer
     subtitle: "Les ressources sont essentielles dans Dynasty Nova. Le métal est crucial pour la construction, tandis que le cristal est nécessaire pour les technologies avancées. Une bonne gestion est clé pour progresser."
@@ -38,6 +40,7 @@ blocks:
         screenshot: /landing/screens/resource-energy.webp
 
   - type: featurePhone
+    sectionId: buildings
     icon: buildings
     title: Optimisez l'extraction de vos ressources
     subtitle: "Les mines sont vos sources de ressources. L'Excavateur minéral produit du métal, et l'Extracteur cristallin produit du cristal. Améliorez vos mines pour augmenter leur production."
@@ -84,6 +87,7 @@ blocks:
     galleryExtra: 8
 
   - type: carousel
+    sectionId: laboratory
     icon: flask
     title: Débloquez des technologies
     subtitle: "Développez votre arbre technologique pour débloquer de nouvelles capacités. Recherchez des innovations qui transformeront votre civilisation."
@@ -122,6 +126,7 @@ blocks:
         title: Métallurgie Avancée
 
   - type: featurePhone
+    sectionId: defenses
     icon: shield-star
     title: Protégez votre empire des attaques ennemie
     subtitle: "Un bon système de défense protège votre empire. Les lance-missiles et canons à ions sont efficaces contre les vaisseaux. Une défense diversifiée est clé."
@@ -145,6 +150,7 @@ blocks:
     galleryExtra: 8
 
   - type: featurePhone
+    sectionId: fleet
     icon: rocket-launch
     title: Développez votre flotte pour dominer.
     subtitle: "Les vaisseaux sont essentiels. Les chasseurs sont rapides, les lourds résistants, les croiseurs polyvalents, et les vaisseaux de colonisation créent des colonies."
@@ -168,6 +174,7 @@ blocks:
     galleryExtra: 8
 
   - type: featurePhone
+    sectionId: shop
     icon: storefront
     title: "Progressez à votre rythme, brillez par style"
     subtitle: "Notre boutique respecte l'intégrité de la compétition. Aucun avantage ne s'achète : l'arène est le domaine de la stratégie. Choisissez des options Pay-to-Fast pour accélérer votre développement ou explorez nos avatars exclusifs."

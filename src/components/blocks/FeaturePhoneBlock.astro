@@ -19,6 +19,7 @@ interface Props {
   galleryExtra?: number;
   resourceIcons?: { icon: string; active?: boolean; screenshot?: string; src?: string }[];
   mobileCards?: { src: string; alt?: string }[];
+  sectionId?: string;
 }
 
 const {
@@ -33,10 +34,11 @@ const {
   galleryExtra = 0,
   resourceIcons = [],
   mobileCards = [],
+  sectionId,
 } = Astro.props;
 
-// Generate a unique ID for this section instance
-const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
+// Generate a unique ID for this section instance (for internal JS targeting)
+const instanceId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 
 // Determine which phone is active (the one whose screenshot changes)
 // Normal: Phone1 = context (center, col-span-2), Phone2 = active (far, col-span-1)
@@ -45,9 +47,10 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 // The "active" phone is always the smaller one (col-span-1)
 ---
 
+{sectionId && <span id={sectionId} style="display:block; height:0; overflow:hidden;"></span>}
 <section
   class={`feature-phone-section overflow-hidden relative bg-[#0B1120] pt-20 pb-0 md:py-[128px] px-6 md:px-12 lg:px-20 flex items-center ${reversed ? 'is-reversed' : ''}`}
-  id={sectionId}
+  id={instanceId}
   data-reversed={reversed.toString()}
 >
   <!-- Background image layers -->
@@ -426,9 +429,9 @@ const sectionId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
 </section>
 
 
-<script define:vars={{ sectionId }}>
+<script define:vars={{ instanceId }}>
   document.addEventListener('DOMContentLoaded', () => {
-    const section = document.getElementById(sectionId);
+    const section = document.getElementById(instanceId);
     if (!section) return;
 
     const buttons = section.querySelectorAll('.resource-btn[data-screenshot]');
