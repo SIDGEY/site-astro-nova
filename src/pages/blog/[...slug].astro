@@ -150,7 +150,7 @@ const relatedArticles = allArticles
   <!-- Related articles -->
   {
     relatedArticles.length > 0 && (
-      <section class="bg-slate-900 py-20 md:py-[128px] px-6 lg:px-8 border-t border-slate-800">
+      <section class="bg-slate-900 py-20 md:py-[128px] px-6 lg:px-8">
         <div class="max-w-7xl mx-auto w-full">
           <div class="text-center mb-12">
             <p class="text-xs uppercase tracking-widest text-slate-500 mb-3">
@@ -312,8 +312,13 @@ const relatedArticles = allArticles
     font-weight: 700;
     color: #e2e8f0;
     line-height: 40px;
+    margin-top: 64px;
+    margin-bottom: 16px;
+  }
+
+  /* First h2 has no preceding element — skip the 80px top margin */
+  .article-content :global(h2:first-child) {
     margin-top: 0;
-    margin-bottom: 0;
   }
 
   .article-content :global(h3) {
@@ -322,8 +327,13 @@ const relatedArticles = allArticles
     color: #e2e8f0;
     line-height: 28px;
     text-transform: uppercase;
-    margin-top: 0;
+    margin-top: 16px;
     margin-bottom: 0;
+  }
+
+  /* h3 directly after h2: h2 margin-bottom already gives 32px, don't double */
+  .article-content :global(h2 + h3) {
+    margin-top: 0;
   }
 
   .article-content :global(p) {
@@ -364,12 +374,33 @@ const relatedArticles = allArticles
   }
 
   .article-content :global(img) {
+    display: block;
     width: 100%;
     border-radius: 12px;
     border: 1px solid #334155;
     box-shadow:
       0 10px 15px -3px rgba(15, 23, 42, 0.5),
       0 4px 6px -4px rgba(15, 23, 42, 0.5);
+  }
+
+  /* Image+caption block: 80px above and below */
+  .article-content :global(p:has(img)) {
+    margin-top: 64px;    /* gap(16) + 64 = 80px */
+    margin-bottom: 64px; /* gap(16) + 64 = 80px */
+  }
+
+  /* h2 already has margin-bottom: 16px — compensate to keep total at 80px */
+  .article-content :global(h2 + p:has(img)) {
+    margin-top: 48px; /* gap(16) + h2-mb(16) + 48 = 80px */
+  }
+
+  /* h3/h2 after image: their own margin-top would over-add — reset it */
+  .article-content :global(p:has(img) + h3) {
+    margin-top: 0; /* gap(16) + img-mb(64) + 0 = 80px */
+  }
+
+  .article-content :global(p:has(img) + h2) {
+    margin-top: 0; /* gap(16) + img-mb(64) + 0 = 80px */
   }
 
   .article-content :global(hr) {
@@ -383,7 +414,7 @@ const relatedArticles = allArticles
     color: #64748b;
     display: block;
     text-align: center;
-    margin-top: -20px;
+    margin-top: 12px;
   }
 
   .article-content :global(> *) {
@@ -393,7 +424,7 @@ const relatedArticles = allArticles
   .article-content {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 16px;
   }
 
   .toc-link.active {

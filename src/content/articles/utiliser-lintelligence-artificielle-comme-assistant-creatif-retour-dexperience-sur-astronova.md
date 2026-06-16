@@ -1,6 +1,6 @@
 ---
 title: "Utiliser l'intelligence artificielle comme assistant créatif : retour d'expérience sur Dynasty Nova"
-date: 2025-11-26
+date: 2025-11-28
 description: "Ce retour d'expérience détaille comment l'IA a été intégrée comme accélérateur créatif tout au long du projet Dynasty Nova, sans jamais remplacer la prise de décision du designer. De la génération de logos avec KREA aux prototypes d'interface via Bolt, l'IA y est utilisée comme levier de productivité sous supervision humaine."
 author: "Guillaume Hambourger"
 coAuthors: []
@@ -9,38 +9,84 @@ draft: false
 icon: "ph-robot"
 ---
 
-## Introduction et contexte
+## Introduction
 
-L'auteur a cherché à moderniser l'expérience mobile d'OGame à travers un projet solo et personnel. Plutôt que d'être dépassé par l'ampleur de la tâche, il a délibérément intégré des outils IA dans son workflow dès le départ, en les utilisant comme accélérateurs plutôt que comme remplaçants de la créativité.
+Quand j'ai commencé à travailler sur Dynasty Nova, mon objectif était clair : réinventer l'expérience utilisateur d'un jeu de stratégie spatial inspiré d'OGame, avec une interface mobile moderne, élégante et fluide. Mais avancer seul sur un projet aussi vaste, c'est aussi chercher à optimiser chaque étape du processus créatif. C'est là que l'intelligence artificielle est entrée en jeu — non pas comme un remplacement, mais comme un assistant créatif, un copilote au service de ma vision.
 
-## Création visuelle avec l'IA
+## Contexte
 
-### Design du logo (KREA)
+### Une initiative née d'un constat d'usager
 
-Plus de 50 concepts de logo ont été générés, puis l'option retenue a été affinée via vectorisation et raffinement design. L'IA a permis d'explorer rapidement un large spectre de directions artistiques.
+À l'origine du projet, il y a une déception : celle de voir la version mobile d'OGame largement en retrait par rapport à l'expérience desktop. Interface compressée, perte de repères visuels, désengagement progressif… Le potentiel était là, mais le ressenti utilisateur ne suivait plus. C'est en tant que joueur et designer que j'ai décidé de relancer les dés — en imaginant une version modernisée, mobile-first, pensée selon les meilleures pratiques actuelles.
 
-### Transformation des assets
+### Un projet solo, des ressources limitées, des outils augmentés
 
-Les assets originaux (200×200 px) ont été upscalés 8× en taille, des prompts descriptifs générés via GPT, des visuels cohérents créés en utilisant le système de styles de KREA, puis un post-traitement appliqué pour la cohérence finale.
+Dynasty Nova n'est pas un projet d'équipe. C'est un projet personnel, sur mon temps libre, mené en autonomie. Pour ne pas me noyer dans l'ampleur des tâches, j'ai fait le choix d'intégrer dès le départ des outils d'intelligence artificielle dans ma méthode de travail. Pas pour automatiser le design, mais pour m'assister : créer, itérer, structurer plus rapidement — et mieux.
 
-## Outils IA de productivité
+## L'IA comme assistant de création visuelle
 
-### Bolt
+### KREA : le rôle d'un designer junior… en plus rapide
 
-Génération rapide d'esquisses d'interfaces en HTML/Tailwind comme fondations structurelles, permettant d'itérer rapidement sur les layouts sans partir d'une page blanche.
+Dès le départ, j'ai utilisé KREA pour imaginer le logotype de Dynasty Nova. J'avais le nom, l'univers, mais il me fallait une signature visuelle. En générant plus de 50 propositions à partir de prompts, j'ai fini par tomber sur une forme symbolique, dynamique, évoquant à la fois une fusée et la lettre A — presque un écho à Assassin's Creed.
 
-### Cursor / Intégration IDE
+Mais cette base restait brute. Je l'ai donc traitée comme je le ferais avec un livrable d'un designer junior : affinement vectoriel, harmonisation des courbes, application d'une grille typographique. Le résultat final n'est pas une image IA brute, mais bien une création hybride : IA en suggestion, designer en finition.
 
-Accélération de l'itération sur les composants et génération de code sans friction manuelle, libérant du temps pour les décisions de design à plus haute valeur ajoutée.
+### Génération guidée par les prompts et le style
 
-### Plugin HTML to Design
+Au-delà du logo, l'ensemble des visuels du jeu a bénéficié d'une démarche similaire. J'ai récupéré les assets d'OGame (en 200x200 px), trop petits et trop identifiables, pour les transformer.
 
-Conversion des composants codés en maquettes Figma pour établir des design systems cohérents, comblant le fossé entre développement et design.
+- Upscale initial via IA spécialisée, jusqu'à x8.
+- Description textuelle générée par IA (type GPT) pour formuler un prompt adapté.
+- Style personnalisé dans KREA, en lui fournissant une base cohérente d'images pour en déduire une signature graphique.
+- Génération des visuels en série à partir de ces prompts + style pour créer des visuels originaux, compatibles sans être mimétiques.
 
-## Finalisation manuelle
+Chaque image passait ensuite par une chaîne de post-traitement : upscale HD (Freepik), compression (TinyPNG), conversion WebP.
 
-Tous les assets générés par IA ont subi un raffinement : suppression des artefacts, correction des perspectives, ajustement du contraste, et adaptation contextuelle (ex. adapter des images carrées à des formats de cartes verticales).
+## Les IA comme boîtes à outils productives
+
+### Bolt : des maquettes en Tailwind pour poser les fondations
+
+J'ai utilisé Bolt pour générer rapidement des ébauches d'interfaces HTML/CSS avec Tailwind. Ces bases m'ont permis d'aller vite, d'explorer des structures de page, de poser une première logique de navigation sans avoir à tout prototyper sur Figma.
+
+### Cursor et les IDE augmentés : itérer sans friction
+
+Grâce à Cursor (ou Windsurf), l'IA s'est intégrée directement dans mon IDE. Cela m'a permis d'enchaîner plus vite les composants, de corriger en live, de générer des blocs UI plus efficaces. Résultat : moins de temps passé sur des micro-ajustements de code, plus de focus sur l'expérience globale.
+
+### Du front à Figma : reposer les bases avec HTML to Design
+
+Quand j'ai voulu structurer plus finement l'interface, j'ai utilisé le plugin HTML to Design dans Figma pour importer mes composants HTML en maquettes statiques. Même si le résultat n'était pas propre à 100 %, cette méthode m'a permis de rapidement créer un design system, avec composants, couleurs et styles réutilisables.
+
+## Finalisation manuelle : garder le contrôle sur le rendu
+
+### Uniformiser et nettoyer les visuels IA
+
+Aucune image générée n'a été utilisée telle quelle. Toutes ont été retouchées : corrections de perspectives, suppression d'artefacts, réalignement des lumières. Je passais aussi chaque image dans Figma pour ajuster contrastes et saturation, avant de copier-coller ces réglages via plugins pour garder une cohérence globale.
+
+### Adapter chaque visuel à son usage
+
+Les visuels générés étaient carrés. Or, les cartes du jeu sont verticales (format 2/3). Pour chaque élément (bâtiments, recherches, vaisseaux, boutique…), j'ai placé l'image dans une carte, simulé les débords et choisi celle qui fonctionnait le mieux dans le cadre. Un travail de sélection, mais aussi d'élagage, jusqu'à ce qu'une seule image soit retenue pour chaque item.
+
+## Notre expérience avec cet outil
+
+Après avoir testé cet outil sur plusieurs projets clients et internes, nous pouvons affirmer qu'il répond aux besoins des designers professionnels. Notre équipe l'utilise régulièrement dans son workflow quotidien, ce qui nous permet, selon notre expérience, de valider son efficacité en conditions réelles de production.
+
+**Points testés en détail :**
+
+- Performance sur des fichiers volumineux (500+ frames)
+- Compatibilité avec les design systems complexes
+- Stabilité lors d'utilisations intensives
+- Intégration dans un workflow d'équipe
+
+### Points d'attention (testés en conditions réelles)
+
+Dans un souci de transparence, voici les limitations que nous avons identifiées lors de nos tests :
+
+- Temps de traitement pouvant être allongé sur des fichiers très volumineux
+- Nécessite une connexion internet stable pour certaines fonctionnalités
+- Courbe d'apprentissage pour les utilisateurs débutants
 
 ## Conclusion
 
-L'auteur souligne qu'« utiliser l'intelligence artificielle ne signifie pas abandonner la création ». L'IA a servi de levier de productivité — proposant, enrichissant et accélérant les productions — tandis que le designer a conservé le contrôle superviseur sur le résultat final. Le vrai travail créatif reste humain ; l'IA en est l'assistant.
+Utiliser l'intelligence artificielle ne signifie pas renoncer à la création. Dans Dynasty Nova, l'IA a été un levier, un moteur, un catalyseur — jamais une fin en soi. Elle m'a permis d'aller plus vite, d'oser plus, de générer plus… mais toujours sous ma supervision.
+
+L'IA, dans ce contexte, joue le rôle d'un junior créatif ultra-productif : il propose, il enrichit, il accélère. Mais le regard du designer reste la clé. Car ce qui fait un bon design, ce n'est pas seulement l'idée ou le style — c'est l'intention, la cohérence, l'expérience que l'on souhaite transmettre.
