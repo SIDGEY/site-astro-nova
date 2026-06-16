@@ -10,16 +10,17 @@ interface Props {
   title: string;
   subtitle: string;
   items: CarouselItem[];
+  sectionId?: string;
 }
 
-const { icon, title, subtitle, items } = Astro.props;
+const { icon, title, subtitle, items, sectionId } = Astro.props;
 const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
 
 // Detect if this is an avatar carousel (at least one item has an avatar field)
 const isAvatarCarousel = items.some((item) => item.avatar);
 ---
 
-<section class="overflow-hidden relative bg-slate-950 py-20 md:py-[128px] px-0">
+<section id={sectionId} class="overflow-hidden relative bg-slate-950 py-20 md:py-[128px] px-0">
   <!-- Gradient overlay -->
   <div
     class="absolute inset-0 bg-gradient-to-b from-slate-900/25 to-slate-950/25"

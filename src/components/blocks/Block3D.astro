@@ -2,12 +2,14 @@
 interface Props {
   title: string;
   subtitle: string;
+  sectionId?: string;
 }
 
-const { title, subtitle } = Astro.props;
+const { title, subtitle, sectionId } = Astro.props;
 ---
 
 <section
+  id={sectionId}
   class="overflow-hidden relative bg-slate-950 px-6 py-20 md:py-[128px] flex items-center"
 >
   <!-- Gradient overlay -->
