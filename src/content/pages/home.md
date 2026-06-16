@@ -40,7 +40,7 @@ blocks:
   - type: featurePhone
     icon: buildings
     title: Optimisez l'extraction de vos ressources
-    subtitle: "Les mines sont vos sources de ressources. La mine de métal produit du métal, et la mine de cristal produit du cristal. Améliorez vos mines pour augmenter leur production."
+    subtitle: "Les mines sont vos sources de ressources. L'Excavateur minéral produit du métal, et l'Extracteur cristallin produit du cristal. Améliorez vos mines pour augmenter leur production."
     screenshot1: /landing/screens/building.webp
     screenshot2: /landing/screens/building-metal.webp
     backgroundImage: /landing/backgrounds/bg-building.webp
@@ -63,7 +63,7 @@ blocks:
   - type: featurePhone
     icon: factory
     title: Maîtrisez les ressources de vos planètes
-    subtitle: "Les bâtiments sont essentiels. Le centre de commandement gère la colonie, le laboratoire développe des technologies, et l'usine de robots accélère la construction."
+    subtitle: "Les bâtiments sont essentiels. La base planétaire gère la colonie, le Centre d'innovation développe des technologies, et la Fabrique d'automates accélère la construction."
     screenshot1: /landing/screens/installation.webp
     screenshot2: /landing/screens/installation-centre-innovation.webp
     backgroundImage: /landing/backgrounds/bg-installation.webp
@@ -131,16 +131,16 @@ blocks:
     reversed: false
     gallery:
       - src: /landing/thumbs/defense-projecteur-balistique.webp
-        alt: Excavateur minéral
+        alt: Projecteur balistique
         screenshot: /landing/screens/defense-projecteur-balistique.webp
       - src: /landing/thumbs/defense-canon-photonique.webp
-        alt: Mine de cristal
+        alt: Canon photonique
         screenshot: /landing/screens/defense-canon-photonique.webp
       - src: /landing/thumbs/defense-emetteur-a-haute-energie.webp
-        alt: Raffinerie
+        alt: Émetteur à haute énergie
         screenshot: /landing/screens/defense-emetteur-a-haute-energie.webp
       - src: /landing/thumbs/defense-accelerateur-magnetique.webp
-        alt: Entrepôt
+        alt: Accélérateur magnétique
         screenshot: /landing/screens/defense-accelerateur-magnetique.webp
     galleryExtra: 8
 
@@ -154,16 +154,16 @@ blocks:
     reversed: true
     gallery:
       - src: /landing/thumbs/fleet-intercepteur.webp
-        alt: Excavateur minéral
+        alt: Intercepteur
         screenshot: /landing/screens/fleet-intercepteur.webp
       - src: /landing/thumbs/fleet-assaillant.webp
-        alt: Mine de cristal
+        alt: Assaillant
         screenshot: /landing/screens/fleet-assaillant.webp
       - src: /landing/thumbs/fleet-corvette.webp
-        alt: Raffinerie
+        alt: Corvette
         screenshot: /landing/screens/fleet-corvette.webp
       - src: /landing/thumbs/fleet-cuirasse.webp
-        alt: Entrepôt
+        alt: Cuirassé
         screenshot: /landing/screens/fleet-cuirasse.webp
     galleryExtra: 8
 
