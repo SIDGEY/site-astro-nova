@@ -297,15 +297,19 @@ const DEFAULT_ICON = "ph-shield-star";
         lastPos = l.top + l.height / 2 - rect.top;
       }
 
-      // The head sticks to ~45% of the viewport. It only starts advancing once
-      // the first node reaches that line, and freezes on the last node.
       // Anchor the start overlay just below the first month badge.
       if (firstBadge) {
         const b = firstBadge.getBoundingClientRect();
         track!.style.setProperty("--rm-overlay-top", b.bottom - rect.top + "px");
       }
 
-      let head = vh * 0.45 - rect.top;
+      // Desktop: the head sticks to ~45% of the viewport (middle of the screen).
+      // Mobile: the reference line sits near the bottom of the screen, so the
+      // progression is driven relative to the bottom edge (and thus the screen
+      // height) rather than the middle. It only starts advancing once the first
+      // node reaches that line, and freezes on the last node.
+      const refLine = window.innerWidth < 768 ? 0.7 : 0.45;
+      let head = vh * refLine - rect.top;
       if (head < firstPos) head = firstPos;
       if (head > lastPos) head = lastPos;
       track!.style.setProperty("--rm-progress", head + "px");
