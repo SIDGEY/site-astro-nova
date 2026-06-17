@@ -23,6 +23,7 @@ import GameResourcesBlock from "./blocks/GameResourcesBlock.astro";
 import FeaturePhoneBlock from "./blocks/FeaturePhoneBlock.astro";
 import CarouselBlock from "./blocks/CarouselBlock.astro";
 import NewsBlock from "./blocks/NewsBlock.astro";
+import RoadmapBlock from "./blocks/RoadmapBlock.astro";
 
 interface Props {
     blocks?: any[];
@@ -79,6 +80,8 @@ const bgVariants = computeBgVariants(blocks, sectionVariants);
       return <CarouselBlock {...commonProps} />;
     case "news":
       return <NewsBlock {...commonProps} />;
+    case "roadmap":
+      return <RoadmapBlock {...commonProps} />;
     default:
       return null;
   }
