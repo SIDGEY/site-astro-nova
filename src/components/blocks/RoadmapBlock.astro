@@ -106,14 +106,21 @@ const DEFAULT_ICON = "ph-shield-star";
       </div>
       {/* Top fade so the rail emerges smoothly at the start of the timeline */}
       <div
-        class="hidden md:block absolute inset-x-0 top-0 h-64 z-[2] pointer-events-none"
+        class="hidden md:block absolute inset-x-0 top-0 h-64 z-[3] pointer-events-none"
         style="background: linear-gradient(to top, rgba(15,23,43,0) 0%, #0F172B 100%);"
+        aria-hidden="true"
+      >
+      </div>
+      {/* Start overlay: makes the blue trail emerge smoothly just below the first badge */}
+      <div
+        class="roadmap-start-overlay hidden md:block absolute left-1/2 w-12 -translate-x-1/2 z-[3] pointer-events-none"
+        style="top: var(--rm-overlay-top, 0px); height: 150px; background: linear-gradient(to bottom, #0F172B 0%, #0F172B 12%, rgba(15,23,43,0) 100%);"
         aria-hidden="true"
       >
       </div>
       {/* Bottom fade so the rail melts into the background (end of timeline) */}
       <div
-        class="hidden md:block absolute inset-x-0 bottom-0 h-64 z-[2] pointer-events-none"
+        class="hidden md:block absolute inset-x-0 bottom-0 h-64 z-[3] pointer-events-none"
         style="background: linear-gradient(to bottom, rgba(15,23,43,0), #0F172B);"
         aria-hidden="true"
       >
@@ -124,13 +131,13 @@ const DEFAULT_ICON = "ph-shield-star";
           <div>
             {gIdx > 0 && (
               <div
-                class="relative h-32 z-[2] pointer-events-none"
+                class="relative h-32 z-[3] pointer-events-none"
                 style="background: linear-gradient(to bottom, rgba(15,23,43,0), #0F172B);"
                 aria-hidden="true"
               />
             )}
             {/* Year heading (its background masks the rail to create a gap) */}
-            <div class="relative z-[3] flex justify-center pb-1">
+            <div class="relative z-[4] flex justify-center pb-1 bg-[#0F172B]">
               <span class="bg-[#0F172B] px-4 text-[#E2E8F0] font-bold text-4xl leading-10 text-center">
                 {group.year}
               </span>
@@ -139,7 +146,7 @@ const DEFAULT_ICON = "ph-shield-star";
             {group.entries.map((entry) => (
               <div class="w-full">
                 {/* Month badge centered on the line (its bg masks the rail) */}
-                <div class="roadmap-badge relative z-[3] flex justify-center py-4 bg-[#0F172B]">
+                <div class="roadmap-badge relative z-[4] flex justify-center py-4 bg-[#0F172B]">
                   <span
                     class="inline-flex backdrop-blur-md px-3 py-1 rounded-full text-[#60A5FA] text-sm font-medium leading-5"
                     style="background: rgba(59,130,246,0.2);"
@@ -151,7 +158,7 @@ const DEFAULT_ICON = "ph-shield-star";
                 {entry.cards.map((card) => (
                   <>
                     {/* Desktop row: two columns around the center line */}
-                    <div class="hidden md:flex items-center w-full py-3 relative z-[3]">
+                    <div class="hidden md:flex items-center w-full py-3 relative z-[4]">
                       <div class="flex-1 flex justify-end pr-8">
                         {entry.side !== "right" && (
                           <div class="roadmap-card card-with-border">
@@ -267,6 +274,7 @@ const DEFAULT_ICON = "ph-shield-star";
     const dots = Array.from(
       track.querySelectorAll<HTMLElement>(".roadmap-dot"),
     );
+    const firstBadge = track.querySelector<HTMLElement>(".roadmap-badge");
     let ticking = false;
 
     function update() {
@@ -287,6 +295,12 @@ const DEFAULT_ICON = "ph-shield-star";
 
       // The head sticks to ~45% of the viewport. It only starts advancing once
       // the first node reaches that line, and freezes on the last node.
+      // Anchor the start overlay just below the first month badge.
+      if (firstBadge) {
+        const b = firstBadge.getBoundingClientRect();
+        track!.style.setProperty("--rm-overlay-top", b.bottom - rect.top + "px");
+      }
+
       let head = vh * 0.45 - rect.top;
       if (head < firstPos) head = firstPos;
       if (head > lastPos) head = lastPos;
