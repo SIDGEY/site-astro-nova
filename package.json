@@ -12,7 +12,8 @@
     "gsc:fetch": "node scripts/gsc-fetch.mjs",
     "ga4:fetch": "node scripts/ga4-fetch.mjs",
     "game:fetch": "node scripts/game-activity-fetch.mjs",
-    "ideas": "node scripts/dynasty-ideas.mjs"
+    "ideas": "node scripts/dynasty-ideas.mjs",
+    "ga4:key-events": "node scripts/ga4-mark-key-event.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",

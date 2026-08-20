@@ -5,11 +5,13 @@ description: >-
   signaux réels croisés : l'activité de dev du jeu (PR mergées sur Dynasty-Nova/Frontend
   et Dynasty-Nova/Backend), la performance GSC/GA4 propre à dynastynova.com, le capital
   de recherche legacy de play-astronova.com (ancienne marque), et le cluster "jeux" de
-  beryldesign.fr (déjà spécialisé sur Dynasty Nova/OGame, 78% de ses clics). Trois modes
-  de production (dev-diary, research, video/Vidiome). Toujours en brouillon
-  (`draft: true`), lot ≤ 3 par run. Déclencher quand l'utilisateur veut « générer/proposer
-  un article », « des idées de sujets », « un article sur une fonctionnalité du jeu »,
-  ou nomme Vidiome / un sujet Dynasty Nova à traiter.
+  beryldesign.fr (déjà spécialisé sur Dynasty Nova/OGame, 78% de ses clics). Quatre modes
+  de production (dev-diary, research, video/Vidiome, community-post pour Reddit/forums).
+  Toujours en brouillon (`draft: true`) pour les modes blog, jamais de publication
+  automatique sur une plateforme tierce pour community-post. Lot ≤ 3 par run. Déclencher
+  quand l'utilisateur veut « générer/proposer un article », « des idées de sujets », « un
+  article sur une fonctionnalité du jeu », « un post pour Reddit/un forum », ou nomme
+  Vidiome / un sujet Dynasty Nova à traiter.
 ---
 
 # dynasty-article — chaîne éditoriale dynastynova.com
@@ -129,6 +131,27 @@ Trouver 2-3 vidéos complémentaires (FR ou EN, chaîne reconnue, pas trop daté
 **RÈGLE ANTI-HALLUCINATION** : vérifier chaque vidéo via `WebFetch` de
 `https://www.youtube.com/oembed?url=...&format=json` avant de l'inclure.
 
+### `community-post` — Reddit/forums (acquisition directe, pas un article de blog)
+
+Cible les communautés où traînent déjà des joueurs OGame/4X : r/ogame, r/webgames,
+r/incremental_games, forums de jeux navigateur. Contrairement aux trois autres modes,
+**ça ne produit pas de fichier dans `src/content/articles/`** — le texte est présenté
+à l'utilisateur pour qu'il le poste lui-même depuis son propre compte.
+
+- **Source** : privilégier un angle `dev-diary` réel (une PR récente et concrète) —
+  c'est ce qui donne un post crédible plutôt qu'auto-promotionnel.
+- **Voix** : premier degré, développeur qui partage un progrès, pas un communiqué
+  marketing. Ton `docs/charte_editoriale.md` toujours valable, mais registre plus
+  familier/direct qu'un article de blog.
+- **Divulgation obligatoire en premier** : la plupart de ces subreddits exigent que le
+  développeur se déclare explicitement (« Je développe Dynasty Nova, un... ») — ne
+  jamais poster de façon déguisée.
+- **Vérifier les règles de la communauté avant de rédiger** : beaucoup de subreddits
+  interdisent l'auto-promo hors thread dédié ("Self-Promo Saturday" etc.) ou exigent
+  un flair précis — si l'utilisateur ne le sait pas, le signaler comme point à
+  vérifier plutôt que de l'ignorer.
+- **Longueur** : 100-250 mots, pas un article complet.
+
 Présenter la shortlist de sources (quelle que soit sa nature) → **s'arrêter**,
 l'utilisateur valide.
 
@@ -144,7 +167,12 @@ notes/citations dans un fichier de travail temporaire (hors `src/`).
 
 ## Étape 4 — Rédaction de l'article
 
-**Voix et structure** : suivre `docs/charte_editoriale.md` à la lettre — ton
+**`community-post`** : pas de frontmatter, pas de fichier. Rédiger le texte du post
+(titre + corps, 100-250 mots, voix premier degré — voir Étape 2) directement dans la
+réponse à l'utilisateur, prêt à copier-coller. S'arrêter là pour ce mode — les étapes
+qui suivent (frontmatter, `npm run build`) ne s'appliquent qu'aux modes blog.
+
+**Voix et structure** (modes blog) : suivre `docs/charte_editoriale.md` à la lettre — ton
 épique-accessible (§4), vocabulaire de référence (§5 : empire, flotte, ressources,
 stratégie, galaxie…), jamais de « il suffit de cliquer » (§6), CTA in-univers
 (§8 : « Explorer la galaxie », jamais « Cliquez ici »), passer la checklist §11 avant
@@ -216,3 +244,6 @@ dans le backlog une fois le fichier écrit.
   (1re personne Dynasty Nova, pas 3e personne agence).
 - Ne jamais ajouter de champ frontmatter hors du schéma `articlesCollection`.
 - Ne jamais exposer les clés (`.env`, `VIDIOME_API_KEY`, la clé de service GSC/GA4).
+- **`community-post` : ne jamais poster automatiquement** sur Reddit/un forum — ce
+  n'est pas à ce skill de détenir ou d'utiliser les identifiants d'un compte
+  communautaire. Toujours remettre le texte à l'utilisateur pour publication manuelle.
