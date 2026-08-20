@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "import:wp": "node --loader ts-node/esm scripts/import-wp-articles.ts",
-    "import:cs": "node --loader ts-node/esm scripts/import-case-studies.ts"
+    "import:cs": "node --loader ts-node/esm scripts/import-case-studies.ts",
+    "gsc:fetch": "node scripts/gsc-fetch.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
@@ -22,6 +23,7 @@
     "clsx": "^2.1.1",
     "fast-xml-parser": "^5.3.4",
     "firebase": "^12.17.1",
+    "google-auth-library": "^10.9.1",
     "gray-matter": "^4.0.3",
     "html-entities": "^2.6.0",
     "p-limit": "^3.1.0",

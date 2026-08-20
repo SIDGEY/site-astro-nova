@@ -4,3 +4,6 @@ dist
 .DS_Store
 dist
 .astro
+.env
+.gsc-cache
+.ga4-cache
