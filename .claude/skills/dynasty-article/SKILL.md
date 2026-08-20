@@ -205,11 +205,12 @@ author: "Guillaume Hambourger"
 coAuthors: []
 tags: ["...", "..."]
 draft: true
-image: "/uploads/blog/....avif"   # optionnel — omettre laisse le fallback cover-{1..27}.webp s'appliquer
+image: "/uploads/blog/covers/<slug>.webp"  # voir "Cover unique" ci-dessous — sinon fallback cover-{1..27}.webp
 icon: "ph-...."                    # optionnel — voir src/utils/articleIcon.ts pour les icônes déjà mappées par tag
 faq:                                # 3-4 items, voir "FAQ obligatoire" ci-dessus
   - question: "..."
     answer: "..."
+coverPrompt: "..."                  # brief nommant une teinte, voir "Cover unique" ci-dessous
 ```
 
 **Publier via script** (mode `video`, ou pour respecter le format à la lettre dans
@@ -219,6 +220,25 @@ node scripts/vidiome-publish.mjs --article article.json [--cache .vidiome-cache/
 ```
 Sinon, écrire directement le fichier dans `src/content/articles/<slug>.md` en suivant
 le gabarit ci-dessus.
+
+## Étape 4bis — Cover unique
+
+Chaque nouvel article (modes blog uniquement, pas `community-post`) reçoit une cover
+générée plutôt que de retomber sur le pool générique `cover-{1..27}.webp`. D'abord
+écrire un `coverPrompt` court dans le frontmatter — un brief qui **nomme une teinte**
+cohérente avec le sujet (table de correspondance dans
+`docs/dynasty-cover-style-guide.md` §4 : bleu = technologie, or = ressources/lore,
+turquoise = exploration, violet = flottes/combat, rouge = compétitif). Puis :
+```bash
+node scripts/generate-cover.mjs --slug <slug> --from-article --dry   # relire le prompt final
+node scripts/generate-cover.mjs --slug <slug> --from-article         # génère public/uploads/blog/covers/<slug>.webp
+```
+Référencer le chemin obtenu dans le champ `image` du frontmatter. **Toujours relire
+l'image visuellement avant de committer** — Cloudflare Workers AI (backend, tier
+gratuit) peut ponctuellement dériver du style (deuxième teinte parasite, forme non
+continue) ; en cas de résultat raté, réessayer plutôt que publier tel quel. Si le
+résultat n'est pas satisfaisant après 2-3 essais, revenir au fallback existant (ne pas
+renseigner `image`) plutôt que de forcer un rendu médiocre.
 
 ## Étape 5 — Valider
 
@@ -243,7 +263,13 @@ dans le backlog une fois le fichier écrit.
 - Ne jamais reprendre un angle `beryldesign:<slug>` mot pour mot — adapter la voix
   (1re personne Dynasty Nova, pas 3e personne agence).
 - Ne jamais ajouter de champ frontmatter hors du schéma `articlesCollection`.
-- Ne jamais exposer les clés (`.env`, `VIDIOME_API_KEY`, la clé de service GSC/GA4).
+- Ne jamais exposer les clés (`.env`, `VIDIOME_API_KEY`, `CLOUDFLARE_API_TOKEN`, la
+  clé de service GSC/GA4).
+- **Cover** : toujours relire visuellement une image générée avant de la référencer
+  dans `image` — jamais committer un résultat qui s'écarte de
+  `docs/dynasty-cover-style-guide.md` (deuxième teinte, forme non continue, objet
+  reconnaissable). Mieux vaut laisser le fallback `cover-{1..27}.webp` s'appliquer
+  qu'un rendu raté.
 - **`community-post` : ne jamais poster automatiquement** sur Reddit/un forum — ce
   n'est pas à ce skill de détenir ou d'utiliser les identifiants d'un compte
   communautaire. Toujours remettre le texte à l'utilisateur pour publication manuelle.

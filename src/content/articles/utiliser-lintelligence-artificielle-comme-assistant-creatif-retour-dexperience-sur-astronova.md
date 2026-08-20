@@ -7,6 +7,8 @@ coAuthors: []
 tags: ["Intelligence Artificielle", "Workflow Créatif", "Design UX/UI", "Productivité"]
 draft: false
 icon: "ph-robot"
+image: "/uploads/blog/covers/utiliser-lintelligence-artificielle-comme-assistant-creatif-retour-dexperience-sur-astronova.webp"
+coverPrompt: "a soft field of violet and magenta light"
 ---
 
 ## Introduction

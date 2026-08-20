@@ -7,6 +7,8 @@ coAuthors: []
 tags: ["Mobile-First", "Design System", "UX/UI Design", "Tailwind CSS"]
 draft: false
 icon: "ph-device-mobile"
+image: "/uploads/blog/covers/astronova-creer-une-ui-mobile-first-inspiree-des-meilleures-pratiques.webp"
+coverPrompt: "a soft field of electric blue light"
 ---
 
 ## Introduction

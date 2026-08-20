@@ -7,6 +7,8 @@ coAuthors: []
 tags: ["UX Design", "Mobile", "Analyse Critique", "OGame", "Ergonomie"]
 draft: false
 icon: "ph-magnifying-glass"
+image: "/uploads/blog/covers/ogame-mobile-une-ux-sacrifiee-analyse-critique.webp"
+coverPrompt: "a soft field of coral red light"
 ---
 
 ## Introduction : Un classique revisité à l'ère mobile

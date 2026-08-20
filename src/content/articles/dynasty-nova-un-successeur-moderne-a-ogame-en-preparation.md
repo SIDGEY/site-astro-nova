@@ -7,6 +7,8 @@ coAuthors: []
 tags: ["Gameplay", "OGame", "Stratégie", "Preview"]
 draft: false
 icon: "ph-rocket-launch"
+image: "/uploads/blog/covers/dynasty-nova-un-successeur-moderne-a-ogame-en-preparation.webp"
+coverPrompt: "a soft field of warm amber and gold light"
 ---
 
 ## Un OGame nouvelle génération

@@ -7,6 +7,8 @@ coAuthors: []
 tags: ["Intelligence Artificielle", "Workflow Créatif", "Design UX/UI", "Outils"]
 draft: false
 icon: "ph-sparkle"
+image: "/uploads/blog/covers/krea-ai-quand-lintelligence-artificielle-reinvente-la-creativite-visuelle.webp"
+coverPrompt: "a soft field of violet and magenta light"
 ---
 
 ## Introduction

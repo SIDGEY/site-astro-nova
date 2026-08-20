@@ -7,6 +7,8 @@ coAuthors: []
 tags: ["Design Graphique", "Intelligence Artificielle", "Design System", "Identité Visuelle"]
 draft: false
 icon: "ph-palette"
+image: "/uploads/blog/covers/comment-astronova-reinvente-lunivers-visuel-dogame.webp"
+coverPrompt: "a soft field of turquoise and teal light"
 ---
 
 ## Introduction

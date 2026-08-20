@@ -13,7 +13,8 @@
     "ga4:fetch": "node scripts/ga4-fetch.mjs",
     "game:fetch": "node scripts/game-activity-fetch.mjs",
     "ideas": "node scripts/dynasty-ideas.mjs",
-    "ga4:key-events": "node scripts/ga4-mark-key-event.mjs"
+    "ga4:key-events": "node scripts/ga4-mark-key-event.mjs",
+    "cover:generate": "node scripts/generate-cover.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
@@ -44,6 +45,7 @@
     "@types/turndown": "^5.0.6",
     "dotenv": "^17.2.3",
     "node-fetch": "^2.7.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
     "ts-node": "^10.9.2",
     "turndown": "^7.2.2",

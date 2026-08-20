@@ -7,6 +7,8 @@ coAuthors: ["BoGosseDu59"]
 tags: ["Annonce", "Développement", "Espace"]
 draft: false
 icon: "ph-newspaper"
+image: "/uploads/blog/covers/mon-premier-article.webp"
+coverPrompt: "a soft field of warm amber and gold light"
 ---
 
 ## Bienvenue, Commandants !

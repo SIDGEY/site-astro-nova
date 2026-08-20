@@ -7,6 +7,8 @@ coAuthors: []
 tags: ["Game Design", "UX/UI Design", "Design Systems", "Indie Games"]
 draft: false
 icon: "ph-planet"
+image: "/uploads/blog/covers/astronova-repenser-ogame-avec-une-experience-immersive-et-accessible.webp"
+coverPrompt: "a soft field of electric blue light"
 ---
 
 ## Introduction : Redonner vie à une légende du jeu spatial

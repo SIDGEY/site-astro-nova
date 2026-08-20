@@ -574,6 +574,9 @@ const articlesCollection = defineCollection({
       question: z.string(),
       answer: z.string(),
     })).optional(),
+    // Brief court (nomme une teinte) consommé par scripts/generate-cover.mjs pour
+    // générer la cover unique de l'article — voir docs/dynasty-cover-style-guide.md.
+    coverPrompt: z.string().optional(),
   }),
 });
 
