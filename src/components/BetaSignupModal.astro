@@ -1,0 +1,425 @@
+---
+// Global "Join the beta" modal. Any element with [data-open-beta-modal] or any
+// link with href="#beta" (the convention already used by ctaLink: "#beta" in
+// content blocks) opens this modal instead of navigating.
+// Markup is a 1:1 port of the beta signup card from play-astronova.com
+// (same classes, same inline icons), only the copy/branding was swapped.
+---
+
+<div
+  id="beta-modal-overlay"
+  class="hidden fixed inset-0 z-[1000] items-center justify-center pointer-events-none"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="beta-modal-title"
+>
+  <div id="beta-modal-backdrop" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md pointer-events-auto">
+  </div>
+
+  <div
+    id="beta-modal-panel"
+    class="text-base max-w-[400px] max-h-[600px] bg-slate-900/95 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 pointer-events-auto flex flex-col"
+  >
+    <div class="flex flex-col h-full">
+      <button
+        type="button"
+        id="beta-modal-close"
+        aria-label="Fermer"
+        class="fixed top-4 right-4 flex items-center justify-center w-10 h-10 rounded-full bg-slate-900/90 backdrop-blur-sm hover:bg-slate-800/90 transition-colors z-[100]"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="w-5 h-5 text-white">
+          <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+        </svg>
+      </button>
+
+      <div class="flex-1 overflow-y-auto" style="scrollbar-width: thin; scrollbar-color: rgb(75, 85, 99) rgb(31, 41, 55);">
+        <div class="relative w-full">
+          <div class="relative pb-[66%] overflow-hidden">
+            <div id="beta-banner-form" class="absolute inset-0">
+              <div class="absolute inset-0">
+                <img src="/assets/images/help/stellar.webp" alt="" class="absolute inset-0 w-full h-full object-cover object-center" />
+              </div>
+              <div class="absolute inset-0 bg-gradient-to-b from-slate-900/40 to-slate-900/90 flex items-center justify-center pb-12">
+                <div class="w-24 h-24 rounded-full flex items-center justify-center bg-slate-950/40 backdrop-blur-lg border border-slate-900/5 shadow-xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="w-12 h-12 text-slate-50">
+                    <path d="M152,224a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h32A8,8,0,0,1,152,224ZM128,112a12,12,0,1,0-12-12A12,12,0,0,0,128,112Zm95.62,43.83-12.36,55.63a16,16,0,0,1-25.51,9.11L158.51,200h-61L70.25,220.57a16,16,0,0,1-25.51-9.11L32.38,155.83a16.09,16.09,0,0,1,3.32-13.71l28.56-34.26a123.07,123.07,0,0,1,8.57-36.67c12.9-32.34,36-52.63,45.37-59.85a16,16,0,0,1,19.6,0c9.34,7.22,32.47,27.51,45.37,59.85a123.07,123.07,0,0,1,8.57,36.67l28.56,34.26A16.09,16.09,0,0,1,223.62,155.83ZM99.43,184h57.14c21.12-37.54,25.07-73.48,11.74-106.88C156.55,47.64,134.49,29,128,24c-6.51,5-28.57,23.64-40.33,53.12C74.36,110.52,78.31,146.46,99.43,184Zm-15,5.85Q68.28,160.5,64.83,132.16L48,152.36,60.36,208l.18-.13ZM208,152.36l-16.83-20.2q-3.42,28.28-19.56,57.69l23.85,18,.18.13Z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
+              <div class="absolute bottom-0 left-0 right-0 px-6 md:px-8 pt-6">
+                <div class="space-y-1">
+                  <h2 id="beta-modal-title" class="text-2xl font-bold text-white mb-1">Rejoignez la Bêta</h2>
+                  <p class="text-gray-400 mb-0">Inscrivez-vous pour être parmi les premiers à explorer l'univers de Dynasty Nova.</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="beta-banner-success" class="hidden absolute inset-0">
+              <div class="absolute inset-0">
+                <img src="/assets/images/planets/jungle/jungle_1.webp" alt="" class="absolute inset-0 w-full h-full object-cover object-center" />
+              </div>
+              <div class="absolute inset-0 bg-gradient-to-b from-slate-900/40 to-slate-900/90 flex items-center justify-center pb-12">
+                <div class="w-24 h-24 rounded-full flex items-center justify-center bg-slate-950/40 backdrop-blur-lg border border-slate-900/5 shadow-xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="w-12 h-12 text-slate-50">
+                    <path d="M212.24,30A28,28,0,0,0,161,36.77L148,85.09,135.05,36.77A28,28,0,1,0,81,51.26l9.38,35-8.73-1.68A28,28,0,0,0,56.8,132.38,27.86,27.86,0,0,0,48,152.87V160a80,80,0,0,0,80,80h.61c43.78-.33,79.39-36.62,79.39-80.9v-3.34a55.88,55.88,0,0,0-11.77-34.27L215,51.26A27.8,27.8,0,0,0,212.24,30ZM97.61,38a12,12,0,0,1,22,2.9l14.77,55.15a28,28,0,0,0-14,4.77,2.26,2.26,0,0,0-.16-.26A27.65,27.65,0,0,0,108,90.35L96.42,47.12A11.94,11.94,0,0,1,97.61,38Zm-33.36,71.6a12,12,0,0,1,14.25-9.34l20.71,4a12,12,0,0,1,9.36,14.16,12,12,0,0,1-14.25,9.34l-20.75-4a12,12,0,0,1-9.32-14.15Zm0,40.72a12,12,0,0,1,14-9.37l10.11,2a12,12,0,0,1,9.36,14.15,12,12,0,0,1-14.2,9.35l-10-2a12,12,0,0,1-9.34-14.16ZM192,159.1c0,35.53-28.49,64.64-63.5,64.9a64.08,64.08,0,0,1-61.56-44.78,30.74,30.74,0,0,0,3.48.95h0l10,2a28.33,28.33,0,0,0,5.61.57,28,28,0,0,0,24.16-42.14c.79-.43,1.57-.89,2.32-1.4l.16.26a27.82,27.82,0,0,0,17.78,12l6.32,1.26a36,36,0,0,0,9.53,32.49A8,8,0,0,0,157.71,174a20,20,0,0,1-3.31-23.51,8,8,0,0,0-5.46-11.66l-15.34-3.07a12,12,0,0,1-9.35-14.15h0a12,12,0,0,1,14.18-9.35l21.41,4.28A40.1,40.1,0,0,1,192,155.76Zm7.59-112-16.62,62a55.55,55.55,0,0,0-20-8.28l-2.5-.5L176.4,40.91a12,12,0,1,1,23.18,6.21Z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
+              <div class="absolute bottom-0 left-0 right-0 px-6 md:px-8 pt-6">
+                <div class="space-y-1">
+                  <h2 class="text-2xl font-bold text-white mb-1">Demande envoyée !</h2>
+                  <p id="beta-success-email" class="text-gray-400 mb-0"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="beta-modal-form-state" class="p-6 md:p-8 pt-6 space-y-4">
+          <form id="beta-form" class="space-y-4" novalidate>
+            <div>
+              <div>
+                <label for="beta-email" class="block mb-2 font-medium text-slate-300">Email</label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 top-3 bottom-3 pl-4 pr-3 border-r border-slate-500/50 flex items-center pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="w-5 h-5 text-slate-400">
+                      <path d="M224,44H32A12,12,0,0,0,20,56V192a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V56A12,12,0,0,0,224,44Zm-96,83.72L62.85,68h130.3ZM92.79,128,44,172.72V83.28Zm17.76,16.28,9.34,8.57a12,12,0,0,0,16.22,0l9.34-8.57L193.15,188H62.85ZM163.21,128,212,83.28v89.44Z"></path>
+                    </svg>
+                  </div>
+                  <input
+                    id="beta-email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    required
+                    minlength="5"
+                    pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                    placeholder="votre@email.com"
+                    aria-invalid="false"
+                    class="w-full h-11 pl-16 pr-3 py-2 rounded-lg border bg-slate-900/50 text-white placeholder-slate-500 border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  />
+                </div>
+              </div>
+              <div id="beta-error" class="hidden mt-2 flex items-start gap-2 text-red-400 text-sm" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="w-5 h-5 flex-shrink-0 text-red-400">
+                  <path d="M240.26,186.1,152.81,34.23h0a28.74,28.74,0,0,0-49.62,0L15.74,186.1a27.45,27.45,0,0,0,0,27.71A28.31,28.31,0,0,0,40.55,228h174.9a28.31,28.31,0,0,0,24.79-14.19A27.45,27.45,0,0,0,240.26,186.1Zm-20.8,15.7a4.46,4.46,0,0,1-4,2.2H40.55a4.46,4.46,0,0,1-4-2.2,3.56,3.56,0,0,1,0-3.73L124,46.2a4.77,4.77,0,0,1,8,0l87.44,151.87A3.56,3.56,0,0,1,219.46,201.8ZM116,136V104a12,12,0,0,1,24,0v32a12,12,0,0,1-24,0Zm28,40a16,16,0,1,1-16-16A16,16,0,0,1,144,176Z"></path>
+                </svg>
+                <span><strong>Format invalide :</strong> <span id="beta-error-message"></span></span>
+              </div>
+            </div>
+          </form>
+          <div class="flex items-center justify-center gap-3 text-xs text-slate-500 pb-4">
+            <p class="mb-0">En vous inscrivant, vous acceptez de recevoir des emails concernant la bêta et les actualités de Dynasty Nova.</p>
+          </div>
+        </div>
+
+        <div id="beta-modal-success-state" class="hidden p-6 md:p-8 pt-6 space-y-4">
+          <div class="space-y-4">
+            <p class="text-slate-300 mb-3">Merci de votre intérêt. Nous avons bien reçu votre demande d'accès à la bêta.</p>
+            <p class="text-slate-300 mb-0">Un email de confirmation vous a été envoyé. Surveillez votre boîte de réception (et vos spams) !</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="beta-modal-footer"
+      class="shrink-0 px-6 md:px-8 py-4 border-t border-slate-700/50 bg-slate-800/50"
+    >
+      <button
+        type="submit"
+        form="beta-form"
+        id="beta-submit"
+        class="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+      >
+        <div class="flex items-center gap-2">
+          <svg id="beta-submit-icon-send" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+            <path d="M230.14,25.86a20,20,0,0,0-19.57-5.11l-.22.07L18.44,79a20,20,0,0,0-3.06,37.25L99,157l40.71,83.65a19.81,19.81,0,0,0,18,11.38c.57,0,1.15,0,1.73-.07A19.82,19.82,0,0,0,177,237.56L235.18,45.65a1.42,1.42,0,0,0,.07-.22A20,20,0,0,0,230.14,25.86ZM156.91,221.07l-34.37-70.64,46-45.95a12,12,0,0,0-17-17l-46,46L34.93,99.09,210,46Z"></path>
+          </svg>
+          <span id="beta-submit-label">S'inscrire à la bêta</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const BETA_COLLECTION = "betaRequests";
+
+  // Firestore (~450KB) is only needed once someone opens the modal, so it's
+  // loaded on demand instead of shipping on every page.
+  let firestorePromise: Promise<{
+    db: import("firebase/firestore").Firestore;
+    firestore: typeof import("firebase/firestore");
+  }> | null = null;
+
+  function loadFirestore() {
+    if (!firestorePromise) {
+      firestorePromise = Promise.all([
+        import("../lib/firebase"),
+        import("firebase/firestore"),
+      ]).then(([{ getBetaDb }, firestore]) => ({
+        db: getBetaDb(),
+        firestore,
+      }));
+    }
+    return firestorePromise;
+  }
+
+  function generateBetaKey(length = 12) {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    const bytes = crypto.getRandomValues(new Uint8Array(length));
+    return Array.from(bytes, (b) => chars[b % chars.length]).join("");
+  }
+
+  function validateEmail(raw: string): { email?: string; error?: string } {
+    const email = raw.trim().toLowerCase();
+    if (!email) return { error: "L'email est requis" };
+    if (email.length < 6) return { error: "L'email est trop court" };
+    if (!email.includes("@")) return { error: "L'email doit contenir un @" };
+    const domain = email.split("@")[1] ?? "";
+    if (!domain || !domain.includes(".")) {
+      return {
+        error: "L'email doit avoir un domaine valide (ex: example.com)",
+      };
+    }
+    const extension = domain.split(".").pop() ?? "";
+    if (extension.length < 2) {
+      return {
+        error: "L'email doit avoir une extension valide (.com, .fr, etc.)",
+      };
+    }
+    return { email };
+  }
+
+  function initBetaModal() {
+    const overlay = document.getElementById("beta-modal-overlay");
+    const panel = document.getElementById("beta-modal-panel");
+    const closeBtn = document.getElementById("beta-modal-close");
+    const form = document.getElementById("beta-form") as HTMLFormElement | null;
+    const emailInput = document.getElementById(
+      "beta-email",
+    ) as HTMLInputElement | null;
+    const errorBox = document.getElementById("beta-error");
+    const errorMessageEl = document.getElementById("beta-error-message");
+    const submitBtn = document.getElementById(
+      "beta-submit",
+    ) as HTMLButtonElement | null;
+    const submitIconSend = document.getElementById("beta-submit-icon-send");
+    const submitLabel = document.getElementById("beta-submit-label");
+    const formState = document.getElementById("beta-modal-form-state");
+    const successState = document.getElementById("beta-modal-success-state");
+    const bannerForm = document.getElementById("beta-banner-form");
+    const bannerSuccess = document.getElementById("beta-banner-success");
+    const successEmailEl = document.getElementById("beta-success-email");
+    const footer = document.getElementById("beta-modal-footer");
+
+    if (
+      !overlay ||
+      !panel ||
+      !closeBtn ||
+      !form ||
+      !emailInput ||
+      !errorBox ||
+      !errorMessageEl ||
+      !submitBtn ||
+      !submitIconSend ||
+      !submitLabel ||
+      !formState ||
+      !successState ||
+      !bannerForm ||
+      !bannerSuccess ||
+      !successEmailEl ||
+      !footer
+    ) {
+      return;
+    }
+
+    // Avoid double-binding if this script re-runs after a client navigation.
+    if (overlay.dataset.betaModalBound === "true") return;
+    overlay.dataset.betaModalBound = "true";
+
+    function setError(message: string) {
+      errorMessageEl!.textContent = message;
+      errorBox!.classList.remove("hidden");
+      emailInput!.setAttribute("aria-invalid", "true");
+      emailInput!.setAttribute("aria-describedby", "beta-error");
+      emailInput!.classList.remove("border-slate-600");
+      emailInput!.classList.add("border-red-500");
+    }
+
+    function clearError() {
+      errorBox!.classList.add("hidden");
+      emailInput!.setAttribute("aria-invalid", "false");
+      emailInput!.removeAttribute("aria-describedby");
+      emailInput!.classList.remove("border-red-500");
+      emailInput!.classList.add("border-slate-600");
+    }
+
+    function showSuccess(email: string) {
+      successEmailEl!.textContent = email;
+      formState!.classList.add("hidden");
+      successState!.classList.remove("hidden");
+      bannerForm!.classList.add("hidden");
+      bannerSuccess!.classList.remove("hidden");
+      submitBtn!.type = "button";
+      submitIconSend!.classList.add("hidden");
+      submitLabel!.textContent = "Fermer";
+      submitBtn!.disabled = false;
+    }
+
+    function resetForm() {
+      form!.reset();
+      clearError();
+      formState!.classList.remove("hidden");
+      successState!.classList.add("hidden");
+      bannerForm!.classList.remove("hidden");
+      bannerSuccess!.classList.add("hidden");
+      submitBtn!.type = "submit";
+      submitBtn!.disabled = false;
+      submitIconSend!.classList.remove("hidden");
+      submitLabel!.textContent = "S'inscrire à la bêta";
+    }
+
+    // The panel's target size is min(400x600, viewport - 48px margin). This is
+    // computed in JS instead of a CSS calc(100dvh-...) expression: some
+    // Chromium-based browsers (e.g. Arc) were seen failing to cap the height
+    // via max-height when combined with dvh, letting the panel overflow the
+    // viewport. Plain pixel math via innerWidth/innerHeight has no such quirk.
+    function sizePanel() {
+      const margin = 48;
+      panel!.style.width = `${Math.min(400, window.innerWidth - margin)}px`;
+      panel!.style.height = `${Math.min(600, window.innerHeight - margin)}px`;
+    }
+
+    function open() {
+      resetForm();
+      loadFirestore(); // kick off in the background so it's ready by submit time
+      sizePanel();
+      overlay!.classList.remove("hidden");
+      overlay!.classList.add("flex", "backdrop-enter");
+      panel!.classList.add("modal-enter");
+      requestAnimationFrame(() => {
+        overlay!.classList.add("backdrop-enter-active");
+        panel!.classList.add("modal-enter-active");
+      });
+      document.body.classList.add("overflow-hidden");
+      setTimeout(() => emailInput!.focus(), 50);
+    }
+
+    function close() {
+      overlay!.classList.remove("backdrop-enter-active");
+      overlay!.classList.add("backdrop-exit", "backdrop-exit-active");
+      panel!.classList.remove("modal-enter-active");
+      panel!.classList.add("modal-exit", "modal-exit-active");
+      setTimeout(() => {
+        overlay!.classList.add("hidden");
+        overlay!.classList.remove(
+          "flex",
+          "backdrop-enter",
+          "backdrop-enter-active",
+          "backdrop-exit",
+          "backdrop-exit-active",
+        );
+        panel!.classList.remove(
+          "modal-enter",
+          "modal-enter-active",
+          "modal-exit",
+          "modal-exit-active",
+        );
+        document.body.classList.remove("overflow-hidden");
+      }, 300);
+    }
+
+    document.querySelectorAll('a[href="#beta"], [data-open-beta-modal]').forEach(
+      (trigger) => {
+        trigger.addEventListener("click", (event) => {
+          event.preventDefault();
+          open();
+        });
+      },
+    );
+
+    closeBtn.addEventListener("click", close);
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay || event.target === overlay.firstElementChild) {
+        close();
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !overlay!.classList.contains("hidden")) {
+        close();
+      }
+    });
+    window.addEventListener("resize", () => {
+      if (!overlay!.classList.contains("hidden")) sizePanel();
+    });
+
+    // Once the signup succeeded, the footer button becomes a plain close action.
+    submitBtn.addEventListener("click", () => {
+      if (submitBtn!.type === "button") close();
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearError();
+
+      const { email, error } = validateEmail(emailInput!.value);
+      if (error || !email) {
+        setError(error ?? "Email invalide");
+        return;
+      }
+
+      submitBtn!.disabled = true;
+      submitLabel!.textContent = "Inscription...";
+
+      try {
+        const { db, firestore } = await loadFirestore();
+        const betaRequests = firestore.collection(db, BETA_COLLECTION);
+
+        try {
+          const existing = await firestore.getDocs(
+            firestore.query(
+              betaRequests,
+              firestore.where("email", "==", email),
+            ),
+          );
+          if (!existing.empty) {
+            showSuccess(email);
+            return;
+          }
+        } catch (err) {
+          // Only a permission-denied read (expected for unauthenticated
+          // users under stricter security rules) falls through to signup
+          // anyway. Any other error (network blip, outage) must not skip
+          // the dedup check silently, or it could create a duplicate entry.
+          if ((err as { code?: string })?.code !== "permission-denied") {
+            throw err;
+          }
+        }
+
+        await firestore.addDoc(betaRequests, {
+          email,
+          betaKey: generateBetaKey(),
+          status: "pending",
+          timestamp: firestore.serverTimestamp(),
+          invitationSent: false,
+          createdAt: firestore.Timestamp.now(),
+          source: "dynastynova.com",
+        });
+
+        showSuccess(email);
+      } catch (err) {
+        console.error("Erreur lors de l'inscription à la bêta:", err);
+        setError("Une erreur est survenue, merci de réessayer dans un instant.");
+        submitBtn!.disabled = false;
+        submitLabel!.textContent = "S'inscrire à la bêta";
+      }
+    });
+  }
+
+  initBetaModal();
+  document.addEventListener("astro:page-load", initBetaModal);
+</script>

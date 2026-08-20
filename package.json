@@ -21,6 +21,7 @@
     "cheerio": "^1.0.0-rc.12",
     "clsx": "^2.1.1",
     "fast-xml-parser": "^5.3.4",
+    "firebase": "^12.17.1",
     "gray-matter": "^4.0.3",
     "html-entities": "^2.6.0",
     "p-limit": "^3.1.0",
