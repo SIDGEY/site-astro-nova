@@ -83,7 +83,7 @@ jobs:
           path: deploy-files
 
       - name: 📂 Sync files (FTP)
-        uses: airvzxf/ftp-deployment-action@latest
+        uses: airvzxf/ftp-deployment-action@v1.3.3
         with:
           server: ${{ secrets.OVH_HOST }}
           user: ${{ secrets.OVH_USERNAME }}
