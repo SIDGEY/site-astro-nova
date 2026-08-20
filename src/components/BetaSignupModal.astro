@@ -390,9 +390,14 @@
             showSuccess(email);
             return;
           }
-        } catch {
-          // Read may be denied by security rules for unauthenticated users;
-          // fall through and attempt the signup anyway.
+        } catch (err) {
+          // Only a permission-denied read (expected for unauthenticated
+          // users under stricter security rules) falls through to signup
+          // anyway. Any other error (network blip, outage) must not skip
+          // the dedup check silently, or it could create a duplicate entry.
+          if ((err as { code?: string })?.code !== "permission-denied") {
+            throw err;
+          }
         }
 
         await firestore.addDoc(betaRequests, {
