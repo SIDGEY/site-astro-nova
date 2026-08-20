@@ -10,7 +10,9 @@
     "import:wp": "node --loader ts-node/esm scripts/import-wp-articles.ts",
     "import:cs": "node --loader ts-node/esm scripts/import-case-studies.ts",
     "gsc:fetch": "node scripts/gsc-fetch.mjs",
-    "ga4:fetch": "node scripts/ga4-fetch.mjs"
+    "ga4:fetch": "node scripts/ga4-fetch.mjs",
+    "game:fetch": "node scripts/game-activity-fetch.mjs",
+    "ideas": "node scripts/dynasty-ideas.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",

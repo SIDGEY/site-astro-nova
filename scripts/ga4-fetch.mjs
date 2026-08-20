@@ -55,13 +55,24 @@ async function loadEnvVar(name) {
 }
 
 function parseArgs(argv) {
-  const o = { days: 30, out: ".ga4-cache" };
+  const o = { days: 30, out: ".ga4-cache", host: null };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--days") o.days = Number(argv[++i]);
     else if (argv[i] === "--out") o.out = argv[++i];
+    else if (argv[i] === "--host") o.host = argv[++i];
     else fail(`Option inconnue : ${argv[i]}`);
   }
   return o;
+}
+
+// La propriété GA4 est partagée entre le jeu (play-astronova.com) et ce site
+// (dynastynova.com) — --host isole les métriques d'un seul des deux hostnames via un
+// dimensionFilter hostName, combiné (AND) au filtre déjà en place le cas échéant.
+function withHostFilter(host, existingFilter) {
+  if (!host) return existingFilter;
+  const hostFilter = { filter: { fieldName: "hostName", stringFilter: { value: host } } };
+  if (!existingFilter) return hostFilter;
+  return { andGroup: { expressions: [existingFilter, hostFilter] } };
 }
 
 function ymd(d) {
@@ -120,6 +131,7 @@ async function main() {
           { name: "engagementRate" },
           { name: "bounceRate" },
         ],
+        dimensionFilter: withHostFilter(opts.host, null),
         orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }],
         limit: 100,
       }),
@@ -129,6 +141,7 @@ async function main() {
         dateRanges: [{ startDate, endDate }],
         dimensions: [{ name: "sessionSource" }, { name: "sessionMedium" }],
         metrics: [{ name: "sessions" }],
+        dimensionFilter: withHostFilter(opts.host, null),
         orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
         limit: 50,
       }),
@@ -137,12 +150,12 @@ async function main() {
         dateRanges: [{ startDate, endDate }],
         dimensions: [{ name: "eventName" }],
         metrics: [{ name: "eventCount" }],
-        dimensionFilter: {
+        dimensionFilter: withHostFilter(opts.host, {
           filter: {
             fieldName: "eventName",
             inListFilter: { values: ["beta_modal_open", "beta_signup"] },
           },
-        },
+        }),
       }),
     ]);
   } catch (e) {
