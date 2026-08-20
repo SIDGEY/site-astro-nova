@@ -15,7 +15,7 @@ Grandir avec un classique culte comme OGame fait naître l'envie de le voir évo
 
 ## Contexte : De la dégradation mobile à la renaissance visuelle
 
-La déclinaison mobile d'OGame est devenue « une version appauvrie, compressée et moins immersive ». Cette déception a lancé la création d'Dynasty Nova comme alternative mobile-first privilégiant l'utilisabilité, la clarté et l'esthétique sans compromis.
+La déclinaison mobile d'OGame est devenue « une version appauvrie, compressée et moins immersive ». Cette déception a lancé la création de Dynasty Nova comme alternative mobile-first privilégiant l'utilisabilité, la clarté et l'esthétique sans compromis.
 
 ## Upscaling des visuels de base
 

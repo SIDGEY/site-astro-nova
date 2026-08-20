@@ -20,7 +20,6 @@ const TAG_ICON_MAP: Record<string, string> = {
   'ergonomie': 'ph-hand-pointing',
   'annonce': 'ph-megaphone',
   'développement': 'ph-code',
-  'espace': 'ph-planet',
   'game design': 'ph-game-controller',
   'tailwind css': 'ph-code',
 };

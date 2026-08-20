@@ -24,16 +24,16 @@ Au début des années 2000, OGame a introduit un concept révolutionnaire : cons
 
 ### Répondre à la frustration des joueurs
 
-Malgré son attrait, OGame imposait une tension permanente. Les joueurs préférant la construction et la gestion se retrouvaient confrontés à des attaques répétées. Ce constat a fait germer le concept central d'Dynasty Nova : « un jeu de stratégie spatiale plus tranquille, personnel, plus immersif ».
+Malgré son attrait, OGame imposait une tension permanente. Les joueurs préférant la construction et la gestion se retrouvaient confrontés à des attaques répétées. Ce constat a fait germer le concept central de Dynasty Nova : « un jeu de stratégie spatiale plus tranquille, personnel, plus immersif ».
 
-## Les trois piliers fondateurs d'Dynasty Nova
+## Les trois piliers fondateurs de Dynasty Nova
 
 1. Mode solo intelligent avec des bots adaptatifs ajustant les niveaux de difficulté
 2. Interface 3D immersive avec des planètes animées et des interactions naturelles
 3. Accessibilité universelle jouable directement via navigateur web sur desktop et mobile
 
-![Itération sur une potentielle version Desktop d'Dynasty Nova](/uploads/blog/article-106-astro-desktop.avif)
-*Itération sur une potentielle version Desktop d'Dynasty Nova*
+![Itération sur une potentielle version Desktop de Dynasty Nova](/uploads/blog/article-106-astro-desktop.avif)
+*Itération sur une potentielle version Desktop de Dynasty Nova*
 
 ## Un design centré sur la planète
 

@@ -45,7 +45,7 @@ L'interface a été construite autour d'éléments modulaires — boutons, carte
 
 ### Identité visuelle
 
-Phosphor Icons a été choisi stratégiquement pour sa « riche bibliothèque d'icônes au style uniforme et raffiné parfaitement adapté à l'univers spatialisé d'Dynasty Nova », permettant « un traitement rapide de l'information essentiel pour les jeux de gestion ».
+Phosphor Icons a été choisi stratégiquement pour sa « riche bibliothèque d'icônes au style uniforme et raffiné parfaitement adapté à l'univers spatialisé de Dynasty Nova », permettant « un traitement rapide de l'information essentiel pour les jeux de gestion ».
 
 ## Du développement au design : un workflow inversé
 
