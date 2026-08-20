@@ -23,6 +23,7 @@ const {
 ---
 
 <header
+  id="game-hero"
   class="overflow-hidden relative bg-[#121B2E] min-h-[90dvh] flex items-center"
 >
   <!-- Background image layers (reversed style: image on right) -->
@@ -68,6 +69,7 @@ const {
         </a>
         <a
           href={secondaryCtaLink}
+          data-scroll-next
           class="flex items-center justify-center h-12 px-6 w-full md:w-auto border border-slate-600 backdrop-blur-xl text-slate-200 hover:text-white hover:border-slate-500 font-semibold text-lg rounded-lg transition-colors"
         >
           {secondaryCtaText}
@@ -79,6 +81,7 @@ const {
   <div class="absolute bottom-8 left-0 right-0 flex justify-center">
     <a
       href="#features"
+      data-scroll-next
       class="animate-bounce text-slate-400 hover:text-slate-300 transition-colors"
     >
       <div class="w-12 h-12 flex items-center justify-center">
@@ -87,3 +90,31 @@ const {
     </a>
   </div>
 </header>
+
+<script>
+  function getNextSection(el: Element): Element | null {
+    let node = el.nextElementSibling;
+    while (node && (node.tagName === "SCRIPT" || node.tagName === "STYLE")) {
+      node = node.nextElementSibling;
+    }
+    return node;
+  }
+
+  function initHeroScroll() {
+    const hero = document.getElementById("game-hero");
+    if (!hero) return;
+
+    hero.querySelectorAll<HTMLAnchorElement>("[data-scroll-next]").forEach((trigger) => {
+      if (trigger.dataset.scrollNextBound === "true") return;
+      trigger.dataset.scrollNextBound = "true";
+
+      trigger.addEventListener("click", (event) => {
+        event.preventDefault();
+        getNextSection(hero)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
+
+  initHeroScroll();
+  document.addEventListener("astro:page-load", initHeroScroll);
+</script>
