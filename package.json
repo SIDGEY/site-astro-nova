@@ -9,7 +9,8 @@
     "astro": "astro",
     "import:wp": "node --loader ts-node/esm scripts/import-wp-articles.ts",
     "import:cs": "node --loader ts-node/esm scripts/import-case-studies.ts",
-    "gsc:fetch": "node scripts/gsc-fetch.mjs"
+    "gsc:fetch": "node scripts/gsc-fetch.mjs",
+    "ga4:fetch": "node scripts/ga4-fetch.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
