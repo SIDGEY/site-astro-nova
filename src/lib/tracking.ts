@@ -1,8 +1,15 @@
 /**
  * Système de tracking privacy-first minimal.
  * En développement : affiche dans la console et stocke en local.
- * En production : peut être branché à Plausible/Fathom.
+ * En production : les événements remontent aussi dans GA4 via gtag
+ * (voir le tag dans BaseLayout.astro).
  */
+
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
 
 export const trackEvent = (eventName: string, props: Record<string, any> = {}) => {
   const timestamp = new Date().toISOString();
@@ -28,8 +35,7 @@ export const trackEvent = (eventName: string, props: Record<string, any> = {}) =
     }
   }
 
-  // NOTE: Pour activer Plausible plus tard :
-  // if (window.plausible) {
-  //   window.plausible(eventName, { props });
-  // }
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', eventName, props);
+  }
 };

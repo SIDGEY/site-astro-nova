@@ -146,6 +146,8 @@
 </div>
 
 <script>
+  import { trackEvent } from "../lib/tracking";
+
   const BETA_COLLECTION = "betaRequests";
 
   // Firestore (~450KB) is only needed once someone opens the modal, so it's
@@ -259,6 +261,7 @@
     }
 
     function showSuccess(email: string) {
+      trackEvent("beta_signup");
       successEmailEl!.textContent = email;
       formState!.classList.add("hidden");
       successState!.classList.remove("hidden");
@@ -295,6 +298,7 @@
     }
 
     function open() {
+      trackEvent("beta_modal_open");
       resetForm();
       loadFirestore(); // kick off in the background so it's ready by submit time
       sizePanel();
