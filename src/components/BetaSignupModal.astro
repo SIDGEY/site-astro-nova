@@ -176,6 +176,40 @@
     return Array.from(bytes, (b) => chars[b % chars.length]).join("");
   }
 
+  // Capture d'acquisition : sait quel canal (post Reddit, campagne, recherche
+  // organique...) a amené chaque inscription, stocké dans le doc betaRequests
+  // lui-même — pas besoin de recroiser GA4 pour savoir ce qui convertit vraiment.
+  // First-touch de la session : ne s'écrase pas si l'utilisateur navigue ensuite
+  // sur une page sans UTM (ex: il clique un lien Reddit, puis navigue dans le site).
+  const ACQUISITION_STORAGE_KEY = "dn_acquisition_source";
+
+  function captureAcquisitionSource() {
+    try {
+      if (sessionStorage.getItem(ACQUISITION_STORAGE_KEY)) return;
+      const params = new URLSearchParams(window.location.search);
+      const utmSource = params.get("utm_source");
+      const utmMedium = params.get("utm_medium");
+      const utmCampaign = params.get("utm_campaign");
+      const referrer = document.referrer || null;
+      if (!utmSource && !utmMedium && !utmCampaign && !referrer) return;
+      sessionStorage.setItem(
+        ACQUISITION_STORAGE_KEY,
+        JSON.stringify({ utmSource, utmMedium, utmCampaign, referrer }),
+      );
+    } catch {
+      // sessionStorage indisponible (navigation privée stricte, etc.) — pas bloquant.
+    }
+  }
+
+  function getAcquisitionSource(): Record<string, string | null> {
+    try {
+      const raw = sessionStorage.getItem(ACQUISITION_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  }
+
   function validateEmail(raw: string): { email?: string; error?: string } {
     const email = raw.trim().toLowerCase();
     if (!email) return { error: "L'email est requis" };
@@ -412,6 +446,7 @@
           invitationSent: false,
           createdAt: firestore.Timestamp.now(),
           source: "dynastynova.com",
+          ...getAcquisitionSource(),
         });
 
         showSuccess(email);
@@ -424,6 +459,7 @@
     });
   }
 
+  captureAcquisitionSource();
   initBetaModal();
   document.addEventListener("astro:page-load", initBetaModal);
 </script>
