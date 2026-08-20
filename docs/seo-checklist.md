@@ -17,8 +17,8 @@ Cette checklist répertorie les éléments SEO implémentés et à vérifier pou
 ## 3. JSON-LD (Schema.org)
 - [x] **Organization** : Informations sur l'éditeur du jeu.
 - [x] **WebSite** : Présent sur la landing page.
-- [x] **VideoGame** : Schema spécifique pour les jeux (genre, platform, etc.).
-- [ ] **FAQ** : Pour la page FAQ si existante.
+- [x] **VideoGame** : `getVideoGameSchema()` dans `src/lib/seo.ts`, injecté site-wide via `SEO.astro` (corrigé le 20/08/2026 — cette case était cochée alors que le schéma n'existait pas encore).
+- [x] **FAQ** : `getFaqSchema()` dans `src/lib/seo.ts`. Auto-injecté quand un bloc `faq` existe sur une page (`[...slug].astro`) ou quand un article de blog a un frontmatter `faq` (`blog/[...slug].astro`) — voir `docs/geo-guidelines.md`.
 
 ## 4. Structure & Contenu (Landing Page)
 - [x] **Balise H1** : Une seule par page, contenant les mots-clés principaux.
@@ -61,5 +61,10 @@ Cette checklist répertorie les éléments SEO implémentés et à vérifier pou
 - Jeu comme OGame
 - Jeu de stratégie tour par tour en ligne
 - Jeu de colonisation spatiale gratuit
+
+## 9. GEO (Generative Engine Optimization)
+- [x] **FAQPage par page/article à fort potentiel** : voir `docs/geo-guidelines.md` pour la structure de contenu citable (réponse directe, définitions, format Q/R).
+- [ ] **Audit régulier des citations IA** : vérifier périodiquement (ChatGPT/Perplexity/AI Overviews) si Dynasty Nova est cité sur les requêtes cibles de la section 8.
+- [ ] **llms.txt** : pas encore mis en place — à évaluer si le trafic issu des moteurs génératifs devient significatif.
 
 ---

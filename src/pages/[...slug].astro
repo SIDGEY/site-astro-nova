@@ -21,8 +21,17 @@ const breadcrumbs = [
   { name: "Accueil", item: `${SITE_URL}/` },
   { name: title, item: canonicalURL },
 ];
+
+// Une page FAQ (ex: src/content/pages/faq.md) expose ses questions/réponses aussi
+// en JSON-LD FAQPage — c'est le contenu que les moteurs génératifs (IA) citent le
+// plus directement.
+const faqBlock = blocks?.find(
+  (block): block is Extract<(typeof blocks)[number], { type: "faq" }> =>
+    block.type === "faq",
+);
+const faqItems = faqBlock?.items;
 ---
 
-<BaseLayout {title} {description} {canonicalURL} {breadcrumbs}>
+<BaseLayout {title} {description} {canonicalURL} {breadcrumbs} {faqItems}>
   <BlockRenderer {blocks} {sectionVariants} />
 </BaseLayout>

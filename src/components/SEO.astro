@@ -1,15 +1,17 @@
 ---
 import { getEntry } from 'astro:content';
-import { 
-  SITE_NAME, 
-  DEFAULT_OG_IMAGE, 
-  getCanonicalURL, 
+import {
+  SITE_NAME,
+  DEFAULT_OG_IMAGE,
+  getCanonicalURL,
   formatTitle,
   getOrganizationSchema,
   getWebSiteSchema,
   getWebPageSchema,
   getBreadcrumbSchema,
-  getArticleSchema
+  getArticleSchema,
+  getVideoGameSchema,
+  getFaqSchema
 } from '../lib/seo';
 
 const settingsEntry = await getEntry('settings', 'general');
@@ -34,6 +36,7 @@ interface Props {
     author: string;
   };
   breadcrumbs?: BreadcrumbItem[];
+  faqItems?: { question: string; answer: string }[];
 }
 
 const {
@@ -45,7 +48,8 @@ const {
   index = true,
   follow = true,
   articleData,
-  breadcrumbs
+  breadcrumbs,
+  faqItems
 } = Astro.props;
 
 const formattedTitle = title.includes('|') ? title : `${title} | ${siteName}`;
@@ -56,6 +60,7 @@ const ogImageURL = image.startsWith('http') ? image : new URL(image, Astro.site)
 const schemas = [
   getOrganizationSchema(),
   getWebSiteSchema(),
+  getVideoGameSchema(),
   getWebPageSchema(formattedTitle, description, canonicalURL)
 ];
 
@@ -72,6 +77,10 @@ if (type === 'article' && articleData) {
     datePublished: articleData.datePublished,
     author: articleData.author
   }));
+}
+
+if (faqItems && faqItems.length > 0) {
+  schemas.push(getFaqSchema(faqItems, canonicalURL));
 }
 
 const jsonLdGraph = {

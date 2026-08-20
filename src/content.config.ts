@@ -568,6 +568,12 @@ const articlesCollection = defineCollection({
     draft: z.boolean().default(false),
     image: z.string().optional(),
     icon: z.string().optional(),
+    // 3-4 questions/réponses -> JSON-LD FAQPage (voir src/pages/blog/[...slug].astro).
+    // Le contenu le plus directement cité par les moteurs génératifs (IA).
+    faq: z.array(z.object({
+      question: z.string(),
+      answer: z.string(),
+    })).optional(),
   }),
 });
 

@@ -150,13 +150,25 @@ stratégie, galaxie…), jamais de « il suffit de cliquer » (§6), CTA in-univ
 (§8 : « Explorer la galaxie », jamais « Cliquez ici »), passer la checklist §11 avant
 de considérer le brouillon terminé.
 
+**Citabilité (GEO)** : suivre `docs/geo-guidelines.md` — chaque section répond à sa
+propre question dans sa première phrase, définitions autonomes (pas de "cela"/"ce
+système" sans antécédent explicite), comparaisons en liste/tableau plutôt qu'en
+prose quand le sujet le permet.
+
 **Format** : Markdown simple — `##` pour les sections, `**gras**` pour les
 termes/produits clés, listes `- item` pour les énumérations, **jamais de HTML brut**
 (contrairement à beryldesign). Référence de longueur et de ton : n'importe quel
 fichier existant dans `src/content/articles/*.md`. Cible **500-700 mots**.
 
+**FAQ obligatoire** : chaque article se termine par 3-4 questions/réponses (frontmatter
+`faq`, ci-dessous) — la question dans les mots exacts qu'un joueur taperait, la
+réponse en 1-3 phrases autonomes. Génère automatiquement un schéma `FAQPage`
+(`src/lib/seo.ts`) et s'affiche en bas de l'article (`blog/[...slug].astro`). Piocher
+les questions dans le signal qui a motivé l'idée (ex: `legacy-gsc`/`gsc-gap` du
+backlog = la question EST la requête réelle) plutôt qu'en inventer.
+
 **Frontmatter** = schéma exact de `articlesCollection`
-(`src/content.config.ts:559-572`) — ne pas ajouter de champ hors schéma :
+(`src/content.config.ts:559-575`) — ne pas ajouter de champ hors schéma :
 ```yaml
 title: "..."
 date: 2026-08-20
@@ -167,6 +179,9 @@ tags: ["...", "..."]
 draft: true
 image: "/uploads/blog/....avif"   # optionnel — omettre laisse le fallback cover-{1..27}.webp s'appliquer
 icon: "ph-...."                    # optionnel — voir src/utils/articleIcon.ts pour les icônes déjà mappées par tag
+faq:                                # 3-4 items, voir "FAQ obligatoire" ci-dessus
+  - question: "..."
+    answer: "..."
 ```
 
 **Publier via script** (mode `video`, ou pour respecter le format à la lettre dans

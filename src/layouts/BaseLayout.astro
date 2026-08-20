@@ -26,6 +26,7 @@ interface Props {
   };
   breadcrumbs?: { name: string; item: string }[];
   canonicalURL?: string;
+  faqItems?: { question: string; answer: string }[];
 }
 
 const {
@@ -38,6 +39,7 @@ const {
   articleData,
   breadcrumbs,
   canonicalURL,
+  faqItems,
 } = Astro.props;
 ---
 
@@ -65,6 +67,7 @@ const {
       {articleData}
       {breadcrumbs}
       {canonicalURL}
+      {faqItems}
     />
   </head>
   <body

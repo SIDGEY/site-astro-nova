@@ -83,6 +83,37 @@ export function getBreadcrumbSchema(items: { name: string; item: string }[]) {
   };
 }
 
+export function getVideoGameSchema() {
+  return {
+    "@type": "VideoGame",
+    "@id": `${SITE_URL}/#videogame`,
+    "name": "Dynasty Nova",
+    "description": "Jeu de stratégie spatiale 4X par navigateur : gérez vos ressources, développez vos technologies, construisez votre flotte et conquérez la galaxie.",
+    "url": SITE_URL,
+    "genre": ["Strategy", "4X", "Space"],
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "Game",
+    "operatingSystem": "Tous (navigateur web)",
+    "publisher": { "@id": `${SITE_URL}/#organization` },
+    "image": `${SITE_URL}${DEFAULT_OG_IMAGE}`
+  };
+}
+
+export function getFaqSchema(items: { question: string; answer: string }[], url: string) {
+  return {
+    "@type": "FAQPage",
+    "@id": `${url}/#faq`,
+    "mainEntity": items.map((item) => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer
+      }
+    }))
+  };
+}
+
 export function getArticleSchema(article: {
   title: string;
   description: string;

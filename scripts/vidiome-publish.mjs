@@ -30,6 +30,7 @@
  *     "date":          "2026-08-20",                      // optionnel (défaut = aujourd'hui)
  *     "draft":         true,                              // optionnel (défaut = true)
  *     "bodyMarkdown":  "## Titre\n\nTexte...",            // obligatoire, Markdown simple (pas de HTML)
+ *     "faq":           [{ "question": "...", "answer": "..." }],  // 3-4 items recommandés (voir SKILL.md, GEO)
  *     "sources":       [{ "url": "https://youtube.com/watch?v=..", "title": ".." }]  // sinon lues depuis --cache
  *   }
  */
@@ -64,10 +65,20 @@ function ymd(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-// Frontmatter simple, à la main : le schéma de ce repo est plat (pas de faq/seoTitle
-// imbriqués comme chez beryldesign), pas besoin d'une dépendance YAML pour ça.
+// Frontmatter simple, à la main : le schéma de ce repo n'a qu'un seul champ imbriqué
+// (faq), pas besoin d'une dépendance YAML complète pour ça.
 function yamlString(s) {
   return `"${String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+}
+
+function yamlFaqBlock(faq) {
+  if (!faq?.length) return null;
+  return [
+    'faq:',
+    ...faq.map(
+      (item) => `  - question: ${yamlString(item.question)}\n    answer: ${yamlString(item.answer)}`
+    ),
+  ].join('\n');
 }
 function yamlStringArray(arr) {
   return `[${(arr || []).map(yamlString).join(', ')}]`;
@@ -129,6 +140,8 @@ async function main() {
   ];
   if (art.image) fmLines.push(`image: ${yamlString(art.image)}`);
   if (art.icon) fmLines.push(`icon: ${yamlString(art.icon)}`);
+  const faqBlock = yamlFaqBlock(art.faq);
+  if (faqBlock) fmLines.push(faqBlock);
 
   const body = art.bodyMarkdown.trim() + (sources?.length ? buildSourcesMarkdown(sources) : '');
   const md = `---\n${fmLines.join('\n')}\n---\n\n${body}\n`;
@@ -145,7 +158,8 @@ async function main() {
   await fs.mkdir(ARTICLES_DIR, { recursive: true });
   await fs.writeFile(outFile, md);
   console.log(`\n✅ Brouillon écrit : ${outFile}`);
-  console.log(`   draft=${draft} | tags=${(art.tags || []).join(', ') || '(aucun)'} | sources=${sources?.length || 0}`);
+  console.log(`   draft=${draft} | tags=${(art.tags || []).join(', ') || '(aucun)'} | sources=${sources?.length || 0} | faq=${art.faq?.length || 0}`);
+  if (!art.faq?.length) console.log('   ⚠️  Pas de FAQ — voir docs/geo-guidelines.md, 3-4 Q/R recommandées pour la citabilité GEO.');
   if (!art.image) console.log('   ℹ️  Pas de champ image — le fallback cover-{1..27}.webp existant s\'appliquera automatiquement.');
   console.log("   → Relire contre docs/charte_editoriale.md §11, puis npm run build, puis passer draft:false pour publier.\n");
 }
