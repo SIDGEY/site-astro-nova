@@ -55,12 +55,24 @@ Beryldesign (signal 5) n'a pas besoin d'être re-fetché : `dynasty-ideas.mjs` l
 directement le cache déjà présent dans son repo (`.gsc-cache`/`.ga4-cache`), rafraîchi
 par leur propre skill `beryl-article`.
 
+**Anti-redondance automatique** : `--generate` compare le titre de chaque idée
+candidate (les 6 signaux) au titre de chaque article déjà présent dans
+`src/content/articles/*.md` (recouvrement ≥ 2 mots significatifs, voir
+`overlapsExisting()` dans `scripts/dynasty-ideas.mjs`) et rejette silencieusement
+celles qui matchent déjà un sujet couvert. Ce filtre ne joue que sur le TITRE — il
+peut laisser passer un sujet déjà traité sous un angle/titre différent, donc rester
+vigilant en Étape 1 plutôt que de lui faire confiance à 100 %.
+
 ## Étape 1 — Choisir le lot (point d'arrêt ①)
 
 ### Mode dirigé — l'utilisateur a déjà dit « je veux un article sur X »
 
 Vérifier que X se rattache à la phrase mère de `docs/charte_editoriale.md` §2, puis
-regarder si un signal existant le corrobore (`npm run ideas -- --list --json` +
+**vérifier explicitement qu'aucun article existant ne couvre déjà ce sujet**
+(`ls src/content/articles/` + lecture rapide des titres/descriptions les plus
+proches) — le filtre anti-redondance d'Étape 0 ne s'applique qu'au mode `--generate`,
+jamais à un sujet nommé directement par l'utilisateur. Puis regarder si un signal
+existant le corrobore (`npm run ideas -- --list --json` +
 recherche manuelle) avant de rédiger à l'aveugle.
 
 ### Mode ouvert — piocher dans le backlog
