@@ -8,12 +8,19 @@ tags: ["Design Graphique", "Intelligence Artificielle", "Design System", "Identi
 draft: false
 icon: "ph-palette"
 image: "/uploads/blog/covers/comment-astronova-reinvente-lunivers-visuel-dogame.webp"
+faq:
+  - question: "Dynasty Nova réutilise-t-il les visuels originaux d'OGame ?"
+    answer: "Non. Les assets originaux (200×200 pixels) ont servi de base à un upscaling en plusieurs étapes (Upscayl, Krea, Freepik Upscaler), puis à une génération par IA qui ne cite jamais les termes originaux, pour aboutir à un style proche mais original."
+  - question: "Comment les visuels sont-ils optimisés pour le web ?"
+    answer: "Par conversion WebP, adaptations multi-résolutions pour mobile et compression sans perte via TinyPNG, ce qui réduit les temps de chargement même sous conditions réseau dégradées."
+  - question: "Comment les visuels manquants, comme ceux de la boutique, ont-ils été créés ?"
+    answer: "Par co-création avec l'IA : génération de prompts à partir de l'analyse du code, application du style visuel déjà établi, puis upscaling final pour garantir la cohérence avec le reste de l'univers."
 coverPrompt: "a soft field of turquoise and teal light"
 ---
 
 ## Introduction
 
-Grandir avec un classique culte comme OGame fait naître l'envie de le voir évoluer. Cette nostalgie associée aux exigences modernes a donné naissance au projet Dynasty Nova — un hommage qui s'émancipe grâce à une refonte graphique méticuleuse, combinant design UX, direction artistique et technologie.
+Grandir avec un classique culte comme OGame fait naître l'envie de le voir évoluer. Cette nostalgie associée aux exigences modernes a donné naissance au projet Dynasty Nova, un hommage qui s'émancipe grâce à une refonte graphique méticuleuse, combinant design UX, direction artistique et technologie.
 
 ## Contexte : De la dégradation mobile à la renaissance visuelle
 
@@ -43,7 +50,7 @@ Les éléments inexistants (boutique, nouveaux bâtiments) ont nécessité une c
 
 ## Alléger sans sacrifier : la stratégie WebP
 
-Tous les visuels validés ont subi un traitement systématique : conversion WebP, adaptations multi-résolutions pour les écrans mobiles, compression sans perte — optimisant les temps de chargement et garantissant la fluidité même sous conditions réseau dégradées.
+Tous les visuels validés ont subi un traitement systématique : conversion WebP, adaptations multi-résolutions pour les écrans mobiles, compression sans perte, ce qui optimise les temps de chargement et garantit la fluidité même sous conditions réseau dégradées.
 
 ## Une identité visuelle qui affirme Dynasty Nova
 
@@ -51,4 +58,4 @@ Ce travail graphique a créé une identité visuelle durable grâce à un style 
 
 ## Conclusion
 
-Dynasty Nova dépasse l'hommage — c'est une réinvention. En s'appuyant sur des outils contemporains (IA générative, upscaling, compression, design systems), ce projet solo modernise avec succès un jeu bien-aimé tout en construisant un univers visuel inédit : « Un pied dans la nostalgie, l'autre dans l'innovation. »
+Dynasty Nova dépasse l'hommage : c'est une réinvention. En s'appuyant sur des outils contemporains (IA générative, upscaling, compression, design systems), ce projet solo modernise avec succès un jeu bien-aimé tout en construisant un univers visuel inédit : « Un pied dans la nostalgie, l'autre dans l'innovation. »

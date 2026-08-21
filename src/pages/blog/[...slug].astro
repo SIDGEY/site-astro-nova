@@ -144,15 +144,26 @@ const coverImage = article.data.image ?? getFallbackCover(article.id);
           article.data.faq && article.data.faq.length > 0 && (
             <div class="w-full flex flex-col gap-6">
               <h2 class="text-2xl font-bold text-slate-100 mb-0">Questions fréquentes</h2>
-              <div class="flex flex-col gap-3">
-                {article.data.faq.map((item) => (
-                  <details class="group bg-slate-800/60 border border-slate-700 rounded-xl overflow-hidden">
-                    <summary class="flex justify-between items-center gap-4 p-5 cursor-pointer list-none font-semibold text-slate-100">
-                      {item.question}
-                      <i class="ph ph-caret-down text-slate-400 shrink-0 group-open:rotate-180 transition-transform duration-200" />
-                    </summary>
-                    <p class="px-5 pb-5 text-slate-400 leading-relaxed mb-0">{item.answer}</p>
-                  </details>
+              <div class="faq-accordion max-w-3xl w-full">
+                {article.data.faq.map((item, index) => (
+                  <div class="faq-item overflow-hidden transition-all duration-200" data-faq-index={index}>
+                    <button type="button" class="faq-question w-full flex items-start justify-between gap-4 px-6 py-4 transition-all duration-200 hover:opacity-100">
+                      <span class="faq-question-text font-semibold text-left text-lg flex-1 pr-5 leading-7">
+                        {item.question}
+                      </span>
+                      <span class="w-7 h-7 flex items-center justify-center shrink-0">
+                        <i class="ph ph-plus ph-bold faq-icon-plus text-slate-400 transition-all duration-200" />
+                        <i class="ph ph-minus ph-bold faq-icon-minus hidden text-slate-100 transition-all duration-200" />
+                      </span>
+                    </button>
+                    <div class="faq-answer-wrap grid transition-all duration-200">
+                      <div class="overflow-hidden">
+                        <div class="p-6 text-slate-400 leading-relaxed border-t border-slate-700/50 bg-slate-900/80">
+                          {item.answer}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -605,4 +616,67 @@ const coverImage = article.data.image ?? getFallbackCover(article.id);
 
     headingEls.forEach((el) => observer.observe(el));
   }
+</script>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".faq-accordion").forEach((accordion) => {
+    const items = Array.from(accordion.querySelectorAll<HTMLElement>(".faq-item"));
+    let openIndex: number | null = 0;
+
+    function render() {
+      items.forEach((item, index) => {
+        const btn = item.querySelector<HTMLButtonElement>(".faq-question")!;
+        const text = item.querySelector<HTMLElement>(".faq-question-text")!;
+        const answer = item.querySelector<HTMLElement>(".faq-answer-wrap")!;
+        const plus = item.querySelector<HTMLElement>(".faq-icon-plus")!;
+        const minus = item.querySelector<HTMLElement>(".faq-icon-minus")!;
+        const isOpen = openIndex === index;
+
+        item.classList.remove(
+          "border", "border-slate-700", "bg-slate-800", "rounded-lg",
+          "mb-5", "mt-5", "my-5",
+          "border-x", "border-b", "border-t", "border-slate-700/50", "bg-slate-800/0",
+          "rounded-t-lg", "rounded-b-lg",
+        );
+
+        if (isOpen) {
+          item.classList.add("border", "border-slate-700", "bg-slate-800", "rounded-lg");
+          if (index === 0) item.classList.add("mb-5");
+          else if (index === items.length - 1) item.classList.add("mt-5");
+          else item.classList.add("my-5");
+        } else {
+          item.classList.add("border-x", "border-b", "border-slate-700/50", "bg-slate-800/0");
+          const topOfGroup = index === 0 || (openIndex !== null && index === openIndex + 1);
+          const bottomOfGroup =
+            index === items.length - 1 || (openIndex !== null && index === openIndex - 1);
+          if (topOfGroup) item.classList.add("rounded-t-lg", "border-t");
+          if (bottomOfGroup) item.classList.add("rounded-b-lg", "border-b");
+        }
+
+        btn.classList.toggle("bg-slate-800", isOpen);
+        btn.classList.toggle("opacity-100", openIndex === null || isOpen);
+        btn.classList.toggle("opacity-60", openIndex !== null && !isOpen);
+
+        text.classList.toggle("text-white", isOpen);
+        text.classList.toggle("text-slate-300", !isOpen);
+
+        plus.classList.toggle("hidden", isOpen);
+        minus.classList.toggle("hidden", !isOpen);
+
+        answer.classList.toggle("grid-rows-[1fr]", isOpen);
+        answer.classList.toggle("opacity-100", isOpen);
+        answer.classList.toggle("grid-rows-[0fr]", !isOpen);
+        answer.classList.toggle("opacity-0", !isOpen);
+      });
+    }
+
+    items.forEach((item, index) => {
+      item.querySelector<HTMLButtonElement>(".faq-question")!.addEventListener("click", () => {
+        openIndex = openIndex === index ? null : index;
+        render();
+      });
+    });
+
+    render();
+  });
 </script>

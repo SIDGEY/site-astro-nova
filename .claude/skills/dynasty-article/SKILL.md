@@ -185,15 +185,29 @@ prose quand le sujet le permet.
 
 **Format** : Markdown simple — `##` pour les sections, `**gras**` pour les
 termes/produits clés, listes `- item` pour les énumérations, **jamais de HTML brut**
-(contrairement à beryldesign). Référence de longueur et de ton : n'importe quel
-fichier existant dans `src/content/articles/*.md`. Cible **500-700 mots**.
+(contrairement à beryldesign). Cible **500-700 mots**.
 
-**FAQ obligatoire** : chaque article se termine par 3-4 questions/réponses (frontmatter
-`faq`, ci-dessous) — la question dans les mots exacts qu'un joueur taperait, la
-réponse en 1-3 phrases autonomes. Génère automatiquement un schéma `FAQPage`
-(`src/lib/seo.ts`) et s'affiche en bas de l'article (`blog/[...slug].astro`). Piocher
-les questions dans le signal qui a motivé l'idée (ex: `legacy-gsc`/`gsc-gap` du
-backlog = la question EST la requête réelle) plutôt qu'en inventer.
+**Structure obligatoire H2 + H3** : jamais une suite plate de H2 avec un seul
+paragraphe dessous, ça se lit comme une liste de gros titres, pas un article. Chaque
+H2 couvre un thème et se subdivise en 2-3 H3 qui portent chacun un paragraphe court et
+focalisé. Référence de densité : n'importe quel fichier existant dans
+`src/content/articles/*.md` (ex. `astronova-creer-une-ui-mobile-first-inspiree-des-meilleures-pratiques.md`).
+
+**Jamais de tiret cadratin/demi-cadratin (—, –)** : tic d'écriture IA immédiatement
+reconnaissable (voir `docs/charte_editoriale.md` §4). Remplacer par une virgule, un
+point, deux-points, un point-virgule ou des parenthèses selon le sens — y compris en
+relisant son propre brouillon avant de le rendre, pas seulement en rédigeant.
+
+**FAQ obligatoire, sur TOUS les articles, y compris les anciens qu'on retouche** :
+chaque article se termine par 3-4 questions/réponses (frontmatter `faq`, ci-dessous),
+la question dans les mots exacts qu'un joueur taperait, la réponse en 1-3 phrases
+autonomes. Génère automatiquement un schéma `FAQPage` (`src/lib/seo.ts`) et s'affiche
+en bas de l'article (`blog/[...slug].astro`, accordéon calqué sur la FAQ in-game de
+`Frontend/src/features/help/pages/HelpPage.tsx`). Piocher les questions dans le signal
+qui a motivé l'idée (ex: `legacy-gsc`/`gsc-gap` du backlog = la question EST la
+requête réelle) plutôt qu'en inventer ; pour un article sans signal de ce type
+(rétrofit d'un ancien article), les tirer des affirmations déjà présentes dans le
+corps du texte, jamais d'un fait non écrit dans l'article.
 
 **Frontmatter** = schéma exact de `articlesCollection`
 (`src/content.config.ts:559-575`) — ne pas ajouter de champ hors schéma :
@@ -273,3 +287,8 @@ dans le backlog une fois le fichier écrit.
 - **`community-post` : ne jamais poster automatiquement** sur Reddit/un forum — ce
   n'est pas à ce skill de détenir ou d'utiliser les identifiants d'un compte
   communautaire. Toujours remettre le texte à l'utilisateur pour publication manuelle.
+- **Jamais de tiret cadratin/demi-cadratin (—, –)** dans un article ni un post
+  community, relire le brouillon spécifiquement pour ça avant l'Étape 5.
+- **Structure H2 + H3 et FAQ obligatoires** sur tout article (modes blog), y compris
+  quand on retouche un article déjà publié pour une autre raison (cover, correctif de
+  contenu…) : ne pas laisser passer une occasion de le mettre à niveau.

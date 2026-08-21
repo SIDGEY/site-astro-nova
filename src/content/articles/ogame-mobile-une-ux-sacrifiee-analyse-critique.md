@@ -8,12 +8,21 @@ tags: ["UX Design", "Mobile", "Analyse Critique", "OGame", "Ergonomie"]
 draft: false
 icon: "ph-magnifying-glass"
 image: "/uploads/blog/covers/ogame-mobile-une-ux-sacrifiee-analyse-critique.webp"
+faq:
+  - question: "Quels sont les principaux problèmes de l'adaptation mobile d'OGame ?"
+    answer: "Des menus étriqués, des textes difficiles à lire, des boutons trop rapprochés, une absence de responsivité réelle entre les tailles d'écran, et des visuels flous ou mal ajustés."
+  - question: "Les animations sont-elles aussi fluides que sur desktop ?"
+    answer: "Non. Des animations fluides sur desktop deviennent saccadées sur mobile, un problème particulièrement gênant lors des batailles spatiales où la précision visuelle compte stratégiquement."
+  - question: "Qu'est-ce qui a motivé la création de Dynasty Nova ?"
+    answer: "Une double frustration, celle d'un joueur déçu par l'expérience mobile d'OGame et celle d'un designer convaincu que l'UX doit rester centrale, qui a mené à une recherche approfondie sur les comportements des joueurs mobiles."
+  - question: "Quelles technologies structurent le design system de Dynasty Nova ?"
+    answer: "Un design system Figma avec des icônes unifiées via Phosphor, Tailwind CSS pour l'implémentation, et des assets optimisés par IA (Upscayl, Krea, Freepik) pour la performance mobile."
 coverPrompt: "a soft field of coral red light"
 ---
 
 ## Introduction : Un classique revisité à l'ère mobile
 
-L'article commence par évoquer l'attrait nostalgique d'OGame pour les joueurs de longue date. La version desktop originale offrait « une interface claire permettant une immersion facile dans le jeu », malgré son esthétique minimaliste. Les joueurs appréciaient la courbe d'apprentissage progressive permettant une maîtrise graduelle de concepts complexes — ressources, technologies, flottes — tout en maintenant l'accessibilité.
+L'article commence par évoquer l'attrait nostalgique d'OGame pour les joueurs de longue date. La version desktop originale offrait « une interface claire permettant une immersion facile dans le jeu », malgré son esthétique minimaliste. Les joueurs appréciaient la courbe d'apprentissage progressive permettant une maîtrise graduelle de concepts complexes (ressources, technologies, flottes) tout en maintenant l'accessibilité.
 
 ![Version actuelle du jeu OGame](/uploads/blog/article-107-ogame-version.avif)
 *Version actuelle du jeu OGame*

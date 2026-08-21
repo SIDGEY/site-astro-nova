@@ -8,6 +8,15 @@ tags: ["Gameplay", "OGame", "Stratégie", "Preview"]
 draft: false
 icon: "ph-rocket-launch"
 image: "/uploads/blog/covers/dynasty-nova-un-successeur-moderne-a-ogame-en-preparation.webp"
+faq:
+  - question: "Quelles ressources doit-on gérer dans Dynasty Nova ?"
+    answer: "Trois ressources principales : le métal, le cristal et l'hydrogène, produits par des bâtiments spécialisés comme l'Excavateur minéral ou le Condensateur d'hydrogène."
+  - question: "L'arbre technologique fonctionne-t-il comme dans OGame ?"
+    answer: "Non, il est réorganisé par catégories (propulsion, technologies avancées, recherches économiques, développements militaires) plutôt que regroupé dans une longue liste unique, pour une progression plus lisible."
+  - question: "Le jeu propose-t-il déjà du contenu PvP ?"
+    answer: "Pas encore : les versions de test actuelles proposent principalement du contenu PvE, les fonctionnalités PvP étant toujours en cours de développement."
+  - question: "Qu'est-ce que la Cosmologie appliquée ?"
+    answer: "Une technologie qui augmente le nombre de colonies disponibles, débloque les expéditions et permet d'étendre progressivement son influence dans la galaxie."
 coverPrompt: "a soft field of warm amber and gold light"
 ---
 

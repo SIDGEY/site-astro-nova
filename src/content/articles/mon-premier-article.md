@@ -8,6 +8,13 @@ tags: ["Annonce", "Développement", "Espace"]
 draft: false
 icon: "ph-newspaper"
 image: "/uploads/blog/covers/mon-premier-article.webp"
+faq:
+  - question: "Qu'est-ce que Dynasty Nova ?"
+    answer: "Un jeu de stratégie 4X (eXplore, eXpand, eXploit, eXterminate) se déroulant dans une galaxie générée de façon procédurale, où chaque joueur peut bâtir son empire par la diplomatie, le commerce technologique ou la force militaire."
+  - question: "Quel type de contenu sera publié sur ce blog ?"
+    answer: "Des devlogs réguliers sur les défis techniques et artistiques, des focus gameplay sur les mécaniques du jeu, et des annonces communautaires sur les phases de bêta et les événements Discord."
+  - question: "Comment suivre l'actualité de Dynasty Nova en dehors du blog ?"
+    answer: "En rejoignant le serveur Discord officiel du jeu, où l'équipe échange directement avec les joueurs sur le développement et les futures fonctionnalités."
 coverPrompt: "a soft field of warm amber and gold light"
 ---
 
@@ -31,7 +38,8 @@ Pour ceux qui nous rejoignent, Dynasty Nova est un jeu de stratégie **4X** (eXp
 
 Le développement d'un jeu de cette envergure est une aventure humaine. Nous voulons briser la glace entre les développeurs et les joueurs. Vos retours sont essentiels pour faire de Dynasty Nova le 4X spatial de référence.
 
-> "L'univers n'est pas une limite, c'est un terrain de jeu." — *Commandant Nova*
+> "L'univers n'est pas une limite, c'est un terrain de jeu."
+> *(Commandant Nova)*
 
 ### Rejoignez la discussion
 

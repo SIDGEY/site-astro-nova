@@ -8,6 +8,15 @@ tags: ["Game Design", "UX/UI Design", "Design Systems", "Indie Games"]
 draft: false
 icon: "ph-planet"
 image: "/uploads/blog/covers/astronova-repenser-ogame-avec-une-experience-immersive-et-accessible.webp"
+faq:
+  - question: "Qu'est-ce qui distingue Dynasty Nova d'un simple clone d'OGame ?"
+    answer: "Une vision plus paisible et introspective du genre, un design immersif centré sur le confort visuel, et une accessibilité multiplateforme sans installation requise."
+  - question: "Pourquoi la planète est-elle centrale dans le design de Dynasty Nova ?"
+    answer: "Plutôt que des tableaux de données statiques, chaque planète tourne, réagit à l'éclairage et évolue avec les actions du joueur, inspirée de l'esthétique des globes interactifs."
+  - question: "Quelles technologies font tourner le prototype ?"
+    answer: "React pour le frontend, WebGL/Three.js pour le rendu 3D des planètes, et un stockage JSON local pendant la phase de test, avant une infrastructure API complète prévue pour la sortie publique."
+  - question: "À qui s'adresse Dynasty Nova ?"
+    answer: "Aux joueurs cherchant une stratégie spatiale solo, aux fans d'OGame en quête d'une alternative mobile, et à une nouvelle génération de joueurs préférant la construction à la compétition permanente."
 coverPrompt: "a soft field of electric blue light"
 ---
 
@@ -77,7 +86,7 @@ Dynasty Nova se différencie par :
 
 ## Accessibilité et public cible
 
-Le jeu s'adresse aux joueurs recherchant une stratégie spatiale solo, des alternatives Android à OGame, ou des expériences web plus douces — représentant une nouvelle génération de joueurs préférant la construction à la compétition.
+Le jeu s'adresse aux joueurs recherchant une stratégie spatiale solo, des alternatives Android à OGame, ou des expériences web plus douces, une nouvelle génération de joueurs préférant la construction à la compétition.
 
 ## Conclusion
 

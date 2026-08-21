@@ -67,6 +67,9 @@ Tout contenu doit pouvoir se rattacher à cette phrase.
 * ton condescendant envers les débutants
 * incohérences avec l'univers du jeu
 * promesses vagues ou irréalistes
+* **tiret cadratin/demi-cadratin (—, –)** : remplacer systématiquement par une virgule, un point,
+  deux-points, un point-virgule ou des parenthèses selon le sens. C'est un tic d'écriture IA
+  immédiatement reconnaissable, à ne jamais laisser dans un texte publié.
 
 ---
 
@@ -140,6 +143,18 @@ Tout contenu doit pouvoir se rattacher à cette phrase.
 1. Information claire et concise
 2. Contexte (si nécessaire)
 3. Action suggérée (optionnelle)
+
+### Pour un article de blog
+
+Toujours une hiérarchie **H2 + H3**, jamais une suite plate de H2 avec un seul paragraphe
+dessous : chaque H2 couvre un thème, et se subdivise en 2-3 H3 qui portent chacun un
+paragraphe court et focalisé. Référence de densité : n'importe quel article existant dans
+`src/content/articles/*.md` (ex. `astronova-creer-une-ui-mobile-first-inspiree-des-meilleures-pratiques.md`).
+Un article sans H3 se lit comme une liste de gros titres et pas comme un vrai article.
+
+Toujours terminer par une FAQ (3-4 questions/réponses, champ `faq` du frontmatter) — voir
+`docs/geo-guidelines.md` pour la citabilité, et jamais sans elle : même un article ancien
+retouché doit en recevoir une avant republication.
 
 ---
 

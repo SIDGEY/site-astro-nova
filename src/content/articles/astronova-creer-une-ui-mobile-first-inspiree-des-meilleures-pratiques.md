@@ -8,6 +8,15 @@ tags: ["Mobile-First", "Design System", "UX/UI Design", "Tailwind CSS"]
 draft: false
 icon: "ph-device-mobile"
 image: "/uploads/blog/covers/astronova-creer-une-ui-mobile-first-inspiree-des-meilleures-pratiques.webp"
+faq:
+  - question: "Pourquoi Dynasty Nova a-t-il été conçu mobile-first ?"
+    answer: "En réponse aux lacunes ergonomiques de l'adaptation mobile d'OGame, une simple refonte responsive d'une interface pensée pour desktop. Dynasty Nova inverse l'approche en optimisant l'expérience tactile dès la conception."
+  - question: "Quels outils ont servi à construire le design system ?"
+    answer: "Tailwind CSS pour les classes utilitaires et la cohérence visuelle, puis Figma via le plugin « HTML to Design » pour formaliser palettes, grilles, typographie et composants atomiques."
+  - question: "Pourquoi la bibliothèque d'icônes Phosphor a-t-elle été choisie ?"
+    answer: "Pour son style uniforme et raffiné, jugé adapté à l'univers spatialisé de Dynasty Nova, et pour permettre un traitement rapide de l'information, essentiel dans un jeu de gestion."
+  - question: "Le développement a-t-il suivi le design, ou l'inverse ?"
+    answer: "Un processus inversé : les interfaces ont d'abord été développées avec Tailwind et Bolt, puis transférées dans Figma pour un raffinement artistique global."
 coverPrompt: "a soft field of electric blue light"
 ---
 
@@ -24,7 +33,7 @@ OGame a atteint un statut iconique grâce à un gameplay engageant et une profon
 
 ## La nécessité d'une approche moderne
 
-Dynasty Nova représente une approche inverse — commencer par le mobile pour délivrer des expériences natives optimisées pour les interactions tactiles, permettant de « repenser les mécaniques d'interaction avec une attention particulière à la lisibilité et la fluidité ».
+Dynasty Nova représente une approche inverse : commencer par le mobile pour délivrer des expériences natives optimisées pour les interactions tactiles, permettant de « repenser les mécaniques d'interaction avec une attention particulière à la lisibilité et la fluidité ».
 
 ![Version actuelle de Dynasty Nova](/uploads/blog/article-108-astro-nova-current.avif)
 *Version actuelle de Dynasty Nova*
@@ -43,7 +52,7 @@ Le framework a servi de fondation au projet, fournissant « des classes utilitai
 
 ### Composants réutilisables
 
-L'interface a été construite autour d'éléments modulaires — boutons, cartes, menus, onglets — conçus pour une réutilisation facile, assurant « une vitesse d'implémentation rapide et une cohérence graphique sur l'ensemble du projet ».
+L'interface a été construite autour d'éléments modulaires (boutons, cartes, menus, onglets) conçus pour une réutilisation facile, assurant « une vitesse d'implémentation rapide et une cohérence graphique sur l'ensemble du projet ».
 
 ### Identité visuelle
 
@@ -57,8 +66,8 @@ Contrairement aux approches traditionnelles design-first, Dynasty Nova a dévelo
 
 ### Formalisation
 
-Une fois dans Figma, le système a été structuré — palettes de couleurs, grilles, typographie, composants atomiques — stabilisant l'identité et préparant les futures évolutions.
+Une fois dans Figma, le système a été structuré autour des palettes de couleurs, des grilles, de la typographie et des composants atomiques, stabilisant l'identité et préparant les futures évolutions.
 
 ## Conclusion
 
-Dynasty Nova dépasse la simple refonte d'interface — c'est « un manifeste pour un design repensé où chaque décision est guidée par l'expérience utilisateur mobile ». En privilégiant une réflexion tactile, en s'appuyant sur des outils contemporains comme Tailwind et Figma, et en ancrant les décisions dans des design systems cohérents, le projet offre « une vision fraîche des jeux de gestion : plus fluide, plus élégante, plus adaptée aux usages contemporains ».
+Dynasty Nova dépasse la simple refonte d'interface : c'est « un manifeste pour un design repensé où chaque décision est guidée par l'expérience utilisateur mobile ». En privilégiant une réflexion tactile, en s'appuyant sur des outils contemporains comme Tailwind et Figma, et en ancrant les décisions dans des design systems cohérents, le projet offre « une vision fraîche des jeux de gestion : plus fluide, plus élégante, plus adaptée aux usages contemporains ».

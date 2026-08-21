@@ -8,28 +8,35 @@ tags: ["Intelligence Artificielle", "Workflow Créatif", "Design UX/UI", "Produc
 draft: false
 icon: "ph-robot"
 image: "/uploads/blog/covers/utiliser-lintelligence-artificielle-comme-assistant-creatif-retour-dexperience-sur-astronova.webp"
+faq:
+  - question: "L'IA a-t-elle remplacé le travail du designer sur Dynasty Nova ?"
+    answer: "Non. Chaque visuel généré a été retouché manuellement (corrections de perspective, suppression d'artefacts, réalignement des lumières) avant d'être intégré, l'IA servant d'accélérateur, jamais de livrable final."
+  - question: "Quels outils IA ont été utilisés dans le processus créatif ?"
+    answer: "KREA pour le logotype et le style visuel, Bolt pour les premières maquettes d'interface en Tailwind, et Cursor comme IDE augmenté pour itérer plus vite sur le code."
+  - question: "Pourquoi Dynasty Nova est-il développé en solo avec l'aide de l'IA ?"
+    answer: "C'est un projet personnel mené sur le temps libre du développeur, sans équipe : l'IA a été intégrée dès le départ pour assister la création et la structuration, sans automatiser les décisions de design."
 coverPrompt: "a soft field of violet and magenta light"
 ---
 
 ## Introduction
 
-Quand j'ai commencé à travailler sur Dynasty Nova, mon objectif était clair : réinventer l'expérience utilisateur d'un jeu de stratégie spatial inspiré d'OGame, avec une interface mobile moderne, élégante et fluide. Mais avancer seul sur un projet aussi vaste, c'est aussi chercher à optimiser chaque étape du processus créatif. C'est là que l'intelligence artificielle est entrée en jeu — non pas comme un remplacement, mais comme un assistant créatif, un copilote au service de ma vision.
+Quand j'ai commencé à travailler sur Dynasty Nova, mon objectif était clair : réinventer l'expérience utilisateur d'un jeu de stratégie spatial inspiré d'OGame, avec une interface mobile moderne, élégante et fluide. Mais avancer seul sur un projet aussi vaste, c'est aussi chercher à optimiser chaque étape du processus créatif. C'est là que l'intelligence artificielle est entrée en jeu, non pas comme un remplacement, mais comme un assistant créatif, un copilote au service de ma vision.
 
 ## Contexte
 
 ### Une initiative née d'un constat d'usager
 
-À l'origine du projet, il y a une déception : celle de voir la version mobile d'OGame largement en retrait par rapport à l'expérience desktop. Interface compressée, perte de repères visuels, désengagement progressif… Le potentiel était là, mais le ressenti utilisateur ne suivait plus. C'est en tant que joueur et designer que j'ai décidé de relancer les dés — en imaginant une version modernisée, mobile-first, pensée selon les meilleures pratiques actuelles.
+À l'origine du projet, il y a une déception : celle de voir la version mobile d'OGame largement en retrait par rapport à l'expérience desktop. Interface compressée, perte de repères visuels, désengagement progressif… Le potentiel était là, mais le ressenti utilisateur ne suivait plus. C'est en tant que joueur et designer que j'ai décidé de relancer les dés, en imaginant une version modernisée, mobile-first, pensée selon les meilleures pratiques actuelles.
 
 ### Un projet solo, des ressources limitées, des outils augmentés
 
-Dynasty Nova n'est pas un projet d'équipe. C'est un projet personnel, sur mon temps libre, mené en autonomie. Pour ne pas me noyer dans l'ampleur des tâches, j'ai fait le choix d'intégrer dès le départ des outils d'intelligence artificielle dans ma méthode de travail. Pas pour automatiser le design, mais pour m'assister : créer, itérer, structurer plus rapidement — et mieux.
+Dynasty Nova n'est pas un projet d'équipe. C'est un projet personnel, sur mon temps libre, mené en autonomie. Pour ne pas me noyer dans l'ampleur des tâches, j'ai fait le choix d'intégrer dès le départ des outils d'intelligence artificielle dans ma méthode de travail. Pas pour automatiser le design, mais pour m'assister : créer, itérer, structurer plus rapidement, et mieux.
 
 ## L'IA comme assistant de création visuelle
 
 ### KREA : le rôle d'un designer junior… en plus rapide
 
-Dès le départ, j'ai utilisé KREA pour imaginer le logotype de Dynasty Nova. J'avais le nom, l'univers, mais il me fallait une signature visuelle. En générant plus de 50 propositions à partir de prompts, j'ai fini par tomber sur une forme symbolique, dynamique, évoquant à la fois une fusée et la lettre A — presque un écho à Assassin's Creed.
+Dès le départ, j'ai utilisé KREA pour imaginer le logotype de Dynasty Nova. J'avais le nom, l'univers, mais il me fallait une signature visuelle. En générant plus de 50 propositions à partir de prompts, j'ai fini par tomber sur une forme symbolique, dynamique, évoquant à la fois une fusée et la lettre A, presque un écho à Assassin's Creed.
 
 Mais cette base restait brute. Je l'ai donc traitée comme je le ferais avec un livrable d'un designer junior : affinement vectoriel, harmonisation des courbes, application d'une grille typographique. Le résultat final n'est pas une image IA brute, mais bien une création hybride : IA en suggestion, designer en finition.
 
@@ -89,6 +96,6 @@ Dans un souci de transparence, voici les limitations que nous avons identifiées
 
 ## Conclusion
 
-Utiliser l'intelligence artificielle ne signifie pas renoncer à la création. Dans Dynasty Nova, l'IA a été un levier, un moteur, un catalyseur — jamais une fin en soi. Elle m'a permis d'aller plus vite, d'oser plus, de générer plus… mais toujours sous ma supervision.
+Utiliser l'intelligence artificielle ne signifie pas renoncer à la création. Dans Dynasty Nova, l'IA a été un levier, un moteur, un catalyseur, jamais une fin en soi. Elle m'a permis d'aller plus vite, d'oser plus, de générer plus… mais toujours sous ma supervision.
 
-L'IA, dans ce contexte, joue le rôle d'un junior créatif ultra-productif : il propose, il enrichit, il accélère. Mais le regard du designer reste la clé. Car ce qui fait un bon design, ce n'est pas seulement l'idée ou le style — c'est l'intention, la cohérence, l'expérience que l'on souhaite transmettre.
+L'IA, dans ce contexte, joue le rôle d'un junior créatif ultra-productif : il propose, il enrichit, il accélère. Mais le regard du designer reste la clé. Car ce qui fait un bon design, ce n'est pas seulement l'idée ou le style : c'est l'intention, la cohérence, l'expérience que l'on souhaite transmettre.
