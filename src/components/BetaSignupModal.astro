@@ -69,7 +69,7 @@
               <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
               <div class="absolute bottom-0 left-0 right-0 px-6 md:px-8 pt-6">
                 <div class="space-y-1">
-                  <h2 class="text-2xl font-bold text-white mb-1">Demande envoyée !</h2>
+                  <h2 id="beta-banner-success-title" class="text-2xl font-bold text-white mb-1">Demande envoyée !</h2>
                   <p id="beta-success-email" class="text-gray-400 mb-0"></p>
                 </div>
               </div>
@@ -116,9 +116,12 @@
         </div>
 
         <div id="beta-modal-success-state" class="hidden p-6 md:p-8 pt-6 space-y-4">
-          <div class="space-y-4">
-            <p class="text-slate-300 mb-3">Merci de votre intérêt. Nous avons bien reçu votre demande d'accès à la bêta.</p>
+          <div id="beta-success-new" class="space-y-4">
+            <p class="text-slate-300 mb-3">Merci de votre intérêt. Nous avons bien reçu votre demande d'inscription à la liste d'attente.</p>
             <p class="text-slate-300 mb-0">Un email de confirmation vous a été envoyé. Surveillez votre boîte de réception (et vos spams) !</p>
+          </div>
+          <div id="beta-success-duplicate" class="hidden space-y-4">
+            <p class="text-slate-300 mb-0">Cette adresse email est déjà inscrite à la liste d'attente Dynasty Nova. Vous recevrez un email dès qu'une place se libère, pas besoin de vous réinscrire.</p>
           </div>
         </div>
       </div>
@@ -168,12 +171,6 @@
       }));
     }
     return firestorePromise;
-  }
-
-  function generateBetaKey(length = 12) {
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    const bytes = crypto.getRandomValues(new Uint8Array(length));
-    return Array.from(bytes, (b) => chars[b % chars.length]).join("");
   }
 
   // Capture d'acquisition : sait quel canal (post Reddit, campagne, recherche
@@ -249,7 +246,10 @@
     const successState = document.getElementById("beta-modal-success-state");
     const bannerForm = document.getElementById("beta-banner-form");
     const bannerSuccess = document.getElementById("beta-banner-success");
+    const bannerSuccessTitle = document.getElementById("beta-banner-success-title");
     const successEmailEl = document.getElementById("beta-success-email");
+    const successNew = document.getElementById("beta-success-new");
+    const successDuplicate = document.getElementById("beta-success-duplicate");
     const footer = document.getElementById("beta-modal-footer");
 
     if (
@@ -267,7 +267,10 @@
       !successState ||
       !bannerForm ||
       !bannerSuccess ||
+      !bannerSuccessTitle ||
       !successEmailEl ||
+      !successNew ||
+      !successDuplicate ||
       !footer
     ) {
       return;
@@ -294,9 +297,12 @@
       emailInput!.classList.add("border-slate-600");
     }
 
-    function showSuccess(email: string) {
-      trackEvent("beta_signup");
+    function showSuccess(email: string, isDuplicate = false) {
+      trackEvent(isDuplicate ? "beta_signup_duplicate" : "beta_signup");
       successEmailEl!.textContent = email;
+      bannerSuccessTitle!.textContent = isDuplicate ? "Déjà inscrit !" : "Demande envoyée !";
+      successNew!.classList.toggle("hidden", isDuplicate);
+      successDuplicate!.classList.toggle("hidden", !isDuplicate);
       formState!.classList.add("hidden");
       successState!.classList.remove("hidden");
       bannerForm!.classList.add("hidden");
@@ -425,7 +431,7 @@
             ),
           );
           if (!existing.empty) {
-            showSuccess(email);
+            showSuccess(email, true);
             return;
           }
         } catch (err) {
@@ -440,10 +446,8 @@
 
         await firestore.addDoc(betaRequests, {
           email,
-          betaKey: generateBetaKey(),
           status: "pending",
           timestamp: firestore.serverTimestamp(),
-          invitationSent: false,
           createdAt: firestore.Timestamp.now(),
           source: "dynastynova.com",
           ...getAcquisitionSource(),
