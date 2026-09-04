@@ -42,10 +42,10 @@ const relatedArticles = allArticles
   .filter((a) => a.id !== article.id)
   .slice(0, 3);
 
-const canonicalURL = `${SITE_URL}/blog/${article.id}`;
+const canonicalURL = `${SITE_URL}/blog/${article.id}/`;
 const breadcrumbs = [
   { name: "Accueil", item: `${SITE_URL}/` },
-  { name: "Blog", item: `${SITE_URL}/blog` },
+  { name: "Blog", item: `${SITE_URL}/blog/` },
   { name: article.data.title, item: canonicalURL },
 ];
 const coverImage = article.data.image ?? getFallbackCover(article.id);

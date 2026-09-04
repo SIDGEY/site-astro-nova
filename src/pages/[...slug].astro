@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 const { page } = Astro.props;
 const { title, description, blocks, sectionVariants } = page.data;
 const slug = page.id.replace(/\.md$/, "").replace(/\.json$/, "");
-const canonicalURL = `${SITE_URL}/${slug}`;
+const canonicalURL = `${SITE_URL}/${slug}/`;
 
 const breadcrumbs = [
   { name: "Accueil", item: `${SITE_URL}/` },
