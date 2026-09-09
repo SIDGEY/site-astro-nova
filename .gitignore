@@ -2,6 +2,7 @@
 dist
 .astro
 .DS_Store
+.firebase
 dist
 .astro
 .env
