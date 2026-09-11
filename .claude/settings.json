@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/ghambourger/Documents/Github/beryldesign/beryldesign/**)",
+      "Read(//Users/ghambourger/Documents/Github/beryldesign/beryldesign/editorial/**)",
+      "Read(//Users/ghambourger/Documents/Github/beryldesign/beryldesign/scripts/**)",
+      "Bash(rm \"/Users/ghambourger/Documents/Astro Nova/site-astro-nova/src/content/articles/test-article-vidiome-zzz.md\" /tmp/test-article.json)",
+      "Bash(mkdir -p \"/Users/ghambourger/Documents/Astro Nova/site-astro-nova/.claude/skills/dynasty-article\")",
+      "Bash(npm run *)"
+    ],
+    "additionalDirectories": [
+      "/private/tmp",
+      "/Users/ghambourger/Documents/Astro Nova/site-astro-nova/.claude/skills"
+    ]
+  }
+}
