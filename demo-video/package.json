@@ -6,7 +6,7 @@
   "scripts": {
     "capture": "node capture/record.mjs",
     "remotion:studio": "remotion studio remotion/src/index.ts",
-    "remotion:render": "remotion render remotion/src/index.ts DemoVideo output/dynasty-nova-demo.mp4"
+    "remotion:render": "remotion render remotion/src/index.ts DemoVideo output/dynasty-nova-demo.mp4 --codec=h264 --crf=17"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.524",
