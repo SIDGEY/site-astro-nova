@@ -1,3 +1,4 @@
 node_modules/
 output/
 public/clips/
+*.mp4

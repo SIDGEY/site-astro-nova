@@ -16,6 +16,7 @@ import { IntroTitle } from './IntroTitle';
 import { OutroCTA } from './OutroCTA';
 import { SCENES } from './scenes';
 import {
+  END_FADE,
   INTRO_EXIT_DUR,
   INTRO_EXIT_START,
   MOCKUP_ENTRANCE_DUR,
@@ -99,7 +100,7 @@ export const DemoVideo: React.FC = () => {
 
   const endFadeOpacity = interpolate(
     frame,
-    [durationInFrames - 24, durationInFrames],
+    [durationInFrames - END_FADE, durationInFrames],
     [0, 1],
     { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' },
   );
