@@ -41,7 +41,7 @@ export function getOrganizationSchema() {
     },
     "sameAs": [
       "https://twitter.com/dynastynova",
-      "https://discord.gg/dynastynova"
+      "https://discord.gg/dVXdVqw5d5"
     ]
   };
 }

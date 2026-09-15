@@ -26,16 +26,16 @@ export const getWaitlistConfirmationTemplate = (userName?: string): string => {
 
         <div style="background-color: #0F172A; border-radius: 8px; padding: 15px; margin: 20px 0; text-align: center; border: 1px solid #334155;">
           <p style="font-weight: bold; color: #3B82F6;">Votre demande a été enregistrée avec succès</p>
-          <p style="color: #F8FAFC;">Nous vous recontacterons par email dès qu'une place se libère.</p>
+          <p style="color: #F8FAFC;">Vous recevrez votre accès dès l'ouverture du serveur officiel, le 26 septembre 2026 à 18h00 (heure de Paris).</p>
         </div>
 
-        <p style="color: #F8FAFC;">Nous avons hâte de vous voir explorer notre univers et faire partie des premiers à tester cette expérience exclusive.</p>
+        <p style="color: #F8FAFC;">Nous avons hâte de vous voir explorer notre univers dès le lancement.</p>
 
         <p style="color: #F8FAFC;">En attendant, voici quelques actions que vous pouvez faire pour ne rien manquer :</p>
 
         <div style="background-color: #0F172A; border-radius: 8px; padding: 15px; margin: 20px 0; text-align: center; border: 1px solid #334155;">
           <p style="color: #F8FAFC;"><span style="font-weight: bold; color: #3B82F6;">✅</span> Suivez-nous sur <a href="https://twitter.com/dynastynova" style="color: #3B82F6; text-decoration: underline;">X (Twitter)</a> pour les dernières actualités</p>
-          <p style="color: #F8FAFC;"><span style="font-weight: bold; color: #3B82F6;">✅</span> Rejoignez notre <a href="https://discord.gg/dynastynova" style="color: #3B82F6; text-decoration: underline;">Discord</a> pour échanger avec la communauté</p>
+          <p style="color: #F8FAFC;"><span style="font-weight: bold; color: #3B82F6;">✅</span> Rejoignez notre <a href="https://discord.gg/dVXdVqw5d5" style="color: #3B82F6; text-decoration: underline;">Discord</a> pour échanger avec la communauté</p>
           <p style="color: #F8FAFC;"><span style="font-weight: bold; color: #3B82F6;">✅</span> Vérifiez régulièrement votre boîte mail (et le dossier spam)</p>
         </div>
 
@@ -48,7 +48,7 @@ export const getWaitlistConfirmationTemplate = (userName?: string): string => {
         <p style="color: #94A3B8;">Dynasty Nova - Tous droits réservés © ${currentYear}</p>
         <p style="color: #94A3B8;">Cet email a été envoyé car vous vous êtes inscrit à la liste d'attente de Dynasty Nova.</p>
         <div style="margin-top: 15px;">
-          <a href="https://twitter.com/dynastynova" style="margin: 0 10px; color: #94A3B8; text-decoration: none;">X (Twitter)</a> | <a href="https://discord.gg/dynastynova" style="margin: 0 10px; color: #94A3B8; text-decoration: none;">Discord</a>
+          <a href="https://twitter.com/dynastynova" style="margin: 0 10px; color: #94A3B8; text-decoration: none;">X (Twitter)</a> | <a href="https://discord.gg/dVXdVqw5d5" style="margin: 0 10px; color: #94A3B8; text-decoration: none;">Discord</a>
         </div>
       </div>
     </div>
