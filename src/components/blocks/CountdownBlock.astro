@@ -21,12 +21,22 @@ const {
   secondaryCtaLink,
 } = Astro.props;
 
-const launchDateLabel = new Date(targetDate).toLocaleDateString("fr-FR", {
+const launchDate = new Date(targetDate);
+const launchDateLabel = launchDate.toLocaleDateString("fr-FR", {
   weekday: "long",
   day: "numeric",
   month: "long",
   year: "numeric",
+  timeZone: "Europe/Paris",
 });
+const launchTimeLabel = launchDate
+  .toLocaleTimeString("fr-FR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Europe/Paris",
+  })
+  .replace(":", "h");
 ---
 
 <section class="relative overflow-hidden bg-[#121B2E] py-20 md:py-28">
@@ -52,7 +62,7 @@ const launchDateLabel = new Date(targetDate).toLocaleDateString("fr-FR", {
     )}
 
     <p class="text-sm md:text-base text-slate-500 mb-10 capitalize">
-      {launchDateLabel}
+      {launchDateLabel} à {launchTimeLabel} (heure de Paris)
     </p>
 
     <div class="flex justify-center gap-3 sm:gap-6 mb-12" data-countdown={targetDate}>
