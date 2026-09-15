@@ -5,7 +5,7 @@ blocks:
   - type: gameHero
     title: Forgez votre légende au cœur de l'univers
     subtitle: Explorez l'inconnu, étendez votre empire, exploitez chaque ressource et éliminez vos rivaux. Un jeu de stratégie 4X en temps réel, où chaque décision façonne la galaxie.
-    ctaText: S'inscrire à la bêta
+    ctaText: S'inscrire à la liste d'attente
     ctaLink: "#beta"
     secondaryCtaText: Découvrir le jeu
     secondaryCtaLink: "#features"

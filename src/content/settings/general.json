@@ -30,7 +30,7 @@
       "address": "",
       "email": "contact@dynastynova.com",
       "phone": "",
-      "cta_label": "S'inscrire à la bêta",
+      "cta_label": "S'inscrire à la liste d'attente",
       "cta_link": "#"
     },
     "section_titles": {
@@ -65,7 +65,7 @@
         "type": "external"
       },
       {
-        "label": "S'inscrire à la bêta",
+        "label": "S'inscrire à la liste d'attente",
         "href": "#",
         "type": "internal"
       }

@@ -6,7 +6,7 @@ blocks:
   - type: "hero"
     title: "Questions fréquentes"
     subtitle: "Tout ce qu'il faut savoir sur Dynasty Nova avant de rejoindre la bêta."
-    ctaText: "S'inscrire à la bêta"
+    ctaText: "S'inscrire à la liste d'attente"
     ctaLink: "#beta"
   - type: "faq"
     title: "FAQ"
@@ -20,5 +20,5 @@ blocks:
       - question: "Dynasty Nova est-il comme OGame ?"
         answer: "Dynasty Nova reprend les fondamentaux qui ont fait le succès d'OGame — gestion de planètes, recherche technologique, flottes, colonisation — avec une interface moderne, une planète en 3D et un arbre technologique réorganisé par catégories."
       - question: "Comment rejoindre la bêta de Dynasty Nova ?"
-        answer: "Il suffit de laisser votre email via le formulaire d'inscription à la bêta, accessible depuis le bouton « S'inscrire à la bêta » en haut de chaque page. Vous recevrez un email dès que votre accès sera disponible."
+        answer: "Il suffit de laisser votre email via le formulaire d'inscription, accessible depuis le bouton « S'inscrire à la liste d'attente » en haut de chaque page. Vous recevrez un email dès que votre accès sera disponible."
 ---
