@@ -364,6 +364,19 @@ const blockNewsSchema = blockBaseSchema.extend({
   })).optional(),
 });
 
+const blockCountdownSchema = blockBaseSchema.extend({
+  type: z.literal('countdown'),
+  eyebrow: z.string().optional(),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  // Date/heure cible ISO avec fuseau, ex: 2026-09-26T18:00:00+02:00
+  targetDate: z.string(),
+  ctaText: z.string().optional(),
+  ctaLink: z.string().optional(),
+  secondaryCtaText: z.string().optional(),
+  secondaryCtaLink: z.string().optional(),
+});
+
 const blockRoadmapSchema = blockBaseSchema.extend({
   type: z.literal('roadmap'),
   title: z.string(),
@@ -414,6 +427,7 @@ const blockSchema = z.discriminatedUnion('type', [
   blockCarouselSchema,
   blockNewsSchema,
   blockRoadmapSchema,
+  blockCountdownSchema,
 ]);
 
 

@@ -12,6 +12,16 @@ blocks:
     screenshot1: /landing/screenshot1.jpg
     screenshot2: /landing/screenshot2.jpg
 
+  - type: countdown
+    eyebrow: Lancement officiel
+    title: Le premier serveur officiel ouvre le 26 septembre 2026
+    subtitle: Créez votre empire dès la première heure et prenez une longueur d'avance sur la galaxie.
+    targetDate: "2026-09-26T18:00:00+02:00"
+    ctaText: Rejoindre le Discord
+    ctaLink: https://discord.gg/dVXdVqw5d5
+    secondaryCtaText: Découvrir le jeu
+    secondaryCtaLink: "#features"
+
   - type: block3D
     sectionId: planets
     title: Recherchez des innovations pour prospérer.

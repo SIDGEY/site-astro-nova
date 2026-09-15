@@ -24,6 +24,7 @@ import FeaturePhoneBlock from "./blocks/FeaturePhoneBlock.astro";
 import CarouselBlock from "./blocks/CarouselBlock.astro";
 import NewsBlock from "./blocks/NewsBlock.astro";
 import RoadmapBlock from "./blocks/RoadmapBlock.astro";
+import CountdownBlock from "./blocks/CountdownBlock.astro";
 
 interface Props {
     blocks?: any[];
@@ -82,6 +83,8 @@ const bgVariants = computeBgVariants(blocks, sectionVariants);
       return <NewsBlock {...commonProps} />;
     case "roadmap":
       return <RoadmapBlock {...commonProps} />;
+    case "countdown":
+      return <CountdownBlock {...commonProps} />;
     default:
       return null;
   }
