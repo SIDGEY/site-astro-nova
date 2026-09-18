@@ -25,44 +25,10 @@
 
 @layer base {
   :root {
-    color-scheme: light;
-    /* Light Mode Tokens */
-    --bg: 255 255 255;
-    /* Blanc pur */
-    --surface: 255 255 255;
-    /* Blanc pur */
-    --surface-2: 249 250 251;
-    /* Gris neutre très léger (Gray 50) */
-    --text: 17 24 39;
-    /* Gris très foncé (Slate 900) */
-    --muted: 75 85 99;
-    /* Gris moyen (Gray 600) pour meilleur contraste AA */
-    --border: 243 244 246;
-    /* Gris très clair (Gray 100) */
-
-    --primary: 243 104 88;
-    /* Corail #F36858 (CTA) */
-    --primary-contrast: 255 255 255;
-
-    --secondary: 231 79 64;
-    /* Corail profond pour nuances */
-    --secondary-contrast: 255 255 255;
-
-    --success: 0 56 36;
-    /* Vert foncé Atecna #003824 */
-
-    --highlight: 254 243 243;
-    /* Rose très pâle (Corail dilué) */
-    --highlight-text: 153 27 27;
-    /* Rouge foncé pour lisibilité sur rose */
-
-    --ring: 243 104 88;
-    /* Corail focus */
-  }
-
-  :root.dark {
     color-scheme: dark;
-    /* Dark Mode Tokens */
+    /* Dark Mode Tokens (thème par défaut : le reste du site est en dur en sombre,
+       aucun toggle .dark n'existe, donc ces tokens doivent matcher pour que les
+       pages génériques -- FAQ, mentions légales, etc. -- restent cohérentes) */
     --bg: 10 14 23;
     /* Presque noir profond */
     --surface: 20 28 47;
@@ -78,14 +44,21 @@
 
     --primary: 243 104 88;
     /* Corail #F36858 (CTA) */
+    --primary-contrast: 255 255 255;
+
     --secondary: 231 79 64;
     /* Corail profond pour nuances */
+    --secondary-contrast: 255 255 255;
+
+    --success: 0 56 36;
+    /* Vert foncé Atecna #003824 */
 
     --highlight: 243 104 88 / 0.1;
     /* Corail 10% opacity */
     --highlight-text: 254 242 242;
 
     --ring: 243 104 88;
+    /* Corail focus */
   }
 
   html {
