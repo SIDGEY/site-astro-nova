@@ -105,16 +105,12 @@ src/features/landing/
 ## 6. Variables d'Environnement
 
 ### Fichiers concernés
-- `.env.development` : Développement local
-- `.env.production` : Production
+- `.env` : Développement local (jamais commité)
 - `.env.example` : Template pour les nouveaux développeurs
 
 ### Variables importantes
-```bash
-VITE_FIREBASE_API_KEY=...
-VITE_FIREBASE_PROJECT_ID=...
-VITE_USE_EMULATOR=true/false
-```
+Voir `.env.example` : elles ne servent qu'aux scripts d'analyse et de génération
+(`scripts/`), le site statique lui-même n'a aucune variable d'environnement.
 
 ## 7. Workflow de Modification
 
@@ -138,10 +134,10 @@ VITE_USE_EMULATOR=true/false
 ```bash
 # Build de production
 npm run build
-
-# Déploiement Firebase
-npm run deploy
 ```
+
+Le déploiement est automatique : un push sur `main` déclenche le workflow
+`.github/workflows/deploy.yml`, qui build le site et l'envoie en FTP sur OVH.
 
 ### Checklist avant déploiement
 - [ ] Tests passent

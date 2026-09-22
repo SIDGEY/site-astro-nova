@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "source": "functions",
-    "codebase": "default",
-    "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"]
-  },
   "hosting": {
     "site": "play-astronova-redirect",
     "public": "redirects-astro-nova-idle/public",

@@ -2,7 +2,6 @@
 import SEO from "../components/SEO.astro";
 import Header from "../components/Header.astro";
 import GameFooter from "../components/GameFooter.astro";
-import BetaSignupModal from "../components/BetaSignupModal.astro";
 import "../styles/global.css";
 import "@fontsource/lexend/300.css";
 import "@fontsource/lexend/400.css";
@@ -100,6 +99,38 @@ const {
 
     <GameFooter />
 
-    <BetaSignupModal />
+    <script>
+      // Le départ vers le jeu est la conversion principale du site depuis l'arrêt
+      // de la liste d'attente. Délégation sur document plutôt qu'un handler par
+      // bouton : couvre l'en-tête, le menu mobile, les héros et le pied de page,
+      // y compris les CTA saisis depuis le CMS qui ne passent par aucun composant.
+      import { trackEvent } from "../lib/tracking";
+
+      const PLAY_HOST = "play.dynastynova.com";
+
+      document.addEventListener("click", (event) => {
+        const link = (event.target as Element | null)?.closest?.("a[href]") as
+          | HTMLAnchorElement
+          | null;
+        if (!link) return;
+
+        let host: string;
+        try {
+          host = new URL(link.href, window.location.href).host;
+        } catch {
+          return; // href non parsable (mailto:, javascript:...) — rien à tracker.
+        }
+        if (host !== PLAY_HOST) return;
+
+        trackEvent("play_click", {
+          // Distingue le bouton d'en-tête d'un CTA de bas de page.
+          link_text: link.textContent?.trim().slice(0, 100) || "",
+          page_path: window.location.pathname,
+          // La navigation quitte le site dans la foulée : sendBeacon survit à
+          // l'unload, là où une requête classique serait annulée avant d'arriver.
+          transport_type: "beacon",
+        });
+      });
+    </script>
   </body>
 </html>

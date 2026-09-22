@@ -5,10 +5,10 @@ blocks:
   - type: gameHero
     title: Forgez votre légende au cœur de l'univers
     subtitle: Explorez l'inconnu, étendez votre empire, exploitez chaque ressource et éliminez vos rivaux. Un jeu de stratégie 4X en temps réel, où chaque décision façonne la galaxie.
-    ctaText: S'inscrire à la liste d'attente
-    ctaLink: "#beta"
+    ctaText: Rejoindre Dynasty Nova
+    ctaLink: "https://play.dynastynova.com"
     secondaryCtaText: Découvrir le jeu
-    secondaryCtaLink: "#features"
+    secondaryCtaLink: "#planets"
     screenshot1: /landing/screenshot1.jpg
     screenshot2: /landing/screenshot2.jpg
 

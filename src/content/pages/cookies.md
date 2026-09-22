@@ -45,7 +45,6 @@ blocks:
       <h2>Cookies tiers</h2>
       <p>En plus de nos propres cookies, nous pouvons également utiliser divers cookies tiers pour signaler les statistiques d'utilisation du site, diffuser des publicités, etc. Ces cookies entrent dans les catégories suivantes :</p>
       <ul>
-        <li>Services d'authentification (comme Firebase Auth)</li>
         <li>Services analytiques (à venir)</li>
         <li>Services publicitaires (comme Google AdSense, à venir)</li>
       </ul>

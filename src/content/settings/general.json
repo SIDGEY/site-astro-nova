@@ -30,8 +30,8 @@
       "address": "",
       "email": "contact@dynastynova.com",
       "phone": "",
-      "cta_label": "S'inscrire à la liste d'attente",
-      "cta_link": "#"
+      "cta_label": "Rejoindre Dynasty Nova",
+      "cta_link": "https://play.dynastynova.com"
     },
     "section_titles": {
       "main_nav": "Navigation",
@@ -61,13 +61,8 @@
     "expertises_nav": [
       {
         "label": "Jouer maintenant",
-        "href": "https://astro-nova-recette.web.app/game",
+        "href": "https://play.dynastynova.com",
         "type": "external"
-      },
-      {
-        "label": "S'inscrire à la liste d'attente",
-        "href": "#",
-        "type": "internal"
       }
     ],
     "agencies_nav": [],

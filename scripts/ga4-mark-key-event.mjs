@@ -6,8 +6,8 @@
  * projet Google Cloud (console.cloud.google.com/apis/library/analyticsadmin.googleapis.com).
  *
  * Usage :
- *   node scripts/ga4-mark-key-event.mjs beta_signup
- *   node scripts/ga4-mark-key-event.mjs beta_signup --counting once_per_session
+ *   node scripts/ga4-mark-key-event.mjs play_click
+ *   node scripts/ga4-mark-key-event.mjs play_click --counting once_per_session
  *   node scripts/ga4-mark-key-event.mjs --list                # liste les événements clés existants
  */
 
@@ -72,7 +72,7 @@ async function main() {
     return;
   }
 
-  if (!opts.eventName) fail("Nom d'événement requis (ou --list). Ex: node scripts/ga4-mark-key-event.mjs beta_signup");
+  if (!opts.eventName) fail("Nom d'événement requis (ou --list). Ex: node scripts/ga4-mark-key-event.mjs play_click");
 
   try {
     const res = await client.request({

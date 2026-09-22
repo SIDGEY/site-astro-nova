@@ -145,7 +145,10 @@ async function main() {
         orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
         limit: 50,
       }),
-      // beta_modal_open / beta_signup (voir src/lib/tracking.ts) : conversion du funnel bêta.
+      // play_click (voir src/layouts/BaseLayout.astro) : conversion principale du
+      // site, le départ vers play.dynastynova.com. Les beta_* sont conservés pour
+      // pouvoir comparer avec le funnel liste d'attente d'avant la bascule ; ils
+      // ne remontent plus rien après celle-ci et pourront être retirés.
       runReport(client, property, {
         dateRanges: [{ startDate, endDate }],
         dimensions: [{ name: "eventName" }],
@@ -153,7 +156,9 @@ async function main() {
         dimensionFilter: withHostFilter(opts.host, {
           filter: {
             fieldName: "eventName",
-            inListFilter: { values: ["beta_modal_open", "beta_signup"] },
+            inListFilter: {
+              values: ["play_click", "beta_modal_open", "beta_signup"],
+            },
           },
         }),
       }),
@@ -192,10 +197,10 @@ async function main() {
 
   await fs.writeFile(path.join(dir, "Pages.csv"), pagesCsv);
   await fs.writeFile(path.join(dir, "Sources.csv"), sourcesCsv);
-  await fs.writeFile(path.join(dir, "Evenements-beta.csv"), eventsCsv);
+  await fs.writeFile(path.join(dir, "Evenements.csv"), eventsCsv);
 
   console.log(
-    `✅ ${pageRows.length} pages, ${sourceRows.length} sources, ${eventRows.length} types d'événement bêta -> ${dir}\n`
+    `✅ ${pageRows.length} pages, ${sourceRows.length} sources, ${eventRows.length} types d'événement -> ${dir}\n`
   );
 }
 
