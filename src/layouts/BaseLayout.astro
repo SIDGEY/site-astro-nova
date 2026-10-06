@@ -109,6 +109,61 @@ const {
       import { trackEvent } from "../lib/tracking";
 
       const PLAY_HOST = "play.dynastynova.com";
+      const ORIGIN_KEY = "dn_session_origin";
+      const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+
+      // Origine de la visite, retenue à la première page de la session : sans elle, le jeu ne
+      // voit arriver que « dynastynova.com » et ne sait pas qui vient de LinkedIn, d'un e-mail
+      // ou de Google (le jeu la capte en premier contact, voir Frontend `lib/attribution.ts`).
+      const rememberOrigin = () => {
+        try {
+          if (sessionStorage.getItem(ORIGIN_KEY)) return;
+          const params = new URLSearchParams(window.location.search);
+          const origin: Record<string, string> = {};
+          for (const key of UTM_KEYS) {
+            const value = params.get(key);
+            if (value) origin[key] = value.slice(0, 100);
+          }
+          if (!origin.utm_source && document.referrer) {
+            const host = new URL(document.referrer).hostname;
+            if (host && !host.endsWith("dynastynova.com")) {
+              origin.utm_source = host;
+              origin.utm_medium = "referral";
+            }
+          }
+          sessionStorage.setItem(ORIGIN_KEY, JSON.stringify(origin));
+        } catch {
+          // Stockage refusé : les liens partent sans origine, comme avant.
+        }
+      };
+      rememberOrigin();
+
+      // Ajoute l'origine au lien vers le jeu, juste avant la navigation. Priorité : l'origine
+      // réelle de la session, puis les UTM déjà posés sur le lien (CTA d'article), puis le site.
+      const tagPlayLink = (link: HTMLAnchorElement) => {
+        try {
+          const url = new URL(link.href, window.location.href);
+          let origin: Record<string, string> = {};
+          try {
+            origin = JSON.parse(sessionStorage.getItem(ORIGIN_KEY) || "{}");
+          } catch {
+            origin = {};
+          }
+          if (origin.utm_source) {
+            for (const key of UTM_KEYS) {
+              if (origin[key]) url.searchParams.set(key, origin[key]);
+              else url.searchParams.delete(key);
+            }
+          } else if (!url.searchParams.get("utm_source")) {
+            url.searchParams.set("utm_source", "dynastynova.com");
+            url.searchParams.set("utm_medium", "site");
+            url.searchParams.set("utm_campaign", window.location.pathname.replace(/^\/|\/$/g, "") || "home");
+          }
+          link.href = url.toString();
+        } catch {
+          // URL illisible : le lien part tel quel.
+        }
+      };
 
       document.addEventListener("click", (event) => {
         const link = (event.target as Element | null)?.closest?.("a[href]") as
@@ -124,6 +179,7 @@ const {
         }
         if (host !== PLAY_HOST) return;
 
+        tagPlayLink(link);
         trackEvent("play_click", {
           // Distingue le bouton d'en-tête d'un CTA de bas de page.
           link_text: link.textContent?.trim().slice(0, 100) || "",
