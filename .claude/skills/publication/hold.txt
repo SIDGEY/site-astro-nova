@@ -1,0 +1,6 @@
+# Articles que le skill publication ne publie jamais, quelle que soit leur date.
+# Un slug (nom de fichier sans .md) par ligne. Retirer la ligne pour libérer l'article.
+
+# Fonctionnalité pas encore en production : à publier à la sortie de la release 3.7.0 du jeu,
+# en même temps que l'e-mail 10b (plan-resend.py --apply --dynasties) et le post LinkedIn 09.
+dynasty-nova-dynasties-classes-et-arbres-de-talents

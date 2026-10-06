@@ -330,3 +330,33 @@ dans le backlog une fois le fichier écrit.
 - **Structure H2 + H3 et FAQ obligatoires** sur tout article (modes blog), y compris
   quand on retouche un article déjà publié pour une autre raison (cover, correctif de
   contenu…) : ne pas laisser passer une occasion de le mettre à niveau.
+
+## Mode routine (sans humain dans la boucle)
+
+Quand la demande dit « mode routine » (une routine planifiée, personne pour répondre),
+les trois points d'arrêt sont remplacés par **une PR** : l'auteur relit et fusionne, et
+c'est la fusion qui vaut validation. Le skill `publication` publiera ensuite l'article à sa
+date. Ce mode ne publie jamais et ne pousse jamais sur `main`.
+
+1. **Signaux** : si les clés GSC/GA4 ne sont pas dans l'environnement, sauter Étape 0 sauf
+   les PR du jeu : `gh pr list -R Dynasty-Nova/Frontend --state merged --search
+   "merged:>=<date J-7>"`, idem pour `Dynasty-Nova/Backend`. Si `gh` n'a pas accès à ces
+   dépôts, s'arrêter et le dire.
+2. **Choix (2 articles au plus)** : uniquement des `feat` qui changent ce qu'un joueur voit
+   ou fait. Regrouper une PR front et sa PR back dans un même article. Écarter `fix`,
+   `chore`, `refactor`, le back-office et l'admin. Écarter une PR fusionnée **après la
+   dernière release** (`gh release list -R Dynasty-Nova/Frontend --limit 1`) : la
+   fonctionnalité n'est pas encore en production, elle attend la semaine suivante.
+   Écarter un sujet déjà couvert (titres et descriptions de `src/content/articles/`).
+3. **Rédaction** : Étape 4 à la lettre (titre orienté intention, H2 + H3, FAQ, 500 à 700
+   mots, aucun tiret cadratin, règle anti-hallucination : rien qui ne soit dans la PR).
+   `draft: true`, et `date` = le prochain mercredi qui n'a pas déjà deux brouillons datés.
+4. **Cover** : `scripts/generate-cover.mjs` si `CLOUDFLARE_ACCOUNT_ID`/`CLOUDFLARE_API_TOKEN`
+   sont présents ; sinon, pas de champ `image` (cover de repli) et le dire dans la PR.
+5. **Validation** : `npm ci && npm run build`.
+6. **PR** : branche `routine/articles-<date du jour>`, un commit par article, push, puis
+   `gh pr create` vers `main`. Corps de la PR : pour chaque article, les PR sources (liens),
+   ce que l'article affirme et d'où ça vient, la date de publication prévue, et la phrase
+   « Fusionner cette PR vaut validation : le skill publication publiera l'article à sa
+   date. » Ne jamais fusionner soi-même.
+7. Rien qui vaille un article cette semaine : pas de PR, un compte rendu d'une ligne.
