@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova face à Neptune's Pride : le jeu spatial qui a supprimé l'interface"
+title: "Neptune's Pride : le jeu spatial qui a supprimé l'interface"
 date: 2026-09-24
 description: "Neptune's Pride a retiré tout bouton d'alliance dès 2010 : une carte, des étoiles, des flottes, et rien d'autre. Ce que ce choix radical nous apprend chez Dynasty Nova sur la diplomatie en jeu."
 author: "Guillaume Hambourger"

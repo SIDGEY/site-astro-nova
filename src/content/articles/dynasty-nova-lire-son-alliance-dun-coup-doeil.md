@@ -1,11 +1,11 @@
 ---
-title: "Dynasty Nova : lire son alliance d'un coup d'œil, de l'équipage au score de guerre"
-date: 2026-10-20
+title: "Gérer une alliance : registre de l'équipage et score de guerre dans Dynasty Nova"
+date: 2026-10-06
 description: "Registre de l'équipage trié par rang ou activité, dernier signal de chaque membre, matrice des droits et score des guerres en cours : les écrans d'alliance de Dynasty Nova sont refaits."
 author: "Guillaume Hambourger"
 coAuthors: []
 tags: ["Mise à Jour", "Alliance", "Multijoueur", "Diplomatie"]
-draft: true
+draft: false
 image: "/uploads/blog/covers/dynasty-nova-lire-son-alliance-dun-coup-doeil.webp"
 icon: "ph-users-three"
 coverPrompt: "a soft field of violet and magenta light"

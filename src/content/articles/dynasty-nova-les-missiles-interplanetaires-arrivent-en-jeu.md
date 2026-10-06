@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : les missiles interplanétaires arrivent en jeu"
+title: "Missiles interplanétaires : comment ils fonctionnent dans Dynasty Nova"
 date: 2026-08-13
 description: "Dynasty Nova sépare enfin les missiles des défenses classiques : un silo dédié, une frappe irréversible dont la portée et la durée de vol viennent uniquement du serveur, et des dégâts qui ne se réparent jamais tout seuls."
 author: "Guillaume Hambourger"

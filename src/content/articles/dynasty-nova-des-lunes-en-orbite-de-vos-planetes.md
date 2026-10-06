@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : des lunes en orbite de vos planètes"
+title: "Lunes dans un jeu de stratégie spatiale : formation, bâtiments et défense dans Dynasty Nova"
 date: 2026-09-09
 description: "Dynasty Nova ajoute les lunes : un second corps céleste qui naît des débris d'un combat en orbite, avec ses propres bâtiments, sa propre garnison, et une mission dédiée pour le briser."
 author: "Guillaume Hambourger"

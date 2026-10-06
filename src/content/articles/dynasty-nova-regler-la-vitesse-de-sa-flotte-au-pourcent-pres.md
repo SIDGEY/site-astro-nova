@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : régler la vitesse de sa flotte au pourcent près"
+title: "Vitesse de flotte : régler son heure d'arrivée au pourcent près dans Dynasty Nova"
 date: 2026-09-04
 description: "Le curseur de vitesse d'une mission passe des paliers de 10% à un réglage au pourcent près, de 1% à 100%. Glissement, saisie directe ou clavier : trois façons de caler précisément l'heure d'arrivée d'une flotte."
 author: "Guillaume Hambourger"

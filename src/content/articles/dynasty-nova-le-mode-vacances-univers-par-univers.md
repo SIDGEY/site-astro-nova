@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : le mode vacances, univers par univers"
+title: "Mode vacances : protéger son empire pendant une absence dans Dynasty Nova"
 date: 2026-09-15
 description: "Dynasty Nova ouvre le mode vacances : une pause protégée qui ne se déclenche que sur l'univers choisi, avec trois conditions à remplir pour partir et 48 heures incompressibles avant de revenir."
 author: "Guillaume Hambourger"

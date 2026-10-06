@@ -1,11 +1,11 @@
 ---
-title: "Dynasty Nova : sept jours de bouclier pour les nouveaux commandants"
-date: 2026-10-07
+title: "Protection des nouveaux joueurs : sept jours de bouclier dans Dynasty Nova"
+date: 2026-10-06
 description: "Rejoindre un jeu de stratégie spatiale déjà lancé sans servir de cible : Dynasty Nova protège chaque nouveau joueur pendant 7 jours dans son univers. Ce que le bouclier couvre, et comment on le perd."
 author: "Guillaume Hambourger"
 coAuthors: []
 tags: ["Mise à Jour", "Gameplay", "Onboarding", "PvP"]
-draft: true
+draft: false
 image: "/uploads/blog/covers/dynasty-nova-sept-jours-de-bouclier-pour-les-nouveaux-joueurs.webp"
 icon: "ph-shield-check"
 coverPrompt: "a soft field of electric blue light, a rounded protective glow in the centre"
@@ -62,4 +62,4 @@ Un univers ouvert depuis quelques jours est un univers vivant : des alliances re
 
 ### Une semaine pour poser les fondations
 
-Sept jours suffisent pour monter vos mines de métal, de cristal et d'hydrogène, lancer vos premières technologies et rejoindre une alliance. Explorer la galaxie, c'est maintenant : votre planète vous attend sur [play.dynastynova.com](https://play.dynastynova.com/?utm_source=blog&utm_medium=article&utm_campaign=bouclier-7-jours).
+Sept jours suffisent pour [monter vos mines](/blog/debuter-jeu-de-strategie-spatiale-guide-premieres-heures/) de métal, de cristal et d'hydrogène, lancer vos premières technologies et rejoindre une alliance. Explorer la galaxie, c'est maintenant : votre planète vous attend sur [play.dynastynova.com](https://play.dynastynova.com/?utm_source=blog&utm_medium=article&utm_campaign=bouclier-7-jours).

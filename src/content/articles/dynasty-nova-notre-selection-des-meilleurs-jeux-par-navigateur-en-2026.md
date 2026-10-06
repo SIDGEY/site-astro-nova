@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : notre sélection des meilleurs jeux par navigateur en 2026"
+title: "Meilleurs jeux par navigateur en 2026 : notre sélection"
 date: 2026-08-27
 description: "Notre sélection des meilleurs jeux par navigateur en 2026, d'OGame à Starborne: Frontiers, et la place que Dynasty Nova vise dans ce paysage en pleine renaissance."
 author: "Guillaume Hambourger"

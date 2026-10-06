@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : coordonner son alliance depuis le chat"
+title: "Chat d'alliance : partager coordonnées et rapports d'espionnage dans Dynasty Nova"
 date: 2026-08-30
 description: "Le canal d'alliance de Dynasty Nova reçoit des cartes typées pour partager une coordonnée ou un rapport d'espionnage sans en exposer le contenu, et le centre de notifications s'ouvre enfin aux événements d'alliance."
 author: "Guillaume Hambourger"

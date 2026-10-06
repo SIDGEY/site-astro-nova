@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : ce qui change pour un joueur habitué à OGame"
+title: "Jeu comme OGame : ce qui change dans Dynasty Nova pour un joueur habitué"
 date: 2026-09-04
 description: "Dynasty Nova reprend les fondamentaux d'OGame, ressources, recherches et flottes, mais change l'interface mobile, l'équilibrage du temps de jeu et l'accès au combat. Le comparatif concret pour un joueur qui vient d'OGame."
 author: "Guillaume Hambourger"

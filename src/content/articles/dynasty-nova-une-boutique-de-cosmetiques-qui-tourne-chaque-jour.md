@@ -1,11 +1,11 @@
 ---
-title: "Dynasty Nova : une boutique de cosmétiques qui tourne chaque jour"
-date: 2026-10-09
+title: "Boutique de cosmétiques tournante : comment elle fonctionne dans Dynasty Nova"
+date: 2026-10-06
 description: "Vitrines quotidiennes et hebdomadaires, liste de souhaits, éditions limitées et packs à -20 % : la boutique de Dynasty Nova change de visage, et ne vend toujours que des cosmétiques."
 author: "Guillaume Hambourger"
 coAuthors: []
 tags: ["Mise à Jour", "Boutique", "Monétisation"]
-draft: true
+draft: false
 image: "/uploads/blog/covers/dynasty-nova-une-boutique-de-cosmetiques-qui-tourne-chaque-jour.webp"
 icon: "ph-storefront"
 coverPrompt: "a soft field of warm amber and gold light"

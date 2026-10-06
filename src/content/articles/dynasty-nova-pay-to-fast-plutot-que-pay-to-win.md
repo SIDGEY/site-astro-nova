@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : Pay-to-Fast plutôt que Pay-to-Win"
+title: "Pay to fast ou pay to win : le modèle économique de Dynasty Nova"
 date: 2026-08-20
 description: "Chez Dynasty Nova, l'argent réel achète du temps, jamais un avantage inaccessible. Voici comment cette promesse se retrouve concrètement dans la boutique du jeu."
 author: "Guillaume Hambourger"

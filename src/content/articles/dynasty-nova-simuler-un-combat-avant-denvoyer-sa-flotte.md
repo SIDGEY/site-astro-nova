@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : simuler un combat avant d'envoyer sa flotte"
+title: "Simulateur de combat : tester sa flotte avant d'attaquer dans Dynasty Nova"
 date: 2026-08-27
 description: "Le nouveau simulateur de combat de Dynasty Nova permet de tester une attaque avant de l'envoyer, avec un rapport d'espionnage pré-rempli, un taux de victoire calculé sur 50 tirages et le même moteur que les vrais affrontements."
 author: "Guillaume Hambourger"

@@ -1,11 +1,11 @@
 ---
 title: "Jeu de stratégie spatiale gratuit sur navigateur : ce que vous trouverez dans Dynasty Nova"
-date: 2026-10-13
+date: 2026-10-06
 description: "Gratuit, sans téléchargement, jouable sur ordinateur et mobile : ce que propose Dynasty Nova, jeu de stratégie spatiale par navigateur inspiré d'OGame, et ce qu'il ne propose pas."
 author: "Guillaume Hambourger"
 coAuthors: []
 tags: ["Jeux Par Navigateur", "OGame", "Stratégie", "Multijoueur"]
-draft: true
+draft: false
 image: "/uploads/blog/covers/jeu-de-strategie-spatiale-gratuit-navigateur-dynasty-nova.webp"
 icon: "ph-planet"
 coverPrompt: "a soft field of turquoise and nebula green light"
@@ -54,7 +54,7 @@ Le tableau ci-dessous résume ce qu'un nouveau joueur trouve en arrivant.
 
 ### Un jeu qui accueille les retardataires
 
-Le principal frein des jeux du genre, c'est d'arriver après tout le monde. Dans Dynasty Nova, chaque joueur est protégé pendant **7 jours** à compter de sa première arrivée dans un univers, et ne perd ce bouclier que s'il attaque lui-même. Une protection fondée sur l'écart de points complète le dispositif.
+Le principal frein des jeux du genre, c'est d'arriver après tout le monde. Dans Dynasty Nova, chaque joueur est [protégé pendant **7 jours**](/blog/dynasty-nova-sept-jours-de-bouclier-pour-les-nouveaux-joueurs/) à compter de sa première arrivée dans un univers, et ne perd ce bouclier que s'il attaque lui-même. Une protection fondée sur l'écart de points complète le dispositif.
 
 ### Des parties entre amis
 
@@ -74,7 +74,7 @@ Dynasty Nova se joue en sessions courtes : lancer une construction, envoyer une 
 
 ## Par où commencer ?
 
-Le plus simple est de créer un compte, de rejoindre un univers ouvert et de suivre le tutoriel, qui accompagne les premières constructions sans bloquer l'écran.
+Le plus simple est de créer un compte, de rejoindre un univers ouvert et de suivre le tutoriel, qui accompagne les premières constructions sans bloquer l'écran. Notre [guide des premières heures](/blog/debuter-jeu-de-strategie-spatiale-guide-premieres-heures/) détaille l'ordre des décisions.
 
 ### Les premiers réflexes
 

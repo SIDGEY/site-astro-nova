@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : déclarer la guerre à une autre alliance, au vote"
+title: "Guerre entre alliances : déclarer la guerre au vote dans Dynasty Nova"
 date: 2026-09-04
 description: "Dynasty Nova ouvre les guerres d'alliance : une question se propose, l'état-major vote, et l'adoption déclare seule la guerre. Pactes rompus, bilans sans vainqueur, tout ce qui change pour la diplomatie interstellaire."
 author: "Guillaume Hambourger"

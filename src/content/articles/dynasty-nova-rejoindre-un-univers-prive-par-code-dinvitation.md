@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : rejoindre un univers privé par code d'invitation"
+title: "Jouer entre amis à un jeu de stratégie spatiale : les univers privés de Dynasty Nova"
 date: 2026-09-24
 description: "Dynasty Nova ouvre les univers privés : une pastille les distingue dans la liste, un code d'invitation copiable y donne accès, et les rapports de transport reçus affichent enfin le bon camp."
 author: "Guillaume Hambourger"

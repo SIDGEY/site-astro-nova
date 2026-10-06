@@ -205,6 +205,22 @@ H2 couvre un thème et se subdivise en 2-3 H3 qui portent chacun un paragraphe c
 focalisé. Référence de densité : n'importe quel fichier existant dans
 `src/content/articles/*.md` (ex. `astronova-creer-une-ui-mobile-first-inspiree-des-meilleures-pratiques.md`).
 
+**Titre orienté intention, marque en fin de titre** : le titre est aussi la balise
+`<title>` (le schéma n'a pas de `seoTitle`). Commencer par les mots qu'un joueur tape
+sans connaître le jeu (« Simulateur de combat : … », « Jeu comme OGame : … »,
+« Protection des nouveaux joueurs : … »), et placer « dans Dynasty Nova » à la fin si
+le sujet est propre au jeu. Ne plus ouvrir par « Dynasty Nova : … » : au 2026-10-06,
+91 % des clics Google du site venaient de la requête de marque et les articles titrés
+ainsi ne captaient aucune recherche non-marque. Exception : une annonce ou un
+lancement, que seuls cherchent ceux qui connaissent déjà le jeu. Ne jamais toucher au
+slug d'un article publié en changeant son titre.
+
+**Une page d'intention par mois au minimum** : en plus des dev-diaries, produire au
+moins un article qui répond à une question réelle de joueur qui ne connaît pas encore le
+jeu (guide, définition, comparatif), sur le modèle de
+`jeu-de-strategie-spatiale-gratuit-navigateur-dynasty-nova.md` et
+`debuter-jeu-de-strategie-spatiale-guide-premieres-heures.md`.
+
 **Jamais de tiret cadratin/demi-cadratin (—, –)** : tic d'écriture IA immédiatement
 reconnaissable (voir `docs/charte_editoriale.md` §4). Remplacer par une virgule, un
 point, deux-points, un point-virgule ou des parenthèses selon le sens — y compris en

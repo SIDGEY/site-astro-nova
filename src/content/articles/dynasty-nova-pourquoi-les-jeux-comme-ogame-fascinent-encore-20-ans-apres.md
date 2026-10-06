@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : pourquoi les jeux comme OGame fascinent encore 20 ans après"
+title: "Pourquoi les jeux comme OGame fascinent encore 20 ans après"
 date: 2026-09-17
 description: "OGame, Travian, Ikariam : retour sur ce qui a rendu les jeux de stratégie par navigateur cultes, et sur ce que Dynasty Nova reprend de cet héritage sans en trahir l'esprit."
 author: "Guillaume Hambourger"

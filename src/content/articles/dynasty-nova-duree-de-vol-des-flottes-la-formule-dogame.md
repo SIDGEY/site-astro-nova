@@ -1,11 +1,11 @@
 ---
 title: "Durée de vol des flottes : Dynasty Nova adopte la formule d'OGame"
-date: 2026-10-15
+date: 2026-10-06
 description: "Comment se calcule le temps de vol d'une flotte dans un jeu de type OGame, et pourquoi Dynasty Nova a corrigé une erreur qui rendait chaque trajet environ 10 fois trop court."
 author: "Guillaume Hambourger"
 coAuthors: []
 tags: ["Mise à Jour", "Flotte", "OGame", "Stratégie"]
-draft: true
+draft: false
 image: "/uploads/blog/covers/dynasty-nova-duree-de-vol-des-flottes-la-formule-dogame.webp"
 icon: "ph-hourglass"
 coverPrompt: "a soft field of deep violet and indigo light, a long gentle diagonal streak of brightness crossing the frame"
@@ -55,7 +55,7 @@ Des trajets plus longs, ce sont des décisions qui pèsent plus lourd. C'est exa
 
 ### Espionner juste avant d'agir
 
-Un rapport d'espionnage est une photo à l'instant T. Avec des vols de plusieurs heures, la cible a le temps de rentrer sa flotte ou de dépenser ses ressources. Le réflexe des joueurs expérimentés : envoyer une sonde juste avant le départ de l'attaque, pas des heures avant.
+Un rapport d'espionnage est une photo à l'instant T, envoyée par une [sonde](/blog/debuter-jeu-de-strategie-spatiale-guide-premieres-heures/). Avec des vols de plusieurs heures, la cible a le temps de rentrer sa flotte ou de dépenser ses ressources. Le réflexe des joueurs expérimentés : envoyer une sonde juste avant le départ de l'attaque, pas des heures avant.
 
 ### Ce qui n'a pas bougé
 
