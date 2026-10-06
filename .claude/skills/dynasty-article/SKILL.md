@@ -221,6 +221,16 @@ jeu (guide, définition, comparatif), sur le modèle de
 `jeu-de-strategie-spatiale-gratuit-navigateur-dynasty-nova.md` et
 `debuter-jeu-de-strategie-spatiale-guide-premieres-heures.md`.
 
+Calendrier tenu (brouillons prêts, à passer en `draft: false` le mois venu, puis
+vérifier que les faits cités sont toujours vrais en jeu) :
+- 2026-10 : article pilier + guide débutant (publiés le 2026-10-06)
+- 2026-11 : `jouer-jeu-de-strategie-spatiale-sur-mobile-sans-application.md`
+- 2026-12 : `lexique-jeu-de-strategie-spatiale-ogame.md`
+- 2027-01 : `preparer-un-raid-jeu-de-strategie-spatiale.md`
+Pistes suivantes, à confronter au GSC avant d'écrire : coloniser sa deuxième planète,
+choisir sa classe (une fois la 3.7.0 en production), défendre sa planète sans flotte,
+jouer entre amis à un jeu de stratégie spatiale.
+
 **Jamais de tiret cadratin/demi-cadratin (—, –)** : tic d'écriture IA immédiatement
 reconnaissable (voir `docs/charte_editoriale.md` §4). Remplacer par une virgule, un
 point, deux-points, un point-virgule ou des parenthèses selon le sens — y compris en
