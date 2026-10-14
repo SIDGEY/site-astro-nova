@@ -4,3 +4,7 @@
 # Fonctionnalité pas encore en production : à publier à la sortie de la release 3.7.0 du jeu,
 # en même temps que l'e-mail 10b (plan-resend.py --apply --dynasties) et le post LinkedIn 09.
 dynasty-nova-dynasties-classes-et-arbres-de-talents
+
+# Fonctionnalité pas encore en production (fusionnée le 2026-10-13, après la release du 2026-10-12) :
+# à publier quand une release la déploie, après avoir vérifié qu'elle est activée sur l'univers.
+meteorites-cometes-impacts-geants-evenements-cosmiques-dynasty-nova
