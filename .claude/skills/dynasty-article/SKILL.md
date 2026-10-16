@@ -7,6 +7,9 @@ description: >-
   de recherche legacy de play-astronova.com (ancienne marque), et le cluster "jeux" de
   beryldesign.fr (déjà spécialisé sur Dynasty Nova/OGame, 78% de ses clics). Quatre modes
   de production (dev-diary, research, video/Vidiome, community-post pour Reddit/forums).
+  Chaque article de blog sert aussi l'acquisition de nouveaux joueurs : intention de
+  recherche non-marque, intro lisible sans connaître le jeu, CTA tracé (UTM) vers
+  play.dynastynova.com, maillage vers les pages d'entrée.
   Toujours en brouillon (`draft: true`) pour les modes blog, jamais de publication
   automatique sur une plateforme tierce pour community-post. Lot ≤ 3 par run. Déclencher
   quand l'utilisateur veut « générer/proposer un article », « des idées de sujets », « un
@@ -19,6 +22,12 @@ description: >-
 Produit des **brouillons** (`draft: true`) prêts à relire — jamais de publication
 auto. Le backlog persistant (`editorial/backlog.jsonl`) évite de reproposer un sujet
 déjà traité ou rejeté.
+
+**Double objectif du blog** : informer les joueurs actuels ET amener des joueurs qui
+ne connaissent pas encore Dynasty Nova. Le SEO fait venir le lecteur, l'article doit
+lui donner envie de lancer une partie. Concrètement, chaque article de blog respecte le
+« Parcours d'acquisition » de l'Étape 4 ; ça ne crée pas de mode à part, ça s'applique
+aux modes existants.
 
 **Trois points d'arrêt obligatoires** : ① validation du lot retenu (≤ 3 idées),
 ② validation des sources selon le mode, ③ confirmation finale avant de rendre la main.
@@ -97,6 +106,21 @@ source :
   non encore couvert, priorité la plus basse (aucune preuve de demande, juste une
   cible déclarée).
 
+**Filtre acquisition** (en plus de l'ordre ci-dessus) :
+- Dans un lot, **au moins une idée doit pouvoir être trouvée par quelqu'un qui ne
+  connaît pas le jeu** : un signal `legacy-gsc`/`gsc-gap`/`beryldesign` sur une requête
+  non-marque, ou une page d'intention du calendrier (Étape 4). Un lot 100 % dev-diary
+  ne parle qu'aux joueurs déjà là.
+- Pour un `dev-diary`, préférer une fonctionnalité qui change l'expérience d'un
+  **nouveau** joueur ou qui illustre ce qui distingue le jeu (gratuit, navigateur,
+  mobile, combats lisibles…) à un réglage qui ne parle qu'aux vétérans. Si le sujet
+  reste pointu, le dire dans la présentation du lot plutôt que de l'écarter.
+- Pour voir ce qui amène déjà des visiteurs, lire le dernier
+  `.ga4-cache/dynastynova.com-GA4-*/` (`Pages.csv` : pages `/blog/…` qui reçoivent des
+  sessions, `Sources.csv` : part du trafic organique, `Evenements.csv` : total des
+  `play_click`, départs vers le jeu). Le cache ne donne pas les `play_click` par
+  article : ne jamais présenter un chiffre de conversion par article comme mesuré.
+
 **Mode batch** : sélectionner jusqu'à **3** idées `proposed`/`queued` (jamais plus).
 ```bash
 node scripts/dynasty-ideas.mjs --queue <id1> <id2> <id3> --apply
@@ -163,6 +187,11 @@ r/incremental_games, forums de jeux navigateur. Contrairement aux trois autres m
   un flair précis — si l'utilisateur ne le sait pas, le signaler comme point à
   vérifier plutôt que de l'ignorer.
 - **Longueur** : 100-250 mots, pas un article complet.
+- **Lien** : si un article du blog couvre le sujet, y renvoyer plutôt que directement
+  vers le jeu (le lecteur y trouve le contexte et le CTA). Ajouter
+  `?utm_source=<communauté, ex. reddit-ogame>&utm_medium=community&utm_campaign=<slug>`
+  pour distinguer ce trafic dans `Sources.csv`. Un seul lien, et seulement si les
+  règles de la communauté l'autorisent.
 
 Présenter la shortlist de sources (quelle que soit sa nature) → **s'arrêter**,
 l'utilisateur valide.
@@ -230,6 +259,36 @@ vérifier que les faits cités sont toujours vrais en jeu) :
 Pistes suivantes, à confronter au GSC avant d'écrire : coloniser sa deuxième planète,
 choisir sa classe (une fois la 3.7.0 en production), défendre sa planète sans flotte,
 jouer entre amis à un jeu de stratégie spatiale.
+
+**Parcours d'acquisition (tous les modes blog)** : convention déjà suivie par les
+articles récents (ex. `vendre-et-acheter-des-ressources-banque-stellaire-dynasty-nova.md`,
+`preparer-un-raid-jeu-de-strategie-spatiale.md`), à appliquer systématiquement :
+- **Intro lisible à froid** : le premier paragraphe doit tenir pour un lecteur arrivé
+  de Google sans connaître le jeu. Dans un `dev-diary`, situer Dynasty Nova en une
+  demi-phrase (jeu de stratégie spatiale gratuit, dans le navigateur, jouable sur
+  mobile) avant de parler de la nouveauté. Jargon du genre (raid, recyclage,
+  colonisation…) expliqué au premier usage ou lié au lexique.
+- **CTA vers le jeu, tracé** : au moins un lien vers le jeu, dans la conclusion,
+  formulé avec un verbe de la charte §8 (« Explorer la galaxie », « Envoyer la
+  flotte »…) et jamais « Cliquez ici ». Un second au maximum, au milieu de l'article,
+  s'il tombe naturellement. Format exact :
+  `[play.dynastynova.com](https://play.dynastynova.com/?utm_source=blog&utm_medium=article&utm_campaign=<campagne>)`
+  où `<campagne>` = sujet court en kebab-case (`banque-stellaire`), préfixé
+  `intention-` pour une page d'intention (`intention-raid`). Le script de
+  `src/layouts/BaseLayout.astro` conserve ces UTM et compte le clic en `play_click`.
+- **Maillage interne** : 2-3 liens `/blog/<slug>/` vers des articles publiés
+  (`draft: false`). Un `dev-diary` renvoie vers au moins une page d'entrée (le pilier
+  `jeu-de-strategie-spatiale-gratuit-navigateur-dynasty-nova` ou le guide
+  `debuter-jeu-de-strategie-spatiale-guide-premieres-heures`) ; une page d'intention
+  renvoie vers les dev-diaries qui prouvent ce qu'elle affirme. Vérifier que chaque
+  slug lié existe.
+- **FAQ** : quand l'article l'établit, une des 3-4 questions est celle d'un joueur qui
+  hésite à commencer (« Dynasty Nova est-il gratuit ? », « Peut-on y jouer sur
+  mobile ? »). Même règle que la FAQ : rien qui ne soit écrit dans l'article.
+- **Transparent sans trop en dire** : décrire ce que le joueur voit et fait (écrans,
+  parcours, délais). Jamais de chiffres d'équilibrage internes, de formules, de
+  pourcentages de configuration, de back-office ni de monétisation. Si une information
+  manque, déprioriser le sujet plutôt que de la deviner.
 
 **Jamais de tiret cadratin/demi-cadratin (—, –)** : tic d'écriture IA immédiatement
 reconnaissable (voir `docs/charte_editoriale.md` §4). Remplacer par une virgule, un
@@ -302,7 +361,8 @@ contre `docs/charte_editoriale.md` §11 tient lieu de contrôle qualité.
 
 ## Étape 6 — Confirmation finale (point d'arrêt ③)
 
-Présenter chaque brouillon produit (chemin, titre, mode, source) → l'utilisateur
+Présenter chaque brouillon produit (chemin, titre, mode, source, plus la requête
+non-marque visée, le lien CTA avec sa campagne et les articles liés) → l'utilisateur
 relit et décide de publier (`draft: false`) ou d'ajuster. Marquer l'idée `--complete`
 dans le backlog une fois le fichier écrit.
 
@@ -327,9 +387,15 @@ dans le backlog une fois le fichier écrit.
   communautaire. Toujours remettre le texte à l'utilisateur pour publication manuelle.
 - **Jamais de tiret cadratin/demi-cadratin (—, –)** dans un article ni un post
   community, relire le brouillon spécifiquement pour ça avant l'Étape 5.
-- **Structure H2 + H3 et FAQ obligatoires** sur tout article (modes blog), y compris
-  quand on retouche un article déjà publié pour une autre raison (cover, correctif de
-  contenu…) : ne pas laisser passer une occasion de le mettre à niveau.
+- **Structure H2 + H3, FAQ et parcours d'acquisition obligatoires** sur tout article
+  (modes blog), y compris quand on retouche un article déjà publié pour une autre
+  raison (cover, correctif de contenu…) : ne pas laisser passer une occasion de le
+  mettre à niveau. Au 2026-10-16, 45 des 56 articles publiés n'ont aucun lien vers le
+  jeu (`grep -L "play.dynastynova.com"` sur les articles `draft: false`) ; leur ajouter
+  le CTA tracé et le maillage dès qu'on y touche, sans changer le slug.
+- **Acquisition sans racolage** : le CTA reste in-univers et à sa place (conclusion,
+  au plus un autre) ; pas de bandeau, de superlatif ni de promesse que le jeu ne tient
+  pas (charte §3, « ce que nous ne promettons pas »).
 
 ## Mode routine (sans humain dans la boucle)
 
@@ -349,14 +415,16 @@ date. Ce mode ne publie jamais et ne pousse jamais sur `main`.
    fonctionnalité n'est pas encore en production, elle attend la semaine suivante.
    Écarter un sujet déjà couvert (titres et descriptions de `src/content/articles/`).
 3. **Rédaction** : Étape 4 à la lettre (titre orienté intention, H2 + H3, FAQ, 500 à 700
-   mots, aucun tiret cadratin, règle anti-hallucination : rien qui ne soit dans la PR).
+   mots, aucun tiret cadratin, règle anti-hallucination : rien qui ne soit dans la PR),
+   parcours d'acquisition compris (intro lisible à froid, CTA tracé, maillage interne).
    `draft: true`, et `date` = le prochain mercredi qui n'a pas déjà deux brouillons datés.
 4. **Cover** : `scripts/generate-cover.mjs` si `CLOUDFLARE_ACCOUNT_ID`/`CLOUDFLARE_API_TOKEN`
    sont présents ; sinon, pas de champ `image` (cover de repli) et le dire dans la PR.
 5. **Validation** : `npm ci && npm run build`.
 6. **PR** : branche `routine/articles-<date du jour>`, un commit par article, push, puis
    `gh pr create` vers `main`. Corps de la PR : pour chaque article, les PR sources (liens),
-   ce que l'article affirme et d'où ça vient, la date de publication prévue, et la phrase
+   ce que l'article affirme et d'où ça vient, la date de publication prévue, la requête
+   non-marque visée et la campagne UTM du CTA, et la phrase
    « Fusionner cette PR vaut validation : le skill publication publiera l'article à sa
    date. » Ne jamais fusionner soi-même.
 7. Rien qui vaille un article cette semaine : pas de PR, un compte rendu d'une ligne.
