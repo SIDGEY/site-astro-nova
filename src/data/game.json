@@ -1,10 +1,10 @@
 {
   "source": {
     "repo": "Dynasty-Nova/Frontend",
-    "ref": "origin/main",
-    "sha": "eb30637dc0256da5d73a6b6fe83bbe444735134c",
-    "commitDate": "2026-10-16T19:17:37+02:00",
-    "syncedAt": "2026-10-16T17:18:54.920Z",
+    "ref": "origin/fix/biomes-v8-normal-relief-bands",
+    "sha": "46160a4d060b3a6c74b42525ae5cfa114909a1d4",
+    "commitDate": "2026-10-16T23:26:00+02:00",
+    "syncedAt": "2026-10-16T21:33:41.200Z",
     "three": "^0.186.1",
     "shop": "Astro-Nova-Backend@59b01c6a",
     "avatars": "dynasty-nova-codex/assets/references/livraison-avatars-2026-10-15"
