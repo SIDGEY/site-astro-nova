@@ -3,7 +3,8 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import { SITE_URL } from "../lib/seo";
-const pages = await getCollection("pages");
+// La home a sa propre route (/) : /home n'existe pas.
+const pages = await getCollection("pages", ({ id }) => id !== "home");
 const sortedPages = pages.sort(
   (a, b) => (a.data.order || 99) - (b.data.order || 99),
 );
@@ -17,6 +18,7 @@ const breadcrumbs = [
 <BaseLayout
   title="Toutes nos pages"
   description="Explorez l'ensemble des pages de présentation."
+  index={false}
   breadcrumbs={breadcrumbs}
 >
   <div class="container-custom py-12">
@@ -27,7 +29,7 @@ const breadcrumbs = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {
         sortedPages.map((page) => (
-          <a href={`/${page.id}`} class="group card-basic">
+          <a href={`/${page.id}/`} class="group card-basic">
             <h2 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
               {page.data.title}
             </h2>

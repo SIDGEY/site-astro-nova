@@ -53,5 +53,5 @@ blocks:
       <p>Nous pouvons mettre à jour cette politique de cookies de temps à autre. Les modifications prendront effet dès qu'elles seront publiées sur cette page. Nous vous encourageons à consulter régulièrement cette page pour rester informé des dernières informations sur notre utilisation des cookies.</p>
 
       <h2>Nous contacter</h2>
-      <p>Si vous avez des questions concernant notre utilisation des cookies, n'hésitez pas à nous contacter via la page <a href="/contact">Contact</a>.</p>
+      <p>Si vous avez des questions concernant notre utilisation des cookies, n'hésitez pas à nous contacter via la page <a href="/contact/">Contact</a>.</p>
 ---

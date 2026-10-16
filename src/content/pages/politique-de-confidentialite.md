@@ -1,6 +1,7 @@
 ---
 title: "Politique de confidentialité"
 description: "Comprendre quelles données nous collectons et comment nous les traitons."
+index: false
 order: 99
 blocks:
   - type: "richContent"

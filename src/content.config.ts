@@ -515,6 +515,8 @@ const pagesCollection = defineCollection({
     sectionVariants: z.array(sectionVariantSchema).optional(),
     order: z.number().optional(),
     visibleInNav: z.boolean().optional(),
+    // false : page servie mais hors index Google et hors sitemap (pages légales, sommaire).
+    index: z.boolean().optional(),
     updatedAt: z.union([z.date(), z.string()]).optional(),
     hero: z.object({
       title: z.string(),

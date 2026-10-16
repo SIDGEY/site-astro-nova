@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { page } = Astro.props;
-const { title, description, blocks, sectionVariants } = page.data;
+const { title, description, blocks, sectionVariants, index = true } = page.data;
 const slug = page.id.replace(/\.md$/, "").replace(/\.json$/, "");
 const canonicalURL = `${SITE_URL}/${slug}/`;
 
@@ -32,6 +32,6 @@ const faqBlock = blocks?.find(
 const faqItems = faqBlock?.items;
 ---
 
-<BaseLayout {title} {description} {canonicalURL} {breadcrumbs} {faqItems}>
+<BaseLayout {title} {description} {canonicalURL} {breadcrumbs} {faqItems} {index}>
   <BlockRenderer {blocks} {sectionVariants} />
 </BaseLayout>

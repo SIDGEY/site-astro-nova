@@ -1,6 +1,7 @@
 ---
 title: "Conditions générales"
 description: "Les conditions d’utilisation et les règles applicables à la navigation sur le site."
+index: false
 order: 99
 blocks:
   - type: "richContent"
@@ -24,5 +25,5 @@ blocks:
       <p>Les présentes conditions sont régies par le droit français. En cas de litige, les tribunaux compétents seront ceux du ressort de [À compléter].</p>
 
       <h2>Contact</h2>
-      <p>Pour toute question, contactez-nous via la page <a href="/contact">Contact</a>.</p>
+      <p>Pour toute question, contactez-nous via la page <a href="/contact/">Contact</a>.</p>
 ---

@@ -24,5 +24,5 @@ blocks:
       <p>Le site et l’ensemble de son contenu (textes, images, graphismes, logos, vidéos, etc.) sont protégés par les droits de propriété intellectuelle. Toute reproduction, représentation, modification, publication ou adaptation, totale ou partielle, est interdite sans autorisation préalable écrite.</p>
 
       <h2>Contact</h2>
-      <p>Pour toute question, vous pouvez nous contacter via la page <a href="/contact">Contact</a>.</p>
+      <p>Pour toute question, vous pouvez nous contacter via la page <a href="/contact/">Contact</a>.</p>
 ---

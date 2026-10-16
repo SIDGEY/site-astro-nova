@@ -1,5 +1,5 @@
 ---
-title: "Dynasty Nova : annonce et décompte l'ouverture d'un univers"
+title: "Dynasty Nova : les nouveaux univers s'annoncent avec un décompte"
 date: 2026-09-18
 description: "Dynasty Nova sépare la création d'un univers de son ouverture : une date de lancement peut désormais être annoncée à l'avance, avec un décompte en jeu et un bouton Rejoindre qui reste fermé jusqu'à l'heure dite."
 author: "Guillaume Hambourger"

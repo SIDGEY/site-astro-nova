@@ -9,7 +9,7 @@
     },
     {
       "label": "Blog",
-      "link": "/blog"
+      "link": "/blog/"
     },
     {
       "label": "Communauté",
@@ -21,7 +21,7 @@
     },
     {
       "label": "Roadmap",
-      "link": "/roadmap"
+      "link": "/roadmap/"
     }
   ],
   "footer": {
@@ -70,17 +70,17 @@
     "resources_nav": [
       {
         "label": "Politique de confidentialité",
-        "href": "/politique-de-confidentialite",
+        "href": "/politique-de-confidentialite/",
         "type": "internal"
       },
       {
         "label": "Conditions d'utilisation",
-        "href": "/conditions-generales",
+        "href": "/conditions-generales/",
         "type": "internal"
       },
       {
         "label": "Cookies",
-        "href": "/cookies",
+        "href": "/cookies/",
         "type": "internal"
       }
     ],
