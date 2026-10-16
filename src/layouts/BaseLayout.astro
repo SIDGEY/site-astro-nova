@@ -177,6 +177,10 @@ const {
             url.searchParams.set("utm_medium", "site");
             url.searchParams.set("utm_campaign", window.location.pathname.replace(/^\/|\/$/g, "") || "home");
           }
+          // La page qui a fait partir le visiteur, quelle que soit son origine : site et jeu sont
+          // dans deux projets PostHog (quotas séparés), le jeu relit ce paramètre de sa session
+          // pour attribuer une inscription à un article (voir scripts/posthog-fetch.mjs).
+          url.searchParams.set("utm_content", window.location.pathname);
           link.href = url.toString();
         } catch {
           // URL illisible : le lien part tel quel.
