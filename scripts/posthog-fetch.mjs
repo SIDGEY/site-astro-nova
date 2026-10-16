@@ -2,8 +2,13 @@
 /**
  * Récupère le comportement des visiteurs de dynastynova.com dans PostHog (requêtes HogQL
  * via l'API) : ce que GA4 et GSC ne donnent pas, la conversion vers le jeu PAR PAGE et PAR
- * SOURCE (`play_click`, voir src/layouts/BaseLayout.astro), la profondeur de lecture, les
- * frictions (rage/dead clicks) et les Web Vitals. Écrit dans .posthog-cache/ (gitignored).
+ * SOURCE (`play_click`, voir src/layouts/BaseLayout.astro) jusqu'à l'inscription dans le jeu
+ * (`auth_signup_submitted`), la profondeur de lecture, les frictions (rage/dead clicks) et les
+ * Web Vitals. Écrit dans .posthog-cache/ (gitignored).
+ *
+ * Site et jeu envoient dans le même projet (218176) avec un cookie posé sur .dynastynova.com :
+ * le visiteur du blog garde son distinct_id jusqu'à l'inscription, qui part avant
+ * l'identification. C'est ce distinct_id qui relie une page lue à une inscription.
  *
  * Les chemins de page sont les mêmes que `pagePath` de GA4 et que l'URL de GSC, sans le
  * domaine : la jointure se fait sur le chemin (GSC requête -> page, GA4 vues -> page,
@@ -16,7 +21,7 @@
  *
  * Variables d'env requises (dans .env, jamais commité) :
  *   POSTHOG_PERSONAL_API_KEY=phx_...
- *   POSTHOG_PROJECT_ID=12345
+ *   POSTHOG_PROJECT_ID=218176     # projet commun site + jeu
  *   POSTHOG_API_HOST=https://eu.posthog.com     # optionnel, https://us.posthog.com pour un projet US
  *
  * Usage :
@@ -105,19 +110,24 @@ async function main() {
   if (!projectId) fail("POSTHOG_PROJECT_ID manquante dans .env (ID numérique du projet PostHog).");
 
   // Filtre commun : la période et le site seul, au cas où le jeu envoie dans le même projet.
-  const scope = `timestamp > now() - INTERVAL ${opts.days} DAY AND properties.$host = '${opts.host}'`;
+  const period = `timestamp > now() - INTERVAL ${opts.days} DAY`;
+  const scope = `${period} AND properties.$host = '${opts.host}'`;
+  // Visiteurs qui ont soumis une inscription dans le jeu sur la période, quel que soit l'hôte.
+  const signedUp = `SELECT DISTINCT distinct_id FROM events WHERE ${period} AND event = 'auth_signup_submitted'`;
 
   console.log(`\n▶ PostHog fetch — projet ${projectId} | ${opts.host} | ${opts.days} derniers jours`);
 
   const queries = {
-    // Vues et visiteurs par page, et départs vers le jeu depuis cette page.
+    // Vues et visiteurs par page, départs vers le jeu depuis cette page, et lecteurs de la page
+    // qui se sont inscrits sur la période (pas forcément juste après : c'est une contribution).
     pages: `
       SELECT
         properties.$pathname AS page,
         countIf(event = '$pageview') AS views,
         uniqIf(distinct_id, event = '$pageview') AS visitors,
         countIf(event = 'play_click') AS play_clicks,
-        uniqIf(distinct_id, event = 'play_click') AS play_visitors
+        uniqIf(distinct_id, event = 'play_click') AS play_visitors,
+        uniqIf(distinct_id, event = '$pageview' AND distinct_id IN (${signedUp})) AS signup_visitors
       FROM events
       WHERE ${scope} AND event IN ('$pageview', 'play_click')
       GROUP BY page
@@ -137,8 +147,9 @@ async function main() {
       GROUP BY page
       ORDER BY leaves DESC
       LIMIT 300`,
-    // Une ligne par session : page d'entrée, origine, appareil, et départ vers le jeu ou non.
-    // Les agrégations suivantes (entrées, sources, appareils) partent de cette table.
+    // Une ligne par session entrée sur le site : page d'entrée, origine, appareil, départ vers le
+    // jeu, et inscription dans la même session (le cookie partagé garde la session d'un
+    // sous-domaine à l'autre). Les agrégations suivantes (entrées, sources, appareils) en partent.
     sessions: `
       SELECT
         argMinIf(properties.$pathname, timestamp, event = '$pageview') AS entry,
@@ -147,12 +158,15 @@ async function main() {
         argMinIf(properties.utm_medium, timestamp, event = '$pageview') AS utm_medium,
         argMinIf(properties.utm_campaign, timestamp, event = '$pageview') AS utm_campaign,
         argMinIf(properties.$device_type, timestamp, event = '$pageview') AS device,
-        countIf(event = '$pageview') AS pageviews,
-        countIf(event = 'play_click') > 0 AS played
+        countIf(event = '$pageview' AND properties.$host = '${opts.host}') AS pageviews,
+        countIf(event = 'play_click') > 0 AS played,
+        countIf(event = 'auth_signup_submitted') > 0 AS signed_up,
+        argMinIf(properties.$host, timestamp, event = '$pageview') AS entry_host
       FROM events
-      WHERE ${scope} AND event IN ('$pageview', 'play_click') AND properties.$session_id IS NOT NULL
+      WHERE ${period} AND event IN ('$pageview', 'play_click', 'auth_signup_submitted')
+        AND properties.$session_id IS NOT NULL
       GROUP BY properties.$session_id
-      HAVING pageviews > 0
+      HAVING entry_host = '${opts.host}' AND pageviews > 0
       LIMIT 100000`,
     // Frictions : clics répétés de rage et clics sans effet, par page et élément visé.
     frictions: `
@@ -221,11 +235,13 @@ async function main() {
       "Départs vers le jeu",
       "Visiteurs partis vers le jeu",
       "Conversion visiteurs (%)",
+      "Lecteurs inscrits ensuite",
+      "Inscription lecteurs (%)",
       "Durée médiane (s)",
       "Scroll moyen (%)",
       "Lus jusqu'au bout (%)",
     ],
-    results.pages.map(([page, views, visitors, clicks, playVisitors]) => {
+    results.pages.map(([page, views, visitors, clicks, playVisitors, signupVisitors]) => {
       const r = reading.get(page);
       return [
         page,
@@ -234,6 +250,8 @@ async function main() {
         clicks,
         playVisitors,
         pct(playVisitors, visitors),
+        signupVisitors,
+        pct(signupVisitors, visitors),
         r ? num(r[2], 1) : "",
         r ? num(Number(r[3]) * 100, 1) : "",
         r ? pct(r[4], r[1]) : "",
@@ -246,16 +264,31 @@ async function main() {
     const acc = new Map();
     for (const s of results.sessions) {
       const key = keyOf(s);
-      const row = acc.get(key) || { sessions: 0, played: 0, pageviews: 0 };
+      const row = acc.get(key) || { sessions: 0, played: 0, signedUp: 0, pageviews: 0 };
       row.sessions += 1;
       row.played += s[7] ? 1 : 0;
+      row.signedUp += s[8] ? 1 : 0;
       row.pageviews += Number(s[6]);
       acc.set(key, row);
     }
     return [...acc.entries()].sort((a, b) => b[1].sessions - a[1].sessions);
   };
-  const sessionCols = ["Sessions", "Sessions parties vers le jeu", "Conversion (%)", "Pages par session"];
-  const sessionVals = (r) => [r.sessions, r.played, pct(r.played, r.sessions), (r.pageviews / r.sessions).toFixed(2)];
+  const sessionCols = [
+    "Sessions",
+    "Sessions parties vers le jeu",
+    "Conversion (%)",
+    "Sessions avec inscription",
+    "Inscription (%)",
+    "Pages par session",
+  ];
+  const sessionVals = (r) => [
+    r.sessions,
+    r.played,
+    pct(r.played, r.sessions),
+    r.signedUp,
+    pct(r.signedUp, r.sessions),
+    (r.pageviews / r.sessions).toFixed(2),
+  ];
 
   const entriesCsv = toCsv(
     ["Page d'entrée", ...sessionCols],
@@ -295,8 +328,10 @@ async function main() {
   ]);
 
   const played = results.sessions.filter((s) => s[7]).length;
+  const signedUpSessions = results.sessions.filter((s) => s[8]).length;
   console.log(
-    `✅ ${results.pages.length} pages, ${results.sessions.length} sessions (${played} parties vers le jeu), ` +
+    `✅ ${results.pages.length} pages, ${results.sessions.length} sessions (${played} parties vers le jeu, ` +
+      `${signedUpSessions} avec inscription), ` +
       `${results.frictions.length} frictions -> ${dir}\n`
   );
 }

@@ -35,6 +35,38 @@ passée se traite **avant** toute nouvelle proposition (Étape 3).
 Sans clés PostHog (`.env`), ou moins de 7 jours de données : le dire, travailler sur
 GSC/GA4 seuls et ne présenter aucune conversion comme mesurée.
 
+**Vérifier que PostHog reçoit bien les données** avant d'en tirer quoi que ce soit : le
+projet est sur le plan gratuit (1 million d'événements par mois, période qui repart vers
+le 5). Quota épuisé, PostHog jette tout sauf les `$exception` : un creux brutal un jour
+donné, avec des erreurs qui continuent, c'est le quota, pas une chute du trafic.
+```sql
+SELECT toDate(timestamp) AS jour, countIf(event = '$exception') AS erreurs,
+       countIf(event != '$exception') AS autres
+FROM events WHERE timestamp > now() - INTERVAL 14 DAY GROUP BY jour ORDER BY jour DESC
+```
+(via le MCP PostHog, `execute-sql`). Une période touchée est exclue des comparaisons du
+journal.
+
+## PostHog en direct (MCP)
+
+Le MCP `posthog` (outil `mcp__posthog__exec`, région EU) pilote le projet **218176**
+« Dynasty Nova », commun au site et au jeu : un visiteur garde son identifiant du blog
+jusqu'à l'inscription. Vérifier le projet actif (`call project-get {}`) avant toute
+requête, `switch-project` sinon.
+
+- **Tableau « Acquisition : du site au joueur »** (dashboard 1030608) : entonnoir site →
+  `play_click` → `auth_signup_submitted` → `onboarding_tour_started`, visiteurs du site,
+  départs par page, inscriptions par canal (canal de la *session* : les propriétés
+  `$initial_*` de la personne sont vides au moment de l'inscription, qui précède
+  l'identification), visiteurs par canal.
+- **Annotation à chaque déploiement** qui change le parcours (`annotation-create`, scope
+  `project`) : c'est le repère des comparaisons avant/après.
+- **Test A/B plutôt qu'avant/après** quand le trafic de la page le permet (quelques
+  centaines de visiteurs par variante) : expérience PostHog avec l'inscription comme
+  métrique principale. Sinon, l'avant/après à J+14 de l'Étape 3.
+- Toute modification du projet (réglages, expériences, tableaux) se fait sur demande de
+  l'utilisateur : lire librement, changer seulement avec son accord.
+
 ## Étape 1 — Croiser par chemin de page
 
 La clé de jointure est le chemin (`/blog/<slug>/`) : URL sans domaine dans GSC

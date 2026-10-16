@@ -9,7 +9,7 @@
  */
 import type { PostHog } from "posthog-js";
 
-const POSTHOG_KEY = "phc_vwC4MWEfdmFWdXwLnzUTNvni44HJXDb5Bq5i76siRRUn";
+const POSTHOG_KEY = "phc_AH6stLNBpB2VpaMSr7EYhDzaexD3RWUFJBC8paLSnw3o";
 const POSTHOG_HOST = "https://eu.i.posthog.com";
 
 let loading: Promise<PostHog | null> | null = null;
