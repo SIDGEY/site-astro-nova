@@ -13,6 +13,18 @@ const { title, subtitle, sectionId } = Astro.props;
 // Le jeu de textures v8 de chaque biome (variante 01), synchronisé par scripts/sync-game.mjs, au
 // format `PlanetTextureSet` du moteur : cartes, nuages, et profil d'atmosphère lu par le parseur
 // du jeu, tel que `planetAtmosphere()` le fournit en jeu.
+// Ordre, libellé et icône du sélecteur ; seuls les corps présents dans le catalogue sont proposés.
+const BIOMES = [
+  { key: "desert", label: "Désertique", icon: "sun" },
+  { key: "dry", label: "Aride", icon: "wind" },
+  { key: "normal", label: "Tempérée", icon: "globe-simple" },
+  { key: "jungle", label: "Jungle", icon: "leaf" },
+  { key: "water", label: "Océanique", icon: "drop" },
+  { key: "ice", label: "Glaciaire", icon: "snowflake" },
+  { key: "gas", label: "Géante gazeuse", icon: "cloud" },
+  { key: "moon", label: "Lune", icon: "moon" },
+];
+
 const textures = Object.fromEntries(
   Object.entries(planets).map(([biome, p]) => {
     const atmosphere = parsePlanetAtmosphere(p.atmosphere) ?? undefined;
@@ -22,6 +34,7 @@ const textures = Object.fromEntries(
         albedo: p.albedo,
         normal: p.normal,
         specular: p.specular,
+        ...(p.airless ? { airless: true } : {}),
         ...(p.clouds && atmosphere?.clouds ? { clouds: p.clouds } : {}),
         ...(atmosphere ? { atmosphere } : {}),
       },
@@ -46,8 +59,10 @@ const textures = Object.fromEntries(
   >
   </div>
 
+  <!-- `w-full min-w-0` : la section est un flex en ligne, sa colonne prenait sinon la largeur de
+       son contenu (le titre sur une ligne) et débordait de l'écran en mobile. -->
   <div
-    class="relative z-20 max-w-5xl mx-auto px-6 flex flex-col items-center gap-12"
+    class="relative z-20 w-full min-w-0 max-w-5xl mx-auto md:px-6 flex flex-col items-center gap-12"
   >
     <div class="flex flex-col text-center gap-4 max-w-3xl">
       <i
@@ -85,27 +100,11 @@ const textures = Object.fromEntries(
         class="flex flex-nowrap items-center gap-0 absolute top-1/2 left-1/2 transition-transform duration-500 ease-out w-max z-10"
         style="transform: translate(0px, -50%);"
       >
-        <button data-biome="desert" class="biome-btn shrink-0" title="Desert"
-          ><i class="ph ph-bold ph-sun text-2xl"></i></button
-        >
-        <button data-biome="dry" class="biome-btn shrink-0" title="Dry"
-          ><i class="ph ph-bold ph-wind text-2xl"></i></button
-        >
-        <button data-biome="normal" class="biome-btn shrink-0" title="Normal"
-          ><i class="ph ph-bold ph-globe-simple text-2xl"></i></button
-        >
-        <button data-biome="jungle" class="biome-btn shrink-0" title="Jungle"
-          ><i class="ph ph-bold ph-leaf text-2xl"></i></button
-        >
-        <button data-biome="water" class="biome-btn shrink-0" title="Water"
-          ><i class="ph ph-bold ph-drop text-2xl"></i></button
-        >
-        <button data-biome="ice" class="biome-btn shrink-0" title="Ice"
-          ><i class="ph ph-bold ph-snowflake text-2xl"></i></button
-        >
-        <button data-biome="gas" class="biome-btn shrink-0" title="Gas"
-          ><i class="ph ph-bold ph-cloud text-2xl"></i></button
-        >
+        {BIOMES.filter((b) => textures[b.key]).map((b) => (
+          <button type="button" data-biome={b.key} data-label={b.label} class="biome-btn shrink-0" title={b.label} aria-label={b.label}>
+            <i class={`ph ph-bold ph-${b.icon} text-2xl`}></i>
+          </button>
+        ))}
       </div>
 
       <!-- Layer 1: Active border (fixed, above buttons) -->
@@ -115,6 +114,7 @@ const textures = Object.fromEntries(
       >
       </div>
     </div>
+    <p id="biome-name" class="-mt-8 text-sm font-medium uppercase tracking-wider text-slate-400" aria-live="polite"></p>
   </div>
 
   <style>
@@ -168,7 +168,7 @@ const textures = Object.fromEntries(
     // Glisser fait tourner la planète, qui revient d'elle-même à sa pose au relâcher.
     const DRAG_SPEED = 1 / 300;
     const RETURN_SPEED = 0.08;
-    const DEFAULT_BIOME = "jungle";
+    const DEFAULT_BIOME = "normal";
 
     const container = document.getElementById("planet-3d");
     if (container) init(container);
@@ -270,8 +270,10 @@ const textures = Object.fromEntries(
 
       const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>("button.biome-btn"));
       const biomeList = document.getElementById("biome-list");
+      const biomeName = document.getElementById("biome-name");
       function setActive(btn: HTMLButtonElement | undefined) {
         for (const b of buttons) b.setAttribute("aria-pressed", String(b === btn));
+        if (biomeName && btn) biomeName.textContent = btn.dataset.label ?? "";
         if (biomeList && btn) {
           const btnCenter = btn.offsetLeft + btn.offsetWidth / 2;
           biomeList.style.transform = `translate(-${btnCenter}px, -50%)`;

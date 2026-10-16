@@ -76,6 +76,7 @@ blocks:
     reversed: false
 
   - type: carousel
+    sectionId: gallery
     icon: user-circle
     title: Incarnez l'élite de la galaxie
     subtitle: "Trouvez un avatar qui vous ressemble. C'est l'âme de votre empire. Forgez votre réputation et imposez votre présence."

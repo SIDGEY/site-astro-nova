@@ -4,7 +4,7 @@
     "ref": "origin/main",
     "sha": "26bf68c461fe0f55be4071a96d4fab89e10dccbd",
     "commitDate": "2026-10-16T11:45:10+02:00",
-    "syncedAt": "2026-10-16T11:57:02.157Z",
+    "syncedAt": "2026-10-16T15:30:46.889Z",
     "three": "^0.186.1",
     "avatars": "dynasty-nova-codex/assets/references/livraison-avatars-2026-10-15"
   },
@@ -499,7 +499,116 @@
     "simulator": "/game/banners/simulator.webp"
   },
   "planets": {
+    "normal": {
+      "variant": "normal-02",
+      "albedo": "/game/planets/normal/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.012,
+        "cloudopacity": 0.92,
+        "cloudshadow": 0.55,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 1.3,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 0,
+        "cloudbright": 0.95,
+        "cloudtint": "#ffffff",
+        "veil": 0.6,
+        "veilcolor": "#7fb8ff"
+      },
+      "clouds": "/game/planets/normal/clouds.webp",
+      "normal": "/game/planets/normal/normal.webp",
+      "specular": "/game/planets/normal/specular.webp",
+      "sphere": "/game/planets/normal/sphere.webp",
+      "horizon": "/game/planets/normal/horizon.webp"
+    },
+    "jungle": {
+      "variant": "jungle-04",
+      "albedo": "/game/planets/jungle/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.012,
+        "cloudopacity": 0.85,
+        "cloudshadow": 0.55,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 1.3,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 0,
+        "cloudbright": 0.95,
+        "cloudtint": "#ffffff",
+        "veil": 0.35,
+        "veilcolor": "#a6e8b4"
+      },
+      "clouds": "/game/planets/jungle/clouds.webp",
+      "normal": "/game/planets/jungle/normal.webp",
+      "specular": "/game/planets/jungle/specular.webp",
+      "sphere": "/game/planets/jungle/sphere.webp",
+      "horizon": "/game/planets/jungle/horizon.webp"
+    },
+    "water": {
+      "variant": "water-04",
+      "albedo": "/game/planets/water/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.012,
+        "cloudopacity": 0.92,
+        "cloudshadow": 0.55,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 1.1,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 0,
+        "cloudbright": 0.95,
+        "cloudtint": "#ffffff",
+        "veil": 0.6,
+        "veilcolor": "#7fb8ff"
+      },
+      "clouds": "/game/planets/water/clouds.webp",
+      "normal": "/game/planets/water/normal.webp",
+      "specular": "/game/planets/water/specular.webp",
+      "sphere": "/game/planets/water/sphere.webp",
+      "horizon": "/game/planets/water/horizon.webp"
+    },
+    "ice": {
+      "variant": "ice-04",
+      "albedo": "/game/planets/ice/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.012,
+        "cloudopacity": 0.9,
+        "cloudshadow": 0.25,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 1,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 1,
+        "cloudbright": 1.3,
+        "cloudtint": "#f4f8ff",
+        "veil": 0.45,
+        "veilcolor": "#a8d8ff"
+      },
+      "clouds": "/game/planets/ice/clouds.webp",
+      "normal": "/game/planets/ice/normal.webp",
+      "specular": "/game/planets/ice/specular.webp",
+      "sphere": "/game/planets/ice/sphere.webp",
+      "horizon": "/game/planets/ice/horizon.webp"
+    },
     "desert": {
+      "variant": "desert-04",
       "albedo": "/game/planets/desert/albedo.webp",
       "atmosphere": {
         "atmosphere": true,
@@ -526,6 +635,7 @@
       "horizon": "/game/planets/desert/horizon.webp"
     },
     "dry": {
+      "variant": "dry-03",
       "albedo": "/game/planets/dry/albedo.webp",
       "atmosphere": {
         "atmosphere": true,
@@ -552,6 +662,7 @@
       "horizon": "/game/planets/dry/horizon.webp"
     },
     "gas": {
+      "variant": "gas-01",
       "albedo": "/game/planets/gas/albedo.webp",
       "atmosphere": {
         "atmosphere": true,
@@ -575,109 +686,12 @@
       "sphere": "/game/planets/gas/sphere.webp",
       "horizon": "/game/planets/gas/horizon.webp"
     },
-    "ice": {
-      "albedo": "/game/planets/ice/albedo.webp",
-      "atmosphere": {
-        "atmosphere": true,
-        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
-        "nuages": "clouds.webp",
-        "cloudalt": 1.012,
-        "cloudopacity": 0.9,
-        "cloudshadow": 0.25,
-        "cloudlon": 0,
-        "cloudgamma": 1,
-        "cloudcover": 1,
-        "cloudfloor": 0,
-        "cloudground": 0,
-        "cloudsoft": 1,
-        "cloudbright": 1.3,
-        "cloudtint": "#f4f8ff",
-        "veil": 0.45,
-        "veilcolor": "#a8d8ff"
-      },
-      "clouds": "/game/planets/ice/clouds.webp",
-      "normal": "/game/planets/ice/normal.webp",
-      "specular": "/game/planets/ice/specular.webp",
-      "sphere": "/game/planets/ice/sphere.webp",
-      "horizon": "/game/planets/ice/horizon.webp"
-    },
-    "jungle": {
-      "albedo": "/game/planets/jungle/albedo.webp",
-      "atmosphere": {
-        "atmosphere": true,
-        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
-        "nuages": "clouds.webp",
-        "cloudalt": 1.012,
-        "cloudopacity": 0.85,
-        "cloudshadow": 0.55,
-        "cloudlon": 0,
-        "cloudgamma": 1,
-        "cloudcover": 1.3,
-        "cloudfloor": 0,
-        "cloudground": 0,
-        "cloudsoft": 0,
-        "cloudbright": 0.95,
-        "cloudtint": "#ffffff",
-        "veil": 0.35,
-        "veilcolor": "#a6e8b4"
-      },
-      "clouds": "/game/planets/jungle/clouds.webp",
-      "normal": "/game/planets/jungle/normal.webp",
-      "specular": "/game/planets/jungle/specular.webp",
-      "sphere": "/game/planets/jungle/sphere.webp",
-      "horizon": "/game/planets/jungle/horizon.webp"
-    },
-    "normal": {
-      "albedo": "/game/planets/normal/albedo.webp",
-      "atmosphere": {
-        "atmosphere": true,
-        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
-        "nuages": "clouds.webp",
-        "cloudalt": 1.012,
-        "cloudopacity": 0.92,
-        "cloudshadow": 0.55,
-        "cloudlon": 0,
-        "cloudgamma": 1,
-        "cloudcover": 1.3,
-        "cloudfloor": 0,
-        "cloudground": 0,
-        "cloudsoft": 0,
-        "cloudbright": 0.95,
-        "cloudtint": "#ffffff",
-        "veil": 0.6,
-        "veilcolor": "#7fb8ff"
-      },
-      "clouds": "/game/planets/normal/clouds.webp",
-      "normal": "/game/planets/normal/normal.webp",
-      "specular": "/game/planets/normal/specular.webp",
-      "sphere": "/game/planets/normal/sphere.webp",
-      "horizon": "/game/planets/normal/horizon.webp"
-    },
-    "water": {
-      "albedo": "/game/planets/water/albedo.webp",
-      "atmosphere": {
-        "atmosphere": true,
-        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
-        "nuages": "clouds.webp",
-        "cloudalt": 1.012,
-        "cloudopacity": 0.92,
-        "cloudshadow": 0.55,
-        "cloudlon": 0,
-        "cloudgamma": 1,
-        "cloudcover": 1.1,
-        "cloudfloor": 0,
-        "cloudground": 0,
-        "cloudsoft": 0,
-        "cloudbright": 0.95,
-        "cloudtint": "#ffffff",
-        "veil": 0.6,
-        "veilcolor": "#7fb8ff"
-      },
-      "clouds": "/game/planets/water/clouds.webp",
-      "normal": "/game/planets/water/normal.webp",
-      "specular": "/game/planets/water/specular.webp",
-      "sphere": "/game/planets/water/sphere.webp",
-      "horizon": "/game/planets/water/horizon.webp"
+    "moon": {
+      "variant": "moon-01",
+      "airless": true,
+      "albedo": "/game/planets/moon/albedo.webp",
+      "normal": "/game/planets/moon/normal.webp",
+      "specular": "/game/planets/moon/specular.webp"
     }
   },
   "avatars": [

@@ -1,9 +1,31 @@
 ---
 import { getEntry } from "astro:content";
-
 const settings = await getEntry("settings", "general");
 if (!settings) return Astro.redirect("/404");
-const { navigation } = settings.data;
+
+const PLAY_URL = "https://play.dynastynova.com";
+
+// Les sections de la home : sous-menu « Le jeu » (dropdown en desktop, accordéon en mobile).
+const gameLinks = [
+  { href: "/#planets", label: "Planètes", icon: "planet" },
+  { href: "/#resources", label: "Ressources", icon: "cube" },
+  { href: "/#buildings", label: "Bâtiments", icon: "buildings" },
+  { href: "/#laboratory", label: "Technologies", icon: "flask" },
+  { href: "/#defenses", label: "Défenses", icon: "shield-star" },
+  { href: "/#fleet", label: "Vaisseaux", icon: "rocket-launch" },
+  { href: "/#shop", label: "Boutique", icon: "storefront" },
+];
+const galleryLink = { href: "/#gallery", label: "Galerie", icon: "user-circle" };
+const mainLinks = [
+  { href: "/blog", label: "Blog" },
+  { href: "/#community", label: "Communauté" },
+  galleryLink,
+  { href: "/roadmap", label: "Roadmap" },
+];
+// En mobile, la galerie (les avatars) rejoint les sections du jeu : la liste de premier niveau
+// reste courte et la grille du sous-menu tombe juste (8 tuiles sur 2 colonnes).
+const mobileGameLinks = [...gameLinks, galleryLink];
+const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
 ---
 
 <nav
@@ -17,95 +39,38 @@ const { navigation } = settings.data;
       </a>
     </div>
     <div class="flex items-center justify-end gap-8">
-      <!-- Navigation links with gap-8 (32px) -->
       <div class="flex items-center text-base gap-8">
-        <!-- Dropdown: Le jeu -->
         <div class="relative group">
           <button
             class="flex items-center gap-2 text-slate-300 hover:text-slate-200 transition-colors py-2"
           >
             <span>Le jeu</span>
-            <i
-              class="ph ph-bold ph-caret-down text-slate-300 text-base opacity-50"
-            ></i>
+            <i class="ph ph-bold ph-caret-down text-slate-300 text-base opacity-50"></i>
           </button>
-          <!-- Dropdown menu -->
           <div
-            class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+            class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200"
           >
-            <div
-              class="bg-slate-800 border border-slate-700 rounded-md shadow-xl py-2 min-w-[200px]"
-            >
-              <a
-                href="/#planets"
-                class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-              >
-                Planètes
-              </a>
-              <a
-                href="/#resources"
-                class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-              >
-                Ressources
-              </a>
-              <a
-                href="/#buildings"
-                class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-              >
-                Bâtiments
-              </a>
-              <a
-                href="/#laboratory"
-                class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-              >
-                Technologies
-              </a>
-              <a
-                href="/#defenses"
-                class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-              >
-                Défenses
-              </a>
-              <a
-                href="/#fleet"
-                class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-              >
-                Vaisseaux
-              </a>
-              <a
-                href="/#shop"
-                class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-              >
-                Boutique
-              </a>
+            <div class="bg-slate-800 border border-slate-700 rounded-md shadow-xl py-2 min-w-[200px]">
+              {gameLinks.map((link) => (
+                <a
+                  href={link.href}
+                  class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
           </div>
         </div>
-        <a
-          href="/blog"
-          class="text-slate-300 hover:text-slate-200 transition-colors py-2"
-          >Blog</a
-        >
-        <a
-          href="/#community"
-          class="text-slate-300 hover:text-slate-200 transition-colors py-2"
-          >Communauté</a
-        >
-        <a
-          href="/#gallery"
-          class="text-slate-300 hover:text-slate-200 transition-colors py-2"
-          >Galerie</a
-        >
-        <a
-          href="/roadmap"
-          class="text-slate-300 hover:text-slate-200 transition-colors py-2"
-          >Roadmap</a
-        >
+        {mainLinks.map((link) => (
+          <a href={link.href} class="text-slate-300 hover:text-slate-200 transition-colors py-2">
+            {link.label}
+          </a>
+        ))}
       </div>
-      <!-- Buttons with gap-4 (16px) -->
       <div class="flex items-center gap-4">
         <a
-          href="https://play.dynastynova.com"
+          href={PLAY_URL}
           class="inline-flex items-center px-4 py-2 whitespace-nowrap bg-blue-600 hover:bg-blue-500 text-slate-50 rounded-md font-semibold text-base transition-colors h-10"
         >
           Rejoindre Dynasty Nova
@@ -114,14 +79,17 @@ const { navigation } = settings.data;
     </div>
   </div>
 
-  <div class="lg:hidden flex items-center justify-between relative">
+  <!-- Au-dessus du panneau mobile : logo et bouton restent visibles menu ouvert. -->
+  <div class="lg:hidden flex items-center justify-between relative z-[1000]">
     <a href="/">
       <img src="/logo.svg" alt="Dynasty Nova" class="h-11 w-auto" />
     </a>
     <button
       id="mobile-menu-toggle"
-      class="absolute top-0 right-0 flex items-center justify-center w-12 h-12 rounded-full bg-slate-950 hover:bg-slate-900/90 transition-colors z-[1000] overflow-hidden"
+      class="absolute top-0 right-0 flex items-center justify-center w-12 h-12 rounded-full bg-slate-950 hover:bg-slate-900/90 transition-colors overflow-hidden"
       aria-label="Ouvrir le menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
     >
       <div class="relative w-6 h-6">
         <svg
@@ -156,76 +124,66 @@ const { navigation } = settings.data;
 
   <div
     id="mobile-menu"
-    class="fixed left-0 right-0 bottom-0 backdrop-blur-xl flex items-center justify-center transition-all duration-500 opacity-0 pointer-events-none"
-    style="top: 0; bottom: 0; background-color: rgba(30, 41, 59, 0.5);"
+    class="lg:hidden fixed inset-0 overflow-y-auto overscroll-contain bg-slate-950/95 backdrop-blur-xl transition-opacity duration-300 opacity-0 pointer-events-none"
+    inert
   >
-    <div
-      class="flex flex-col space-y-0 md:space-y-4 items-center text-center w-full px-12 md:px-6"
-    >
-      <!-- Le jeu section with submenu -->
-      <div class="text-slate-200 py-4 text-2xl font-medium w-full">Le jeu</div>
-      <div class="flex flex-col space-y-2 items-center text-center w-full">
-        <a
-          href="/#planets"
-          class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg"
-          >Planètes</a
-        >
-        <a
-          href="/#resources"
-          class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg"
-          >Ressources</a
-        >
-        <a
-          href="/#buildings"
-          class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg"
-          >Bâtiments</a
-        >
-        <a
-          href="/#laboratory"
-          class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg"
-          >Technologies</a
-        >
-        <a
-          href="/#defenses"
-          class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg"
-          >Défenses</a
-        >
-        <a
-          href="/#fleet"
-          class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg"
-          >Vaisseaux</a
-        >
-        <a
-          href="/#shop"
-          class="text-slate-400 hover:text-blue-400 transition-colors py-2 text-lg"
-          >Boutique</a
-        >
-      </div>
+    <div class="min-h-full flex flex-col w-full max-w-md mx-auto px-6 pt-20 pb-6">
+      <ul class="border-y border-slate-800 divide-y divide-slate-800">
+        <li>
+          <button
+            id="mobile-game-toggle"
+            class="flex w-full items-center justify-between py-3.5 text-xl font-medium text-slate-100"
+            aria-expanded="false"
+            aria-controls="mobile-game-links"
+          >
+            <span>Le jeu</span>
+            <i
+              class="ph ph-bold ph-caret-down text-base text-slate-400 transition-transform duration-300"
+              data-caret
+            ></i>
+          </button>
+          <div
+            id="mobile-game-links"
+            class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+            inert
+          >
+            <div class="overflow-hidden">
+              <div class="grid grid-cols-2 gap-2 pb-4">
+                {mobileGameLinks.map((link) => (
+                  <a
+                    href={link.href}
+                    class="flex items-center gap-2.5 min-w-0 rounded-md border border-slate-800 bg-slate-900/60 px-3 py-2.5 text-[15px] text-slate-300 hover:border-blue-500/50 hover:text-white transition-colors"
+                  >
+                    <i class={`ph ph-${link.icon} text-lg text-blue-400 shrink-0`}></i>
+                    <span class="truncate">{link.label}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </li>
+        {mobileMainLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="flex items-center justify-between py-3.5 text-xl font-medium text-slate-100 hover:text-blue-400 transition-colors"
+            >
+              {link.label}
+              <i class="ph ph-bold ph-caret-right text-base text-slate-600"></i>
+            </a>
+          </li>
+        ))}
+      </ul>
       <a
-        href="/blog"
-        class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full"
-        >Blog</a
+        href={PLAY_URL}
+        class="mt-auto pt-6 group/cta"
       >
-      <a
-        href="/#community"
-        class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full"
-        >Communauté</a
-      >
-      <a
-        href="/#gallery"
-        class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full"
-        >Galerie</a
-      >
-      <a
-        href="/roadmap"
-        class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium w-full"
-        >Roadmap</a
-      >
-      <a
-        href="https://play.dynastynova.com"
-        class="text-slate-200 hover:text-blue-400 transition-colors py-4 text-2xl font-medium"
-      >
-        Découvrir le jeu
+        <span
+          class="flex items-center justify-center gap-2 h-12 rounded-md bg-blue-600 group-hover/cta:bg-blue-500 text-slate-50 font-semibold text-base transition-colors"
+        >
+          Rejoindre Dynasty Nova
+          <i class="ph ph-bold ph-arrow-right"></i>
+        </span>
       </a>
     </div>
   </div>
@@ -236,48 +194,70 @@ const { navigation } = settings.data;
   const mobileMenu = document.getElementById("mobile-menu");
   const iconMenu = document.getElementById("icon-menu");
   const iconClose = document.getElementById("icon-close");
-  const mobileLinks = mobileMenu?.querySelectorAll("a");
+  const gameToggle = document.getElementById("mobile-game-toggle");
+  const gameLinks = document.getElementById("mobile-game-links");
+
+  const setGameOpen = (isOpen) => {
+    if (!gameToggle || !gameLinks) return;
+    gameToggle.setAttribute("aria-expanded", String(isOpen));
+    gameLinks.classList.toggle("grid-rows-[1fr]", isOpen);
+    gameLinks.classList.toggle("grid-rows-[0fr]", !isOpen);
+    gameLinks.inert = !isOpen;
+    gameToggle.querySelector("[data-caret]")?.classList.toggle("rotate-180", isOpen);
+  };
 
   const setMenuOpen = (isOpen) => {
     if (!menuToggle || !mobileMenu || !iconMenu || !iconClose) return;
 
-    // Toggle Menu Visibility
-    if (isOpen) {
-      mobileMenu.classList.remove("opacity-0", "pointer-events-none");
-    } else {
-      mobileMenu.classList.add("opacity-0", "pointer-events-none");
-    }
+    mobileMenu.classList.toggle("opacity-0", !isOpen);
+    mobileMenu.classList.toggle("pointer-events-none", !isOpen);
+    mobileMenu.inert = !isOpen;
+    // La page ne défile pas sous le panneau ouvert.
+    document.documentElement.style.overflow = isOpen ? "hidden" : "";
 
-    // Toggle Icons
-    if (isOpen) {
-      iconMenu.classList.add("opacity-0", "rotate-90", "scale-50");
-      iconMenu.classList.remove("opacity-100", "rotate-0", "scale-100");
+    iconMenu.classList.toggle("opacity-0", isOpen);
+    iconMenu.classList.toggle("rotate-90", isOpen);
+    iconMenu.classList.toggle("scale-50", isOpen);
+    iconMenu.classList.toggle("opacity-100", !isOpen);
+    iconMenu.classList.toggle("rotate-0", !isOpen);
+    iconMenu.classList.toggle("scale-100", !isOpen);
 
-      iconClose.classList.add("opacity-100", "rotate-0", "scale-100");
-      iconClose.classList.remove("opacity-0", "rotate-90", "scale-50");
-    } else {
-      iconMenu.classList.add("opacity-100", "rotate-0", "scale-100");
-      iconMenu.classList.remove("opacity-0", "rotate-90", "scale-50");
-
-      iconClose.classList.add("opacity-0", "rotate-90", "scale-50");
-      iconClose.classList.remove("opacity-100", "rotate-0", "scale-100");
-    }
+    iconClose.classList.toggle("opacity-100", isOpen);
+    iconClose.classList.toggle("rotate-0", isOpen);
+    iconClose.classList.toggle("scale-100", isOpen);
+    iconClose.classList.toggle("opacity-0", !isOpen);
+    iconClose.classList.toggle("rotate-90", !isOpen);
+    iconClose.classList.toggle("scale-50", !isOpen);
 
     menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+    // Rouvert, le menu repart replié.
+    if (!isOpen) setGameOpen(false);
   };
 
-  if (menuToggle) {
-    menuToggle.addEventListener("click", () => {
-      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
-      setMenuOpen(!isOpen);
-    });
-  }
+  menuToggle?.addEventListener("click", () => {
+    setMenuOpen(menuToggle.getAttribute("aria-expanded") !== "true");
+  });
 
-  if (mobileLinks) {
-    mobileLinks.forEach((link) => {
-      link.addEventListener("click", () => setMenuOpen(false));
-    });
-  }
+  gameToggle?.addEventListener("click", () => {
+    setGameOpen(gameToggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  mobileMenu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setMenuOpen(false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menuToggle?.getAttribute("aria-expanded") === "true") {
+      setMenuOpen(false);
+      menuToggle.focus();
+    }
+  });
+
+  // Repassé en desktop menu ouvert : on referme, sinon le défilement resterait bloqué.
+  window.matchMedia("(min-width: 1024px)").addEventListener("change", (event) => {
+    if (event.matches) setMenuOpen(false);
+  });
 
   const nav = document.getElementById("main-nav");
 

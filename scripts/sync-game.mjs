@@ -37,8 +37,22 @@ const OUT_DATA = path.join(ROOT, 'src', 'data', 'game.json');
 const ENTITY_WIDTH = 640;
 /** Bannières de page, réutilisées en fond de section (75 % de 1280px). */
 const BANNER_WIDTH = 1600;
-/** Biome affiché par défaut par la planète 3D : une variante par biome suffit. */
-const PLANET_VARIANT = '01';
+/**
+ * La vitrine de la planète 3D : une variante par biome, plus une lune. Choisies sur planche, rendues
+ * par le moteur du jeu sous le même angle (16/10/2026) : la plus lisible et la plus contrastée de
+ * chaque famille. Le dossier source est `textures/planets/<biome>/<biome>-<n>` ou
+ * `textures/moons/moon-<n>` ; une lune est un corps sans atmosphère (`airless`, comme en jeu).
+ */
+const PLANET_SHOWCASE = {
+  normal: '02',
+  jungle: '04',
+  water: '04',
+  ice: '04',
+  desert: '04',
+  dry: '03',
+  gas: '01',
+  moon: '01',
+};
 
 const git = (...args) => execFileSync('git', ['-C', FRONTEND, ...args], { maxBuffer: 1 << 28 });
 const show = (file) => git('show', `${REF}:${file}`);
@@ -200,25 +214,31 @@ for (const file of listTree('src/assets/images/heroes')) {
 catalog.logo = '/game/logo-icon.svg';
 fs.writeFileSync(path.join(OUT_PUBLIC, 'logo-icon.svg'), show('public/logo-icon.svg'));
 
-// Planète 3D : la variante 01 de chaque biome, textures telles que le moteur du jeu les charge.
-for (const dir of new Set(
-  listTree('src/assets/textures/planets').map((f) => path.dirname(f)).filter((d) => d.endsWith(`-${PLANET_VARIANT}`)),
-)) {
-  const biome = path.basename(path.dirname(dir));
+// Planète 3D : la variante vitrine de chaque biome, textures telles que le moteur du jeu les charge.
+for (const [biome, variant] of Object.entries(PLANET_SHOWCASE)) {
+  const isMoon = biome === 'moon';
+  const dir = isMoon
+    ? `src/assets/textures/moons/moon-${variant}`
+    : `src/assets/textures/planets/${biome}/${biome}-${variant}`;
+  const tree = listTree(dir);
+  if (tree.length === 0) throw new Error(`Variante vitrine introuvable dans le jeu : ${dir}`);
   const out = path.join(OUT_PUBLIC, 'planets', biome);
   fs.mkdirSync(out, { recursive: true });
-  const files = {};
-  for (const file of listTree(dir)) {
+  const files = { variant: `${biome}-${variant}`, ...(isMoon ? { airless: true } : {}) };
+  for (const file of tree) {
     const base = path.basename(file);
     fs.writeFileSync(path.join(out, base), show(file));
     written++;
     if (base.endsWith('.json')) files.atmosphere = JSON.parse(show(file).toString('utf8'));
     else files[slugOf(base)] = `/game/planets/${biome}/${base}`;
   }
-  // Les illustrations 2D du même biome : `<biome>_full_1` la sphère détourée, `<biome>_1` l'horizon.
-  const variant = Number(PLANET_VARIANT);
-  files.sphere = await gameImage(`/assets/images/planets/${biome}/${biome}_full_${variant}.webp`, `planets/${biome}`, 'sphere');
-  files.horizon = await gameImage(`/assets/images/planets/${biome}/${biome}_${variant}.webp`, `planets/${biome}`, 'horizon');
+  // Les illustrations 2D de la même variante : `<biome>_full_<n>` la sphère détourée, `<biome>_<n>`
+  // l'horizon. Une lune n'en a pas.
+  if (!isMoon) {
+    const n = Number(variant);
+    files.sphere = await gameImage(`/assets/images/planets/${biome}/${biome}_full_${n}.webp`, `planets/${biome}`, 'sphere');
+    files.horizon = await gameImage(`/assets/images/planets/${biome}/${biome}_${n}.webp`, `planets/${biome}`, 'horizon');
+  }
   catalog.planets[biome] = files;
 }
 
