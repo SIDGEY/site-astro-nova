@@ -1,61 +1,290 @@
 ---
 /**
- * La page Planète du jeu : la sphère du biome (`<biome>_full_N`, la même illustration que l'orbe
- * de la barre de navigation), sa position, et les tuiles de caractéristiques. Nom, position et
- * valeurs sont des valeurs d'illustration ; libellés et visuel viennent du jeu.
+ * La page Planète du jeu sous 768px (`PlanetPage`, onglet « Planète ») : le titre — nom et
+ * coordonnées —, le contrôle segmenté Planète / Détails, et la scène 3D plein écran
+ * (`UnifiedPlanet3D` + `PlanetSceneBackdrop`) sous la barre du haut et la barre de navigation.
+ *
+ * La scène tourne sur le moteur du jeu (`src/vendor/game/`), avec ses constantes : cadrage
+ * (`calculatePlanetDimensions`, réserves mobile 255 / 80 px), caméra (FOV 25° pour 900 px de haut,
+ * z 2,5), champ d'étoiles fixe incliné, éclairage, tone mapping, un tour en 180 s, 30 images/s au
+ * repos. Elle ne démarre qu'à l'écran et s'arrête hors champ.
+ *
+ * Nom et coordonnées sont des valeurs d'illustration ; libellés, fond et textures viennent du jeu.
  */
-import { planets, resources, RESOURCE_ORDER } from '../../lib/game';
+import GameScreen from './GameScreen.astro';
+import { backdrops, planets } from '../../lib/game';
+import { parsePlanetAtmosphere } from '../../vendor/game/planetAtmosphere.ts';
 
 interface Props {
   biome?: string;
   name?: string;
+  coordinates?: string;
+  label?: string;
 }
 
-const { biome = 'normal', name = 'Kerinaurus' } = Astro.props;
+const { biome = 'normal', name = 'Kerinaurus', coordinates = '2:148:7', label = 'Écran Planète du jeu' } = Astro.props;
 const planet = planets[biome] ?? planets.normal;
+const atmosphere = planet.atmosphere ? parsePlanetAtmosphere(planet.atmosphere) ?? undefined : undefined;
+const textures = {
+  albedo: planet.albedo,
+  normal: planet.normal,
+  specular: planet.specular,
+  ...(planet.airless ? { airless: true } : {}),
+  ...(planet.clouds ? { clouds: planet.clouds } : {}),
+  ...(atmosphere ? { atmosphere } : {}),
+};
 
-const stats = [
-  { icon: 'arrows-out', label: 'Diamètre', value: '12 800 km' },
-  { icon: 'thermometer-simple', label: 'Température', value: '18 °C' },
-  { icon: 'squares-four', label: 'Cases utilisées', value: '42 / 163' },
-];
-const production = { metal: '1,2K', crystal: '640', hydrogen: '210', energy: '+48' };
+// La scène couvre l'écran sous la barre de statut : 375 × 765 px natifs.
+const SCENE_W = 375;
+const SCENE_H = 765;
+// `calculatePlanetDimensions` (planetSceneLayout.ts du jeu), palier mobile, zone plein écran.
+const planetSize = Math.max(Math.min(Math.min(SCENE_W, SCENE_H - 255 - 80) - 40 * 2, 640), 240);
+const verticalOffset = (80 - 255) / 2 + 24;
+// `computeBackdrop` : le fond se cale derrière la planète, trois fois son diamètre.
+const backdropSize = Math.max(planetSize * 3, Math.max(SCENE_W, SCENE_H) * 0.75);
+const backdropY = SCENE_H / 2 - verticalOffset;
 ---
 
-<div class="h-full overflow-hidden">
-  <div class="px-4 pt-4">
-    <h1 class="text-xl font-semibold">{name}</h1>
-    <p class="text-sm text-slate-400 mt-1">Position 1:42:8</p>
+<GameScreen activeTab="planet" label={label}>
+  <div slot="scene" class="absolute inset-0 bg-slate-900">
+    <div
+      class="absolute -translate-x-1/2 -translate-y-1/2 bg-contain bg-center bg-no-repeat"
+      style={`left: ${SCENE_W / 2}px; top: ${backdropY}px; width: ${backdropSize}px; height: ${backdropSize}px; background-image: url('${backdrops.space}');`}
+    ></div>
+    <div
+      class="planet-scene absolute inset-0"
+      data-planet-scene={JSON.stringify(textures)}
+      data-planet-size={planetSize}
+      data-vertical-offset={verticalOffset}
+    ></div>
   </div>
 
-  <div class="relative mx-auto mt-2 w-[300px] aspect-square">
-    <div class="absolute inset-6 rounded-full bg-sky-400/20 blur-2xl"></div>
-    <img src={planet.sphere} alt="" class="relative w-full h-full object-contain" />
-  </div>
-
-  <div class="px-4 mt-2 space-y-5">
-    <div class="grid grid-cols-3 gap-4">
-      {stats.map((s) => (
-        <div>
-          <div class="aspect-square rounded-lg bg-slate-800/50 card-with-border overflow-hidden flex flex-col items-center justify-center gap-2">
-            <i class={`ph ph-${s.icon} text-2xl leading-none text-slate-400`}></i>
-            <span class="text-sm text-slate-200 tabular-nums">{s.value}</span>
-          </div>
-          <p class="mt-2 text-xs text-slate-500 text-center">{s.label}</p>
-        </div>
-      ))}
+  {/* `PageHeader` : px-5 pt-4 space-y-3, sans padding bas (`hideTopFade` sur l'onglet Planète). */}
+  <div class="relative px-5 pt-4 space-y-3">
+    <div class="flex justify-between items-center gap-2">
+      <div class="flex items-center gap-2">
+        <h1 class="text-xl font-semibold">{name}</h1>
+        <span class="text-base mt-0.5 font-normal text-gray-400 tabular-nums">{coordinates}</span>
+      </div>
     </div>
-
-    <div class="space-y-3">
-      <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Ressources</div>
-      <div class="grid grid-cols-4 gap-3">
-        {RESOURCE_ORDER.map((code) => (
-          <div class="rounded-lg bg-slate-800/50 card-with-border overflow-hidden py-3 flex flex-col items-center gap-1.5">
-            <i class={`ph-fill ph-${resources[code].icon} text-xl leading-none ${code === 'energy' ? 'text-green-400' : 'text-slate-400'}`}></i>
-            <span class="text-xs text-slate-200 tabular-nums">{production[code]}</span>
-          </div>
-        ))}
+    <div class="flex">
+      <div class="inline-flex shrink-0 rounded-lg min-w-full">
+        <span class="flex-1 flex h-12 items-center justify-center gap-2 rounded-l-lg border border-blue-500 bg-blue-500/20 px-3 py-3 text-sm font-medium text-white">
+          <i class="ph ph-globe-hemisphere-west text-xl leading-none text-blue-400"></i>
+          <span class="whitespace-nowrap">Planète</span>
+        </span>
+        <span class="flex-1 flex h-12 items-center justify-center gap-2 rounded-r-lg border border-l-0 border-slate-700 bg-slate-800 px-3 py-3 text-sm font-medium text-white">
+          <i class="ph ph-book text-xl leading-none text-slate-400"></i>
+          <span class="whitespace-nowrap">Détails</span>
+        </span>
       </div>
     </div>
   </div>
-</div>
+</GameScreen>
+
+<style>
+  .planet-scene {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .planet-scene[data-ready] {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  import * as THREE from "three";
+  import { PlanetSurface, PLANET_SUN_DIRECTION } from "../../vendor/game/planetSurface.ts";
+
+  // Constantes de `UnifiedPlanet3D.tsx` (Frontend).
+  const SCENE_W = 375;
+  const SCENE_H = 765;
+  const PLANET_BASE_DIAMETER = 0.63;
+  const SUN_DISTANCE = 50;
+  const PLANET_ROTATION_DURATION = 180;
+  const STARFIELD_AXIAL_TILT = 0.41;
+  const CAMERA_REFERENCE_FOV = 25;
+  const CAMERA_REFERENCE_HEIGHT = 900;
+  const PIXEL_RATIO = 1.5; // `HIGH_DENSITY_PIXEL_RATIO` : le plafond du jeu, et la netteté du hero.
+  const IDLE_FRAME_INTERVAL_MS = 1000 / 30 - 4; // `isFrameDue`, hors interaction.
+
+  function computeCameraFov(viewportHeight: number) {
+    const halfAngleTangent =
+      Math.tan((CAMERA_REFERENCE_FOV * Math.PI) / 360) * (viewportHeight / CAMERA_REFERENCE_HEIGHT);
+    return (Math.atan(halfAngleTangent) * 360) / Math.PI;
+  }
+
+  // `createStarfield` du jeu, tel quel.
+  function createStarfield() {
+    const starCount = 45000;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(starCount * 3);
+    const colors = new Float32Array(starCount * 3);
+    const sizes = new Float32Array(starCount);
+    for (let i = 0; i < starCount; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      const distanceFactor = Math.random();
+      const radius = 100 + distanceFactor * 60;
+      positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      positions[i * 3 + 2] = radius * Math.cos(phi);
+      const exponentialFactor = Math.pow(Math.random(), 3);
+      const distanceAttenuation = 1 - distanceFactor * 0.25;
+      sizes[i] = (0.16 + exponentialFactor * 0.3) * distanceAttenuation;
+      const brightness = (0.3 + exponentialFactor * 0.7) * distanceAttenuation;
+      if (exponentialFactor > 0.95) {
+        const colorVariation = Math.random();
+        if (colorVariation > 0.7) {
+          colors.set([0.8 + brightness * 0.2, 0.85 + brightness * 0.15, 1.0], i * 3);
+        } else if (colorVariation > 0.4) {
+          colors.set([1.0, 0.9 + brightness * 0.1, 0.7 + brightness * 0.3], i * 3);
+        } else {
+          colors.set([brightness, brightness, brightness], i * 3);
+        }
+      } else {
+        colors.set([brightness, brightness, brightness + Math.random() * 0.02], i * 3);
+      }
+    }
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
+    const material = new THREE.ShaderMaterial({
+      uniforms: { pointScale: { value: 2000 } },
+      vertexShader: `
+        uniform float pointScale;
+        attribute float size;
+        attribute vec3 color;
+        varying vec3 vColor;
+        varying vec2 vNdc;
+        void main() {
+          vColor = color;
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = clamp(size * (pointScale / -mvPosition.z), 1.5, 4.5);
+          gl_Position = projectionMatrix * mvPosition;
+          vNdc = gl_Position.xy / gl_Position.w;
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vColor;
+        varying vec2 vNdc;
+        void main() {
+          float dist = length(gl_PointCoord - vec2(0.5));
+          if (dist > 0.5) discard;
+          float shape = smoothstep(0.5, 0.0, dist);
+          float edgeFade = 1.0 - smoothstep(0.99, 1.0, max(abs(vNdc.x), abs(vNdc.y)));
+          gl_FragColor = vec4(vColor, shape * edgeFade);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const starfield = new THREE.Points(geometry, material);
+    starfield.rotation.z = STARFIELD_AXIAL_TILT;
+    return starfield;
+  }
+
+  function mountScene(host: HTMLElement) {
+    const textures = JSON.parse(host.dataset.planetScene!);
+    const planetSize = Number(host.dataset.planetSize);
+    const verticalOffset = Number(host.dataset.verticalOffset);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(computeCameraFov(SCENE_H), SCENE_W / SCENE_H, 0.1, 1000);
+    camera.position.z = 2.5;
+    const pixelToWorld = (2 * Math.tan((camera.fov * Math.PI) / 360) * camera.position.z) / SCENE_H;
+    camera.position.y = -verticalOffset * pixelToWorld;
+
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: "high-performance" });
+    } catch {
+      return; // Sans WebGL, le fond spatial reste seul : pas de planète de substitution.
+    }
+    renderer.setPixelRatio(PIXEL_RATIO);
+    renderer.setSize(SCENE_W, SCENE_H);
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+    renderer.domElement.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
+    host.appendChild(renderer.domElement);
+
+    scene.add(createStarfield());
+    const planetGroup = new THREE.Group();
+    const scale = (planetSize * pixelToWorld) / PLANET_BASE_DIAMETER;
+    planetGroup.scale.set(scale, scale, scale);
+    scene.add(planetGroup);
+
+    const sunPosition = PLANET_SUN_DIRECTION.clone().multiplyScalar(SUN_DISTANCE);
+    scene.add(new THREE.AmbientLight(0x2a3348, 0.4));
+    const sun = new THREE.DirectionalLight(0xffffff, 3);
+    sun.position.copy(sunPosition);
+    scene.add(sun);
+
+    const surface = new PlanetSurface({
+      radius: PLANET_BASE_DIAMETER / 2,
+      sunPosition,
+      maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+    });
+    planetGroup.add(surface.group);
+
+    let visible = false;
+    let frame = 0;
+    let last = 0;
+    const start = performance.now();
+    const draw = (now: number) => {
+      if (!reducedMotion) {
+        planetGroup.rotation.y = (((now - start) / 1000) * Math.PI * 2) / PLANET_ROTATION_DURATION;
+        surface.animateLayers(now / 1000);
+      }
+      renderer.render(scene, camera);
+      last = now;
+    };
+    const loop = (now: number) => {
+      frame = requestAnimationFrame(loop);
+      if (now - last >= IDLE_FRAME_INTERVAL_MS) draw(now);
+    };
+    const play = () => {
+      if (reducedMotion) return draw(performance.now());
+      if (!frame) frame = requestAnimationFrame(loop);
+    };
+    const pause = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    };
+
+    surface.load(textures, () => false).then(() => {
+      host.dataset.ready = "";
+      if (visible) play();
+    });
+
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (!host.hasAttribute("data-ready")) return;
+      visible ? play() : pause();
+    }).observe(host);
+
+    window.addEventListener("pagehide", () => {
+      pause();
+      surface.dispose();
+      renderer.dispose();
+    });
+  }
+
+  // La scène ne se construit qu'à l'approche de l'écran : un téléphone masqué (`hidden lg:flex`)
+  // ou loin dans la page ne coûte rien.
+  const pending = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        pending.unobserve(entry.target);
+        mountScene(entry.target as HTMLElement);
+      }
+    },
+    { rootMargin: "200px" },
+  );
+  document.querySelectorAll<HTMLElement>("[data-planet-scene]").forEach((el) => pending.observe(el));
+</script>

@@ -1,0 +1,40 @@
+---
+/**
+ * Une ligne de détail du jeu (`EntityDetailRow`) : vignette 4/5 de 72px (illustration voilée et
+ * pastille de niveau, ou glyphe), puis un panneau accolé avec le nom et la valeur.
+ */
+interface Props {
+  image?: string;
+  /** Glyphe Phosphor quand la ligne n'a pas d'illustration (modificateur). */
+  icon?: string;
+  badge?: string | number;
+  title: string;
+  value: string;
+  valueClass: string;
+}
+
+const { image, icon, badge, title, value, valueClass } = Astro.props;
+---
+
+<div class="flex w-full gap-4">
+  <div class="w-[72px] shrink-0 aspect-[4/5] relative overflow-hidden rounded-lg bg-slate-800/50 backdrop-blur-sm card-with-border flex items-center justify-center">
+    {image ? (
+      <div class="relative overflow-hidden w-full h-full">
+        <img src={image} alt="" class="w-full h-full object-cover" loading="lazy" />
+        <div class="entity-veil"></div>
+      </div>
+    ) : (
+      <i class={`${icon} text-[32px] leading-none text-slate-400`}></i>
+    )}
+    {badge != null && (
+      <div class="absolute bottom-2 right-2 z-10 rounded-md bg-slate-900/90 px-2 py-1 text-sm font-medium text-slate-50 shadow-lg backdrop-blur-sm">{badge}</div>
+    )}
+  </div>
+  <div class="relative min-w-0 flex-1">
+    <div class="absolute inset-0 metric-panel-border"><div class="h-full w-full metric-panel-fill"></div></div>
+    <div class="relative flex h-full flex-col items-start justify-center pl-1 pr-4 py-4">
+      <span class="text-left text-slate-500">{title}</span>
+      <span class={`flex items-center gap-2 tabular-nums ${valueClass}`}>{value}</span>
+    </div>
+  </div>
+</div>

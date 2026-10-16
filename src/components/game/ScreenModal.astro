@@ -1,0 +1,46 @@
+---
+/**
+ * La modale commune du jeu (`Modal`) sous 768px : voile `bg-slate-950/90`, boîte à 24px des bords
+ * (715px de haut au plus, centrée), bouton de fermeture rond, illustration d'en-tête au ratio 50/33
+ * fondue vers le corps avec le titre posé dessus, corps `p-5 pt-6 pb-8`, pied d'action sur fond
+ * plus clair. Le corps est rogné au pied comme dans le jeu, où il défile.
+ *
+ * `veil` ajoute le dégradé que certaines fiches (`ResourceModal`) portent dans leur image d'en-tête,
+ * par-dessus celui de la modale.
+ */
+interface Props {
+  image: string;
+  veil?: boolean;
+}
+
+const { image, veil = false } = Astro.props;
+---
+
+<div class="absolute inset-0 bg-slate-950/90">
+  <div class="absolute left-6 right-6 top-[25px] bottom-[25px] bg-slate-900/95 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 flex flex-col">
+    <span class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/90 backdrop-blur-sm">
+      <i class="ph-bold ph-x text-base leading-none text-white"></i>
+    </span>
+
+    <div class="flex-1 min-h-0 overflow-hidden">
+      <div class="relative flex aspect-[50/33] flex-col justify-end">
+        <div class="absolute inset-0 overflow-hidden">
+          <img src={image} alt="" class="w-full h-full object-cover" />
+          {veil && <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>}
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
+        <div class="relative px-5 pt-5">
+          <slot name="header" />
+        </div>
+      </div>
+
+      <div class="p-5 pt-6 pb-8 space-y-6">
+        <slot />
+      </div>
+    </div>
+
+    <div class="relative shrink-0 px-5 py-4 border-t border-slate-700/50 bg-slate-800/50">
+      <slot name="footer" />
+    </div>
+  </div>
+</div>

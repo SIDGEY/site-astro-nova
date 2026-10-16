@@ -1,99 +1,161 @@
 ---
 /**
- * La modale d'entité du jeu sous 768px (`Modal` + `EntityModalContent`) : illustration en tête au
- * ratio 50/33 fondue vers le corps, nom et niveau posés dessus, description, coût du prochain
- * niveau en tuiles carrées (`ResourceGrid`), puis l'action en pied.
+ * La modale d'entité du jeu sous 768px, telle que l'ouvrent `BuildingModal` (bâtiments,
+ * installations) et `UnitBuildModal` (vaisseaux, défenses), dans l'ordre d'`EntityModalContent` :
  *
- * Nom, description et image viennent du jeu ; niveaux et coûts sont des valeurs d'illustration
- * (le jeu les reçoit de l'API, ils ne sont écrits nulle part côté front).
+ *   - en tête, l'illustration, le nom et le niveau (ou le nombre d'unités) ;
+ *   - la description longue repliée sur trois lignes (`ExpandableText`) ;
+ *   - le coût (`ResourceGrid`) en rail de tuiles carrées : ressources avec leur jauge de stock,
+ *     énergie, durée ;
+ *   - les prérequis, repliés quand ils sont remplis (`Requirements`) ;
+ *   - les statistiques propres à l'entité : production horaire d'une mine (`ProductionGrid`),
+ *     production d'énergie d'une centrale (`EnergyGrid`), bonus de vitesse du laboratoire, de
+ *     l'usine et du chantier (`ResearchSpeedGrid`, `BuildSpeedGrid`), caractéristiques d'une unité
+ *     (`StatisticsGrid`) ;
+ *   - ce que l'entité débloque, replié (`DependencyList`) ;
+ *   - au pied, « Améliorer » en vert pour un bâtiment construit, sinon « Construire » en bleu,
+ *     précédé du sélecteur de quantité pour une unité.
+ *
+ * Le corps est rogné au pied comme dans le jeu : seul le haut de ces blocs est visible. Nom,
+ * descriptions et image viennent du jeu ; niveaux, coûts, stocks et durées de `empire.ts`.
  */
 import { resources, type GameEntity } from '../../lib/game';
+import { LEVELS, REQUIREMENTS, STOCK, UNLOCKS, productionAt, type Cost, type CostCode } from './empire';
+import { compact, formatTime } from './format';
+import ScreenMetric from './ScreenMetric.astro';
+import ScreenModal from './ScreenModal.astro';
 
 interface Props {
   item: GameEntity;
-  level?: string;
-  costs?: Partial<Record<'metal' | 'crystal' | 'hydrogen' | 'energy', string>>;
-  statLabel?: string;
-  statValue?: string;
-  statIcon?: string;
-  cta?: string;
-  ctaIcon?: string;
+  kind: 'building' | 'unit';
+  /** Niveau actuel (bâtiment) ou nombre d'unités possédées (unité). */
+  count: number;
+  costs: Cost;
+  /** Énergie d'exploitation du niveau visé : négative pour une consommation. */
+  energy?: number;
+  /** Durée de construction, en secondes. */
+  buildTime: number;
 }
 
-const {
-  item,
-  level = 'Niveau 1',
-  costs = { metal: '60', crystal: '15', energy: '10' },
-  statLabel,
-  statValue,
-  statIcon = 'trend-up',
-  cta = 'Construire',
-  ctaIcon = 'plus',
-} = Astro.props;
+const { item, kind, count, costs, energy, buildTime } = Astro.props;
+
+const tiles = [
+  ...(['metal', 'crystal', 'hydrogen'] as CostCode[])
+    .filter((code) => (costs[code] ?? 0) > 0)
+    .map((code) => ({
+      icon: `ph-fill ph-${resources[code].icon}`,
+      label: compact(costs[code]!),
+      fill: Math.min((STOCK[code] / costs[code]!) * 100, 100),
+      short: STOCK[code] < costs[code]!,
+    })),
+  ...(energy ? [{ icon: `ph-fill ph-${resources.energy.icon}`, label: `${energy > 0 ? '+' : ''}${compact(energy)}` }] : []),
+  { icon: 'ph-fill ph-timer', label: formatTime(buildTime) },
+];
+
+const isUpgrade = kind === 'building' && count > 0;
+
+// Statistiques propres à l'entité, dans l'ordre où la modale les pose après le coût.
+const MINED: Record<string, CostCode> = { metal_mine: 'metal', crystal_mine: 'crystal', hydrogen_synthesizer: 'hydrogen' };
+const level = LEVELS[item.code] ?? 0;
+const metric = (() => {
+  if (item.code in MINED) {
+    const res = MINED[item.code];
+    const now = productionAt(item.code, level)[res] ?? 0;
+    const next = productionAt(item.code, level + 1)[res] ?? 0;
+    return { label: 'Production par heure', icon: `ph-fill ph-${resources[res].icon}`, value: compact(now), next: compact(next), delta: `+${compact(next - now)}`, deltaClass: 'text-green-400', clip: true };
+  }
+  if (item.code === 'solar_plant') {
+    const now = productionAt(item.code, level).energy ?? 0;
+    const next = productionAt(item.code, level + 1).energy ?? 0;
+    return { label: "Production d'énergie", icon: 'ph ph-lightning', value: compact(now), next: compact(next), delta: `+${compact(next - now)}`, deltaClass: 'text-emerald-400', clip: true };
+  }
+  if (item.code === 'research_lab') {
+    return { label: 'Vitesse de recherche', icon: 'ph ph-flask', value: `${level * 10}%`, next: `${(level + 1) * 10}%`, delta: '+10%', deltaClass: 'text-blue-400', clip: true };
+  }
+  if (item.code === 'robotic_factory' || item.code === 'shipyard') {
+    return { label: 'Réduction du temps de construction', icon: 'ph ph-bulldozer', value: `${level * 10}%`, next: `${(level + 1) * 10}%`, delta: '+10%', deltaClass: 'text-blue-400', clip: false };
+  }
+  return undefined;
+})();
+const requirements = REQUIREMENTS[item.code] ?? 0;
+const unlocks = UNLOCKS[item.code] ?? 0;
 ---
 
-<div class="absolute inset-0 bg-slate-950">
-  <div class="absolute inset-6 bg-slate-900/95 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 flex flex-col">
-    <span class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/90">
-      <i class="ph-bold ph-x text-base leading-none text-white"></i>
-    </span>
+<ScreenModal image={item.image}>
+  <div slot="header">
+    <h2 class="text-2xl font-semibold text-white mb-1">{item.name}</h2>
+    <p class="text-gray-400">{kind === 'building' ? `Niveau ${count}` : `${count} unités`}</p>
+  </div>
 
-    <div class="flex-1 min-h-0 overflow-hidden">
-      <div class="relative flex aspect-[50/33] flex-col justify-end">
-        <div class="absolute inset-0 overflow-hidden">
-          <img src={item.image} alt="" class="w-full h-full object-cover" />
-        </div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
-        <div class="relative px-5 pt-5">
-          <h2 class="text-2xl font-bold text-white">{item.name}</h2>
-          <p class="text-sm text-slate-400 mt-1">{level}</p>
-        </div>
-      </div>
+  {(item.longDescription || item.description) && (
+    <div>
+      <div class="text-slate-300 line-clamp-3">{item.longDescription || item.description}</div>
+      <span class="mt-2 inline-block text-sm font-medium text-blue-400">Voir plus</span>
+    </div>
+  )}
 
-      <div class="p-5 space-y-6">
-        {item.description && (
-          <div>
-            <p class="text-sm text-slate-300 leading-relaxed line-clamp-3">{item.description}</p>
-            <span class="text-sm text-blue-400 mt-1 inline-block">Voir plus</span>
-          </div>
-        )}
-
-        <div class="space-y-3">
-          <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Coût du prochain niveau</div>
-          <div class="grid grid-cols-3 gap-4">
-            {(Object.entries(costs) as [keyof typeof resources, string][]).map(([code, value]) => (
-              <div>
-                <div class="aspect-square max-w-[104px] rounded-lg bg-slate-800/50 card-with-border overflow-hidden flex items-center justify-center">
-                  <i class={`ph-fill ph-${resources[code].icon} text-3xl leading-none ${code === 'energy' ? 'text-green-400' : 'text-slate-400'}`}></i>
-                </div>
-                <p class="mt-2 text-sm text-slate-200 tabular-nums">{value}</p>
+  <div class="space-y-3">
+    <div>
+      <span class="text-gray-400">{kind === 'building' ? 'Coût du prochain niveau' : 'Coût de fabrication'}</span>
+      <div class="-mx-5 px-5 flex gap-4 pb-2 mt-2 overflow-hidden">
+        {tiles.map((tile) => (
+          <div class="w-[calc((100%-3rem)/3)] min-w-[calc((100%-3rem)/3)] max-w-[104px] shrink-0 rounded-lg bg-slate-900 card-with-border overflow-hidden">
+            <div class="relative aspect-square max-w-[104px] rounded-lg bg-slate-800/50 card-with-border overflow-hidden">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <i class={`${tile.icon} text-2xl leading-none text-gray-400`}></i>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {statLabel && (
-          <div class="space-y-3">
-            <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">{statLabel}</div>
-            <div class="grid grid-cols-3 gap-4">
-              <div class="aspect-square max-w-[104px] rounded-lg bg-slate-800/50 card-with-border overflow-hidden flex items-center justify-center">
-                <i class={`ph ph-${statIcon} text-3xl leading-none text-slate-400`}></i>
-              </div>
-              <div class="col-span-2 rounded-lg card-with-border bg-slate-800/30 px-4 flex flex-col justify-center">
-                <span class="text-xs text-slate-500">Niveau suivant</span>
-                <span class="text-base text-slate-200 tabular-nums">{statValue}</span>
-              </div>
+              <div class="entity-veil"></div>
+              {'fill' in tile && (
+                <>
+                  <div class="absolute bottom-0 left-0 w-full h-0.5 bg-slate-600 z-10"></div>
+                  <div class={`absolute bottom-0 left-0 h-0.5 z-10 ${tile.short ? 'bg-red-400' : 'bg-blue-400'}`} style={`width: ${tile.fill}%`}></div>
+                </>
+              )}
+            </div>
+            <div class={`px-2 h-9 flex items-center justify-center text-center rounded-md text-sm font-medium shadow-lg ${'short' in tile && tile.short ? 'text-red-400' : 'text-slate-200'}`}>
+              {tile.label}
             </div>
           </div>
-        )}
+        ))}
       </div>
     </div>
-
-    <div class="shrink-0 p-5 pt-3">
-      <span class="flex h-12 w-full items-center justify-center gap-2 rounded-lg btn-raised btn-raised-blue text-white font-semibold">
-        <i class={`ph-bold ph-${ctaIcon} text-base leading-none`}></i>
-        {cta}
-      </span>
-    </div>
   </div>
-</div>
+
+  {requirements > 0 && (
+    <div class="border-t border-slate-800 pt-1">
+      <div class="flex min-h-11 items-center gap-2 text-gray-400">
+        <span>Prérequis</span>
+        <span class="inline-flex shrink-0 items-center gap-1 border text-xs font-medium rounded-md px-2 py-0.5 border-emerald-500/40 bg-emerald-500/10 text-emerald-300 tabular-nums">{requirements}/{requirements}</span>
+        <i class="ph-bold ph-caret-down ml-auto text-base leading-none shrink-0"></i>
+      </div>
+    </div>
+  )}
+
+  {metric && <ScreenMetric {...metric} />}
+
+  {kind === 'unit' && <span class="block text-gray-400">Caractéristiques</span>}
+
+  {unlocks > 0 && (
+    <div class="border-t border-slate-800 pt-1">
+      <div class="flex min-h-11 items-center gap-2 text-gray-400">
+        <span>Débloque</span>
+        <span class="inline-flex shrink-0 items-center gap-1 border text-xs font-medium rounded-md px-2 py-0.5 border-slate-700/60 bg-slate-800/60 text-slate-300 tabular-nums">{unlocks}</span>
+        <i class="ph-bold ph-caret-down ml-auto text-base leading-none shrink-0"></i>
+      </div>
+    </div>
+  )}
+
+  <div slot="footer" class="w-full flex items-center gap-3">
+    {kind === 'unit' && (
+      <div class="flex items-center justify-between shrink-0 h-12 p-3 w-28 bg-slate-900 border border-slate-700/50 rounded-lg">
+        <span class="p-1 rounded-md text-slate-600"><i class="ph-bold ph-minus block text-base leading-none"></i></span>
+        <span class="w-10 text-center font-medium text-slate-300">1</span>
+        <span class="p-1 rounded-md text-slate-300"><i class="ph-bold ph-plus block text-base leading-none"></i></span>
+      </div>
+    )}
+    <span class={`flex-1 inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-base font-medium text-white btn-raised ${isUpgrade ? 'btn-raised-green' : 'btn-raised-blue'}`}>
+      <i class={`ph ph-${isUpgrade ? 'arrow-up-right' : 'plus'} text-xl leading-none`}></i>
+      {isUpgrade ? 'Améliorer' : 'Construire'}
+    </span>
+  </div>
+</ScreenModal>

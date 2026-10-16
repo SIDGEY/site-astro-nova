@@ -10,7 +10,10 @@ import catalog from '../data/game.json';
 export interface GameEntity {
   code: string;
   name: string;
+  /** Description courte, celle des cartes de liste. */
   description: string;
+  /** Description longue, celle des modales (vide si le jeu n'en a pas). */
+  longDescription?: string;
   image: string;
 }
 
@@ -23,6 +26,9 @@ export interface GameAvatar {
   name: string;
   image: string;
   background: string;
+  /** Rareté et prix en Stellar Points au catalogue de la boutique ; absents si l'avatar n'y est pas. */
+  rarity?: 'offered' | 'common' | 'rare' | 'epic' | 'legendary' | 'exclusive';
+  price?: number;
 }
 
 export const ENTITY_FAMILIES = ['buildings', 'facilities', 'defenses', 'ships', 'research', 'packs'] as const;
@@ -35,10 +41,11 @@ export const gameSource = catalog.source;
 export const nav = catalog.nav as Record<string, string>;
 export const logo = catalog.logo;
 export const banners = catalog.banners as Record<string, string>;
+export const backdrops = (catalog as { backdrops: { space: string } }).backdrops;
 export const avatars = catalog.avatars as GameAvatar[];
 export const planets = catalog.planets as Record<
   string,
-  { albedo: string; normal?: string; specular?: string; clouds?: string; sphere: string; horizon: string; atmosphere?: Record<string, unknown> }
+  { variant: string; albedo: string; normal?: string; specular?: string; clouds?: string; airless?: boolean; sphere?: string; horizon?: string; atmosphere?: Record<string, unknown> }
 >;
 
 export const resources = catalog.resources as Record<ResourceCode, GameResource>;

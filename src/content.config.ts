@@ -252,6 +252,8 @@ const blockGameHeroSchema = blockBaseSchema.extend({
   secondaryCtaLink: z.string().optional(),
   screenshot1: z.string().optional(),
   screenshot2: z.string().optional(),
+  // Arguments de réassurance sous les CTA (« Gratuit », « Sans téléchargement »…).
+  highlights: z.array(z.object({ icon: z.string(), label: z.string() })).optional(),
   // Une bannière de page du jeu (nom du fichier sous heroes/, cf. scripts/sync-game.mjs).
   banner: z.string().optional(),
   backgroundImage: z.string().optional(),

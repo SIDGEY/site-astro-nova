@@ -1,0 +1,52 @@
+---
+/**
+ * Un bloc de statistique des modales du jeu (`MetricBlock`) : libellé, puis une grille de trois
+ * colonnes avec la tuile carrée de la valeur actuelle (`MetricTile` : glyphe, voile, pastille) et
+ * le panneau « Niveau suivant » sur les deux autres (`MetricPanel`). C'est la forme commune de
+ * `ProductionGrid`, `EnergyGrid`, `BuildSpeedGrid` et `ResearchSpeedGrid`.
+ */
+interface Props {
+  label: string;
+  /** Classes du glyphe Phosphor de la tuile (graisse comprise). */
+  icon: string;
+  value: string;
+  next: string;
+  delta: string;
+  deltaClass: string;
+  /** `overflow-hidden rounded-lg` sur la grille, que certains blocs portent. */
+  clip?: boolean;
+}
+
+const { label, icon, value, next, delta, deltaClass, clip = false } = Astro.props;
+---
+
+<div>
+  <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center gap-2 text-gray-400">
+      <span>{label}</span>
+    </div>
+  </div>
+  <div class:list={['grid grid-cols-3 gap-4', clip && 'overflow-hidden rounded-lg']}>
+    <div class="col-span-1">
+      <div class="relative aspect-square max-w-[104px] rounded-lg bg-slate-800/50 backdrop-blur-sm card-with-border overflow-hidden">
+        <div class="flex h-full w-full items-center justify-center">
+          <i class={`${icon} text-2xl leading-none text-gray-400`}></i>
+        </div>
+        <div class="entity-veil"></div>
+        <div class="absolute bottom-2 right-2 rounded-md bg-slate-900/90 px-2 py-1 text-sm font-medium shadow-lg backdrop-blur-sm">
+          <span class="text-white">{value}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-2 relative">
+      <div class="absolute inset-0 metric-panel-border"><div class="h-full w-full metric-panel-fill"></div></div>
+      <div class="relative flex h-full flex-col items-start justify-center px-4 py-4">
+        <div class="flex items-center gap-2 text-gray-500"><span>Niveau suivant</span></div>
+        <div class="flex items-center gap-2">
+          <span class="text-white">{next}</span>
+          <span class={deltaClass}>({delta})</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

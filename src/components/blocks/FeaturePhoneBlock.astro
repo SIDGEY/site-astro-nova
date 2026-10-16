@@ -10,7 +10,7 @@
  */
 import Mobile from "../Mobile.astro";
 import FeatureScreens, { type FeatureFamily } from "../game/FeatureScreens.astro";
-import { banners, family as familyOf, pick, resources, RESOURCE_ORDER, type GameEntity, type ResourceCode } from "../../lib/game";
+import { avatars, banners, family as familyOf, pick, resources, RESOURCE_ORDER, type GameEntity, type ResourceCode } from "../../lib/game";
 
 interface Props {
   icon: string;
@@ -45,8 +45,9 @@ const entities: GameEntity[] = isResources || isShop ? [] : pick(family, items?.
 const galleryExtra = isResources || isShop ? 0 : Math.max(0, familyOf(family).length - entities.length);
 
 // Les deux vignettes flottantes du rendu mobile.
+// Pour la boutique : deux avatars du catalogue, ceux que ses écrans mettent en vitrine.
 const mobileCards = isShop
-  ? familyOf("packs").slice(0, 2)
+  ? avatars.filter((a) => a.rarity === "legendary").slice(0, 2)
   : isResources
     ? resourceCodes.slice(0, 2).map((code) => resources[code])
     : entities.slice(0, 2);

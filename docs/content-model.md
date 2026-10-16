@@ -86,6 +86,8 @@ interface HeroSection {
   ctaText: string;
   ctaLink: string;
   backgroundImage: string;
+  /** `gameHero` : arguments de réassurance sous les CTA, icône Phosphor + libellé. */
+  highlights?: { icon: string; label: string }[];
 }
 
 interface FeatureSection {

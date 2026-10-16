@@ -9,7 +9,9 @@
  *   - le jeu (`Dynasty-Nova/Frontend`), lu sur `origin/main` via git — jamais la copie de travail,
  *     qui suit la branche du moment : la home doit montrer ce qui est en production ;
  *   - le codex (`dynasty-nova-codex`), pour les avatars, qui vivent sur le CDN et pas dans le jeu.
- *     Seuls ceux marqués `surLeCdn` sont repris.
+ *     Seuls ceux marqués `surLeCdn` sont repris ;
+ *   - le backend (`Astro-Nova-Backend`, `origin/main` aussi), pour la rareté et le prix de chaque
+ *     avatar : le catalogue de la boutique est semé par ses migrations (`shop_item`).
  *
  * Sorties (versionnées : la CI de déploiement n'a pas les autres dépôts) :
  *   - `src/data/game.json`  le catalogue, avec le commit du jeu dont il est tiré ;
@@ -18,7 +20,7 @@
  * Usage :
  *   node scripts/sync-game.mjs            # lit origin/main tel que connu localement
  *   node scripts/sync-game.mjs --fetch    # git fetch origin main d'abord
- *   FRONTEND_PATH=… CODEX_PATH=… GAME_REF=… node scripts/sync-game.mjs
+ *   FRONTEND_PATH=… CODEX_PATH=… BACKEND_PATH=… GAME_REF=… node scripts/sync-game.mjs
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -29,6 +31,7 @@ import sharp from 'sharp';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const FRONTEND = path.resolve(process.env.FRONTEND_PATH ?? path.join(ROOT, '..', 'Frontend'));
 const CODEX = path.resolve(process.env.CODEX_PATH ?? path.join(ROOT, '..', 'dynasty-nova-codex'));
+const BACKEND = path.resolve(process.env.BACKEND_PATH ?? path.join(ROOT, '..', 'Astro-Nova-Backend'));
 const REF = process.env.GAME_REF ?? 'origin/main';
 const OUT_PUBLIC = path.join(ROOT, 'public', 'game');
 const OUT_DATA = path.join(ROOT, 'src', 'data', 'game.json');
@@ -61,7 +64,12 @@ const showJson = (file) => JSON.parse(showText(file));
 const listTree = (dir) =>
   git('ls-tree', '-r', '--name-only', REF, dir).toString('utf8').split('\n').filter(Boolean);
 
-if (process.argv.includes('--fetch')) git('fetch', '--quiet', 'origin', 'main');
+const backendGit = (...args) => execFileSync('git', ['-C', BACKEND, ...args], { maxBuffer: 1 << 28 });
+
+if (process.argv.includes('--fetch')) {
+  git('fetch', '--quiet', 'origin', 'main');
+  backendGit('fetch', '--quiet', 'origin', 'main');
+}
 
 const sha = git('rev-parse', REF).toString('utf8').trim();
 const commitDate = git('show', '-s', '--format=%cI', REF).toString('utf8').trim();
@@ -94,13 +102,19 @@ function parseShips() {
     [...src.matchAll(/const (\w+) = assetUrl\('([^']+)'\)/g)].map((m) => [m[1], m[2]]),
   );
   const ships = [];
-  const re = /code:\s*'([a-z_]+)',\s*name:\s*'([^']+)',\s*description:\s*(?:'((?:[^'\\]|\\.)*)'|"([^"]*)")[\s\S]*?imageUrl:\s*(\w+)/g;
+  const str = String.raw`(?:'((?:[^'\\]|\\.)*)'|"([^"]*)")`;
+  const re = new RegExp(
+    String.raw`code:\s*'([a-z_]+)',\s*name:\s*'([^']+)',\s*description:\s*${str},\s*(?:longDescription:\s*${str},)?[\s\S]*?imageUrl:\s*(\w+)`,
+    'g',
+  );
+  const text = (single, double) => (single ?? double ?? '').replace(/\\'/g, "'");
   for (const m of src.matchAll(re)) {
     ships.push({
       code: m[1],
       name: m[2],
-      description: (m[3] ?? m[4]).replace(/\\'/g, "'"),
-      asset: vars[m[5]],
+      description: text(m[3], m[4]),
+      longDescription: text(m[5], m[6]),
+      asset: vars[m[7]],
     });
   }
   if (ships.length === 0) throw new Error('Aucun vaisseau lu dans shipsData.ts : le format a changé ?');
@@ -115,6 +129,7 @@ function withTexts(entries, ns) {
     code,
     name: t.name?.[code] ?? code,
     description: t.description?.[code] ?? '',
+    longDescription: t.long_description?.[code] ?? '',
     asset,
   }));
 }
@@ -140,6 +155,12 @@ const resourceMeta = {
   const src = showText('src/data/resourceIconsData.ts');
   for (const m of src.matchAll(/type:\s*'(\w+)',\s*name:\s*'([^']+)',\s*description:\s*'([^']+)'/g)) {
     if (resourceMeta[m[1]]) Object.assign(resourceMeta[m[1]], { name: m[2], description: m[3] });
+  }
+  // La description longue, celle de la fiche ressource (`ResourceModal`), vit dans `RESOURCE_DATA`.
+  const data = showText('src/features/resources/types/resources.ts');
+  const longRow = /^ {2}(\w+): \{[^}]*?longDescription:\s*(?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)')/gm;
+  for (const m of data.matchAll(longRow)) {
+    if (resourceMeta[m[1]]) resourceMeta[m[1]].longDescription = (m[2] ?? m[3]).replace(/\\(.)/g, '$1');
   }
 }
 
@@ -211,6 +232,8 @@ for (const file of listTree('src/assets/images/heroes')) {
   const name = slugOf(file);
   catalog.banners[name] = await gameImage(file.replace(/^src/, ''), 'banners', name, BANNER_WIDTH);
 }
+// Fond de la page Planète (`PLANET_BACKDROP_IMAGE`), posé derrière la scène 3D.
+catalog.backdrops = { space: await gameImage('/assets/images/backgrounds/space.webp', 'backgrounds', 'space', 1200) };
 catalog.logo = '/game/logo-icon.svg';
 fs.writeFileSync(path.join(OUT_PUBLIC, 'logo-icon.svg'), show('public/logo-icon.svg'));
 
@@ -283,13 +306,35 @@ for (const [biome, variant] of Object.entries(PLANET_SHOWCASE)) {
   if (!latest) throw new Error(`Aucune livraison d'avatars dans ${CODEX}/assets/references`);
   const dir = path.join(CODEX, 'assets/references', latest);
   const roster = JSON.parse(fs.readFileSync(path.join(dir, 'avatars.json'), 'utf8'));
+
+  // Rareté et prix en Stellar Points : les lignes `shop_item` des migrations du backend, dans
+  // l'ordre des fichiers (une ligne plus récente l'emporte). Un avatar absent du catalogue n'est
+  // pas en boutique : il n'aura ni rareté ni prix, et la boutique de la home ne le montrera pas.
+  const shopRow =
+    /\('cosmetic-avatar-[a-z0-9-]+', 'cosmetic', '[a-z_]+', (\d+), 'avatar', '([a-z0-9_]+)', '([a-z]+)'/g;
+  const shopCatalog = new Map();
+  const migrations = backendGit('grep', '-h', '-E', 'cosmetic-avatar-', 'origin/main', '--', 'migrations')
+    .toString('utf8')
+    .replace(/\\'/g, "'");
+  for (const [, price, key, rarity] of migrations.matchAll(shopRow)) {
+    shopCatalog.set(key, { rarity, price: Number(price) });
+  }
+  if (shopCatalog.size === 0) throw new Error(`Aucun avatar dans les migrations de ${BACKEND}`);
+  catalog.source.shop = `Astro-Nova-Backend@${backendGit('rev-parse', '--short', 'origin/main').toString('utf8').trim()}`;
+
   for (const a of roster.filter((x) => x.surLeCdn).sort((x, y) => x.index - y.index)) {
     const key = a.dossier;
     const image = `avatars/${key}/image.webp`;
     const background = `avatars/${key}/background.webp`;
-    await writeImage(fs.readFileSync(path.join(dir, a.fichiers.image)), path.join(OUT_PUBLIC, image), 256, 82);
+    await writeImage(fs.readFileSync(path.join(dir, a.fichiers.image)), path.join(OUT_PUBLIC, image), 384, 82);
     await writeImage(fs.readFileSync(path.join(dir, a.fichiers.background)), path.join(OUT_PUBLIC, background), 640);
-    catalog.avatars.push({ code: a.cosmeticKey, name: a.nom, image: `/game/${image}`, background: `/game/${background}` });
+    catalog.avatars.push({
+      code: a.cosmeticKey,
+      name: a.nom,
+      image: `/game/${image}`,
+      background: `/game/${background}`,
+      ...shopCatalog.get(a.cosmeticKey),
+    });
   }
   catalog.source.avatars = `dynasty-nova-codex/assets/references/${latest}`;
 }

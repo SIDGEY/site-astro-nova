@@ -1,91 +1,327 @@
 ---
 /**
- * La boutique du jeu : onglets de catégorie (`components.shop.categories`), puis soit les packs de
- * Stellar Points (`credits`), soit la galerie d'avatars (`avatars`). Packs, contenus et avatars
- * viennent du jeu et du codex ; aucun prix n'est affiché (il dépend de la région et de Stripe).
+ * La boutique du jeu sous 768px (`ShopPage`) : en-tête de page — titre, « J'ai un code »
+ * (`RewardCodeShopButton`), solde (`StellarBalancePill`) — et ses trois onglets (Boutique,
+ * Collection, Crédits), puis le point du jour (`DailyClaimCard`), posé au-dessus de chaque section.
+ *
+ *   - `showcase` : l'onglet par défaut, la vitrine (`ShowcaseView`) — « À la une » et son compte
+ *     à rebours, la tuile mise en avant (`FeaturedTile`) ;
+ *   - `collection` : la collection d'avatars (`CollectionView`, tuiles `ShopTile`), montrée
+ *     défilée jusqu'aux tuiles, l'en-tête restant en place comme en jeu.
+ *
+ * Avatars, raretés et prix viennent du catalogue de la boutique (migrations du backend) ; le barème
+ * du point du jour est celui du backend (`DailyClaimSchedule`). Solde, série en cours, compte à
+ * rebours et objets possédés sont des valeurs d'illustration : le jeu les reçoit de l'API.
  */
-import { avatars, family } from '../../lib/game';
+import { avatars, type GameAvatar } from '../../lib/game';
 
 interface Props {
-  view: 'credits' | 'avatars';
-  /** Décalage dans la liste d'avatars, pour que deux écrans n'affichent pas les mêmes. */
-  offset?: number;
+  view: 'showcase' | 'collection';
 }
 
-const { view, offset = 0 } = Astro.props;
+const { view } = Astro.props;
+
+type Rarity = 'offered' | 'common' | 'rare' | 'epic' | 'legendary' | 'exclusive';
+
+// `RARITY` (src/styles/rarity.ts du jeu).
+const RARITY: Record<Rarity, { tile: string; border: string; glow: string; label: string }> = {
+  offered: {
+    tile: 'bg-[radial-gradient(120%_90%_at_50%_28%,#64748b_0%,#334155_50%,#0f172a_100%)]',
+    border: 'border-slate-400/70',
+    glow: '',
+    label: 'text-slate-200',
+  },
+  common: {
+    tile: 'bg-[radial-gradient(120%_90%_at_50%_28%,#5f9483_0%,#28463e_50%,#0f1c19_100%)]',
+    border: 'border-[#6fa392]',
+    glow: '',
+    label: 'text-[#b5e0d1]',
+  },
+  rare: {
+    tile: 'bg-[radial-gradient(120%_90%_at_50%_28%,#3b82f6_0%,#1e3a8a_50%,#0b1433_100%)]',
+    border: 'border-blue-400',
+    glow: '',
+    label: 'text-blue-200',
+  },
+  epic: {
+    tile: 'bg-[radial-gradient(120%_90%_at_50%_28%,#a855f7_0%,#581c87_50%,#1a0b2e_100%)]',
+    border: 'border-purple-400',
+    glow: '',
+    label: 'text-purple-200',
+  },
+  legendary: {
+    tile: 'bg-[radial-gradient(120%_90%_at_50%_28%,#f59e0b_0%,#92400e_50%,#2a1405_100%)]',
+    border: 'border-amber-400',
+    glow: 'shadow-[0_14px_44px_-16px_rgba(245,158,11,0.8)]',
+    label: 'text-amber-200',
+  },
+  exclusive: {
+    tile: 'bg-[radial-gradient(120%_90%_at_50%_28%,#ec4899_0%,#6d28d9_50%,#0f172a_100%)]',
+    border: 'border-pink-300',
+    glow: '',
+    label: 'text-pink-200',
+  },
+};
+// `components.avatar.rarity` (FR).
+const RARITY_LABEL: Record<Rarity, string> = {
+  offered: 'Offert',
+  common: 'Commun',
+  rare: 'Rare',
+  epic: 'Épique',
+  legendary: 'Légendaire',
+  exclusive: 'Exclusif',
+};
+
 const tabs = [
-  { key: 'avatars', label: 'Avatars', icon: 'user-circle' },
-  { key: 'credits', label: 'Crédits', icon: 'star-four' },
+  { key: 'showcase', label: 'Boutique', icon: 'storefront' },
+  { key: 'collection', label: 'Collection', icon: 'squares-four' },
+  { key: 'stellar', label: 'Crédits', icon: 'sparkle' },
 ];
-const packs = family('packs') as { code: string; name: string; image: string; amount?: number | null }[];
-const gallery = avatars.slice(offset, offset + 12);
+
+// Barème du point du jour (`DailyClaimSchedule::AMOUNTS`) ; série illustrée : 3e jour, à récupérer.
+const SCHEDULE = [1, 1, 1, 1, 1, 1, 5];
+const STREAK_DAY = 3;
+
+const inShop = avatars.filter((a): a is GameAvatar & { rarity: Rarity; price: number } => Boolean(a.rarity));
+const byRarity = (rarity: Rarity, skip = 0) => inShop.filter((a) => a.rarity === rarity)[skip];
+const featured = byRarity('legendary');
+
+// La collection, filtre « Tous » : un échantillon des états qu'une tuile peut prendre.
+type TileState = 'offered' | 'owned' | 'inShop' | 'missed' | 'notYetShown';
+const collection: { avatar: (typeof inShop)[number]; state: TileState; seenDaysAgo?: number }[] = [
+  { avatar: byRarity('rare'), state: 'inShop' },
+  { avatar: byRarity('offered'), state: 'offered' },
+  { avatar: byRarity('legendary', 1), state: 'inShop' },
+  { avatar: byRarity('epic'), state: 'missed', seenDaysAgo: 9 },
+  { avatar: byRarity('common'), state: 'owned' },
+  { avatar: byRarity('epic', 1), state: 'notYetShown' },
+  { avatar: byRarity('common', 1), state: 'inShop' },
+  { avatar: byRarity('rare', 1), state: 'owned' },
+].filter((tile) => tile.avatar);
 ---
 
-<div class="h-full overflow-hidden">
-  <div class="px-4 pt-4 pb-3 space-y-4">
+<div class="h-full flex flex-col">
+  {/* `PageHeader` : px-5 pt-4 space-y-3, sans fondu (`hideTopFade`). */}
+  <div class="shrink-0 relative px-5 pt-4 space-y-3">
     <div class="flex justify-between items-center gap-2">
       <h1 class="text-xl font-semibold">Boutique</h1>
-      <span class="flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-800/60 px-3 py-1 text-sm text-slate-200 tabular-nums">
-        <i class="ph-fill ph-star-four text-amber-300 leading-none"></i>
-        1 250
-      </span>
-    </div>
-    <div class="flex w-full">
-      {tabs.map((tab, i) => (
-        <span
-          class={`flex-1 flex h-12 items-center justify-center gap-2 border px-3 py-3 text-sm font-medium text-white ${
-            tab.key === view ? 'border-blue-500 bg-blue-500/20' : 'border-slate-700 bg-slate-800'
-          } ${i === 0 ? 'rounded-l-lg' : 'rounded-r-lg'}`}
-        >
-          <i class={`ph ph-${tab.icon} text-xl leading-none ${tab.key === view ? 'text-blue-400' : 'text-slate-400'}`}></i>
-          {tab.label}
+      <div class="flex items-center gap-2">
+        <span class="inline-flex shrink-0 items-center justify-center whitespace-nowrap h-8 gap-1.5 rounded-md px-3 text-xs font-semibold text-slate-400">
+          <i class="ph ph-gift"></i>
+          J'ai un code
         </span>
-      ))}
+        <span class="flex items-center gap-1.5 rounded-full border border-yellow-400/30 bg-slate-900/80 px-3 py-1 text-sm">
+          <i class="ph-fill ph-star-four text-base leading-none text-yellow-400"></i>
+          <span class="font-semibold text-white">45</span>
+        </span>
+      </div>
+    </div>
+    {/* `TabBar` → `SegmentedControl fullWidth` : sous 400px, les trois libellés dépassent et le
+        contrôle défile, comme en jeu. */}
+    <div class="flex overflow-hidden">
+      <div class="inline-flex shrink-0 rounded-lg min-w-full">
+        {tabs.map((tab, i) => (
+          <span
+            class:list={[
+              'flex-1 flex h-12 items-center justify-center gap-2 border px-3 py-3 text-sm font-medium text-white',
+              tab.key === view ? 'border-blue-500 bg-blue-500/20' : 'border-slate-700 bg-slate-800',
+              i === 0 && 'rounded-l-lg',
+              i === tabs.length - 1 && 'rounded-r-lg',
+              i > 0 && tabs[i - 1].key === view && 'border-l-0',
+              i < tabs.length - 1 && tabs[i + 1].key === view && 'border-r-0',
+            ]}
+          >
+            <i class={`ph ph-${tab.icon} text-xl leading-none shrink-0 ${tab.key === view ? 'text-blue-400' : 'text-slate-400'}`}></i>
+            <span class="whitespace-nowrap">{tab.label}</span>
+          </span>
+        ))}
+      </div>
     </div>
   </div>
 
-  {view === 'credits' ? (
-    <div class="px-4 pt-1 space-y-4">
-      <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Packs de Stellar Points</div>
-      <div class="grid grid-cols-2 gap-4">
-        {packs.map((pack) => (
-          <div class="relative rounded-lg overflow-hidden card-with-border flex flex-col">
-            <div class="relative overflow-hidden rounded-t-lg bg-gray-700 aspect-square">
-              <img src={pack.image} alt="" class="w-full h-full object-cover" />
-              <div class="entity-veil"></div>
-              {pack.amount && (
-                <div class="absolute bottom-2 right-2 px-2 py-1 bg-slate-900/90 rounded-md text-sm font-medium text-slate-200 tabular-nums">
-                  {pack.amount} SP
-                </div>
-              )}
-            </div>
-            <div class="px-4 pt-2 pb-3 bg-slate-900/90">
-              <h3 class="text-sm text-white line-clamp-1">{pack.name}</h3>
-            </div>
+  <div class="relative flex-1 min-h-0 overflow-hidden">
+    <div class="px-5 pt-4" style={view === 'collection' ? 'transform: translateY(-366px)' : undefined}>
+      {/* `DailyClaimCard`. */}
+      <section class="relative rounded-lg overflow-hidden card-with-border mb-4 flex flex-col gap-3 p-4">
+        <div class="flex min-w-0 flex-1 items-center gap-3">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-yellow-400/10">
+            <i class="ph-fill ph-star-four text-xl leading-none text-yellow-400"></i>
+          </span>
+          <div class="min-w-0">
+            <h2 class="font-semibold text-white">Point du jour</h2>
+            <p class="text-sm text-slate-400">Revenez chaque jour : {SCHEDULE.at(-1)} points au {SCHEDULE.length}e jour d'affilée.</p>
           </div>
-        ))}
-        <div class="relative rounded-lg overflow-hidden card-with-border flex flex-col items-center justify-center gap-2 aspect-[4/5] bg-slate-800/40">
-          <i class="ph ph-gift text-4xl leading-none text-slate-400"></i>
-          <span class="text-sm text-slate-300">Point du jour</span>
-          <span class="text-xs text-green-400">Récupérer +1</span>
         </div>
-      </div>
-    </div>
-  ) : (
-    <div class="px-4 pt-1 space-y-4">
-      <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Avatars</div>
-      <div class="grid grid-cols-3 gap-3">
-        {gallery.map((a) => (
-          <div class="relative rounded-lg overflow-hidden card-with-border aspect-[4/5]">
-            <img src={a.background} alt="" class="absolute inset-0 w-full h-full object-cover opacity-50" />
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900"></div>
-            <div class="relative h-full flex flex-col items-center justify-end pb-2 gap-1.5">
-              <img src={a.image} alt="" class="w-14 h-14 rounded-full border-2 border-slate-500/70 object-cover" />
-              <span class="text-[10px] leading-[14px] text-slate-200 text-center line-clamp-1 px-1">{a.name}</span>
-            </div>
+        <ol class="flex shrink-0 items-center gap-1.5">
+          {SCHEDULE.map((amount, index) => {
+            const day = index + 1;
+            const isTaken = day < STREAK_DAY;
+            const isToday = day === STREAK_DAY;
+            return (
+              <li
+                class:list={[
+                  'flex size-8 items-center justify-center rounded-full border text-xs font-semibold tabular-nums',
+                  isTaken && 'border-yellow-400/60 bg-yellow-400/20 text-yellow-300',
+                  isToday && 'border-yellow-400 text-yellow-300 ring-2 ring-yellow-400/30',
+                  !isTaken && !isToday && 'border-slate-700 text-slate-500',
+                ]}
+              >
+                {isTaken ? <i class="ph-bold ph-check text-sm leading-none"></i> : `+${amount}`}
+              </li>
+            );
+          })}
+        </ol>
+        <div class="flex shrink-0 flex-col items-stretch gap-1">
+          <span class="btn-raised btn-raised-amber inline-flex items-center justify-center whitespace-nowrap h-10 gap-2 rounded-lg px-4 text-sm font-medium text-white">
+            <i class="ph-fill ph-star-four text-base leading-none"></i>
+            Récupérer +{SCHEDULE[STREAK_DAY - 1]}
+          </span>
+        </div>
+      </section>
+
+      {view === 'showcase' ? (
+        <div class="space-y-7">
+          {featured && (
+            <section class="space-y-3.5">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h2 class="text-base font-bold uppercase tracking-wider text-slate-50">À la une</h2>
+                <span class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs text-slate-300">
+                  <i class="ph ph-clock text-sm leading-none text-slate-400"></i>
+                  Change dans
+                  <strong class="font-semibold tabular-nums text-slate-50">3 j 14:22:05</strong>
+                </span>
+              </div>
+              {/* `FeaturedTile`. */}
+              <article class={`relative flex min-h-[230px] overflow-hidden rounded-2xl border ${RARITY[featured.rarity].tile} ${RARITY[featured.rarity].border} ${RARITY[featured.rarity].glow}`}>
+                <div class="relative flex flex-[1_1_58%] flex-col justify-end gap-1.5 p-4">
+                  <span class="flex gap-1.5">
+                    <span class="rounded-md bg-slate-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-900">À la une</span>
+                  </span>
+                  <span class={`text-[10px] font-semibold uppercase tracking-widest ${RARITY[featured.rarity].label}`}>
+                    {RARITY_LABEL[featured.rarity]} · Avatar
+                  </span>
+                  <h3 class="text-2xl font-bold leading-tight text-white">{featured.name}</h3>
+                  <p class="text-xs text-slate-200">1re apparition</p>
+                  <div class="mt-1 flex items-center gap-2.5">
+                    <span class="flex h-11 items-center gap-2 rounded-lg bg-slate-50 px-4 text-[15px] font-bold text-slate-900">
+                      <i class="ph-fill ph-star-four text-base leading-none text-yellow-600"></i>
+                      {featured.price}
+                    </span>
+                    <span class="flex items-center justify-center size-11 shrink-0 rounded-lg border border-white/25 bg-slate-950/45">
+                      <i class="ph ph-heart text-base leading-none text-slate-100"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="relative flex flex-[1_1_42%] justify-center items-end">
+                  <img
+                    src={featured.image}
+                    alt=""
+                    loading="lazy"
+                    class="absolute inset-0 h-full w-full object-cover object-top [mask-image:linear-gradient(to_right,transparent,black_35%)]"
+                  />
+                </div>
+              </article>
+            </section>
+          )}
+        </div>
+      ) : (
+        <div class="space-y-6">
+          <div class="flex flex-wrap items-center gap-3">
+            {[
+              [
+                { label: 'Avatars', icon: 'user-circle', active: true },
+                { label: 'Skins de planète', icon: 'globe-hemisphere-east' },
+              ],
+              [
+                { label: 'Tous', active: true },
+                { label: 'Possédés' },
+                { label: 'Manquants' },
+                { label: 'Mes envies', icon: 'heart' },
+              ],
+            ].map((items) => (
+              <div class="flex max-w-full overflow-hidden">
+                <div class="inline-flex shrink-0 rounded-lg">
+                  {items.map((item, i) => (
+                    <span
+                      class:list={[
+                        'flex h-12 items-center justify-center gap-2 border px-3 py-3 text-sm font-medium text-white',
+                        item.active ? 'border-blue-500 bg-blue-500/20' : 'border-slate-700 bg-slate-800',
+                        i === 0 && 'rounded-l-lg',
+                        i === items.length - 1 && 'rounded-r-lg',
+                        i > 0 && items[i - 1].active && 'border-l-0',
+                        i < items.length - 1 && items[i + 1].active && 'border-r-0',
+                      ]}
+                    >
+                      {item.icon && (
+                        <i class={`ph ph-${item.icon} text-xl leading-none shrink-0 ${item.active ? 'text-blue-400' : 'text-slate-400'}`}></i>
+                      )}
+                      <span class="whitespace-nowrap">{item.label}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+
+          {/* `ShopTile`, mode « collection ». */}
+          <div class="grid grid-cols-2 gap-3">
+            {collection.map(({ avatar, state, seenDaysAgo }) => {
+              const scale = RARITY[avatar.rarity];
+              const isMissed = state === 'missed' || state === 'notYetShown';
+              const isUsable = state === 'owned' || state === 'offered';
+              const canWish = avatar.rarity !== 'offered' && avatar.rarity !== 'exclusive' && !isUsable;
+              return (
+                <article
+                  class:list={[
+                    'group relative flex flex-col overflow-hidden rounded-2xl border',
+                    isMissed ? 'bg-gradient-to-b from-slate-800 to-slate-900 border-slate-700' : [scale.tile, scale.border, scale.glow],
+                  ]}
+                >
+                  <div class:list={['relative flex aspect-square justify-center overflow-hidden items-end', isMissed && 'opacity-55 grayscale']}>
+                    <img src={avatar.image} alt="" loading="lazy" class="h-full w-full object-cover object-top" />
+                  </div>
+                  {state === 'inShop' && (
+                    <span class="pointer-events-none absolute left-2.5 top-2.5 flex items-center gap-1.5 rounded-md bg-emerald-400 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-950">
+                      <span class="size-1.5 rounded-full bg-emerald-950"></span>
+                      En boutique
+                    </span>
+                  )}
+                  {canWish && (
+                    <div class="absolute right-0.5 top-0.5 z-20">
+                      <span class="flex items-center justify-center size-11 rounded-full">
+                        <span class="flex items-center justify-center size-8 rounded-full border border-white/20 bg-slate-950/55 backdrop-blur-sm">
+                          <i class="ph ph-heart text-base leading-none text-slate-100"></i>
+                        </span>
+                      </span>
+                    </div>
+                  )}
+                  <div class="flex flex-col gap-0.5 border-t border-white/10 bg-slate-950/70 px-3 pb-3 pt-2.5">
+                    <span class:list={['text-[10px] font-semibold uppercase tracking-widest', isMissed ? 'text-slate-400' : scale.label]}>
+                      {RARITY_LABEL[avatar.rarity]} · Avatar
+                    </span>
+                    <span class:list={['truncate text-[15px] font-semibold', isMissed ? 'text-slate-300' : 'text-white']}>{avatar.name}</span>
+                    {isUsable ? (
+                      <span class="flex items-center gap-1 text-[13px] font-semibold text-emerald-300">
+                        <i class="ph-bold ph-check text-sm leading-none"></i>
+                        {state === 'offered' ? 'Offert' : 'Possédé'}
+                      </span>
+                    ) : isMissed ? (
+                      <span class="truncate text-xs text-slate-400">
+                        {state === 'notYetShown' ? 'Pas encore en vitrine' : `vu il y a ${seenDaysAgo} j`}
+                      </span>
+                    ) : (
+                      <span class="flex items-center gap-1 text-sm font-bold text-white">
+                        <i class="ph-fill ph-star-four text-sm leading-none text-yellow-400"></i>
+                        {avatar.price}
+                      </span>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
-  )}
+  </div>
 </div>

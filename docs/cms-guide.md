@@ -94,8 +94,16 @@ images, noms et descriptions. Le contenu ne nomme qu'une famille et des codes d'
 
 Le reste en découle : vignettes, fiche de chaque entité, page de liste, fond de section (la bannière
 de page du jeu), compteur « +N ». Un code inconnu fait échouer le build avec la liste des codes
-valides. Niveaux, coûts et stocks affichés sont des valeurs d'illustration, fixées dans
-`src/components/game/FeatureScreens.astro` et `ScreenTopBar.astro` (le jeu les reçoit de l'API).
+valides.
+
+Niveaux, quantités, stocks, débits, coûts et durées viennent d'un seul empire d'illustration,
+`src/components/game/empire.ts`, partagé par tous les écrans (barre de ressources, fiches, listes).
+Seuls les niveaux, les quantités d'unités et les stocks y sont choisis ; le reste est calculé avec les
+formules du backend (`Building::getProduction`, `getStorage`, `getCost`, `getBuildingTime`,
+`getConstructionTime` des unités) et les valeurs de base de ses migrations. L'empire remplit les
+prérequis de tout ce que montre la home : mettre en avant une entité qu'il ne pourrait pas construire
+obligerait à reproduire en plus la section Prérequis ouverte du jeu. Une entité ajoutée à `items:`
+sans valeurs de base dans `empire.ts` fait échouer le build en le disant.
 
 ### Suivre les évolutions du jeu
 
@@ -104,12 +112,28 @@ npm run game:sync -- --fetch
 ```
 
 `scripts/sync-game.mjs` lit le jeu sur `origin/main` (`../Frontend`, jamais la copie de travail),
-les avatars en ligne dans la dernière livraison du codex (`../dynasty-nova-codex`), et réécrit
-`src/data/game.json` (le catalogue, avec le commit du jeu) et `public/game/` (images redimensionnées,
-textures de la planète 3D). Les deux sont versionnés : la CI de déploiement n'a pas les autres dépôts.
-Chemins et ref surchargeables : `FRONTEND_PATH`, `CODEX_PATH`, `GAME_REF`.
+les avatars en ligne dans la dernière livraison du codex (`../dynasty-nova-codex`), la rareté et le
+prix de chaque avatar dans les migrations du backend (`../Astro-Nova-Backend`, `origin/main` aussi,
+lignes `shop_item`), et réécrit `src/data/game.json` (le catalogue, avec le commit du jeu et celui du
+backend) et `public/game/` (images redimensionnées, textures de la planète 3D). Les deux sont
+versionnés : la CI de déploiement n'a pas les autres dépôts. `--fetch` met d'abord à jour le jeu et le
+backend. Chemins et ref surchargeables : `FRONTEND_PATH`, `CODEX_PATH`, `BACKEND_PATH`, `GAME_REF`.
 
-Les visuels du hero (`gameHero`) et de la communauté (`community`) sont des bannières de page du
+Les textures de la planète 3D sont celles que le jeu charge (`albedo`, `normal`, `specular`, et
+`clouds` quand la variante en a) : après une livraison de biomes dans le jeu, relancer la synchro puis
+pousser, sinon le site en ligne garde les anciennes.
+
+Le hero (`gameHero`) montre deux téléphones en lévitation : la page Planète du jeu, scène 3D
+comprise (`components/game/ScreenPlanet.astro`, mêmes constantes que `UnifiedPlanet3D` du jeu), devant
+la page Bâtiments. `highlights:` liste les arguments de réassurance sous les CTA (icône Phosphor +
+libellé).
+
+Les écrans reconstruits doivent coller au jeu, rien d'inventé : un joueur qui s'inscrit doit
+retrouver en jeu ce que la home lui a montré. Pour vérifier, capturer les vrais écrans à 375px avec
+un compte de jeu (`GAME_USERNAME` / `GAME_PASSWORD` dans `.env`, connexion au pseudo, navigation en
+lecture seule).
+
+Les fonds du hero (`gameHero`) et de la communauté (`community`) sont des bannières de page du
 jeu, nommées par `banner:` (`quests`, `alliance`, … — les noms des fichiers sous
 `src/assets/images/heroes/` du jeu). Un chemin écrit à la main reste possible (`backgroundImage:`,
 `image:`).

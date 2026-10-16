@@ -6,13 +6,15 @@
 interface Props {
     screenshot?: string;
     dataRole?: string;
+    /** Ombre portée du cadre ; le hero pose la sienne, plus diffuse, sans filtre. */
+    shadow?: boolean;
 }
 
-const { screenshot, dataRole } = Astro.props;
+const { screenshot, dataRole, shadow = true } = Astro.props;
 const hasScreen = Astro.slots.has('default');
 ---
 
-<div class="relative block w-fit drop-shadow-2xl" data-role={dataRole}>
+<div class:list={['relative block w-fit', shadow && 'drop-shadow-2xl']} data-role={dataRole}>
     <!-- Le téléphone (SVG) qui définit la taille du conteneur -->
     <img
         src="/tel.svg"

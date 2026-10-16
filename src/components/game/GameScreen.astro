@@ -35,8 +35,15 @@ const { chrome = true, activeTab, label, class: className = '' } = Astro.props;
         <i class="ph-fill ph-battery-full"></i>
       </span>
     </div>
+    {/* Une scène plein écran (la page Planète) se peint SOUS la barre du haut et la barre de
+        navigation, comme le canvas fixe du jeu. */}
+    {Astro.slots.has('scene') && (
+      <div class="absolute inset-x-0 bottom-0 top-[44px] overflow-hidden">
+        <slot name="scene" />
+      </div>
+    )}
     {chrome && <ScreenTopBar />}
-    <div class="relative flex-1 min-h-0 overflow-hidden">
+    <div class="relative z-[1] flex-1 min-h-0 overflow-hidden">
       <slot />
     </div>
     {chrome && <ScreenNavBar active={activeTab} />}
@@ -109,6 +116,11 @@ const { chrome = true, activeTab, label, class: className = '' } = Astro.props;
     background-color: var(--color-blue-500);
     background-image: linear-gradient(to bottom, var(--color-blue-500), var(--color-blue-600));
   }
+  .game-screen .btn-raised-amber {
+    --btn-glow: rgb(251 191 36 / 0.5);
+    background-color: var(--color-amber-500);
+    background-image: linear-gradient(to bottom, var(--color-amber-500), var(--color-amber-600));
+  }
   .game-screen .btn-raised-green {
     --btn-glow: rgb(74 222 128 / 0.5);
     background-color: var(--color-green-500);
@@ -122,6 +134,26 @@ const { chrome = true, activeTab, label, class: className = '' } = Astro.props;
     pointer-events: none;
     background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%),
       linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, #434c60 100%);
+  }
+
+  /* Panneau accolé à une tuile (`MetricPanel`, `EntityDetailRow`) : bordure en dégradé d'un pixel,
+     angles droits côté tuile. */
+  .game-screen .metric-panel-border {
+    background: linear-gradient(90deg, #0f1728 10%, #212c3e 100%);
+    padding: 1px;
+    border-radius: 0 8px 8px 0;
+  }
+  .game-screen .metric-panel-fill {
+    background: linear-gradient(90deg, #0f1728 10%, #080f20 100%);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* Jauge au ton vert (`GAUGE_TONES.green`) : bordure et fond en dégradé. */
+  .game-screen .gauge-green {
+    background: linear-gradient(90deg, #059669 0%, #34d399 100%);
+  }
+  .game-screen .gauge-green-fill {
+    background: linear-gradient(90deg, #022c22 0%, #10b981 100%);
   }
 
   .game-screen-swap {

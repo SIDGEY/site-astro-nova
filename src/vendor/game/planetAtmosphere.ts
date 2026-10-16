@@ -1,5 +1,5 @@
 // @ts-nocheck
-// GÉNÉRÉ par scripts/sync-game.mjs — copie de src/features/planets/utils/planetAtmosphere.ts (Dynasty-Nova/Frontend @ 26bf68c4).
+// GÉNÉRÉ par scripts/sync-game.mjs — copie de src/features/planets/utils/planetAtmosphere.ts (Dynasty-Nova/Frontend @ eb30637d).
 // Ne pas modifier ici : relancer `npm run game:sync`.
 import type { PlanetAtmosphere, PlanetCloudLayer } from './planetSurface.ts';
 

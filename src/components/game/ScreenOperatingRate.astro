@@ -1,0 +1,66 @@
+---
+/**
+ * Le réglage du taux de fonctionnement d'une mine (`OperatingRateControl`), au repos : la jauge du
+ * jeu (`GaugeSlider`, ton vert à 100 %, crans tous les 10 %) puis l'aperçu production / consommation
+ * d'énergie (`PreviewRow`), sans écart tant que rien ne bouge.
+ */
+import { resources, type ResourceCode } from '../../lib/game';
+import { compact } from './format';
+
+interface Props {
+  output: ResourceCode;
+  production: number;
+  consumption: number;
+}
+
+const { output, production, consumption } = Astro.props;
+const rate = 100;
+const rows = [
+  { icon: resources[output].icon, label: 'Production du bâtiment', value: `${compact(production)} /h` },
+  { icon: resources.energy.icon, label: "Consommation d'énergie", value: compact(consumption) },
+];
+---
+
+<div class="space-y-3 rounded-lg border border-slate-700/50 bg-slate-800/30 p-3">
+  <div class="space-y-3">
+    <div class="flex items-center justify-between">
+      <div class="text-slate-400 text-base tracking-wide">Taux de fonctionnement</div>
+      <div class="flex items-center gap-1">
+        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-md text-slate-500"><i class="ph ph-caret-left text-xl leading-none"></i></span>
+        <div class="flex h-8 items-center rounded-md border border-slate-700/50 bg-slate-950/50 px-2">
+          <span class="w-8 text-right font-medium tabular-nums text-emerald-400">{rate}</span>
+          <span class="tabular-nums text-emerald-400">%</span>
+        </div>
+        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-md text-slate-700"><i class="ph ph-caret-right text-xl leading-none"></i></span>
+      </div>
+    </div>
+    <div class="relative pt-1 pb-4">
+      <div class="h-3 rounded-full relative overflow-visible border border-slate-700 bg-slate-950/50">
+        <div class="absolute rounded-full overflow-hidden gauge-green" style="width: 100%; top: -1px; left: -1px; bottom: -1px; padding: 1px">
+          <div class="w-full h-full rounded-full gauge-green-fill"></div>
+        </div>
+        <div class="absolute inset-0 flex items-center pointer-events-none z-20">
+          {[10, 20, 30, 40, 50, 60, 70, 80, 90].map((step) => (
+            <div class="w-1 h-1 rounded-full absolute bg-emerald-400" style={`left: ${step}%; transform: translateX(-50%)`}></div>
+          ))}
+        </div>
+        <div class="absolute top-1/2 w-6 h-6 bg-white rounded-full z-30" style="left: calc(100% - 24px); transform: translateY(-50%); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)"></div>
+      </div>
+      <div class="relative text-slate-600 text-sm mt-2.5">
+        <span class="absolute left-0">0</span>
+        <span class="absolute right-0 text-slate-400">100</span>
+      </div>
+    </div>
+  </div>
+  <div class="space-y-1">
+    {rows.map((row) => (
+      <div class="flex items-center justify-between gap-2 text-xs">
+        <span class="flex items-center gap-1.5 text-slate-400">
+          <i class={`ph-fill ph-${row.icon} text-[14px] leading-none`}></i>
+          {row.label}
+        </span>
+        <span class="flex items-center gap-2 tabular-nums"><span class="text-slate-200">{row.value}</span></span>
+      </div>
+    ))}
+  </div>
+</div>

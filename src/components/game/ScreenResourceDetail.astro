@@ -1,10 +1,24 @@
 ---
 /**
- * La modale de ressource du jeu (`ResourceModal`) : illustration de la ressource, stock, puis les
- * bâtiments qui la produisent et la stockent, en lignes illustrées. Les bâtiments sont ceux du
- * jeu ; stocks, niveaux et débits sont des valeurs d'illustration.
+ * La fiche ressource du jeu (`ResourceModal`) sous 768px, dans la modale commune :
+ *
+ *   - en tête, l'illustration, le nom et le stock sur la capacité (pour l'énergie : consommation /
+ *     production et taux d'utilisation) ;
+ *   - la description longue repliée (`ExpandableText`) ;
+ *   - pour une ressource extraite, le taux de fonctionnement de sa mine (`OperatingRateControl`) ;
+ *   - le détail (`ResourceBreakdown`) : lignes de production et de stockage, ou pour l'énergie la
+ *     production puis la consommation, chaque mine suivie de son taux de fonctionnement ;
+ *   - au pied, « D'accord ».
+ *
+ * Les panneaux de talents (conversion du surplus, talents de production ou d'énergie) n'existent
+ * qu'avec une classe : l'empire d'illustration (`empire.ts`) n'en a pas.
  */
 import { pick, resources, type ResourceCode } from '../../lib/game';
+import { energyBalance, resourceBalance } from './empire';
+import { compact } from './format';
+import ScreenDetailRow from './ScreenDetailRow.astro';
+import ScreenModal from './ScreenModal.astro';
+import ScreenOperatingRate from './ScreenOperatingRate.astro';
 
 interface Props {
   resource: ResourceCode;
@@ -12,69 +26,101 @@ interface Props {
 
 const { resource } = Astro.props;
 const meta = resources[resource];
+const building = (code: string) => pick('buildings', [code])[0];
 
-const chain: Record<ResourceCode, { produce: string[]; store: string[]; stock: string; rate: string }> = {
-  metal: { produce: ['metal_mine'], store: ['metal_storage'], stock: '12 400 / 25 000', rate: '1,2K / heure' },
-  crystal: { produce: ['crystal_mine'], store: ['crystal_storage'], stock: '6 800 / 25 000', rate: '640 / heure' },
-  hydrogen: { produce: ['hydrogen_synthesizer'], store: ['hydrogen_storage'], stock: '2 100 / 10 000', rate: '210 / heure' },
-  energy: { produce: ['solar_plant', 'fusion_plant'], store: [], stock: '86 %', rate: '+48' },
-};
-const { produce, store, stock, rate } = chain[resource];
-const levels = [8, 4, 3];
-
-const groups = [
-  { title: 'Production', aside: rate, items: pick('buildings', produce) },
-  ...(store.length ? [{ title: 'Stockage', aside: '', items: pick('buildings', store) }] : []),
-];
+const isEnergy = resource === 'energy';
+const energy = energyBalance();
+const balance = isEnergy ? undefined : resourceBalance(resource);
+const mineOutput = balance ? balance.production.find((line) => line.code === balance.mine)?.value ?? 0 : 0;
+const mineDraw = balance ? energy.consumers.find((c) => c.code === balance.mine)?.value ?? 0 : 0;
 ---
 
-<div class="absolute inset-0 bg-slate-950">
-  <div class="absolute inset-6 bg-slate-900/95 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 flex flex-col">
-    <span class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/90">
-      <i class="ph-bold ph-x text-base leading-none text-white"></i>
-    </span>
-
-    <div class="flex-1 min-h-0 overflow-hidden">
-      <div class="relative flex aspect-[50/33] flex-col justify-end">
-        <div class="absolute inset-0 overflow-hidden">
-          <img src={meta.image} alt="" class="w-full h-full object-cover" />
-        </div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
-        <div class="relative px-5 pt-5">
-          <h2 class="text-2xl font-bold text-white">{meta.name}</h2>
-          <p class="text-sm text-slate-400 mt-1 tabular-nums">{stock}</p>
-        </div>
-      </div>
-
-      <div class="p-5 space-y-6">
-        <p class="text-sm text-slate-300 leading-relaxed">{meta.description}.</p>
-        {groups.map((group) => (
-          <div class="space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-semibold text-slate-500 uppercase tracking-wider">{group.title}</span>
-              {group.aside && <span class="text-sm text-slate-400 tabular-nums">{group.aside}</span>}
-            </div>
-            {group.items.map((b, i) => (
-              <div class="flex gap-4 rounded-lg card-with-border bg-slate-800/30 overflow-hidden">
-                <div class="relative w-[88px] shrink-0 aspect-square">
-                  <img src={b.image} alt="" class="w-full h-full object-cover" />
-                  <div class="entity-veil"></div>
-                </div>
-                <div class="flex flex-col justify-center">
-                  <span class="text-sm text-slate-200">{b.name}</span>
-                  <span class="text-xs text-slate-500 mt-1">Niveau {levels[i] ?? 2}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <div class="shrink-0 p-5 pt-3">
-      <span class="flex h-12 w-full items-center justify-center rounded-lg btn-raised btn-raised-blue text-white font-semibold">
-        D'accord
-      </span>
+<ScreenModal image={meta.image} veil>
+  <div slot="header">
+    <h2 class="text-2xl font-semibold text-white mb-1">{meta.name}</h2>
+    <div class="flex items-center gap-2">
+      <span class="relative inline-flex shrink-0"><i class={`ph-fill ph-${meta.icon} text-xl leading-none text-slate-400`}></i></span>
+      <p class="text-gray-300 tabular-nums">
+        {isEnergy
+          ? `${compact(energy.consumption)} / ${compact(energy.production)} (${energy.usage}%)`
+          : `${compact(balance!.stock)} / ${compact(balance!.capacity)}`}
+      </p>
     </div>
   </div>
-</div>
+
+  {meta.longDescription && (
+    <div>
+      <div class="text-slate-300 line-clamp-3">{meta.longDescription}</div>
+      <span class="mt-2 inline-block text-sm font-medium text-blue-400">Voir plus</span>
+    </div>
+  )}
+
+  {balance && <ScreenOperatingRate output={resource} production={mineOutput} consumption={mineDraw} />}
+
+  <div class="space-y-6">
+    {balance ? (
+      <>
+        <div>
+          <div class="mb-2 flex items-center justify-between gap-2 text-gray-400">
+            <span>Production</span>
+            <span class="text-slate-500">{compact(balance.productionTotal)} /h</span>
+          </div>
+          <div class="space-y-3">
+            {balance.production.map((line) => {
+              const b = building(line.code);
+              return <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={`+${compact(line.value)} /h`} valueClass="text-green-400" />;
+            })}
+          </div>
+        </div>
+        <div>
+          <div class="mb-2 flex items-center justify-between gap-2 text-gray-400">
+            <span>Stockage</span>
+            <span class="text-slate-500">{compact(balance.capacity)}</span>
+          </div>
+          <div class="space-y-3">
+            {balance.storage.map((line) => {
+              const b = building(line.code);
+              return <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={compact(line.value)} valueClass="text-slate-200" />;
+            })}
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div>
+          <div class="mb-2 flex items-center justify-between gap-2 text-gray-400"><span>Production</span></div>
+          <div class="space-y-3">
+            {energy.producers.map((line) => {
+              const b = building(line.code);
+              return (
+                <div class="space-y-2">
+                  <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={`+${compact(line.value)} (${energy.share(line.value)}%)`} valueClass="text-green-400" />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div>
+          <div class="mb-2 flex items-center justify-between gap-2 text-gray-400"><span>Consommation</span></div>
+          <div class="space-y-3">
+            <div class="flex gap-3 text-sm text-gray-500 items-start">
+              <div class="rounded-full bg-slate-950/50 p-3 border border-gray-700/50"><i class="ph-bold ph-info block text-base leading-none text-gray-200"></i></div>
+              <div>Réglez le taux de vos mines pour libérer de l'énergie : leur production et leur consommation baissent d'autant.</div>
+            </div>
+            {energy.consumers.map((line) => {
+              const b = building(line.code);
+              return (
+                <div class="space-y-2">
+                  <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={`-${compact(line.value)} (${energy.share(line.value)}%)`} valueClass="text-amber-400" />
+                  <ScreenOperatingRate output={line.res} production={line.output} consumption={line.value} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </>
+    )}
+  </div>
+
+  <span slot="footer" class="w-full inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-base font-medium text-white btn-raised btn-raised-blue">D'accord</span>
+</ScreenModal>

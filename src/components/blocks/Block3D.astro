@@ -35,7 +35,7 @@ const textures = Object.fromEntries(
         normal: p.normal,
         specular: p.specular,
         ...(p.airless ? { airless: true } : {}),
-        ...(p.clouds && atmosphere?.clouds ? { clouds: p.clouds } : {}),
+        ...(p.clouds ? { clouds: p.clouds } : {}),
         ...(atmosphere ? { atmosphere } : {}),
       },
     ];

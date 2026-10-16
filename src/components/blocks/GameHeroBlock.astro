@@ -1,5 +1,8 @@
 ---
-import { banner as bannerUrl } from "../../lib/game";
+import { banner as bannerUrl, pick } from "../../lib/game";
+import Mobile from "../Mobile.astro";
+import ScreenPlanet from "../game/ScreenPlanet.astro";
+import FeatureScreens from "../game/FeatureScreens.astro";
 
 interface Props {
   title: string;
@@ -11,6 +14,7 @@ interface Props {
   screenshot1?: string;
   screenshot2?: string;
   backgroundImage?: string;
+  highlights?: { icon: string; label: string }[];
   /** Une bannière de page du jeu, par son nom (`quests`, `fleet`…). */
   banner?: string;
 }
@@ -23,15 +27,18 @@ const {
   secondaryCtaText = "Découvrir le jeu",
   secondaryCtaLink = "#features",
   backgroundImage: customBackground,
+  highlights = [],
   banner,
 } = Astro.props;
+
+const heroBuildings = pick("buildings", ["metal_mine", "crystal_mine", "hydrogen_synthesizer", "solar_plant"]);
 
 const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/landing/backgrounds/bg-hero.webp");
 ---
 
 <header
   id="game-hero"
-  class="overflow-hidden relative bg-[#121B2E] min-h-[90dvh] flex items-center"
+  class="overflow-hidden relative bg-[#121B2E] lg:min-h-[90dvh] flex items-center"
 >
   <!-- Background image layers (reversed style: image on right) -->
   <div
@@ -55,37 +62,70 @@ const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/land
     >
     </div>
   </div>
-  <div class="relative z-20 w-full max-w-7xl mx-auto py-24">
-    <div class="max-w-2xl px-11 pt-4 text-center md:text-left mx-auto md:mx-0">
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8">
+  <div
+    class="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-11 pt-28 pb-20 lg:pt-32 lg:pb-20 grid lg:grid-cols-[minmax(0,1fr)_auto] items-center gap-14 lg:gap-16"
+  >
+    <div class="max-w-2xl text-center lg:text-left mx-auto lg:mx-0">
+      <h1 class="text-4xl sm:text-5xl xl:text-6xl font-bold text-white mb-6 lg:mb-8">
         {title}
       </h1>
 
-      <p
-        class="text-lg md:text-2xl text-slate-400 mb-12 max-w-xl mx-auto md:mx-0"
-      >
+      <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-xl mx-auto lg:mx-0">
         {subtitle}
       </p>
 
-      <div class="flex flex-col md:flex-row flex-wrap gap-4 items-center">
+      <div class="flex flex-col sm:flex-row flex-wrap gap-4 items-center justify-center lg:justify-start">
         <a
           href={ctaLink}
-          class="flex items-center justify-center h-12 px-6 w-full md:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold text-lg rounded-lg transition-colors"
+          class="group flex items-center justify-center gap-2 h-12 px-6 w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold text-lg rounded-lg transition-colors shadow-lg shadow-blue-600/25"
         >
           {ctaText}
+          <i class="ph ph-bold ph-arrow-right transition-transform group-hover:translate-x-0.5"></i>
         </a>
         <a
           href={secondaryCtaLink}
           data-scroll-next
-          class="flex items-center justify-center h-12 px-6 w-full md:w-auto border border-slate-600 backdrop-blur-xl text-slate-200 hover:text-white hover:border-slate-500 font-semibold text-lg rounded-lg transition-colors"
+          class="flex items-center justify-center h-12 px-6 w-full sm:w-auto border border-slate-600 backdrop-blur-xl text-slate-200 hover:text-white hover:border-slate-500 font-semibold text-lg rounded-lg transition-colors"
         >
           {secondaryCtaText}
         </a>
       </div>
+
+      {highlights.length > 0 && (
+        <ul class="mt-6 flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-slate-400">
+          {highlights.map((item) => (
+            <li class="flex items-center gap-1.5">
+              <i class={`ph ph-${item.icon} text-base text-blue-400`}></i>
+              {item.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    {/* Le jeu tel qu'un joueur le trouve en se connectant : la page Planète, scène 3D comprise,
+        devant la page Bâtiments. Légère perspective, lévitation et ombre diffuse. */}
+    <div class="hero-stage mx-auto" data-hero-stage>
+      <div class="hero-scene">
+        <div class="hero-device hero-device--back">
+          <div class="hero-device__inner">
+            <Mobile shadow={false}>
+              <FeatureScreens role="context" family="buildings" items={heroBuildings} />
+            </Mobile>
+          </div>
+        </div>
+        <div class="hero-device hero-device--front">
+          <div class="hero-device__inner">
+            <Mobile shadow={false}>
+              <ScreenPlanet label="La page Planète du jeu, telle qu'elle s'affiche sur mobile" />
+            </Mobile>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+  <div class="absolute bottom-8 left-0 right-0 hidden lg:flex justify-center">
     <a
       href="#features"
       data-scroll-next
@@ -97,6 +137,135 @@ const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/land
     </a>
   </div>
 </header>
+
+<style>
+  /* Deux téléphones en lévitation, à la manière d'un rendu produit : chacun incliné dans son
+     plan, décalés en diagonale, une tranche visible et une ombre très diffuse. La perspective est
+     portée ici pour que l'inclinaison de la scène au survol (`--rx`, `--ry`) en ait une. */
+  .hero-stage {
+    --s: 0.82;
+    --w: calc(232px * var(--s));
+    --h: calc(480px * var(--s));
+    --rx: 0deg;
+    --ry: 0deg;
+    position: relative;
+    width: calc(var(--w) * 1.62);
+    height: calc(var(--h) * 1.2);
+    perspective: 2000px;
+  }
+  @media (min-width: 400px) {
+    .hero-stage { --s: 0.9; }
+  }
+  @media (min-width: 768px) {
+    .hero-stage { --s: 1; }
+  }
+  @media (min-width: 1280px) {
+    .hero-stage { --s: 1.12; }
+  }
+
+  /* Halo derrière les téléphones : ils se détachent de la bannière sans la masquer. */
+  .hero-stage::before {
+    content: "";
+    position: absolute;
+    inset: -20% -24%;
+    background: radial-gradient(closest-side, rgb(18 27 46 / 0.9), rgb(18 27 46 / 0.55) 55%, rgb(18 27 46 / 0));
+    pointer-events: none;
+  }
+  .hero-stage::after {
+    content: "";
+    position: absolute;
+    inset: 6% 4% 22% 14%;
+    background: radial-gradient(closest-side, rgb(59 130 246 / 0.2), rgb(59 130 246 / 0));
+    filter: blur(24px);
+    pointer-events: none;
+  }
+
+  /* La scène ne porte que l'inclinaison au survol (±3°) : la pose vient des téléphones. */
+  .hero-scene {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx)) rotateY(var(--ry));
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero-device {
+    position: absolute;
+    width: var(--w);
+    height: var(--h);
+    border-radius: calc(34px * var(--s));
+    will-change: translate;
+  }
+  /* La tranche : un bord métallique décalé sous le cadre, qui donne son épaisseur à l'appareil. */
+  .hero-device::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    translate: calc(4px * var(--s)) calc(3px * var(--s));
+    background: linear-gradient(160deg, #4a5468 0%, #1b2130 35%, #0b0f17 60%, #343c4d 100%);
+    /* Ombre très diffuse, en couches de faible opacité (à la Beautiful Shadows) : elle dit la
+       superposition sans détacher les téléphones d'un fond déjà estompé. Décalée vers la droite,
+       la lumière venant de la gauche comme le soleil de la scène planète. Portée par la tranche
+       en `box-shadow` et non par un `filter` sur l'appareil : un filtre serait recalculé à chaque
+       image de la scène 3D qu'il contient. */
+    box-shadow:
+      0 1px 2px rgb(2 6 23 / 0.06),
+      2px 4px 8px rgb(2 6 23 / 0.08),
+      4px 12px 24px rgb(2 6 23 / 0.1),
+      10px 30px 60px rgb(2 6 23 / 0.16);
+  }
+  /* Le liseré du cadre : un filet clair qui accroche la lumière sur le pourtour. */
+  .hero-device::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.14), inset 1px 1px 0 1px rgb(255 255 255 / 0.06);
+  }
+  .hero-device__inner {
+    position: relative;
+    width: 232px;
+    transform: scale(var(--s));
+    transform-origin: top left;
+  }
+  /* Reflet du verre : un voile diagonal à peine visible, posé sur l'écran sous le cadre. */
+  .hero-device__inner :global([data-screen-stack])::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(115deg, rgb(255 255 255 / 0.1) 0%, rgb(255 255 255 / 0.025) 40%, rgb(255 255 255 / 0) 41%);
+  }
+
+  .hero-device--back {
+    left: 0;
+    top: 0;
+    rotate: -8deg;
+    opacity: 0.8;
+    animation: hero-float 8s ease-in-out -4s infinite;
+  }
+  .hero-device--front {
+    right: 0;
+    top: 12%;
+    rotate: 6deg;
+    animation: hero-float 8s ease-in-out infinite;
+  }
+
+  @keyframes hero-float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-device { animation: none; }
+    .hero-scene { transition: none; }
+  }
+</style>
 
 <script>
   function getNextSection(el: Element): Element | null {
@@ -123,5 +292,30 @@ const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/land
   }
 
   initHeroScroll();
-  document.addEventListener("astro:page-load", initHeroScroll);
+
+  // Inclinaison au survol, à peine perceptible : ±3° qui suivent le pointeur sur le hero.
+  function initHeroTilt() {
+    const hero = document.getElementById("game-hero");
+    const stage = hero?.querySelector<HTMLElement>("[data-hero-stage]");
+    if (!hero || !stage || stage.dataset.tiltBound === "true") return;
+    if (!window.matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)").matches) return;
+    stage.dataset.tiltBound = "true";
+    hero.addEventListener("pointermove", (event) => {
+      const rect = hero.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      stage.style.setProperty("--ry", `${(x * 6).toFixed(2)}deg`);
+      stage.style.setProperty("--rx", `${(-y * 6).toFixed(2)}deg`);
+    });
+    hero.addEventListener("pointerleave", () => {
+      stage.style.setProperty("--ry", "0deg");
+      stage.style.setProperty("--rx", "0deg");
+    });
+  }
+
+  initHeroTilt();
+  document.addEventListener("astro:page-load", () => {
+    initHeroScroll();
+    initHeroTilt();
+  });
 </script>

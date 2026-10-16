@@ -5,16 +5,20 @@ blocks:
   - type: gameHero
     title: Forgez votre légende au cœur de l'univers
     subtitle: Explorez l'inconnu, étendez votre empire, exploitez chaque ressource et éliminez vos rivaux. Un jeu de stratégie 4X en temps réel, où chaque décision façonne la galaxie.
-    ctaText: Rejoindre Dynasty Nova
+    ctaText: Jouer gratuitement
     ctaLink: "https://play.dynastynova.com"
     secondaryCtaText: Découvrir le jeu
     secondaryCtaLink: "#planets"
+    highlights:
+      - { icon: gift, label: Gratuit }
+      - { icon: browser, label: Sans téléchargement }
+      - { icon: devices, label: Mobile et ordinateur }
     banner: quests
 
   - type: block3D
     sectionId: planets
-    title: Recherchez des innovations pour prospérer.
-    subtitle: Votre planète est le cœur de votre empire. C'est ici que vous produisez des ressources et développez vos défenses.
+    title: Colonisez des mondes uniques
+    subtitle: "Jungles, océans, glaces, déserts, géantes gazeuses et lunes : chaque monde a son biome, et son climat pèse sur votre production d'énergie et d'hydrogène."
 
   - type: featurePhone
     sectionId: resources
@@ -36,10 +40,10 @@ blocks:
 
   - type: featurePhone
     icon: factory
-    title: Maîtrisez les ressources de vos planètes
-    subtitle: "Les bâtiments sont essentiels. La base planétaire gère la colonie, le Centre d'innovation développe des technologies, et la Fabrique d'automates accélère la construction."
+    title: Bâtissez les installations de votre empire
+    subtitle: "Le Centre d'innovation accélère vos recherches, la Fabrique d'automates vos constructions, le Dock orbital assemble vaisseaux et défenses, et l'Arsenal balistique fabrique vos missiles."
     family: facilities
-    items: [research_lab, robotic_factory, shipyard, terraformer]
+    items: [research_lab, robotic_factory, shipyard, missile_silo]
     reversed: true
 
   - type: carousel
@@ -52,7 +56,7 @@ blocks:
   - type: featurePhone
     sectionId: defenses
     icon: shield-star
-    title: Protégez votre empire des attaques ennemie
+    title: Protégez votre empire des attaques ennemies
     subtitle: "Un bon système de défense protège votre empire. Projecteurs balistiques et canons photoniques tiennent les premières vagues à distance. Une défense diversifiée est clé."
     family: defenses
     items: [ballistic_projector, photonic_cannon, high_energy_emitter, magnetic_accelerator]
@@ -62,7 +66,7 @@ blocks:
     sectionId: fleet
     icon: rocket-launch
     title: Développez votre flotte pour dominer.
-    subtitle: "Les vaisseaux sont essentiels. Les intercepteurs sont rapides, les assaillants résistants, les corvettes polyvalentes, et le pionnier spatial fonde de nouvelles colonies."
+    subtitle: "Les vaisseaux sont essentiels. Les intercepteurs sont rapides, les assaillants résistants, les corvettes chassent les intercepteurs et le cuirassé est l'épine dorsale de toute flotte."
     family: ships
     items: [light_fighter, heavy_fighter, cruiser, battleship]
     reversed: true
@@ -71,7 +75,7 @@ blocks:
     sectionId: shop
     icon: storefront
     title: "Progressez à votre rythme, brillez par style"
-    subtitle: "Notre boutique respecte l'intégrité de la compétition. Aucun avantage ne s'achète : l'arène est le domaine de la stratégie. Choisissez des options Pay-to-Fast pour accélérer votre développement ou explorez nos avatars exclusifs."
+    subtitle: "Avatars et skins de planète passent en vitrine à tour de rôle. Affichez votre style, ajoutez vos coups de cœur à vos envies pour être prévenu de leur retour, et revenez chaque jour récupérer votre point du jour."
     family: shop
     reversed: false
 
@@ -99,9 +103,9 @@ blocks:
 
   - type: community
     title: Rejoignez l'aventure
-    subtitle: Connectez-vous avec des milliers de joueurs passionnés et partagez vos expériences galactiques.
+    subtitle: Rejoignez une communauté de joueurs passionnés et partagez vos expériences galactiques.
     sectionTitle: Une communauté grandissante
-    description: Rejoignez des milliers de joueurs sur nos forums et canaux Discord pour partager vos stratégies, raconter vos conquêtes et forger des alliances. Plongez dans des événements réguliers, des tournois et des défis saisonniers offrant des récompenses uniques et des opportunités de compétition.
+    description: Retrouvez les autres joueurs sur notre Discord pour partager vos stratégies, raconter vos conquêtes et forger des alliances. Suivez les nouveautés du jeu et proposez vos idées pour la suite.
     secondaryDescription: Échangez, collaborez et imposez votre marque dans cet univers en constante évolution.
     discordLink: https://discord.gg/dVXdVqw5d5
     discordButtonText: Rejoindre le Discord

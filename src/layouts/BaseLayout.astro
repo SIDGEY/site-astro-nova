@@ -93,14 +93,13 @@ const {
   <body
     class="bg-[rgb(var(--bg))] text-[rgb(var(--text))] transition-colors duration-300"
   >
-    <!-- Netlify Identity (needed to handle invite/recovery links that land on the site root) -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"
-    ></script>
     <script>
-      // Redirect invite/recovery links to the CMS admin so Decap can complete auth.
+      // Les liens d'invitation, de récupération ou de confirmation Netlify Identity arrivent sur la
+      // racine : on les passe à l'admin, qui charge le widget et termine l'authentification. Le
+      // widget n'est donc pas chargé ici, où il bloquait le rendu de chaque page pour tout le monde.
       if (
         window.location.hash &&
-        /(invite_token|recovery_token)=/i.test(window.location.hash)
+        /(invite_token|recovery_token|confirmation_token|email_change_token|access_token)=/i.test(window.location.hash)
       ) {
         window.location.href = "/admin/" + window.location.hash;
       }

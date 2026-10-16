@@ -2,16 +2,25 @@
 /**
  * Barre du haut du jeu sous 768px : `Header` (menu, logo centré, messagerie, notifications) puis
  * la barre de ressources embarquée (`ResourceBar` / `ResourceBlock`, icône et valeur côte à côte).
- * Valeurs d'illustration : ce sont celles d'un empire de début de partie, pas des données du jeu.
+ * Stocks, capacités et bilan d'énergie de l'empire d'illustration (`empire.ts`) ; la jauge sous
+ * chaque bloc est le remplissage du stockage, ou le taux d'utilisation de l'énergie.
  */
 import { logo, resources, RESOURCE_ORDER } from '../../lib/game';
+import { energyBalance, resourceBalance } from './empire';
+import { compact, energyTone } from './format';
 
+const energy = energyBalance();
+const tone = energyTone(energy.usage, energy.available);
 const sample: Record<string, { value: string; fill: number }> = {
-  metal: { value: '12,4K', fill: 62 },
-  crystal: { value: '6,8K', fill: 41 },
-  hydrogen: { value: '2,1K', fill: 23 },
-  energy: { value: '86%', fill: 86 },
+  ...Object.fromEntries(
+    (['metal', 'crystal', 'hydrogen'] as const).map((code) => {
+      const { stock, capacity } = resourceBalance(code);
+      return [code, { value: compact(stock), fill: Math.min((stock / capacity) * 100, 100) }];
+    }),
+  ),
+  energy: { value: `${energy.usage}%`, fill: Math.min(energy.usage, 100) },
 };
+const gauge: Record<string, string> = { 'text-red-400': 'bg-red-400', 'text-orange-400': 'bg-orange-400', 'text-green-400': 'bg-green-400' };
 ---
 
 <div class="shrink-0 relative z-10">
@@ -34,12 +43,12 @@ const sample: Record<string, { value: string; fill: number }> = {
       return (
         <div class="px-2 py-3.5 relative w-full">
           <div
-            class={`absolute -bottom-[1px] left-0 h-0.5 ${isEnergy ? 'bg-green-400' : 'bg-blue-400'}`}
+            class={`absolute -bottom-[1px] left-0 h-0.5 ${isEnergy ? gauge[tone] : 'bg-blue-400'}`}
             style={`width: ${sample[code].fill}%`}
           />
           <div class="flex flex-row items-center justify-center gap-1.5 w-full">
-            <i class={`ph-fill ph-${resources[code].icon} text-xl leading-none ${isEnergy ? 'text-green-400' : 'text-slate-400'}`}></i>
-            <span class={`text-sm font-medium tabular-nums ${isEnergy ? 'text-green-400' : ''}`}>{sample[code].value}</span>
+            <i class={`ph-fill ph-${resources[code].icon} text-xl leading-none ${isEnergy ? tone : 'text-slate-400'}`}></i>
+            <span class={`text-sm font-medium tabular-nums text-center max-w-[5ch] truncate ${isEnergy ? tone : ''}`}>{sample[code].value}</span>
           </div>
         </div>
       );
