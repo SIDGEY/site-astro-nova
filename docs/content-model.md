@@ -140,10 +140,7 @@ interface TestimonialSection {
 ### Catégories d'assets
 | Dossier | Contenu |
 | :--- | :--- |
-| `public/assets/images/buildings/` | Images des bâtiments |
-| `public/assets/images/ships/` | Images des vaisseaux |
-| `public/assets/images/research/` | Icônes des technologies |
-| `public/assets/images/facilities/` | Images des installations |
+| `public/game/` | Visuels du jeu (entités, bannières, planètes, avatars) — générés par `npm run game:sync`, ne pas éditer à la main |
 | `public/landing/` | Images marketing |
 
 ## 5. Comment ajouter du contenu ?

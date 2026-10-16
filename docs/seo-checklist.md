@@ -11,7 +11,7 @@ Cette checklist répertorie les éléments SEO implémentés et à vérifier pou
 ## 2. Open Graph & Social
 - [x] **og:title / og:description** : Reprennent les meta-données de base ou les personnalisent.
 - [x] **og:type** : `website` pour la landing, `game` si supporté.
-- [x] **og:image** : Image 1200x630px (bannière du jeu). Fallback sur `og-image.jpg`.
+- [x] **og:image** : Image 1200x630px (bannière du jeu). Fallback sur `public/og-default.jpg` (bannière `quests` du jeu).
 - [x] **Twitter Cards** : Format `summary_large_image`.
 
 ## 3. JSON-LD (Schema.org)
