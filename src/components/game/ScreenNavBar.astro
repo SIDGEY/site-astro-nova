@@ -1,0 +1,80 @@
+---
+/**
+ * Barre de navigation du jeu sous 540px (`Navigation.tsx`) : deux onglets de chaque côté de
+ * l'orbe planète, posé dans l'encoche de `BottomBarShape` (tracé et dégradés repris tels quels).
+ * L'écran natif fait 375px, sous le seuil de 430px du jeu (`isNarrow`) : les onglets y passent en
+ * largeur flexible au lieu de leurs 72px fixes, qui ne tiendraient pas.
+ */
+import { nav, planets } from '../../lib/game';
+
+interface Props {
+  active?: string;
+}
+
+const { active } = Astro.props;
+
+const left = [
+  { key: 'buildings', icon: 'buildings', label: nav.buildings },
+  { key: 'research', icon: 'flask', label: nav.research },
+];
+const right = [
+  { key: 'build', icon: 'warehouse', label: nav.build },
+  { key: 'missions', icon: 'rocket', label: nav.missions },
+];
+
+const NOTCH_PATH =
+  'M538.743 338.088H0.256836V5.81836C1.13899 5.88779 2.02189 5.96423 2.90527 6.05078L2.91504 6.05176C19.2293 7.4484 35.577 8.72988 51.957 9.89258C52.0205 9.89708 52.0837 9.90206 52.1455 9.90625C52.2078 9.91047 52.2694 9.91464 52.3301 9.91895L52.4141 9.9248L52.498 9.91211C52.6495 9.88898 52.8065 9.8812 52.9668 9.89258C86.9017 12.3016 120.977 14.2053 155.183 15.5986H155.187L181.35 16.5254C188.214 16.7687 194.946 18.4925 201.083 21.5781L247.873 45.1025C261.779 52.0942 278.173 52.0942 292.079 45.1025L338.869 21.5781C344.814 18.589 351.317 16.878 357.959 16.5527L358.603 16.5254L384.766 15.5986H384.77C393.638 15.2374 402.499 14.8399 411.35 14.4102C436.636 13.1825 461.849 11.677 486.985 9.89258C503.568 8.71552 520.117 7.4168 536.632 6L536.639 5.99902C537.34 5.93305 538.041 5.8733 538.743 5.81836V338.088Z';
+
+const orb = planets.normal?.sphere;
+---
+
+<nav class="shrink-0 relative h-24 w-full">
+  <div class="absolute inset-0 overflow-hidden">
+    <svg class="absolute left-1/2 top-0 h-full min-h-24 -translate-x-1/2" width="540" viewBox="0 0 540 96" preserveAspectRatio="xMidYMin" fill="none">
+      <path d={NOTCH_PATH} fill="#0F172B" />
+      <path d={NOTCH_PATH} fill="url(#gs-nav-fill)" fill-opacity="0.5" />
+      <path d={NOTCH_PATH} fill="url(#gs-nav-glow)" fill-opacity="0.5" />
+      <path d={NOTCH_PATH} stroke="url(#gs-nav-stroke)" stroke-width="1.51402" />
+      <defs>
+        <linearGradient id="gs-nav-fill" x1="269.501" y1="29.8882" x2="269.501" y2="313.711" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#1D293D" />
+        </linearGradient>
+        <radialGradient id="gs-nav-glow" cx="0" cy="0" r="1" gradientTransform="matrix(269.998 0.37026 -0.701779 209.569 269.501 21.5357)" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#314158" stop-opacity="0.5" />
+          <stop offset="0.4" stop-color="#314158" stop-opacity="0.334058" />
+          <stop offset="0.6" stop-color="#314158" stop-opacity="0.165942" />
+          <stop offset="1" stop-color="#314158" stop-opacity="0" />
+        </radialGradient>
+        <linearGradient id="gs-nav-stroke" x1="-0.497559" y1="167.808" x2="539.5" y2="167.808" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#62748E" stop-opacity="0" />
+          <stop offset="0.5" stop-color="#62748E" />
+          <stop offset="1" stop-color="#62748E" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <div class="relative mx-auto flex h-full items-end pb-0.5 max-w-[720px] px-4">
+    {[left, right].map((tabs, side) => (
+      <>
+        {side === 1 && <div class="w-[72px] shrink-0" />}
+        <div class={`flex flex-1 items-end ${side === 0 ? 'justify-end' : 'justify-start'}`}>
+          <div class={`flex flex-1 items-end ${side === 0 ? 'mr-4' : 'ml-4'}`}>
+            {tabs.map((tab) => (
+              <span class={`flex flex-col items-center h-20 justify-center flex-1 min-w-0 ${active === tab.key ? 'text-white' : 'text-slate-500'}`}>
+                <i class={`ph ph-${tab.icon} text-2xl leading-none`}></i>
+                <span class="text-[10px] leading-[14px] mt-1">{tab.label}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </>
+    ))}
+  </div>
+  <div class="absolute left-1/2 bottom-6 -translate-x-1/2 rounded-full bg-gradient-to-t from-slate-600 to-slate-300 p-[1.5px] w-16 h-16">
+    <div class="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-t from-slate-950 to-slate-900 p-[2.5px]">
+      <div class="overflow-hidden rounded-full bg-slate-950 w-full h-full">
+        {orb && <img src={orb} alt="" class="h-full w-full object-cover" />}
+      </div>
+    </div>
+  </div>
+</nav>

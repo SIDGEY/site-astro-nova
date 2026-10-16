@@ -73,21 +73,60 @@ src/i18n/locales/
 
 ### Sections principales
 
-Les sections de la landing page sont des composants React dans :
-```
-src/features/landing/
-├── components/
-│   ├── HeroSection.tsx
-│   ├── FeaturesSection.tsx
-│   └── ...
-└── LandingPage.tsx
+La home est `src/content/pages/home.md` : une liste de blocs (`type: …`) rendus par
+`src/components/BlockRenderer.astro`, un composant par type dans `src/components/blocks/`.
+
+### Les écrans du jeu (blocs `featurePhone`, carrousels)
+
+Les téléphones de la home ne sont **pas des captures** : ce sont les écrans du jeu reconstruits en
+HTML (`src/components/game/`), avec les classes du design system du jeu (Astrolabe) et ses vraies
+images, noms et descriptions. Le contenu ne nomme qu'une famille et des codes d'entités :
+
+```yaml
+- type: featurePhone
+  family: buildings          # resources | buildings | facilities | defenses | ships | shop
+  items: [metal_mine, crystal_mine, hydrogen_synthesizer, solar_plant]
+  reversed: false
+
+- type: carousel
+  source: research           # research | avatars (items: codes pour restreindre/ordonner, limit)
 ```
 
+Le reste en découle : vignettes, fiche de chaque entité, page de liste, fond de section (la bannière
+de page du jeu), compteur « +N ». Un code inconnu fait échouer le build avec la liste des codes
+valides. Niveaux, coûts et stocks affichés sont des valeurs d'illustration, fixées dans
+`src/components/game/FeatureScreens.astro` et `ScreenTopBar.astro` (le jeu les reçoit de l'API).
+
+### Suivre les évolutions du jeu
+
+```bash
+npm run game:sync -- --fetch
+```
+
+`scripts/sync-game.mjs` lit le jeu sur `origin/main` (`../Frontend`, jamais la copie de travail),
+les avatars en ligne dans la dernière livraison du codex (`../dynasty-nova-codex`), et réécrit
+`src/data/game.json` (le catalogue, avec le commit du jeu) et `public/game/` (images redimensionnées,
+textures de la planète 3D). Les deux sont versionnés : la CI de déploiement n'a pas les autres dépôts.
+Chemins et ref surchargeables : `FRONTEND_PATH`, `CODEX_PATH`, `GAME_REF`.
+
+Les visuels du hero (`gameHero`) et de la communauté (`community`) sont des bannières de page du
+jeu, nommées par `banner:` (`quests`, `alliance`, … — les noms des fichiers sous
+`src/assets/images/heroes/` du jeu). Un chemin écrit à la main reste possible (`backgroundImage:`,
+`image:`).
+
+La planète 3D (`block3D`) tourne sur le moteur du jeu lui-même : `PlanetSurface`, copié par la
+synchro dans `src/vendor/game/` (ne pas modifier ces fichiers), dans la scène que le codex rejoue
+(`Planete3D.astro`). Nuages et voile viennent de l'`atmosphere.json` de chaque biome. `three` doit
+rester à la version du jeu (`source.three` dans `game.json`).
+
+Si le jeu change la **mise en page** d'un écran (pas seulement ses images ou ses textes), c'est le
+composant correspondant de `src/components/game/` qu'il faut retoucher ; chacun cite en en-tête le
+composant du jeu qu'il reproduit.
+
 ### Modifier le contenu
-1. Ouvrir le composant concerné
-2. Modifier le texte ou les données
-3. Vérifier le rendu en local (`npm run dev`)
-4. Déployer
+1. Modifier `src/content/pages/home.md`
+2. Vérifier le rendu en local (`npm run dev`)
+3. Pousser sur `main` (déploiement FTP automatique)
 
 ## 5. Ajouter des Images
 

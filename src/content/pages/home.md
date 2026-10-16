@@ -9,8 +9,7 @@ blocks:
     ctaLink: "https://play.dynastynova.com"
     secondaryCtaText: Découvrir le jeu
     secondaryCtaLink: "#planets"
-    screenshot1: /landing/screenshot1.jpg
-    screenshot2: /landing/screenshot2.jpg
+    banner: quests
 
   - type: block3D
     sectionId: planets
@@ -22,249 +21,66 @@ blocks:
     icon: nut
     title: Gérez vos ressources pour prospérer
     subtitle: "Les ressources sont essentielles dans Dynasty Nova. Le métal est crucial pour la construction, tandis que le cristal est nécessaire pour les technologies avancées. Une bonne gestion est clé pour progresser."
-    screenshot1: /landing/screens/resource.webp
-    screenshot2: /landing/screens/resource-metal.webp
-    backgroundImage: /landing/backgrounds/bg-resource.webp
+    family: resources
+    items: [metal, crystal, hydrogen, energy]
     reversed: true
-    resourceIcons:
-      - icon: nut
-        active: true
-        screenshot: /landing/screens/resource-metal.webp
-        src: /landing/thumbs/thumb-metal.webp
-      - icon: diamonds-four
-        screenshot: /landing/screens/resource-crystal.webp
-        src: /landing/thumbs/thumb-crystal.webp
-      - icon: drop
-        screenshot: /landing/screens/resource-hydrogen.webp
-      - icon: lightning
-        screenshot: /landing/screens/resource-energy.webp
 
   - type: featurePhone
     sectionId: buildings
     icon: buildings
     title: Optimisez l'extraction de vos ressources
     subtitle: "Les mines sont vos sources de ressources. L'Excavateur minéral produit du métal, et l'Extracteur cristallin produit du cristal. Améliorez vos mines pour augmenter leur production."
-    screenshot1: /landing/screens/building.webp
-    screenshot2: /landing/screens/building-metal.webp
-    backgroundImage: /landing/backgrounds/bg-building.webp
+    family: buildings
+    items: [metal_mine, crystal_mine, hydrogen_synthesizer, solar_plant]
     reversed: false
-    gallery:
-      - src: /landing/thumbs/buildings-metal.webp
-        alt: Excavateur minéral
-        screenshot: /landing/screens/building-metal.webp
-      - src: /landing/thumbs/buildings-cristal.webp
-        alt: Mine de cristal
-        screenshot: /landing/screens/building-cristal.webp
-      - src: /landing/thumbs/buildings-hydrogen.webp
-        alt: Raffinerie
-        screenshot: /landing/screens/building-hydrogen.webp
-      - src: /landing/thumbs/buildings-energy.webp
-        alt: Entrepôt
-        screenshot: /landing/screens/building-energy.webp
-    galleryExtra: 8
 
   - type: featurePhone
     icon: factory
     title: Maîtrisez les ressources de vos planètes
     subtitle: "Les bâtiments sont essentiels. La base planétaire gère la colonie, le Centre d'innovation développe des technologies, et la Fabrique d'automates accélère la construction."
-    screenshot1: /landing/screens/installation.webp
-    screenshot2: /landing/screens/installation-centre-innovation.webp
-    backgroundImage: /landing/backgrounds/bg-installation.webp
+    family: facilities
+    items: [research_lab, robotic_factory, shipyard, terraformer]
     reversed: true
-    gallery:
-      - src: /landing/thumbs/installation-centre-innovation.webp
-        alt: Centre d'innovation
-        screenshot: /landing/screens/installation-centre-innovation.webp
-      - src: /landing/thumbs/installation-fabrique-automates.webp
-        alt: Fabrique d'automates
-        screenshot: /landing/screens/installation-fabrique-automates.webp
-      - src: /landing/thumbs/installation-dock-orbital.webp
-        alt: Dock orbital
-        screenshot: /landing/screens/installation-dock-orbital.webp
-      - src: /landing/thumbs/installation-modulateur-planetaire.webp
-        alt: Modulateur planétaire
-        screenshot: /landing/screens/installation-modulateur-planetaire.webp
-    galleryExtra: 8
 
   - type: carousel
     sectionId: laboratory
     icon: flask
     title: Débloquez des technologies
     subtitle: "Développez votre arbre technologique pour débloquer de nouvelles capacités. Recherchez des innovations qui transformeront votre civilisation."
-    items:
-      - image: /assets/images/research/science-energetique.webp
-        title: Science Énergétique
-      - image: /assets/images/research/systemes-photoniques.webp
-        title: Systèmes Photoniques
-      - image: /assets/images/research/manipulation-ionique.webp
-        title: Manipulation Ionique
-      - image: /assets/images/research/pliage-spatial.webp
-        title: Pliage Spatial
-      - image: /assets/images/research/maitrise-du-plasma.webp
-        title: Maîtrise du Plasma
-      - image: /assets/images/research/propulseur-chimique.webp
-        title: Propulseur Chimique
-      - image: /assets/images/research/moteur-magnetique.webp
-        title: Moteur Magnétique
-      - image: /assets/images/research/navigation-transdimensionnelle.webp
-        title: Navigation Transdimensionnelle
-      - image: /assets/images/research/renseignement-tactique.webp
-        title: Renseignement Tactique
-      - image: /assets/images/research/calcul-quantique.webp
-        title: Calcul Quantique
-      - image: /assets/images/research/cosmologie-appliquee.webp
-        title: Cosmologie Appliquée
-      - image: /assets/images/research/collaboration-stellaire.webp
-        title: Collaboration Stellaire
-      - image: /assets/images/research/manipulation-gravitationnelle.webp
-        title: Manipulation Gravitationnelle
-      - image: /assets/images/research/systemes-offensifs.webp
-        title: Systèmes Offensifs
-      - image: /assets/images/research/champs-de-protection.webp
-        title: Champs de Protection
-      - image: /assets/images/research/metallurgie-avancee.webp
-        title: Métallurgie Avancée
+    source: research
 
   - type: featurePhone
     sectionId: defenses
     icon: shield-star
     title: Protégez votre empire des attaques ennemie
-    subtitle: "Un bon système de défense protège votre empire. Les lance-missiles et canons à ions sont efficaces contre les vaisseaux. Une défense diversifiée est clé."
-    screenshot1: /landing/screens/defense.webp
-    screenshot2: /landing/screens/defense-projecteur-balistique.webp
-    backgroundImage: /landing/backgrounds/bg-defense.webp
+    subtitle: "Un bon système de défense protège votre empire. Projecteurs balistiques et canons photoniques tiennent les premières vagues à distance. Une défense diversifiée est clé."
+    family: defenses
+    items: [ballistic_projector, photonic_cannon, high_energy_emitter, magnetic_accelerator]
     reversed: false
-    gallery:
-      - src: /landing/thumbs/defense-projecteur-balistique.webp
-        alt: Projecteur balistique
-        screenshot: /landing/screens/defense-projecteur-balistique.webp
-      - src: /landing/thumbs/defense-canon-photonique.webp
-        alt: Canon photonique
-        screenshot: /landing/screens/defense-canon-photonique.webp
-      - src: /landing/thumbs/defense-emetteur-a-haute-energie.webp
-        alt: Émetteur à haute énergie
-        screenshot: /landing/screens/defense-emetteur-a-haute-energie.webp
-      - src: /landing/thumbs/defense-accelerateur-magnetique.webp
-        alt: Accélérateur magnétique
-        screenshot: /landing/screens/defense-accelerateur-magnetique.webp
-    galleryExtra: 8
 
   - type: featurePhone
     sectionId: fleet
     icon: rocket-launch
     title: Développez votre flotte pour dominer.
-    subtitle: "Les vaisseaux sont essentiels. Les chasseurs sont rapides, les lourds résistants, les croiseurs polyvalents, et les vaisseaux de colonisation créent des colonies."
-    screenshot1: /landing/screens/fleet.webp
-    screenshot2: /landing/screens/fleet-intercepteur.webp
-    backgroundImage: /landing/backgrounds/bg-fleet.webp
+    subtitle: "Les vaisseaux sont essentiels. Les intercepteurs sont rapides, les assaillants résistants, les corvettes polyvalentes, et le pionnier spatial fonde de nouvelles colonies."
+    family: ships
+    items: [light_fighter, heavy_fighter, cruiser, battleship]
     reversed: true
-    gallery:
-      - src: /landing/thumbs/fleet-intercepteur.webp
-        alt: Intercepteur
-        screenshot: /landing/screens/fleet-intercepteur.webp
-      - src: /landing/thumbs/fleet-assaillant.webp
-        alt: Assaillant
-        screenshot: /landing/screens/fleet-assaillant.webp
-      - src: /landing/thumbs/fleet-corvette.webp
-        alt: Corvette
-        screenshot: /landing/screens/fleet-corvette.webp
-      - src: /landing/thumbs/fleet-cuirasse.webp
-        alt: Cuirassé
-        screenshot: /landing/screens/fleet-cuirasse.webp
-    galleryExtra: 8
 
   - type: featurePhone
     sectionId: shop
     icon: storefront
     title: "Progressez à votre rythme, brillez par style"
     subtitle: "Notre boutique respecte l'intégrité de la compétition. Aucun avantage ne s'achète : l'arène est le domaine de la stratégie. Choisissez des options Pay-to-Fast pour accélérer votre développement ou explorez nos avatars exclusifs."
-    screenshot1: /landing/screens/shop-credit.webp
-    screenshot2: /landing/screens/shop-avatar.webp
-    backgroundImage: /landing/backgrounds/bg-store.webp
+    family: shop
     reversed: false
-    mobileCards:
-      - src: /landing/thumbs/thumb-small-pack.webp
-        alt: Petit pack
-      - src: /landing/thumbs/thumb-big-pack.webp
-        alt: Grand pack
 
   - type: carousel
     icon: user-circle
     title: Incarnez l'élite de la galaxie
     subtitle: "Trouvez un avatar qui vous ressemble. C'est l'âme de votre empire. Forgez votre réputation et imposez votre présence."
-    items:
-      - image: /landing/avatars/background/bg-avatar-01.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-01.png
-      - image: /landing/avatars/background/bg-avatar-02.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-02.png
-      - image: /landing/avatars/background/bg-avatar-03.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-03.png
-      - image: /landing/avatars/background/bg-avatar-04.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-04.png
-      - image: /landing/avatars/background/bg-avatar-05.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-05.png
-      - image: /landing/avatars/background/bg-avatar-06.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-06.png
-      - image: /landing/avatars/background/bg-avatar-07.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-07.png
-      - image: /landing/avatars/background/bg-avatar-08.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-08.png
-      - image: /landing/avatars/background/bg-avatar-09.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-09.png
-      - image: /landing/avatars/background/bg-avatar-10.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-10.png
-      - image: /landing/avatars/background/bg-avatar-11.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-11.png
-      - image: /landing/avatars/background/bg-avatar-12.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-12.png
-      - image: /landing/avatars/background/bg-avatar-13.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-13.png
-      - image: /landing/avatars/background/bg-avatar-14.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-14.png
-      - image: /landing/avatars/background/bg-avatar-15.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-15.png
-      - image: /landing/avatars/background/bg-avatar-16.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-16.png
-      - image: /landing/avatars/background/bg-avatar-17.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-17.png
-      - image: /landing/avatars/background/bg-avatar-18.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-18.png
-      - image: /landing/avatars/background/bg-avatar-19.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-19.png
-      - image: /landing/avatars/background/bg-avatar-20.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-20.png
-      - image: /landing/avatars/background/bg-avatar-21.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-21.png
-      - image: /landing/avatars/background/bg-avatar-22.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-22.png
-      - image: /landing/avatars/background/bg-avatar-23.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-23.png
-      - image: /landing/avatars/background/bg-avatar-24.png
-        title: Commandant Nova
-        avatar: /landing/avatars/avatar/avatar-24.png
+    source: avatars
+    limit: 24
 
   - type: news
     title: Actualités
@@ -288,6 +104,6 @@ blocks:
     secondaryDescription: Échangez, collaborez et imposez votre marque dans cet univers en constante évolution.
     discordLink: https://discord.gg/dVXdVqw5d5
     discordButtonText: Rejoindre le Discord
-    image: /landing/features/bg-community.webp
-    imageAlt: Communauté Dynasty Nova
+    banner: alliance
+    imageAlt: Une station orbitale où convergent les flottes d'une alliance
 ---

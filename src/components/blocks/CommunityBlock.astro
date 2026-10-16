@@ -1,4 +1,6 @@
 ---
+import { banner as bannerUrl } from "../../lib/game";
+
 interface Props {
   title: string;
   subtitle: string;
@@ -7,7 +9,9 @@ interface Props {
   secondaryDescription?: string;
   discordLink: string;
   discordButtonText?: string;
-  image: string;
+  /** Une bannière de page du jeu, par son nom ; sinon `image`. */
+  banner?: string;
+  image?: string;
   imageAlt: string;
 }
 
@@ -19,9 +23,12 @@ const {
   secondaryDescription,
   discordLink,
   discordButtonText = "Rejoindre le Discord",
-  image,
+  banner,
+  image: customImage,
   imageAlt,
 } = Astro.props;
+
+const image = customImage ?? bannerUrl(banner ?? "");
 ---
 
 <section

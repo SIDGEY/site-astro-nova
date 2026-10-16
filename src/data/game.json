@@ -1,0 +1,1136 @@
+{
+  "source": {
+    "repo": "Dynasty-Nova/Frontend",
+    "ref": "origin/main",
+    "sha": "26bf68c461fe0f55be4071a96d4fab89e10dccbd",
+    "commitDate": "2026-10-16T11:45:10+02:00",
+    "syncedAt": "2026-10-16T11:57:02.157Z",
+    "three": "^0.186.1",
+    "avatars": "dynasty-nova-codex/assets/references/livraison-avatars-2026-10-15"
+  },
+  "nav": {
+    "planet": "Planète",
+    "moon": "Lune",
+    "buildings": "Bâtiments",
+    "resources": "Ressources",
+    "installations": "Installations",
+    "research": "Recherche",
+    "defense": "Défense",
+    "ships": "Vaisseaux",
+    "galaxy": "Galaxie",
+    "fleet": "Flotte",
+    "build": "Docks",
+    "missions": "Missions",
+    "menu": "Menu",
+    "rail": {
+      "galaxy": "Galaxies",
+      "ranking": "Classement",
+      "quests": "Quêtes",
+      "reports": "Rapports",
+      "simulator": "Simulateur",
+      "shop": "Boutique",
+      "inventory": "Inventaire",
+      "alliance": "Alliance",
+      "messages": "Messagerie",
+      "help": "Aides",
+      "settings": "Paramètres",
+      "notifications": "Notifications",
+      "profile": "Profil",
+      "universes": "Univers",
+      "rankingHumans": "Joueurs",
+      "rankingBots": "Bots",
+      "shopOrnaments": "Ornements",
+      "shopPlanets": "Planètes",
+      "referral": "Parrainage",
+      "news": "Nouveautés",
+      "premium": "Premium",
+      "bookmarks": "Favoris",
+      "empire": "Empire",
+      "talents": "Talents"
+    },
+    "closeMenu": "Fermer le menu",
+    "talentsChooseClass": "Choisir"
+  },
+  "resources": {
+    "metal": {
+      "code": "metal",
+      "name": "Métal",
+      "icon": "nut",
+      "description": "Ressource fondamentale pour la construction",
+      "image": "/game/resources/metal.webp"
+    },
+    "crystal": {
+      "code": "crystal",
+      "name": "Cristal",
+      "icon": "diamonds-four",
+      "description": "Ressource précieuse pour les technologies avancées",
+      "image": "/game/resources/crystal.webp"
+    },
+    "hydrogen": {
+      "code": "hydrogen",
+      "name": "Hydrogène",
+      "icon": "drop",
+      "description": "Carburant essentiel pour les vaisseaux et réacteurs",
+      "image": "/game/resources/hydrogen.webp"
+    },
+    "energy": {
+      "code": "energy",
+      "name": "Énergie",
+      "icon": "lightning",
+      "description": "Puissance nécessaire au fonctionnement des installations",
+      "image": "/game/resources/energy.webp"
+    }
+  },
+  "buildings": [
+    {
+      "code": "planetary_base",
+      "name": "Base planetaire",
+      "description": "La base planétaire est le cœur névralgique de votre colonie. C'est ici que vous centralisez toutes vos opérations, de la gestion des ressources à la planification des constructions. Cette structure avancée abrite des systèmes de communication interstellaires, des salles de stratégie équipées d'hologrammes, et des centres de contrôle pour surveiller chaque aspect de votre empire en expansion. Son importance est capitale : sans elle, aucune autre construction ou recherche ne serait possible sur la planète.",
+      "image": "/game/buildings/planetary_base.webp"
+    },
+    {
+      "code": "metal_mine",
+      "name": "Excavateur minéral",
+      "description": "Le métal est la ressource primaire utilisée dans la fondation de votre Empire. À des profondeurs plus importantes, les excavateurs peuvent produire davantage de métal viable pour la construction de bâtiments, de vaisseaux, de systèmes de défense et la recherche. Plus les excavateurs creusent profondément, plus d'énergie est requise pour une production maximale. Comme le métal est la plus abondante des ressources disponibles, sa valeur est considérée comme la plus faible de toutes les ressources pour le commerce.",
+      "image": "/game/buildings/metal_mine.webp"
+    },
+    {
+      "code": "crystal_mine",
+      "name": "Extracteur cristallin",
+      "description": "Les extracteurs cristallins fournissent la principale ressource utilisée pour produire des circuits électroniques et certains composés d'alliage. L'extraction de cristal consomme environ une fois et demie plus d'énergie que l'extraction de métal, ce qui rend le cristal plus précieux. Presque tous les vaisseaux et tous les bâtiments nécessitent du cristal. La plupart des cristaux nécessaires à la construction des vaisseaux spatiaux sont très rares et, comme le métal, ne peuvent être trouvés qu'à une certaine profondeur. Par conséquent, la construction d'extracteurs dans des strates plus profondes augmentera la quantité de cristal produite.",
+      "image": "/game/buildings/crystal_mine.webp"
+    },
+    {
+      "code": "hydrogen_synthesizer",
+      "name": "Condensateur d'hydrogène",
+      "description": "Le condensateur d'hydrogène est un dispositif avancé qui permet de séparer l'eau en hydrogène et oxygène. L'oxygène est utilisé pour l'air de l'atmosphère, tandis que l'hydrogène est stocké dans des réservoirs spéciaux. Chaque niveau d'amélioration du condensateur augmente la quantité d'hydrogène synthétisé. Le processus de condensation est une étape cruciale dans la production de vaisseaux et de bâtiments, car l'hydrogène est utilisé comme carburant.",
+      "image": "/game/buildings/hydrogen_synthesizer.webp"
+    },
+    {
+      "code": "solar_plant",
+      "name": "Capteurs photovoltaïques",
+      "description": "Les capteurs photovoltaïques absorbent l'énergie des rayonnements solaires et la convertissent en énergie électrique pour alimenter les excavateurs et les condensateurs. L'augmentation de la surface des cellules photovoltaïques entraînera une hausse de la production d'énergie.",
+      "image": "/game/buildings/solar_plant.webp"
+    },
+    {
+      "code": "fusion_plant",
+      "name": "Réacteur thermonucléaire",
+      "description": "Les réacteurs thermonucléaires sont des structures avancées qui exploitent la fusion des atomes pour produire une quantité massive d'énergie. Ils sont essentiels pour la production d'énergie sur les planètes colonisées et pour la propulsion spatiale. Les réacteurs thermonucléaires sont conçus pour produire une énergie stable et sûre, mais ils nécessitent une gestion minutieuse des ressources énergétiques et des matériaux radioactifs.",
+      "image": "/game/buildings/fusion_plant.webp"
+    },
+    {
+      "code": "metal_storage",
+      "name": "Dépôt d'alliages",
+      "description": "Les dépôts d'alliages sont des structures spécialisées dans le stockage et la gestion des alliages métalliques, essentiels pour la construction de vaisseaux et de structures avancées. Ils sont conçus pour stocker et gérer efficacement les alliages métalliques, garantissant une disponibilité constante pour les opérations de construction et la production de vaisseaux. Les dépôts d'alliages sont essentiels pour la gestion des ressources métalliques et la planification des constructions avancées.",
+      "image": "/game/buildings/metal_storage.webp"
+    },
+    {
+      "code": "crystal_storage",
+      "name": "Chambre cristalline",
+      "description": "Les chambres cristallines sont des structures spécialisées dans le stockage et la gestion des cristaux, essentiels pour la fabrication de composants avancés et la construction de vaisseaux spatiaux. Ils sont conçus pour stocker et gérer efficacement les cristaux, garantissant une disponibilité constante pour les opérations de fabrication et la construction de vaisseaux. Les chambres cristallines sont essentielles pour la gestion des ressources précieuses et la planification des constructions avancées.",
+      "image": "/game/buildings/crystal_storage.webp"
+    },
+    {
+      "code": "hydrogen_storage",
+      "name": "Citerne d'hydrogène",
+      "description": "Les citernes d'hydrogène sont des structures spécialisées dans le stockage et la gestion de l'hydrogène, essentiels pour la propulsion spatiale and la production d'énergie. Ils sont conçus pour stocker et gérer efficacement l'hydrogène, garantissant une disponibilité constante pour les opérations de propulsion et la production d'énergie. Les citernes d'hydrogène sont essentielles pour la gestion des ressources précieuses et la planification des missions spatiales.",
+      "image": "/game/buildings/hydrogen_storage.webp"
+    }
+  ],
+  "facilities": [
+    {
+      "code": "shipyard",
+      "name": "Dock orbital",
+      "description": "Les docks orbitaux sont des structures avancées qui permettent la construction et la maintenance des vaisseaux spatiaux dans l'espace. Ils sont conçus pour assurer une production efficace et sûre de vaisseaux spatiaux, garantissant une disponibilité constante pour les missions spatiales. Les docks orbitaux sont essentiels pour la gestion des ressources spatiales et la planification des missions exploratoires.",
+      "image": "/game/facilities/shipyard.webp"
+    },
+    {
+      "code": "logistics_center",
+      "name": "Centre logistique",
+      "description": "Le centre logistique rationalise les flux de la base : chaque niveau augmente de 10 % la capacité de stockage de métal, de cristal et d'hydrogène, en plus de ce que tiennent déjà les entrepôts.",
+      "image": "/game/facilities/logistics_center.webp"
+    },
+    {
+      "code": "repair_dock",
+      "name": "Station de réparation",
+      "description": "Les stations de réparation sont des structures avancées qui permettent la réparation et la maintenance des vaisseaux spatiaux dans l'espace. Ils sont conçus pour assurer une réparation efficace et sûre des vaisseaux spatiaux, garantissant une disponibilité constante pour les missions spatiales. Les stations de réparation sont essentielles pour la maintenance des vaisseaux et la planification des missions exploratoires.",
+      "image": "/game/facilities/repair_dock.webp"
+    },
+    {
+      "code": "research_lab",
+      "name": "Centre d'innovation",
+      "description": "Les centres d'innovation sont des structures spécialisées dans la recherche et le développement technologique, essentiels pour la planification et la coordination des missions spatiales. Ils sont conçus pour assurer une recherche efficace et sûre des technologies spatiales, garantissant une disponibilité constante pour les missions spatiales. Les centres d'innovation sont essentiels pour la coordination des technologies et la planification des missions exploratoires.",
+      "image": "/game/facilities/research_lab.webp"
+    },
+    {
+      "code": "missile_silo",
+      "name": "Arsenal balistique",
+      "description": "Les arsenals balistiques sont des structures spécialisées dans la fabrication et le stockage des missiles spatiaux, essentiels pour la planification et la coordination des missions spatiales. Ils sont conçus pour assurer une fabrication efficace et sûre des missiles spatiaux, garantissant une disponibilité constante pour les missions spatiales. Les arsenals balistiques sont essentiels pour la coordination des technologies et la planification des missions exploratoires.",
+      "image": "/game/facilities/missile_silo.webp"
+    },
+    {
+      "code": "terraformer",
+      "name": "Modulateur planétaire",
+      "description": "Les modulateurs planétaires sont des structures avancées qui permettent la modification et la transformation des planètes colonisées, essentiels pour la planification et la coordination des missions spatiales. Ils sont conçus pour assurer une transformation efficace et sûre des planètes colonisées, garantissant une disponibilité constante pour les missions spatiales. Les modulateurs planétaires sont essentiels pour la coordination des technologies et la planification des missions exploratoires.",
+      "image": "/game/facilities/terraformer.webp"
+    },
+    {
+      "code": "nanite_factory",
+      "name": "Assembleur moléculaire",
+      "description": "Les assembleurs moléculaires sont des structures avancées qui permettent la fabrication et la transformation des nanites, essentiels pour la planification et la coordination des missions spatiales. Ils sont conçus pour assurer une fabrication efficace et sûre des nanites, garantissant une disponibilité constante pour les missions spatiales. Les assembleurs moléculaires sont essentiels pour la coordination des technologies et la planification des missions exploratoires.",
+      "image": "/game/facilities/nanite_factory.webp"
+    },
+    {
+      "code": "robotic_factory",
+      "name": "Fabrique d'automates",
+      "description": "Les fabriques d'automates sont des structures avancées qui permettent la fabrication et la transformation des robots, essentiels pour la planification et la coordination des missions spatiales. Ils sont conçus pour assurer une fabrication efficace et sûre des robots, garantissant une disponibilité constante pour les missions spatiales. Les fabriques d'automates sont essentiels pour la coordination des technologies et la planification des missions exploratoires.",
+      "image": "/game/facilities/robotic_factory.webp"
+    },
+    {
+      "code": "lunar_base",
+      "name": "Base lunaire",
+      "description": "La base lunaire creuse et pressurise le sol de la lune. Chaque niveau rend trois cases habitables et en occupe une, dans la limite de ce que le diamètre de la lune autorise.",
+      "image": "/game/facilities/lunar_base.webp"
+    },
+    {
+      "code": "sensor_phalanx",
+      "name": "Phalange de capteur",
+      "description": "La phalange de capteur sonde l'espace autour de la lune et révèle les flottes en vol au-dessus d'une planète, leur composition comprise. Chaque scan consomme de l'hydrogène.",
+      "image": "/game/facilities/sensor_phalanx.webp"
+    },
+    {
+      "code": "jump_gate",
+      "name": "Porte de saut",
+      "description": "La porte de saut ouvre un couloir instantané vers une autre de vos lunes équipée du même dispositif. Elle ne transporte que des coques, jamais de ressources.",
+      "image": "/game/facilities/jump_gate.webp"
+    }
+  ],
+  "defenses": [
+    {
+      "code": "ballistic_projector",
+      "name": "Projecteur balistique",
+      "description": "Le projecteur balistique est une option de défense simple et rentable. Il permet aux forces armées de tirer sur des cibles à courte distance, tout en offrant une protection contre les missiles. La technologie de l'artillerie permet aux soldats de tirer sur des cibles à courte distance avec précision et efficacité. Les missiles sont lancés à partir d'un silo, qui est entouré de protections pour éviter les attaques.",
+      "image": "/game/defenses/ballistic_projector.webp"
+    },
+    {
+      "code": "photonic_cannon",
+      "name": "Canon photonique",
+      "description": "Le canon photonique représente la première génération d'armes à énergie dirigée pour la défense planétaire. En concentrant des faisceaux de photons cohérents, ces tourelles peuvent infliger des dégâts précis et efficaces aux cibles ennemies. Leur conception compacte et leur système de refroidissement avancé permettent un tir rapide et soutenu. Ces défenses sont particulièrement efficaces contre les petits vaisseaux et les chasseurs.",
+      "image": "/game/defenses/photonic_cannon.webp"
+    },
+    {
+      "code": "high_energy_emitter",
+      "name": "Émetteur à haute énergie",
+      "description": "L'émetteur à haute énergie représente une évolution majeure de la technologie défensive à photons. Ces plateformes massives utilisent des cristaux de focalisation avancés et des générateurs d'énergie dédiés pour produire des faisceaux d'une puissance dévastatrice. Leur blindage renforcé et leurs systèmes de refroidissement sophistiqués leur permettent de maintenir un tir continu même sous le feu ennemi.",
+      "image": "/game/defenses/high_energy_emitter.webp"
+    },
+    {
+      "code": "magnetic_accelerator",
+      "name": "Accélérateur magnétique",
+      "description": "L'accélérateur magnétique est un canon de tir à grande vitesse utilisé pour tirer des projectiles lourds et rapidement. Les projectiles sont propulsés grâce à un puissant champ magnétique, entouré de protections pour éviter les attaques. Cette technologie est essentielle pour la protection des territoires et la sécurité des populations.",
+      "image": "/game/defenses/magnetic_accelerator.webp"
+    },
+    {
+      "code": "ion_battery",
+      "name": "Batterie ionique",
+      "description": "La batterie ionique est une technologie avancée qui utilise des faisceaux d'ions pour tirer sur des cibles. Les ions sont propulsés à partir d'un générateur, qui est entouré de protections pour éviter les attaques. Cette technologie est essentielle pour la protection des territoires et la sécurité des populations.",
+      "image": "/game/defenses/ion_battery.webp"
+    },
+    {
+      "code": "plasma_ejector",
+      "name": "Éjecteur à plasma",
+      "description": "L'éjecteur à plasma représente le summum de la technologie défensive à énergie dirigée. En exploitant la puissance du quatrième état de la matière, ces tourelles peuvent libérer des torrents de plasma surchauffé capables de désintégrer pratiquement n'importe quelle cible. Leurs systèmes de confinement magnétique et leurs générateurs de haute puissance en font les défenses les plus redoutables disponibles.",
+      "image": "/game/defenses/plasma_ejector.webp"
+    },
+    {
+      "code": "defensive_barrier",
+      "name": "Barrière défensive",
+      "description": "La barrière défensive est une technologie avancée qui utilise des champs magnétiques pour absorber une quantité importante d'énergie. Elle est utilisée pour protéger une planète entière contre les attaques de missiles. Le champ magnétique est entouré de protections pour éviter les attaques.",
+      "image": "/game/defenses/defensive_barrier.webp"
+    },
+    {
+      "code": "protective_dome",
+      "name": "Dôme protecteur",
+      "description": "Le dôme protecteur représente l'évolution ultime de la technologie de défense passive. Ces générateurs massifs créent un dôme de protection énergétique capable d'absorber des quantités phénoménales de dégâts. Leurs matrices de bouclier multicouches et leurs systèmes de régénération rapide assurent une protection continue même face aux assauts les plus intenses.",
+      "image": "/game/defenses/protective_dome.webp"
+    },
+    {
+      "code": "interceptors",
+      "name": "Intercepteurs",
+      "description": "Les intercepteurs sont des missiles défensifs qui sont lancés contre des ogives longue portée. Ils sont utilisés pour protéger les installations critiques et les ressources de la planète en interceptant les menaces avant l'impact.",
+      "image": "/game/defenses/interceptors.webp"
+    },
+    {
+      "code": "long_range_warheads",
+      "name": "Ogives longue portée",
+      "description": "Les ogives longue portée sont des missiles balistiques interplanétaires conçus pour détruire les défenses ennemies à grande distance. Ils sont utilisés pour affaiblir les installations défensives adverses avant une attaque principale.",
+      "image": "/game/defenses/long_range_warheads.webp"
+    }
+  ],
+  "ships": [
+    {
+      "code": "small_cargo",
+      "name": "Navette de fret",
+      "description": "La navette de fret est un vaisseau agile qui peut rapidement transporter des ressources entre les planètes.",
+      "image": "/game/ships/small_cargo.webp"
+    },
+    {
+      "code": "large_cargo",
+      "name": "Cargo stellaire",
+      "description": "Le cargo stellaire a une capacité de fret beaucoup plus importante que la navette de fret.",
+      "image": "/game/ships/large_cargo.webp"
+    },
+    {
+      "code": "colony_ship",
+      "name": "Pionnier spatial",
+      "description": "Le pionnier spatial permet de prendre possession de nouvelles planètes.",
+      "image": "/game/ships/colony_ship.webp"
+    },
+    {
+      "code": "recycler",
+      "name": "Récupérateur",
+      "description": "Le récupérateur permet de récupérer les débris laissés après les combats.",
+      "image": "/game/ships/recycler.webp"
+    },
+    {
+      "code": "espionage_probe",
+      "name": "Éclaireur",
+      "description": "Petite sonde non armée utilisée pour collecter des informations sur les planètes ennemies.",
+      "image": "/game/ships/espionage_probe.webp"
+    },
+    {
+      "code": "light_fighter",
+      "name": "Intercepteur",
+      "description": "Premier vaisseau de combat que tous les empereurs construiront. L'intercepteur est un vaisseau agile, mais vulnérable seul.",
+      "image": "/game/ships/light_fighter.webp"
+    },
+    {
+      "code": "heavy_fighter",
+      "name": "Assaillant",
+      "description": "Version améliorée de l'intercepteur avec une meilleure puissance de feu.",
+      "image": "/game/ships/heavy_fighter.webp"
+    },
+    {
+      "code": "cruiser",
+      "name": "Corvette",
+      "description": "La corvette est spécialisée dans la destruction des intercepteurs grâce à ses canons ioniques.",
+      "image": "/game/ships/cruiser.webp"
+    },
+    {
+      "code": "battleship",
+      "name": "Cuirassé",
+      "description": "Le cuirassé est l'épine dorsale de toute flotte militaire.",
+      "image": "/game/ships/battleship.webp"
+    },
+    {
+      "code": "bomber",
+      "name": "Frappe-orbital",
+      "description": "Le frappe-orbital est spécialisé dans la destruction des défenses planétaires.",
+      "image": "/game/ships/bomber.webp"
+    },
+    {
+      "code": "solar_satellite",
+      "name": "Collecteur solaire",
+      "description": "Les collecteurs solaires sont des plateformes simples couvertes de cellules solaires qui collectent la lumière du soleil et la transmettent à la station au sol par laser.",
+      "image": "/game/ships/solar_satellite.webp"
+    },
+    {
+      "code": "predator",
+      "name": "Prédateur",
+      "description": "Le prédateur est un vaisseau furtif conçu pour intercepter et détruire les flottes ennemies.",
+      "image": "/game/ships/predator.webp"
+    },
+    {
+      "code": "destroyer",
+      "name": "Annihilateur",
+      "description": "L'annihilateur est le vaisseau le plus puissant de la flotte standard.",
+      "image": "/game/ships/destroyer.webp"
+    },
+    {
+      "code": "battle_cruiser",
+      "name": "Colossus stellaire",
+      "description": "Le Colossus stellaire représente l'apogée de la technologie militaire spatiale.",
+      "image": "/game/ships/battle_cruiser.webp"
+    }
+  ],
+  "research": [
+    {
+      "code": "energy_science",
+      "name": "Science Énergétique",
+      "description": "La science énergétique est fondamentale pour le développement de votre empire. Elle permet de mieux comprendre et maîtriser les différentes formes d'énergie, des réacteurs à fusion aux champs de force. Chaque niveau améliore l'efficacité énergétique globale de vos installations et débloque de nouvelles technologies avancées. Cette recherche est particulièrement importante pour les technologies de propulsion et de défense qui nécessitent une grande quantité d'énergie.",
+      "image": "/game/research/energy_science.webp"
+    },
+    {
+      "code": "plasma",
+      "name": "Maîtrise du Plasma",
+      "description": "La maîtrise du plasma représente une avancée majeure dans l'optimisation des processus d'extraction et de production. En utilisant le quatrième état de la matière, cette technologie permet d'améliorer significativement l'efficacité de vos installations minières. Le plasma est utilisé pour augmenter la température et la pression dans les processus d'extraction, permettant d'obtenir plus de ressources à partir des mêmes gisements. Chaque niveau augmente les taux de production de toutes vos ressources de base.",
+      "image": "/game/research/plasma.webp"
+    },
+    {
+      "code": "quantum_computing",
+      "name": "Calcul Quantique",
+      "description": "Le calcul quantique est le cerveau de votre empire spatial. Il englobe le développement de systèmes informatiques toujours plus puissants et sophistiqués, capables de gérer des calculs complexes en temps réel. Ces ordinateurs quantiques avancés sont essentiels pour la gestion de flottes, l'analyse stratégique et l'optimisation des ressources. Chaque niveau augmente la capacité de traitement et permet de gérer plus efficacement votre empire grandissant.",
+      "image": "/game/research/quantum_computing.webp"
+    },
+    {
+      "code": "research_network",
+      "name": "Collaboration Stellaire",
+      "description": "La collaboration stellaire est une ressource essentielle pour les scientifiques en recherche. Elle permet aux chercheurs de communiquer et de partager des connaissances avec des experts de toutes les planètes. Le réseau permet aussi de collecter des données et de publier des articles scientifiques. La collaboration stellaire est essentielle pour les scientifiques en recherche d'informations et d'innovation.",
+      "image": "/game/research/research_network.webp"
+    },
+    {
+      "code": "combustion_drive",
+      "name": "Propulseur Chimique",
+      "description": "Le propulseur chimique représente la première génération de propulsion spatiale. Utilisant des carburants chimiques conventionnels, ces réacteurs sont parfaits pour les petits vaisseaux qui n'ont pas besoin d'atteindre des vitesses extrêmes. Bien que limités par rapport aux technologies plus avancées, ils restent fiables et économiques. Chaque niveau de recherche améliore l'efficacité de la combustion et la vitesse des vaisseaux qui en sont équipés.",
+      "image": "/game/research/combustion_drive.webp"
+    },
+    {
+      "code": "impulse_drive",
+      "name": "Moteur Magnétique",
+      "description": "Le moteur magnétique représente un bond technologique majeur dans la propulsion spatiale. En utilisant la fusion nucléaire contrôlée pour éjecter du plasma à haute vélocité, ces réacteurs permettent aux vaisseaux moyens d'atteindre des vitesses considérables. Ils sont plus efficaces que les propulseurs chimiques et constituent l'épine dorsale de toute flotte spatiale moderne. Chaque niveau améliore la puissance et l'efficacité de la propulsion.",
+      "image": "/game/research/impulse_drive.webp"
+    },
+    {
+      "code": "hyperspace_drive",
+      "name": "Navigation Transdimensionnelle",
+      "description": "La navigation transdimensionnelle représente le summum de la technologie de propulsion spatiale. En créant des corridors à travers l'espace-temps, cette technologie permet aux grands vaisseaux de voyager à des vitesses supérieures à celle de la lumière. Cette technologie est essentielle pour les vaisseaux de guerre lourds et les vaisseaux de bataille qui doivent traverser de vastes distances galactiques. Chaque niveau améliore la stabilité des corridors spatiaux et la vitesse de voyage.",
+      "image": "/game/research/hyperspace_drive.webp"
+    },
+    {
+      "code": "laser",
+      "name": "Systèmes Photoniques",
+      "description": "Les systèmes photoniques représentent la première génération d'armes à énergie dirigée. En concentrant la lumière en faisceaux cohérents de haute intensité, les lasers peuvent délivrer une énergie destructrice avec une précision chirurgicale. Bien que relativement basiques comparés aux technologies plus avancées, les systèmes photoniques restent fiables et économiques. Chaque niveau améliore la puissance et la précision des armes à énergie.",
+      "image": "/game/research/laser.webp"
+    },
+    {
+      "code": "ion",
+      "name": "Manipulation Ionique",
+      "description": "La manipulation ionique représente une avancée majeure dans les systèmes d'armement. En accélérant des particules chargées à des vitesses extrêmes, les canons à ions peuvent désactiver les systèmes ennemis et perturber leurs boucliers. Cette technologie est particulièrement efficace contre les cibles fortement blindées. Chaque niveau améliore la puissance de pénétration et l'efficacité énergétique des armes ioniques.",
+      "image": "/game/research/ion.webp"
+    },
+    {
+      "code": "hyperspace",
+      "name": "Pliage Spatial",
+      "description": "Le pliage spatial représente l'aboutissement de décennies de recherche en physique dimensionnelle. En maîtrisant les dimensions supérieures de l'espace-temps, cette technologie permet de créer des raccourcis à travers le tissu de l'univers. Ces connaissances sont essentielles pour le développement de systèmes de propulsion avancés et d'armes utilisant les propriétés de l'hyperespace. Chaque niveau approfondit notre compréhension des dimensions supérieures.",
+      "image": "/game/research/hyperspace.webp"
+    },
+    {
+      "code": "shielding",
+      "name": "Champs de Protection",
+      "description": "Les champs de protection sont essentiels à la survie dans l'espace. En créant des champs de force énergétiques, cette technologie permet de protéger les vaisseaux et les installations contre les attaques ennemies. Les boucliers peuvent absorber et dissiper une grande variété d'armes, des lasers aux missiles. Chaque niveau améliore la capacité d'absorption d'énergie et la résistance globale des boucliers.",
+      "image": "/game/research/shielding.webp"
+    },
+    {
+      "code": "armor",
+      "name": "Métallurgie Avancée",
+      "description": "La métallurgie avancée est la dernière ligne de défense de vos vaisseaux et installations. Cette recherche se concentre sur le développement de nouveaux alliages et de structures composites capables de résister aux impacts les plus violents. Les blindages avancés combinent plusieurs couches de matériaux aux propriétés complémentaires pour maximiser la protection. Chaque niveau améliore la durabilité et la résistance structurelle de vos coques.",
+      "image": "/game/research/armor.webp"
+    },
+    {
+      "code": "weapons",
+      "name": "Systèmes Offensifs",
+      "description": "Les systèmes offensifs sont une discipline fondamentale qui englobe tous les aspects du développement des systèmes d'armement. Cette recherche permet d'améliorer l'efficacité générale de toutes vos armes, qu'il s'agisse d'armes cinétiques conventionnelles ou de systèmes plus avancés. Chaque niveau représente une meilleure compréhension des principes balistiques, des matériaux et des systèmes de visée, augmentant significativement la puissance de frappe de vos forces.",
+      "image": "/game/research/weapons.webp"
+    },
+    {
+      "code": "espionage",
+      "name": "Renseignement Tactique",
+      "description": "Le renseignement tactique est essentiel pour comprendre les activités des autres planètes. Cette recherche permet de collecter des données sur les ressources naturelles, les technologies, les activités humaines et les structures de ces autres planètes.",
+      "image": "/game/research/espionage.webp"
+    },
+    {
+      "code": "astrophysics",
+      "name": "Cosmologie Appliquée",
+      "description": "La cosmologie appliquée permet de coloniser plus de planètes et d'entreprendre des expéditions. Cette recherche permet aux scientifiques d'explorer les systèmes stellaires et de comprendre les formations planétaires.",
+      "image": "/game/research/astrophysics.webp"
+    },
+    {
+      "code": "graviton",
+      "name": "Manipulation Gravitationnelle",
+      "description": "La manipulation gravitationnelle représente le pinacle de la recherche en physique fondamentale. En manipulant les particules responsables de la force gravitationnelle, cette technologie permet de créer des armes d'une puissance inimaginable.",
+      "image": "/game/research/graviton.webp"
+    },
+    {
+      "code": "interstellar_diplomacy",
+      "name": "Diplomatie Stellaire",
+      "description": "La diplomatie stellaire permet aux planètes de négocier des accords et des alliances avec d'autres planètes. Cette recherche permet aux scientifiques de développer des techniques de communication et de négociation efficaces pour établir des relations pacifiques et coopératives avec les autres empires.",
+      "image": "/game/research/interstellar_diplomacy.webp"
+    }
+  ],
+  "packs": [
+    {
+      "code": "stellar_base",
+      "name": "Pack Découverte",
+      "description": "Le petit coup de pouce pour vos premiers achats en boutique.",
+      "amount": 100,
+      "image": "/game/packs/stellar_base.webp"
+    },
+    {
+      "code": "stellar_standard",
+      "name": "Pack Expansion",
+      "description": "Plus de liberté pour personnaliser votre empire.",
+      "amount": 275,
+      "image": "/game/packs/stellar_standard.webp"
+    },
+    {
+      "code": "stellar_premium",
+      "name": "Pack Conquête",
+      "description": "Le meilleur rendement pour les collectionneurs.",
+      "amount": 600,
+      "image": "/game/packs/stellar_premium.webp"
+    }
+  ],
+  "banners": {
+    "alliance": "/game/banners/alliance.webp",
+    "buildings": "/game/banners/buildings.webp",
+    "defense": "/game/banners/defense.webp",
+    "facilities": "/game/banners/facilities.webp",
+    "fleet": "/game/banners/fleet.webp",
+    "galaxy": "/game/banners/galaxy.webp",
+    "inventory": "/game/banners/inventory.webp",
+    "laboratory": "/game/banners/laboratory.webp",
+    "messages": "/game/banners/messages.webp",
+    "planet": "/game/banners/planet.webp",
+    "quests": "/game/banners/quests.webp",
+    "ranking": "/game/banners/ranking.webp",
+    "reports": "/game/banners/reports.webp",
+    "ships": "/game/banners/ships.webp",
+    "shop": "/game/banners/shop.webp",
+    "simulator": "/game/banners/simulator.webp"
+  },
+  "planets": {
+    "desert": {
+      "albedo": "/game/planets/desert/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.006,
+        "cloudopacity": 0.65,
+        "cloudshadow": 0.3,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 0.6,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 2,
+        "cloudbright": 0.95,
+        "cloudtint": "#e2c49a",
+        "veil": 0.4,
+        "veilcolor": "#d8a47c"
+      },
+      "clouds": "/game/planets/desert/clouds.webp",
+      "normal": "/game/planets/desert/normal.webp",
+      "specular": "/game/planets/desert/specular.webp",
+      "sphere": "/game/planets/desert/sphere.webp",
+      "horizon": "/game/planets/desert/horizon.webp"
+    },
+    "dry": {
+      "albedo": "/game/planets/dry/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.012,
+        "cloudopacity": 0.92,
+        "cloudshadow": 0.55,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 0.7,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 0,
+        "cloudbright": 0.95,
+        "cloudtint": "#f0e6d8",
+        "veil": 0.4,
+        "veilcolor": "#d8b090"
+      },
+      "clouds": "/game/planets/dry/clouds.webp",
+      "normal": "/game/planets/dry/normal.webp",
+      "specular": "/game/planets/dry/specular.webp",
+      "sphere": "/game/planets/dry/sphere.webp",
+      "horizon": "/game/planets/dry/horizon.webp"
+    },
+    "gas": {
+      "albedo": "/game/planets/gas/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": null,
+        "cloudalt": 1.012,
+        "cloudopacity": 0.92,
+        "cloudshadow": 0.55,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 1,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 0,
+        "cloudbright": 0.95,
+        "cloudtint": "#ffffff",
+        "veil": 0.5
+      },
+      "normal": "/game/planets/gas/normal.webp",
+      "specular": "/game/planets/gas/specular.webp",
+      "sphere": "/game/planets/gas/sphere.webp",
+      "horizon": "/game/planets/gas/horizon.webp"
+    },
+    "ice": {
+      "albedo": "/game/planets/ice/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.012,
+        "cloudopacity": 0.9,
+        "cloudshadow": 0.25,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 1,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 1,
+        "cloudbright": 1.3,
+        "cloudtint": "#f4f8ff",
+        "veil": 0.45,
+        "veilcolor": "#a8d8ff"
+      },
+      "clouds": "/game/planets/ice/clouds.webp",
+      "normal": "/game/planets/ice/normal.webp",
+      "specular": "/game/planets/ice/specular.webp",
+      "sphere": "/game/planets/ice/sphere.webp",
+      "horizon": "/game/planets/ice/horizon.webp"
+    },
+    "jungle": {
+      "albedo": "/game/planets/jungle/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.012,
+        "cloudopacity": 0.85,
+        "cloudshadow": 0.55,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 1.3,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 0,
+        "cloudbright": 0.95,
+        "cloudtint": "#ffffff",
+        "veil": 0.35,
+        "veilcolor": "#a6e8b4"
+      },
+      "clouds": "/game/planets/jungle/clouds.webp",
+      "normal": "/game/planets/jungle/normal.webp",
+      "specular": "/game/planets/jungle/specular.webp",
+      "sphere": "/game/planets/jungle/sphere.webp",
+      "horizon": "/game/planets/jungle/horizon.webp"
+    },
+    "normal": {
+      "albedo": "/game/planets/normal/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.012,
+        "cloudopacity": 0.92,
+        "cloudshadow": 0.55,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 1.3,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 0,
+        "cloudbright": 0.95,
+        "cloudtint": "#ffffff",
+        "veil": 0.6,
+        "veilcolor": "#7fb8ff"
+      },
+      "clouds": "/game/planets/normal/clouds.webp",
+      "normal": "/game/planets/normal/normal.webp",
+      "specular": "/game/planets/normal/specular.webp",
+      "sphere": "/game/planets/normal/sphere.webp",
+      "horizon": "/game/planets/normal/horizon.webp"
+    },
+    "water": {
+      "albedo": "/game/planets/water/albedo.webp",
+      "atmosphere": {
+        "atmosphere": true,
+        "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+        "nuages": "clouds.webp",
+        "cloudalt": 1.012,
+        "cloudopacity": 0.92,
+        "cloudshadow": 0.55,
+        "cloudlon": 0,
+        "cloudgamma": 1,
+        "cloudcover": 1.1,
+        "cloudfloor": 0,
+        "cloudground": 0,
+        "cloudsoft": 0,
+        "cloudbright": 0.95,
+        "cloudtint": "#ffffff",
+        "veil": 0.6,
+        "veilcolor": "#7fb8ff"
+      },
+      "clouds": "/game/planets/water/clouds.webp",
+      "normal": "/game/planets/water/normal.webp",
+      "specular": "/game/planets/water/specular.webp",
+      "sphere": "/game/planets/water/sphere.webp",
+      "horizon": "/game/planets/water/horizon.webp"
+    }
+  },
+  "avatars": [
+    {
+      "code": "avatar_commandant_nova",
+      "name": "Commandant Nova",
+      "image": "/game/avatars/commandant_nova/image.webp",
+      "background": "/game/avatars/commandant_nova/background.webp"
+    },
+    {
+      "code": "avatar_ingenieure_lambda",
+      "name": "Ingénieure Lambda",
+      "image": "/game/avatars/ingenieure_lambda/image.webp",
+      "background": "/game/avatars/ingenieure_lambda/background.webp"
+    },
+    {
+      "code": "avatar_alien_uxari",
+      "name": "Alien Uxari",
+      "image": "/game/avatars/alien_uxari/image.webp",
+      "background": "/game/avatars/alien_uxari/background.webp"
+    },
+    {
+      "code": "avatar_capitaine_de_la_flotte",
+      "name": "Capitaine de la Flotte",
+      "image": "/game/avatars/capitaine_de_la_flotte/image.webp",
+      "background": "/game/avatars/capitaine_de_la_flotte/background.webp"
+    },
+    {
+      "code": "avatar_hacker_stellaire",
+      "name": "Hacker Stellaire",
+      "image": "/game/avatars/hacker_stellaire/image.webp",
+      "background": "/game/avatars/hacker_stellaire/background.webp"
+    },
+    {
+      "code": "avatar_explorateur_robotique",
+      "name": "Explorateur Robotique",
+      "image": "/game/avatars/explorateur_robotique/image.webp",
+      "background": "/game/avatars/explorateur_robotique/background.webp"
+    },
+    {
+      "code": "avatar_archiviste_de_l_ancienne_terre",
+      "name": "Archiviste de l'Ancienne Terre",
+      "image": "/game/avatars/archiviste_de_l_ancienne_terre/image.webp",
+      "background": "/game/avatars/archiviste_de_l_ancienne_terre/background.webp"
+    },
+    {
+      "code": "avatar_gardienne_de_l_energie",
+      "name": "Gardienne de l'Énergie",
+      "image": "/game/avatars/gardienne_de_l_energie/image.webp",
+      "background": "/game/avatars/gardienne_de_l_energie/background.webp"
+    },
+    {
+      "code": "avatar_symbiote_xel_nir",
+      "name": "Symbiote Xel-Nir",
+      "image": "/game/avatars/symbiote_xel_nir/image.webp",
+      "background": "/game/avatars/symbiote_xel_nir/background.webp"
+    },
+    {
+      "code": "avatar_biologiste_stellaire",
+      "name": "Biologiste Stellaire",
+      "image": "/game/avatars/biologiste_stellaire/image.webp",
+      "background": "/game/avatars/biologiste_stellaire/background.webp"
+    },
+    {
+      "code": "avatar_mineur_de_l_orbite",
+      "name": "Mineur de l'Orbite",
+      "image": "/game/avatars/mineur_de_l_orbite/image.webp",
+      "background": "/game/avatars/mineur_de_l_orbite/background.webp"
+    },
+    {
+      "code": "avatar_ambassadeur_galactique",
+      "name": "Ambassadeur Galactique",
+      "image": "/game/avatars/ambassadeur_galactique/image.webp",
+      "background": "/game/avatars/ambassadeur_galactique/background.webp"
+    },
+    {
+      "code": "avatar_technicienne_de_bord",
+      "name": "Technicienne de Bord",
+      "image": "/game/avatars/technicienne_de_bord/image.webp",
+      "background": "/game/avatars/technicienne_de_bord/background.webp"
+    },
+    {
+      "code": "avatar_emissaire_cybernetique",
+      "name": "Émissaire Cybernétique",
+      "image": "/game/avatars/emissaire_cybernetique/image.webp",
+      "background": "/game/avatars/emissaire_cybernetique/background.webp"
+    },
+    {
+      "code": "avatar_chasseur_de_reliques",
+      "name": "Chasseur de Reliques",
+      "image": "/game/avatars/chasseur_de_reliques/image.webp",
+      "background": "/game/avatars/chasseur_de_reliques/background.webp"
+    },
+    {
+      "code": "avatar_enfant_de_la_station",
+      "name": "Enfant de la Station",
+      "image": "/game/avatars/enfant_de_la_station/image.webp",
+      "background": "/game/avatars/enfant_de_la_station/background.webp"
+    },
+    {
+      "code": "avatar_soldat_cryogenique",
+      "name": "Soldat Cryogénique",
+      "image": "/game/avatars/soldat_cryogenique/image.webp",
+      "background": "/game/avatars/soldat_cryogenique/background.webp"
+    },
+    {
+      "code": "avatar_gardien_du_vide",
+      "name": "Gardien du Vide",
+      "image": "/game/avatars/gardien_du_vide/image.webp",
+      "background": "/game/avatars/gardien_du_vide/background.webp"
+    },
+    {
+      "code": "avatar_archiviste_de_donnees_ia",
+      "name": "Archiviste de Données IA",
+      "image": "/game/avatars/archiviste_de_donnees_ia/image.webp",
+      "background": "/game/avatars/archiviste_de_donnees_ia/background.webp"
+    },
+    {
+      "code": "avatar_meca_pretre",
+      "name": "Méca-Prêtre",
+      "image": "/game/avatars/meca_pretre/image.webp",
+      "background": "/game/avatars/meca_pretre/background.webp"
+    },
+    {
+      "code": "avatar_pilleur_de_cargo",
+      "name": "Pilleur de Cargo",
+      "image": "/game/avatars/pilleur_de_cargo/image.webp",
+      "background": "/game/avatars/pilleur_de_cargo/background.webp"
+    },
+    {
+      "code": "avatar_oracle_quantique",
+      "name": "Oracle Quantique",
+      "image": "/game/avatars/oracle_quantique/image.webp",
+      "background": "/game/avatars/oracle_quantique/background.webp"
+    },
+    {
+      "code": "avatar_chirurgien_cybernetique",
+      "name": "Chirurgien Cybernétique",
+      "image": "/game/avatars/chirurgien_cybernetique/image.webp",
+      "background": "/game/avatars/chirurgien_cybernetique/background.webp"
+    },
+    {
+      "code": "avatar_veteran_des_guerres_lunaires",
+      "name": "Vétéran des Guerres Lunaires",
+      "image": "/game/avatars/veteran_des_guerres_lunaires/image.webp",
+      "background": "/game/avatars/veteran_des_guerres_lunaires/background.webp"
+    },
+    {
+      "code": "avatar_enchanteresse_technologique",
+      "name": "Enchanteresse Technologique",
+      "image": "/game/avatars/enchanteresse_technologique/image.webp",
+      "background": "/game/avatars/enchanteresse_technologique/background.webp"
+    },
+    {
+      "code": "avatar_jeune_pilote_rebelle",
+      "name": "Jeune Pilote Rebelle",
+      "image": "/game/avatars/jeune_pilote_rebelle/image.webp",
+      "background": "/game/avatars/jeune_pilote_rebelle/background.webp"
+    },
+    {
+      "code": "avatar_navigateur_stellaire",
+      "name": "Navigateur Stellaire",
+      "image": "/game/avatars/navigateur_stellaire/image.webp",
+      "background": "/game/avatars/navigateur_stellaire/background.webp"
+    },
+    {
+      "code": "avatar_messager_de_la_zone_interdite",
+      "name": "Messager de la Zone Interdite",
+      "image": "/game/avatars/messager_de_la_zone_interdite/image.webp",
+      "background": "/game/avatars/messager_de_la_zone_interdite/background.webp"
+    },
+    {
+      "code": "avatar_double_clone_experimental",
+      "name": "Double Clone Expérimental",
+      "image": "/game/avatars/double_clone_experimental/image.webp",
+      "background": "/game/avatars/double_clone_experimental/background.webp"
+    },
+    {
+      "code": "avatar_xor_thal_l_ancien",
+      "name": "Xor-Thal l'Ancien",
+      "image": "/game/avatars/xor_thal_l_ancien/image.webp",
+      "background": "/game/avatars/xor_thal_l_ancien/background.webp"
+    },
+    {
+      "code": "avatar_krel_mak_le_dompteur",
+      "name": "Krel-Mak le Dompteur",
+      "image": "/game/avatars/krel_mak_le_dompteur/image.webp",
+      "background": "/game/avatars/krel_mak_le_dompteur/background.webp"
+    },
+    {
+      "code": "avatar_unite_con_science",
+      "name": "Unité Con-Science",
+      "image": "/game/avatars/unite_con_science/image.webp",
+      "background": "/game/avatars/unite_con_science/background.webp"
+    },
+    {
+      "code": "avatar_sy_lar_de_la_ruche_etheree",
+      "name": "Sy-Lar de la Ruche Éthérée",
+      "image": "/game/avatars/sy_lar_de_la_ruche_etheree/image.webp",
+      "background": "/game/avatars/sy_lar_de_la_ruche_etheree/background.webp"
+    },
+    {
+      "code": "avatar_rho_7_module_de_reconnaissance",
+      "name": "Rho-7 Module de Reconnaissance",
+      "image": "/game/avatars/rho_7_module_de_reconnaissance/image.webp",
+      "background": "/game/avatars/rho_7_module_de_reconnaissance/background.webp"
+    },
+    {
+      "code": "avatar_gorkahn_vegetalien_synthetique",
+      "name": "Gorkahn Végétalien Synthétique",
+      "image": "/game/avatars/gorkahn_vegetalien_synthetique/image.webp",
+      "background": "/game/avatars/gorkahn_vegetalien_synthetique/background.webp"
+    },
+    {
+      "code": "avatar_dra_mol_forgeron_des_anneaux_noirs",
+      "name": "Dra-Mol Forgeron des Anneaux Noirs",
+      "image": "/game/avatars/dra_mol_forgeron_des_anneaux_noirs/image.webp",
+      "background": "/game/avatars/dra_mol_forgeron_des_anneaux_noirs/background.webp"
+    },
+    {
+      "code": "avatar_naka_nomade_interdimensionnel",
+      "name": "Naka Nomade Interdimensionnel",
+      "image": "/game/avatars/naka_nomade_interdimensionnel/image.webp",
+      "background": "/game/avatars/naka_nomade_interdimensionnel/background.webp"
+    },
+    {
+      "code": "avatar_vega_prime_oracle_solaire",
+      "name": "Vega Prime Oracle Solaire",
+      "image": "/game/avatars/vega_prime_oracle_solaire/image.webp",
+      "background": "/game/avatars/vega_prime_oracle_solaire/background.webp"
+    },
+    {
+      "code": "avatar_zr_nok_parasite_royal",
+      "name": "Zr-Nok Parasite Royal",
+      "image": "/game/avatars/zr_nok_parasite_royal/image.webp",
+      "background": "/game/avatars/zr_nok_parasite_royal/background.webp"
+    },
+    {
+      "code": "avatar_unite_a_0_anomalie_artificielle",
+      "name": "Unité A-0 Anomalie Artificielle",
+      "image": "/game/avatars/unite_a_0_anomalie_artificielle/image.webp",
+      "background": "/game/avatars/unite_a_0_anomalie_artificielle/background.webp"
+    },
+    {
+      "code": "avatar_anka_pretresse_de_la_lune_morte",
+      "name": "Anka Prêtresse de la Lune Morte",
+      "image": "/game/avatars/anka_pretresse_de_la_lune_morte/image.webp",
+      "background": "/game/avatars/anka_pretresse_de_la_lune_morte/background.webp"
+    },
+    {
+      "code": "avatar_emissaire_des_ombres",
+      "name": "Émissaire des Ombres",
+      "image": "/game/avatars/emissaire_des_ombres/image.webp",
+      "background": "/game/avatars/emissaire_des_ombres/background.webp"
+    },
+    {
+      "code": "avatar_fluxi_on_ia_liquide",
+      "name": "Fluxi-On IA Liquide",
+      "image": "/game/avatars/fluxi_on_ia_liquide/image.webp",
+      "background": "/game/avatars/fluxi_on_ia_liquide/background.webp"
+    },
+    {
+      "code": "avatar_seigneur_des_recifs_stellaires",
+      "name": "Seigneur des Récifs Stellaires",
+      "image": "/game/avatars/seigneur_des_recifs_stellaires/image.webp",
+      "background": "/game/avatars/seigneur_des_recifs_stellaires/background.webp"
+    },
+    {
+      "code": "avatar_soo_raa_enfant_des_etoiles",
+      "name": "Soo-Raa Enfant des Étoiles",
+      "image": "/game/avatars/soo_raa_enfant_des_etoiles/image.webp",
+      "background": "/game/avatars/soo_raa_enfant_des_etoiles/background.webp"
+    },
+    {
+      "code": "avatar_echo_9_spectre_du_futur",
+      "name": "Écho-9 Spectre du Futur",
+      "image": "/game/avatars/echo_9_spectre_du_futur/image.webp",
+      "background": "/game/avatars/echo_9_spectre_du_futur/background.webp"
+    },
+    {
+      "code": "avatar_la_voix_du_neant",
+      "name": "La Voix du Néant",
+      "image": "/game/avatars/la_voix_du_neant/image.webp",
+      "background": "/game/avatars/la_voix_du_neant/background.webp"
+    },
+    {
+      "code": "avatar_l_eclipse_vivante",
+      "name": "L'Éclipse Vivante",
+      "image": "/game/avatars/l_eclipse_vivante/image.webp",
+      "background": "/game/avatars/l_eclipse_vivante/background.webp"
+    },
+    {
+      "code": "avatar_metronome",
+      "name": "Métronome",
+      "image": "/game/avatars/metronome/image.webp",
+      "background": "/game/avatars/metronome/background.webp"
+    },
+    {
+      "code": "avatar_myriade",
+      "name": "Myriade",
+      "image": "/game/avatars/myriade/image.webp",
+      "background": "/game/avatars/myriade/background.webp"
+    },
+    {
+      "code": "avatar_truchement",
+      "name": "Truchement",
+      "image": "/game/avatars/truchement/image.webp",
+      "background": "/game/avatars/truchement/background.webp"
+    },
+    {
+      "code": "avatar_rafistol",
+      "name": "Rafistol",
+      "image": "/game/avatars/rafistol/image.webp",
+      "background": "/game/avatars/rafistol/background.webp"
+    },
+    {
+      "code": "avatar_incipit",
+      "name": "Incipit",
+      "image": "/game/avatars/incipit/image.webp",
+      "background": "/game/avatars/incipit/background.webp"
+    },
+    {
+      "code": "avatar_quota",
+      "name": "Quota",
+      "image": "/game/avatars/quota/image.webp",
+      "background": "/game/avatars/quota/background.webp"
+    },
+    {
+      "code": "avatar_temperance",
+      "name": "Tempérance",
+      "image": "/game/avatars/temperance/image.webp",
+      "background": "/game/avatars/temperance/background.webp"
+    },
+    {
+      "code": "avatar_la_generale",
+      "name": "La Générale",
+      "image": "/game/avatars/la_generale/image.webp",
+      "background": "/game/avatars/la_generale/background.webp"
+    },
+    {
+      "code": "avatar_huis",
+      "name": "Huis",
+      "image": "/game/avatars/huis/image.webp",
+      "background": "/game/avatars/huis/background.webp"
+    },
+    {
+      "code": "avatar_bouture",
+      "name": "Bouture",
+      "image": "/game/avatars/bouture/image.webp",
+      "background": "/game/avatars/bouture/background.webp"
+    },
+    {
+      "code": "avatar_petit_frere",
+      "name": "Petit Frère",
+      "image": "/game/avatars/petit_frere/image.webp",
+      "background": "/game/avatars/petit_frere/background.webp"
+    },
+    {
+      "code": "avatar_etalon",
+      "name": "L'Étalon",
+      "image": "/game/avatars/etalon/image.webp",
+      "background": "/game/avatars/etalon/background.webp"
+    },
+    {
+      "code": "avatar_ansar",
+      "name": "Ansar la Graveuse",
+      "image": "/game/avatars/ansar/image.webp",
+      "background": "/game/avatars/ansar/background.webp"
+    },
+    {
+      "code": "avatar_veilleur",
+      "name": "Veilleur",
+      "image": "/game/avatars/veilleur/image.webp",
+      "background": "/game/avatars/veilleur/background.webp"
+    },
+    {
+      "code": "avatar_cadastre",
+      "name": "Cadastre",
+      "image": "/game/avatars/cadastre/image.webp",
+      "background": "/game/avatars/cadastre/background.webp"
+    },
+    {
+      "code": "avatar_cendre",
+      "name": "Cendre",
+      "image": "/game/avatars/cendre/image.webp",
+      "background": "/game/avatars/cendre/background.webp"
+    },
+    {
+      "code": "avatar_epave",
+      "name": "Épave",
+      "image": "/game/avatars/epave/image.webp",
+      "background": "/game/avatars/epave/background.webp"
+    },
+    {
+      "code": "avatar_ration",
+      "name": "Ration",
+      "image": "/game/avatars/ration/image.webp",
+      "background": "/game/avatars/ration/background.webp"
+    },
+    {
+      "code": "avatar_aube",
+      "name": "Aube",
+      "image": "/game/avatars/aube/image.webp",
+      "background": "/game/avatars/aube/background.webp"
+    },
+    {
+      "code": "avatar_brune",
+      "name": "Brune",
+      "image": "/game/avatars/brune/image.webp",
+      "background": "/game/avatars/brune/background.webp"
+    },
+    {
+      "code": "avatar_tesson",
+      "name": "Tesson",
+      "image": "/game/avatars/tesson/image.webp",
+      "background": "/game/avatars/tesson/background.webp"
+    },
+    {
+      "code": "avatar_ossek",
+      "name": "Ossek",
+      "image": "/game/avatars/ossek/image.webp",
+      "background": "/game/avatars/ossek/background.webp"
+    },
+    {
+      "code": "avatar_ithra",
+      "name": "Ithra",
+      "image": "/game/avatars/ithra/image.webp",
+      "background": "/game/avatars/ithra/background.webp"
+    },
+    {
+      "code": "avatar_lirra",
+      "name": "Lirra",
+      "image": "/game/avatars/lirra/image.webp",
+      "background": "/game/avatars/lirra/background.webp"
+    },
+    {
+      "code": "avatar_quille",
+      "name": "Quille",
+      "image": "/game/avatars/quille/image.webp",
+      "background": "/game/avatars/quille/background.webp"
+    },
+    {
+      "code": "avatar_agente_ecarlate",
+      "name": "Agente écarlate",
+      "image": "/game/avatars/agente_ecarlate/image.webp",
+      "background": "/game/avatars/agente_ecarlate/background.webp"
+    },
+    {
+      "code": "avatar_aristocrate_violet",
+      "name": "Aristocrate violet",
+      "image": "/game/avatars/aristocrate_violet/image.webp",
+      "background": "/game/avatars/aristocrate_violet/background.webp"
+    }
+  ],
+  "logo": "/game/logo-icon.svg"
+}

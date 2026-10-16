@@ -1,0 +1,18 @@
+{
+ "atmosphere": true,
+ "prototype": "tools/codex/v6-assets/planets/engine-page.html",
+ "nuages": "clouds.webp",
+ "cloudalt": 1.006,
+ "cloudopacity": 0.65,
+ "cloudshadow": 0.3,
+ "cloudlon": 0,
+ "cloudgamma": 1,
+ "cloudcover": 0.6,
+ "cloudfloor": 0,
+ "cloudground": 0,
+ "cloudsoft": 2,
+ "cloudbright": 0.95,
+ "cloudtint": "#e2c49a",
+ "veil": 0.4,
+ "veilcolor": "#d8a47c"
+}

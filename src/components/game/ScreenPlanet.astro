@@ -1,0 +1,61 @@
+---
+/**
+ * La page Planète du jeu : la sphère du biome (`<biome>_full_N`, la même illustration que l'orbe
+ * de la barre de navigation), sa position, et les tuiles de caractéristiques. Nom, position et
+ * valeurs sont des valeurs d'illustration ; libellés et visuel viennent du jeu.
+ */
+import { planets, resources, RESOURCE_ORDER } from '../../lib/game';
+
+interface Props {
+  biome?: string;
+  name?: string;
+}
+
+const { biome = 'normal', name = 'Kerinaurus' } = Astro.props;
+const planet = planets[biome] ?? planets.normal;
+
+const stats = [
+  { icon: 'arrows-out', label: 'Diamètre', value: '12 800 km' },
+  { icon: 'thermometer-simple', label: 'Température', value: '18 °C' },
+  { icon: 'squares-four', label: 'Cases utilisées', value: '42 / 163' },
+];
+const production = { metal: '1,2K', crystal: '640', hydrogen: '210', energy: '+48' };
+---
+
+<div class="h-full overflow-hidden">
+  <div class="px-4 pt-4">
+    <h1 class="text-xl font-semibold">{name}</h1>
+    <p class="text-sm text-slate-400 mt-1">Position 1:42:8</p>
+  </div>
+
+  <div class="relative mx-auto mt-2 w-[300px] aspect-square">
+    <div class="absolute inset-6 rounded-full bg-sky-400/20 blur-2xl"></div>
+    <img src={planet.sphere} alt="" class="relative w-full h-full object-contain" />
+  </div>
+
+  <div class="px-4 mt-2 space-y-5">
+    <div class="grid grid-cols-3 gap-4">
+      {stats.map((s) => (
+        <div>
+          <div class="aspect-square rounded-lg bg-slate-800/50 card-with-border overflow-hidden flex flex-col items-center justify-center gap-2">
+            <i class={`ph ph-${s.icon} text-2xl leading-none text-slate-400`}></i>
+            <span class="text-sm text-slate-200 tabular-nums">{s.value}</span>
+          </div>
+          <p class="mt-2 text-xs text-slate-500 text-center">{s.label}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="space-y-3">
+      <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Ressources</div>
+      <div class="grid grid-cols-4 gap-3">
+        {RESOURCE_ORDER.map((code) => (
+          <div class="rounded-lg bg-slate-800/50 card-with-border overflow-hidden py-3 flex flex-col items-center gap-1.5">
+            <i class={`ph-fill ph-${resources[code].icon} text-xl leading-none ${code === 'energy' ? 'text-green-400' : 'text-slate-400'}`}></i>
+            <span class="text-xs text-slate-200 tabular-nums">{production[code]}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>

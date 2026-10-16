@@ -1,29 +1,40 @@
 ---
+/**
+ * Cadre de téléphone. L'écran est soit un écran reconstruit du jeu passé en slot
+ * (`components/game/`), soit, à défaut, une image (`screenshot`).
+ */
 interface Props {
     screenshot?: string;
     dataRole?: string;
 }
 
 const { screenshot, dataRole } = Astro.props;
+const hasScreen = Astro.slots.has('default');
 ---
 
 <div class="relative block w-fit drop-shadow-2xl" data-role={dataRole}>
     <!-- Le téléphone (SVG) qui définit la taille du conteneur -->
     <img
         src="/tel.svg"
-        alt="Phone Frame"
-        class="relative z-0 w-[232px] md:h-[480px] h-auto pointer-events-none z-10"
+        alt=""
+        class="relative w-[232px] md:h-[480px] h-auto pointer-events-none z-10"
     />
 
-    <!-- Le screenshot placé derrière le cadre du téléphone -->
+    <!-- L'écran, placé derrière le cadre du téléphone -->
     {
-        screenshot && (
+        (hasScreen || screenshot) && (
             <div class="absolute inset-0 z-0 bg-[#0F141E] rounded-[2.5rem] overflow-hidden flex justify-center items-center">
-                <img
-                    src={screenshot}
-                    alt="Screenshot"
-                    class="z-50 w-[216px] h-[466px] object-cover rounded-[1rem] "
-                />
+                {hasScreen ? (
+                    <div class="relative w-[216px] h-[466px] rounded-[26px] overflow-hidden" data-screen-stack>
+                        <slot />
+                    </div>
+                ) : (
+                    <img
+                        src={screenshot}
+                        alt="Screenshot"
+                        class="z-50 w-[216px] h-[466px] object-cover rounded-[1rem]"
+                    />
+                )}
             </div>
         )
     }

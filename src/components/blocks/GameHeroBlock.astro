@@ -1,4 +1,6 @@
 ---
+import { banner as bannerUrl } from "../../lib/game";
+
 interface Props {
   title: string;
   subtitle: string;
@@ -9,6 +11,8 @@ interface Props {
   screenshot1?: string;
   screenshot2?: string;
   backgroundImage?: string;
+  /** Une bannière de page du jeu, par son nom (`quests`, `fleet`…). */
+  banner?: string;
 }
 
 const {
@@ -18,8 +22,11 @@ const {
   ctaLink,
   secondaryCtaText = "Découvrir le jeu",
   secondaryCtaLink = "#features",
-  backgroundImage = "/landing/backgrounds/bg-hero.webp",
+  backgroundImage: customBackground,
+  banner,
 } = Astro.props;
+
+const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/landing/backgrounds/bg-hero.webp");
 ---
 
 <header

@@ -1,0 +1,92 @@
+---
+/**
+ * Page de liste du jeu (bâtiments, installations, défenses, vaisseaux, recherche) sous 768px :
+ * `PageHeader` (titre + bascule « Disponible »), `GameTabBar` en contrôle segmenté, puis les
+ * cartes d'entité au mode d'affichage par défaut (`EntityCard` non compact : illustration à gauche,
+ * nom et description à droite, une carte par ligne).
+ */
+import type { GameEntity } from '../../lib/game';
+
+interface Tab {
+  icon: string;
+  label: string;
+  active?: boolean;
+}
+
+interface Props {
+  title: string;
+  section?: string;
+  tabs?: Tab[];
+  items: GameEntity[];
+  /** Niveaux (ou quantités) affichés en compteur, dans l'ordre des cartes. */
+  counters?: (number | string)[];
+  toggle?: boolean;
+  /** Unités (défenses, vaisseaux) : le compteur est une quantité, l'action reste « construire ».
+   * Sinon (bâtiments), un niveau > 0 passe l'action au vert « améliorer » (`cardStyles.button`). */
+  units?: boolean;
+}
+
+const { title, section, tabs = [], items, counters = [], toggle = true, units = false } = Astro.props;
+---
+
+<div class="h-full overflow-hidden">
+  <div class="px-4 pt-4 pb-3 space-y-4 bg-slate-900">
+    <div class="flex justify-between items-center gap-2">
+      <h1 class="text-xl font-semibold">{title}</h1>
+      {toggle && (
+        <span class="flex items-center gap-2 text-sm text-slate-300">
+          Disponible
+          <span class="relative inline-block w-9 h-5 rounded-full bg-slate-700">
+            <span class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-slate-300"></span>
+          </span>
+        </span>
+      )}
+    </div>
+    {tabs.length > 0 && (
+      <div class="flex w-full rounded-lg overflow-hidden">
+        {tabs.map((tab, i) => (
+          <span
+            class={`flex-1 flex h-12 items-center justify-center gap-2 border px-3 py-3 text-sm font-medium text-white ${
+              tab.active ? 'border-blue-500 bg-blue-500/20' : 'border-slate-700 bg-slate-800'
+            } ${i === 0 ? 'rounded-l-lg' : ''} ${i === tabs.length - 1 ? 'rounded-r-lg' : ''}`}
+          >
+            <i class={`ph ph-${tab.icon} text-xl leading-none ${tab.active ? 'text-blue-400' : 'text-slate-400'}`}></i>
+            {tab.label}
+          </span>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <div class="px-4 pt-3 space-y-4">
+    {section && <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">{section}</div>}
+    <div class="grid grid-cols-1 gap-4">
+      {items.map((item, i) => {
+        const counter = counters[i] ?? 0;
+        const upgrade = !units && typeof counter === 'number' && counter > 0;
+        return (
+          <div class="relative rounded-lg overflow-hidden card-with-border">
+            <div class="grid grid-cols-2 gap-6">
+              <div class="relative rounded-lg overflow-hidden bg-gray-700 aspect-square">
+                <img src={item.image} alt="" class="w-full h-full object-cover" style="opacity: 0.8" loading="lazy" />
+                <div class="entity-veil"></div>
+                <div class="absolute bottom-2 right-2 px-2 py-1 bg-slate-900/90 rounded-md text-sm font-medium text-slate-200 shadow-lg">
+                  {counter}
+                </div>
+                <span class={`absolute top-2 left-2 p-2 rounded-md btn-raised ${upgrade ? 'btn-raised-green' : 'btn-raised-blue'}`}>
+                  <i class={`ph-bold ${upgrade ? 'ph-arrow-up-right' : 'ph-plus'} text-base leading-none block text-white`}></i>
+                </span>
+              </div>
+              <div class="flex flex-col justify-between pt-5 pb-6 pr-6">
+                <div>
+                  <h3 class="font-semibold line-clamp-2 break-words">{item.name}</h3>
+                  {item.description && <p class="text-sm text-gray-400 mt-2 line-clamp-4">{item.description}</p>}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>

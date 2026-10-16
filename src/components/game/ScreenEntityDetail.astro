@@ -1,0 +1,99 @@
+---
+/**
+ * La modale d'entité du jeu sous 768px (`Modal` + `EntityModalContent`) : illustration en tête au
+ * ratio 50/33 fondue vers le corps, nom et niveau posés dessus, description, coût du prochain
+ * niveau en tuiles carrées (`ResourceGrid`), puis l'action en pied.
+ *
+ * Nom, description et image viennent du jeu ; niveaux et coûts sont des valeurs d'illustration
+ * (le jeu les reçoit de l'API, ils ne sont écrits nulle part côté front).
+ */
+import { resources, type GameEntity } from '../../lib/game';
+
+interface Props {
+  item: GameEntity;
+  level?: string;
+  costs?: Partial<Record<'metal' | 'crystal' | 'hydrogen' | 'energy', string>>;
+  statLabel?: string;
+  statValue?: string;
+  statIcon?: string;
+  cta?: string;
+  ctaIcon?: string;
+}
+
+const {
+  item,
+  level = 'Niveau 1',
+  costs = { metal: '60', crystal: '15', energy: '10' },
+  statLabel,
+  statValue,
+  statIcon = 'trend-up',
+  cta = 'Construire',
+  ctaIcon = 'plus',
+} = Astro.props;
+---
+
+<div class="absolute inset-0 bg-slate-950">
+  <div class="absolute inset-6 bg-slate-900/95 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 flex flex-col">
+    <span class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/90">
+      <i class="ph-bold ph-x text-base leading-none text-white"></i>
+    </span>
+
+    <div class="flex-1 min-h-0 overflow-hidden">
+      <div class="relative flex aspect-[50/33] flex-col justify-end">
+        <div class="absolute inset-0 overflow-hidden">
+          <img src={item.image} alt="" class="w-full h-full object-cover" />
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
+        <div class="relative px-5 pt-5">
+          <h2 class="text-2xl font-bold text-white">{item.name}</h2>
+          <p class="text-sm text-slate-400 mt-1">{level}</p>
+        </div>
+      </div>
+
+      <div class="p-5 space-y-6">
+        {item.description && (
+          <div>
+            <p class="text-sm text-slate-300 leading-relaxed line-clamp-3">{item.description}</p>
+            <span class="text-sm text-blue-400 mt-1 inline-block">Voir plus</span>
+          </div>
+        )}
+
+        <div class="space-y-3">
+          <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Coût du prochain niveau</div>
+          <div class="grid grid-cols-3 gap-4">
+            {(Object.entries(costs) as [keyof typeof resources, string][]).map(([code, value]) => (
+              <div>
+                <div class="aspect-square max-w-[104px] rounded-lg bg-slate-800/50 card-with-border overflow-hidden flex items-center justify-center">
+                  <i class={`ph-fill ph-${resources[code].icon} text-3xl leading-none ${code === 'energy' ? 'text-green-400' : 'text-slate-400'}`}></i>
+                </div>
+                <p class="mt-2 text-sm text-slate-200 tabular-nums">{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {statLabel && (
+          <div class="space-y-3">
+            <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">{statLabel}</div>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="aspect-square max-w-[104px] rounded-lg bg-slate-800/50 card-with-border overflow-hidden flex items-center justify-center">
+                <i class={`ph ph-${statIcon} text-3xl leading-none text-slate-400`}></i>
+              </div>
+              <div class="col-span-2 rounded-lg card-with-border bg-slate-800/30 px-4 flex flex-col justify-center">
+                <span class="text-xs text-slate-500">Niveau suivant</span>
+                <span class="text-base text-slate-200 tabular-nums">{statValue}</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div class="shrink-0 p-5 pt-3">
+      <span class="flex h-12 w-full items-center justify-center gap-2 rounded-lg btn-raised btn-raised-blue text-white font-semibold">
+        <i class={`ph-bold ph-${ctaIcon} text-base leading-none`}></i>
+        {cta}
+      </span>
+    </div>
+  </div>
+</div>

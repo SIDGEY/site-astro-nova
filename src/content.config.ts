@@ -252,6 +252,9 @@ const blockGameHeroSchema = blockBaseSchema.extend({
   secondaryCtaLink: z.string().optional(),
   screenshot1: z.string().optional(),
   screenshot2: z.string().optional(),
+  // Une bannière de page du jeu (nom du fichier sous heroes/, cf. scripts/sync-game.mjs).
+  banner: z.string().optional(),
+  backgroundImage: z.string().optional(),
 });
 
 const block3DSchema = blockBaseSchema.extend({
@@ -294,7 +297,9 @@ const blockCommunitySchema = blockBaseSchema.extend({
   secondaryDescription: z.string().optional(),
   discordLink: z.string(),
   discordButtonText: z.string().optional(),
-  image: z.string(),
+  // `banner` : une bannière de page du jeu (nom sous heroes/) ; `image` : un chemin écrit à la main.
+  banner: z.string().optional(),
+  image: z.string().optional(),
   imageAlt: z.string(),
 });
 
@@ -315,26 +320,12 @@ const blockFeaturePhoneSchema = blockBaseSchema.extend({
   icon: z.string(),
   title: z.string(),
   subtitle: z.string(),
-  screenshot1: z.string(),
-  screenshot2: z.string(),
+  // Les écrans sont reconstruits depuis le catalogue du jeu (src/data/game.json, cf.
+  // scripts/sync-game.mjs) : le contenu ne nomme qu'une famille et des codes d'entités du jeu.
+  family: z.enum(['resources', 'buildings', 'facilities', 'defenses', 'ships', 'shop']),
+  items: z.array(z.string()).optional(),
   backgroundImage: z.string().optional(),
   reversed: z.boolean().optional(),
-  gallery: z.array(z.object({
-    src: z.string(),
-    alt: z.string().optional(),
-    screenshot: z.string().optional(),
-  })).optional(),
-  galleryExtra: z.number().optional(),
-  resourceIcons: z.array(z.object({
-    icon: z.string(),
-    active: z.boolean().optional(),
-    screenshot: z.string().optional(),
-    src: z.string().optional(),
-  })).optional(),
-  mobileCards: z.array(z.object({
-    src: z.string(),
-    alt: z.string().optional(),
-  })).optional(),
   sectionId: z.string().optional(),
 });
 
@@ -343,11 +334,18 @@ const blockCarouselSchema = blockBaseSchema.extend({
   icon: z.string(),
   title: z.string(),
   subtitle: z.string(),
-  items: z.array(z.object({
-    image: z.string(),
-    title: z.string(),
-    avatar: z.string().optional(),
-  })),
+  // `source` tire les cartes du catalogue du jeu (recherches, avatars en ligne) ; `items`
+  // restreint et ordonne par code. Sans `source`, `items` porte des cartes écrites à la main.
+  source: z.enum(['research', 'avatars']).optional(),
+  items: z.array(z.union([
+    z.string(),
+    z.object({
+      image: z.string(),
+      title: z.string(),
+      avatar: z.string().optional(),
+    }),
+  ])).optional(),
+  limit: z.number().optional(),
   sectionId: z.string().optional(),
 });
 

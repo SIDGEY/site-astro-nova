@@ -14,7 +14,8 @@
     "game:fetch": "node scripts/game-activity-fetch.mjs",
     "ideas": "node scripts/dynasty-ideas.mjs",
     "ga4:key-events": "node scripts/ga4-mark-key-event.mjs",
-    "cover:generate": "node scripts/generate-cover.mjs"
+    "cover:generate": "node scripts/generate-cover.mjs",
+    "game:sync": "node scripts/sync-game.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
@@ -34,7 +35,7 @@
     "phosphor-astro": "^2.1.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
-    "three": "^0.182.0"
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",

@@ -1,0 +1,133 @@
+---
+/**
+ * Un écran du jeu reconstruit en HTML, à poser dans le cadre de `Mobile.astro`.
+ *
+ * Il se compose à la taille d'un vrai téléphone (375 × 809 px CSS, la largeur de référence du jeu
+ * sous 430px) puis se réduit d'un bloc à la zone d'écran du cadre (216 × 466 px). Écrit à l'échelle
+ * native, il reprend les classes du jeu telles quelles — `text-sm`, `h-12`, `px-4` — au lieu d'une
+ * copie miniaturisée qui dériverait au premier ajustement.
+ *
+ * `chrome` ajoute l'habillage permanent du jeu (barre du haut, ressources, barre de navigation) ;
+ * une modale d'entité s'en passe, elle couvre l'écran.
+ */
+import ScreenTopBar from './ScreenTopBar.astro';
+import ScreenNavBar from './ScreenNavBar.astro';
+
+interface Props {
+  chrome?: boolean;
+  activeTab?: 'buildings' | 'research' | 'build' | 'missions' | 'planet';
+  label?: string;
+  class?: string;
+}
+
+const { chrome = true, activeTab, label, class: className = '' } = Astro.props;
+---
+
+<div class={`game-screen ${className}`} role="img" aria-label={label}>
+  <div class="game-screen__viewport bg-slate-900 text-white font-sans" aria-hidden="true">
+    {/* Barre de statut iOS : la zone sûre que le jeu réserve sous l'encoche (`TopBar` y peint son
+        aplat #121E31). Sans elle, l'encoche du cadre `tel.svg` recouvre le haut de l'écran. */}
+    <div class={`game-screen__status shrink-0 ${chrome ? 'bg-[#121E31]' : 'bg-slate-950'}`}>
+      <span class="game-screen__clock">9:41</span>
+      <span class="game-screen__indicators">
+        <i class="ph-fill ph-cell-signal-full"></i>
+        <i class="ph-bold ph-wifi-high"></i>
+        <i class="ph-fill ph-battery-full"></i>
+      </span>
+    </div>
+    {chrome && <ScreenTopBar />}
+    <div class="relative flex-1 min-h-0 overflow-hidden">
+      <slot />
+    </div>
+    {chrome && <ScreenNavBar active={activeTab} />}
+  </div>
+</div>
+
+<style is:global>
+  .game-screen {
+    --screen-w: 216px;
+    --screen-h: 466px;
+    --native-w: 375px;
+    position: relative;
+    width: var(--screen-w);
+    height: var(--screen-h);
+    overflow: hidden;
+    /* Le rayon intérieur du cadre `tel.svg` (34,45 − 8,04). */
+    border-radius: 26px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .game-screen__viewport {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: var(--native-w);
+    height: calc(var(--screen-h) * 375 / 216);
+    transform: scale(calc(216 / 375));
+    transform-origin: top left;
+  }
+
+  /* Encoche de `tel.svg` : de x 54,5 à 176,3 et jusqu'à y 24,4 dans le cadre, soit, rapporté à
+     l'écran natif (décalage 8 / 7, échelle 216/375), de x 81 à 292 et jusqu'à y 31. 44px de haut
+     comme la zone sûre d'un iPhone ; l'heure et les indicateurs se calent de part et d'autre. */
+  .game-screen__status {
+    position: relative;
+    height: 44px;
+    color: #fff;
+    font-weight: 600;
+  }
+  .game-screen__clock {
+    position: absolute;
+    left: 0;
+    width: 81px;
+    top: 14px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 18px;
+  }
+  .game-screen__indicators {
+    position: absolute;
+    right: 0;
+    width: 83px;
+    top: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  /* Le relief des boutons du jeu (`.btn-raised*`, src/index.css du Frontend). */
+  .game-screen .btn-raised {
+    box-shadow: inset 0 1px 1px var(--btn-glow, rgb(255 255 255 / 0.25));
+  }
+  .game-screen .btn-raised-blue {
+    --btn-glow: rgb(96 165 250 / 0.5);
+    background-color: var(--color-blue-500);
+    background-image: linear-gradient(to bottom, var(--color-blue-500), var(--color-blue-600));
+  }
+  .game-screen .btn-raised-green {
+    --btn-glow: rgb(74 222 128 / 0.5);
+    background-color: var(--color-green-500);
+    background-image: linear-gradient(to bottom, var(--color-green-500), var(--color-green-600));
+  }
+
+  /* Voile des illustrations d'entité (`ENTITY_OVERLAY_GRADIENT`, entityOverlay.ts du Frontend). */
+  .game-screen .entity-veil {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135.33deg, rgba(42, 48, 60, 0.66) 4.02%, rgba(42, 48, 60, 0) 50%),
+      linear-gradient(135deg, rgba(67, 76, 96, 0) 50%, rgba(67, 76, 96, 0.33) 75%, #434c60 100%);
+  }
+
+  .game-screen-swap {
+    transition: opacity 0.3s ease;
+  }
+  .game-screen-swap[data-active='false'] {
+    opacity: 0;
+  }
+</style>

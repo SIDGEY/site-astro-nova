@@ -1,50 +1,58 @@
 ---
+/**
+ * Bloc « deux téléphones » de la home. Les écrans ne sont pas des captures : ce sont les écrans du
+ * jeu reconstruits (`components/game/`), nourris par le catalogue synchronisé (`lib/game.ts`).
+ * Le contenu ne nomme qu'une famille et des codes d'entités ; images, noms, descriptions et le
+ * compteur « +N » en découlent.
+ *
+ * Le téléphone central (contexte) montre la page de la famille ; le téléphone secondaire (actif)
+ * montre la fiche de l'entité choisie dans la galerie.
+ */
 import Mobile from "../Mobile.astro";
-
-interface GalleryImage {
-  src: string;
-  alt?: string;
-  screenshot?: string;
-}
+import FeatureScreens, { type FeatureFamily } from "../game/FeatureScreens.astro";
+import { banners, family as familyOf, pick, resources, RESOURCE_ORDER, type GameEntity, type ResourceCode } from "../../lib/game";
 
 interface Props {
   icon: string;
   title: string;
   subtitle: string;
-  screenshot1: string;
-  screenshot2: string;
+  family: FeatureFamily;
+  items?: string[];
   backgroundImage?: string;
   reversed?: boolean;
-  gallery?: GalleryImage[];
-  galleryExtra?: number;
-  resourceIcons?: { icon: string; active?: boolean; screenshot?: string; src?: string }[];
-  mobileCards?: { src: string; alt?: string }[];
   sectionId?: string;
 }
 
-const {
-  icon,
-  title,
-  subtitle,
-  screenshot1,
-  screenshot2,
-  backgroundImage,
-  reversed = false,
-  gallery = [],
-  galleryExtra = 0,
-  resourceIcons = [],
-  mobileCards = [],
-  sectionId,
-} = Astro.props;
+const { icon, title, subtitle, family, items, backgroundImage, reversed = false, sectionId } = Astro.props;
 
-// Generate a unique ID for this section instance (for internal JS targeting)
+const BANNER: Record<FeatureFamily, string> = {
+  resources: "planet",
+  buildings: "buildings",
+  facilities: "facilities",
+  defenses: "defense",
+  ships: "ships",
+  shop: "shop",
+};
+const background = backgroundImage ?? banners[BANNER[family]];
+
+const isResources = family === "resources";
+const isShop = family === "shop";
+const resourceCodes = (items?.length ? items : [...RESOURCE_ORDER]) as ResourceCode[];
+for (const code of resourceCodes) {
+  if (isResources && !resources[code]) throw new Error(`Ressource inconnue « ${code} » (attendu : ${RESOURCE_ORDER.join(", ")})`);
+}
+const entities: GameEntity[] = isResources || isShop ? [] : pick(family, items?.length ? items : familyOf(family).slice(0, 4).map((e) => e.code));
+const galleryExtra = isResources || isShop ? 0 : Math.max(0, familyOf(family).length - entities.length);
+
+// Les deux vignettes flottantes du rendu mobile.
+const mobileCards = isShop
+  ? familyOf("packs").slice(0, 2)
+  : isResources
+    ? resourceCodes.slice(0, 2).map((code) => resources[code])
+    : entities.slice(0, 2);
+
 const instanceId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
-
-// Determine which phone is active (the one whose screenshot changes)
-// Normal: Phone1 = context (center, col-span-2), Phone2 = active (far, col-span-1)
-// Reversed: Phone1 = active (far, col-span-1), Phone2 = context (center, col-span-2)
-// The "context" phone is always the larger one (col-span-2)
-// The "active" phone is always the smaller one (col-span-1)
+const screenItems = isResources ? resourceCodes : entities;
 ---
 
 {sectionId && <span id={sectionId} style="display:block; height:0; overflow:hidden;"></span>}
@@ -54,17 +62,17 @@ const instanceId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
   data-reversed={reversed.toString()}
 >
   <!-- Background image layers -->
-  {backgroundImage && (
+  {background && (
     <div class="absolute inset-0 z-[0] pointer-events-none w-full h-full bg-[#121B2E]">
       <!-- Image mobile: full width, vertical gradient -->
       <div
         class={`absolute sm:hidden opacity-40 top-0 bottom-0 w-full ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
-        style={`background: linear-gradient(0deg, #121B2E 40.01%, rgba(18, 27, 46, 0) 100.04%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: center center; background-size: cover;`}
+        style={`background: linear-gradient(0deg, #121B2E 40.01%, rgba(18, 27, 46, 0) 100.04%), url('${background}'); background-repeat: no-repeat; background-position: center center; background-size: cover;`}
       ></div>
       <!-- Image desktop: 75% width, angular gradients -->
       <div
         class={`absolute hidden sm:block opacity-80 top-0 bottom-0 w-[75%] ${reversed ? 'right-0 left-auto' : 'left-0 right-auto'}`}
-        style={`background: linear-gradient(${reversed ? '76.97deg' : '283.03deg'}, #121B2E 18.79%, rgba(22, 32, 50, 0) 83.76%), linear-gradient(${reversed ? '40.96deg' : '319.04deg'}, #121B2E 20%, rgba(22, 32, 50, 0) 100%), url('${backgroundImage}'); background-repeat: no-repeat; background-position: center center; background-size: cover;`}
+        style={`background: linear-gradient(${reversed ? '76.97deg' : '283.03deg'}, #121B2E 18.79%, rgba(22, 32, 50, 0) 83.76%), linear-gradient(${reversed ? '40.96deg' : '319.04deg'}, #121B2E 20%, rgba(22, 32, 50, 0) 100%), url('${background}'); background-repeat: no-repeat; background-position: center center; background-size: cover;`}
       ></div>
 
       <!-- Global Overlay mobile -->
@@ -80,211 +88,108 @@ const instanceId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
     </div>
   )}
 
-  <!-- Desktop layout: 3-column grid [1fr 232px 1fr] so center phone is always perfectly aligned -->
+  <!-- Desktop layout (lg+): 3-column grid [1fr 232px 1fr] so center phone is always perfectly aligned.
+       Normal: active phone | context phone | text. Reversed: text | context phone | active phone.
+       Tablet (sm → lg): the side column is narrower than a phone and the active phone fell off the
+       edge — only the active phone (the one the gallery drives) and the text remain, side by side. -->
   <div
-    class="relative z-[2] max-w-7xl mx-auto w-full hidden sm:grid items-center"
-    style="grid-template-columns: 1fr 232px 1fr; column-gap: 32px;"
+    class={`relative z-[2] max-w-7xl mx-auto w-full hidden sm:grid items-center gap-x-12 lg:gap-x-8 ${reversed ? 'grid-cols-[1fr_232px]' : 'grid-cols-[232px_1fr]'} lg:grid-cols-[1fr_232px_1fr]`}
   >
-    <!-- Left column -->
-    <div
-      class={`flex items-center ${
-        reversed
-          ? "justify-start order-1"
-          : "justify-end order-1"
-      }`}
-    >
-      {reversed ? (
-        <!-- Reversed: text on the left -->
-        <div class="flex flex-col items-start text-left z-10 pr-4 pl-12">
-          <i
-            class={`ph ph-regular ph-${icon} mb-6 opacity-80`}
-            style="font-size: 48px; background: linear-gradient(180deg, #90A1B9 0%, rgba(248, 250, 252, 0.2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
-          ></i>
-          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-slate-50">
-            {title}
-          </h2>
-          <p class="text-base md:text-lg text-slate-400 mb-16 leading-relaxed">
-            {subtitle}
-          </p>
-          {
-            resourceIcons.length > 0 && (
-              <div class="relative flex gap-3 h-14 items-center mb-6" data-resource-buttons>
-                <div
-                  data-resource-indicator
-                  class="absolute w-14 h-14 rounded-lg outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
-                  style="left: 0px;"
-                ></div>
-                {resourceIcons.map((ri, index) => (
-                  <button
-                    class={`resource-btn w-14 h-14 rounded-lg flex items-center justify-center transition-all cursor-pointer hover:text-slate-50 text-slate-300 ${
-                      ri.active ? "bg-slate-900" : "opacity-50"
-                    }`}
-                    data-index={index}
-                    data-screenshot={ri.screenshot || ""}
-                    data-active={ri.active ? "true" : "false"}
-                  >
-                    <i class={`ph ph-fill ph-${ri.icon} text-2xl`} />
-                  </button>
-                ))}
-              </div>
-            )
-          }
-          {
-            gallery.length > 0 && (
-              <div class="relative flex gap-3 h-[68px] items-center" data-gallery-buttons>
-                {/* Border indicator — moves via JS, sits outside overflow-hidden buttons */}
-                <div
-                  data-gallery-indicator
-                  class="absolute w-[51px] h-16 rounded-md outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
-                  style="left: 0px;"
-                ></div>
-                {gallery.map((img, i) => (
-                  <button
-                    class={`gallery-btn w-[51px] h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${i === 0 ? "" : "opacity-50"}`}
-                    data-index={i}
-                    data-screenshot={img.screenshot || img.src}
-                    data-active={i === 0 ? "true" : "false"}
-                  >
-                    <div class="relative w-full h-full">
-                      <img
-                        src={img.src}
-                        alt={img.alt || ""}
-                        class={`w-full h-full object-cover transition-all duration-200 ${i === 0 ? "" : "grayscale"}`}
-                      />
-                      <div class="image-overlay"></div>
-                      <div class="absolute inset-0 rounded-md border border-slate-600/50 pointer-events-none"></div>
-                    </div>
-                  </button>
-                ))}
-                {galleryExtra > 0 && (
-                  <div class="w-[51px] h-16 rounded-md overflow-hidden opacity-50 cursor-default transition-all duration-300">
-                    <div class="relative w-full h-full bg-slate-900/20 flex items-center justify-center">
-                      <span class="text-slate-400 text-sm font-medium">+{galleryExtra}</span>
-                      <div class="absolute inset-0 rounded-md border border-slate-700 pointer-events-none"></div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )
-          }
-        </div>
-      ) : (
-        <!-- Normal: active phone on the left -->
-        <div class="relative z-0">
-          <Mobile
-            screenshot={gallery.length > 0 ? (gallery[0].screenshot || gallery[0].src) : screenshot2}
-            dataRole="active-phone"
-          />
-        </div>
-      )}
+    <!-- Active phone -->
+    <div class={`flex items-center ${reversed ? 'justify-start order-3' : 'justify-end order-1'}`}>
+      <div class="relative z-0">
+        <Mobile dataRole="active-phone">
+          <FeatureScreens role="active" family={family} items={screenItems} />
+        </Mobile>
+      </div>
     </div>
 
     <!-- Center column: context phone (always 232px, always centered) -->
-    <div class="relative z-10 order-2 flex justify-center">
-      <Mobile
-        screenshot={screenshot1}
-        dataRole="context-phone"
-      />
+    <div class="relative z-10 order-2 hidden lg:flex justify-center">
+      <Mobile dataRole="context-phone">
+        <FeatureScreens role="context" family={family} items={screenItems} />
+      </Mobile>
     </div>
 
-    <!-- Right column -->
-    <div
-      class={`flex items-center ${
-        reversed
-          ? "justify-start order-3"
-          : "justify-start order-3"
-      }`}
-    >
-      {reversed ? (
-        <!-- Reversed: active phone on the right -->
-        <div class="relative z-0">
-          <Mobile
-            screenshot={gallery.length > 0 ? (gallery[0].screenshot || gallery[0].src) : screenshot2}
-            dataRole="active-phone"
-          />
-        </div>
-      ) : (
-        <!-- Normal: text on the right -->
-        <div class="flex flex-col items-start text-left z-10 pl-4 pr-12">
-          <i
-            class={`ph ph-regular ph-${icon} mb-6 opacity-80`}
-            style="font-size: 48px; background: linear-gradient(180deg, #90A1B9 0%, rgba(248, 250, 252, 0.2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
-          ></i>
-          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-slate-50">
-            {title}
-          </h2>
-          <p class="text-base md:text-lg text-slate-400 mb-16 leading-relaxed">
-            {subtitle}
-          </p>
-          {
-            resourceIcons.length > 0 && (
-              <div class="relative flex gap-3 h-14 items-center mb-6" data-resource-buttons>
-                <div
-                  data-resource-indicator
-                  class="absolute w-14 h-14 rounded-lg outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
-                  style="left: 0px;"
-                ></div>
-                {resourceIcons.map((ri, index) => (
-                  <button
-                    class={`resource-btn w-14 h-14 rounded-lg flex items-center justify-center transition-all cursor-pointer hover:text-slate-50 text-slate-300 ${
-                      ri.active ? "bg-slate-900" : "opacity-50"
-                    }`}
-                    data-index={index}
-                    data-screenshot={ri.screenshot || ""}
-                    data-active={ri.active ? "true" : "false"}
-                  >
-                    <i class={`ph ph-fill ph-${ri.icon} text-2xl`} />
-                  </button>
-                ))}
+    <!-- Text -->
+    <div class={`flex items-center ${reversed ? 'justify-start order-1' : 'justify-start order-3'}`}>
+      <div class={`flex flex-col items-start text-left z-10 ${reversed ? 'pr-4 pl-12' : 'pl-4 pr-12'}`}>
+        <i
+          class={`ph ph-regular ph-${icon} mb-6 opacity-80`}
+          style="font-size: 48px; background: linear-gradient(180deg, #90A1B9 0%, rgba(248, 250, 252, 0.2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+        ></i>
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-slate-50">
+          {title}
+        </h2>
+        <p class="text-base md:text-lg text-slate-400 mb-16 leading-relaxed">
+          {subtitle}
+        </p>
+        {isResources && (
+          <div class="relative flex gap-3 h-14 items-center mb-6" data-picker>
+            <div
+              data-picker-indicator
+              class="absolute w-14 h-14 rounded-lg outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
+              style="left: 0px;"
+            ></div>
+            {resourceCodes.map((code, index) => (
+              <button
+                type="button"
+                class={`picker-btn w-14 h-14 rounded-lg flex items-center justify-center transition-all cursor-pointer hover:text-slate-50 text-slate-300 ${index === 0 ? "bg-slate-900" : "opacity-50"}`}
+                data-index={index}
+                data-active={index === 0 ? "true" : "false"}
+                aria-label={resources[code].name}
+                aria-pressed={index === 0 ? "true" : "false"}
+              >
+                <i class={`ph ph-fill ph-${resources[code].icon} text-2xl`} />
+              </button>
+            ))}
+          </div>
+        )}
+        {entities.length > 0 && (
+          <div class="relative flex gap-3 h-[68px] items-center" data-picker>
+            {/* Border indicator — moves via JS, sits outside overflow-hidden buttons */}
+            <div
+              data-picker-indicator
+              class="absolute w-[51px] h-16 rounded-md outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
+              style="left: 0px;"
+            ></div>
+            {entities.map((item, i) => (
+              <button
+                type="button"
+                class={`picker-btn w-[51px] h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${i === 0 ? "" : "opacity-50"}`}
+                data-index={i}
+                data-active={i === 0 ? "true" : "false"}
+                aria-label={item.name}
+                aria-pressed={i === 0 ? "true" : "false"}
+              >
+                <div class="relative w-full h-full">
+                  <img
+                    src={item.image}
+                    alt=""
+                    loading="lazy"
+                    class={`w-full h-full object-cover transition-all duration-200 ${i === 0 ? "" : "grayscale"}`}
+                  />
+                  <div class="image-overlay"></div>
+                  <div class="absolute inset-0 rounded-md border border-slate-600/50 pointer-events-none"></div>
+                </div>
+              </button>
+            ))}
+            {galleryExtra > 0 && (
+              <div class="w-[51px] h-16 rounded-md overflow-hidden opacity-50 cursor-default transition-all duration-300">
+                <div class="relative w-full h-full bg-slate-900/20 flex items-center justify-center">
+                  <span class="text-slate-400 text-sm font-medium">+{galleryExtra}</span>
+                  <div class="absolute inset-0 rounded-md border border-slate-700 pointer-events-none"></div>
+                </div>
               </div>
-            )
-          }
-          {
-            gallery.length > 0 && (
-              <div class="relative flex gap-3 h-[68px] items-center" data-gallery-buttons>
-                {/* Border indicator — moves via JS, sits outside overflow-hidden buttons */}
-                <div
-                  data-gallery-indicator
-                  class="absolute w-[51px] h-16 rounded-md outline outline-2 outline-blue-500 outline-offset-2 pointer-events-none z-10 top-1/2 -translate-y-1/2 transition-[left] duration-300 ease-out"
-                  style="left: 0px;"
-                ></div>
-                {gallery.map((img, i) => (
-                  <button
-                    class={`gallery-btn w-[51px] h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${i === 0 ? "" : "opacity-50"}`}
-                    data-index={i}
-                    data-screenshot={img.screenshot || img.src}
-                    data-active={i === 0 ? "true" : "false"}
-                  >
-                    <div class="relative w-full h-full">
-                      <img
-                        src={img.src}
-                        alt={img.alt || ""}
-                        class={`w-full h-full object-cover transition-all duration-200 ${i === 0 ? "" : "grayscale"}`}
-                      />
-                      <div class="image-overlay"></div>
-                      <div class="absolute inset-0 rounded-md border border-slate-600/50 pointer-events-none"></div>
-                    </div>
-                  </button>
-                ))}
-                {galleryExtra > 0 && (
-                  <div class="w-[51px] h-16 rounded-md overflow-hidden opacity-50 cursor-default transition-all duration-300">
-                    <div class="relative w-full h-full bg-slate-900/20 flex items-center justify-center">
-                      <span class="text-slate-400 text-sm font-medium">+{galleryExtra}</span>
-                      <div class="absolute inset-0 rounded-md border border-slate-700 pointer-events-none"></div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )
-          }
-        </div>
-      )}
+            )}
+          </div>
+        )}
+      </div>
     </div>
   </div>
 
   <!-- Mobile layout: text above, media below -->
   <div class="flex sm:hidden flex-col items-center gap-10 relative z-[2] w-full">
-
     <!-- Text zone (centered) -->
     <div class="flex flex-col items-center text-center">
       <i
@@ -295,244 +200,69 @@ const instanceId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
       <p class="text-base text-slate-400 leading-relaxed">{subtitle}</p>
     </div>
 
-    <!-- Media zone: gallery mode — phone centered with 2 overlapping cards -->
-    <!-- The phone crop wrapper keeps the phone's width and shows 3/4 of its
-         height (phone aspect is 232/480, so 3/4 visible = aspect 232/360) -->
-    {gallery.length > 0 && (
-      <div class="relative w-full flex justify-center">
-        {/* Phone + cards wrapper — cards are positioned relative to this */}
-        <div class="relative w-[232px]">
-          {/* Phone */}
-          <div class="aspect-[232/360] overflow-hidden opacity-30 blur-[1px] relative z-10">
-            <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
-          </div>
+    <!-- Media zone: phone centered (3/4 of its height visible: aspect 232/360) with 2 floating cards -->
+    <div class="relative w-full flex justify-center">
+      <div class="relative w-[232px]">
+        <div class="aspect-[232/360] overflow-hidden opacity-30 blur-[1px] relative z-10">
+          <Mobile dataRole="context-phone-mobile">
+            <FeatureScreens role="context" family={family} items={screenItems} />
+          </Mobile>
+        </div>
 
-          {/* Card 1: always left, top if reversed / bottom if not */}
+        {mobileCards.map((card, i) => (
           <div
-            class="absolute z-20 w-[104px] aspect-[4/5] left-2 -translate-x-1/2"
-            style={reversed ? "top: 48px" : "top: calc(48px + 65px)"}
+            class={`absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center ${i === 0 ? 'left-2 -translate-x-1/2' : 'right-2 translate-x-1/2'}`}
+            style={(i === 0) === reversed ? "top: 48px" : "top: calc(48px + 65px)"}
           >
-            <div class="float-1 w-full h-full rounded-lg overflow-hidden shadow-2xl">
-              <div class="card-with-border rounded-lg w-full h-full">
-                <img src={gallery[0].src} alt={gallery[0].alt || ""} class="w-full h-full object-cover" />
+            <div class={`float-${i + 1} w-full`}>
+              <div class={`card-with-border relative w-full rounded-lg overflow-hidden shadow-2xl ${entities.length > 0 ? 'aspect-[4/5]' : 'aspect-square'}`}>
+                <img src={card.image} alt={card.name} loading="lazy" class="w-full h-full object-cover" />
                 <div class="image-overlay"></div>
               </div>
             </div>
           </div>
-
-          {/* Card 2: always right, bottom if reversed / top if not */}
-          {gallery.length > 1 && (
-            <div
-              class="absolute z-20 w-[104px] aspect-[4/5] right-2 translate-x-1/2"
-              style={reversed ? "top: calc(48px + 65px)" : "top: 48px"}
-            >
-              <div class="float-2 w-full h-full rounded-lg overflow-hidden shadow-2xl">
-                <div class="card-with-border rounded-lg w-full h-full">
-                  <img src={gallery[1].src} alt={gallery[1].alt || ""} class="w-full h-full object-cover" />
-                  <div class="image-overlay"></div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+        ))}
       </div>
-    )}
-
-    <!-- Media zone: resource icons mode — same visual layout as gallery -->
-    {resourceIcons.length > 0 && gallery.length === 0 && (
-      <div class="relative w-full flex justify-center">
-        <div class="relative w-[232px]">
-          {/* Phone */}
-          <div class="aspect-[232/360] overflow-hidden opacity-30 blur-[1px] relative z-10">
-            <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
-          </div>
-
-          {/* Card métal: always left, top if reversed / bottom if not */}
-          {(resourceIcons[0]?.src || resourceIcons[0]?.screenshot) && (
-            <div
-              class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center left-2 -translate-x-1/2"
-              style={reversed ? "top: 48px" : "top: calc(48px + 65px)"}
-            >
-              <div class="float-1">
-                <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
-                  <img src={resourceIcons[0].src || resourceIcons[0].screenshot} alt="" class="w-full h-full object-cover" />
-                  <div class="image-overlay"></div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Card cristal: always right, bottom if reversed / top if not */}
-          {(resourceIcons[1]?.src || resourceIcons[1]?.screenshot) && (
-            <div
-              class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center right-2 translate-x-1/2"
-              style={reversed ? "top: calc(48px + 65px)" : "top: 48px"}
-            >
-              <div class="float-2">
-                <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
-                  <img src={resourceIcons[1].src || resourceIcons[1].screenshot} alt="" class="w-full h-full object-cover" />
-                  <div class="image-overlay"></div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    )}
-
-    <!-- Media zone: mobileCards only (no gallery, no resourceIcons) — desktop shows nothing extra -->
-    {gallery.length === 0 && resourceIcons.length === 0 && mobileCards.length > 0 && (
-      <div class="relative w-full flex justify-center">
-        <div class="relative w-[232px]">
-          <div class="aspect-[232/360] overflow-hidden opacity-30 blur-[1px] relative z-10">
-            <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
-          </div>
-
-          {/* Card 1: always left, top if reversed / bottom if not */}
-          <div
-            class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center left-2 -translate-x-1/2"
-            style={reversed ? "top: 48px" : "top: calc(48px + 65px)"}
-          >
-            <div class="float-1">
-              <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
-                <img src={mobileCards[0].src} alt={mobileCards[0].alt || ""} class="w-full h-full object-cover" />
-                <div class="image-overlay"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2: always right, bottom if reversed / top if not */}
-          {mobileCards.length > 1 && (
-            <div
-              class="absolute z-20 w-[104px] aspect-[4/5] flex items-center justify-center right-2 translate-x-1/2"
-              style={reversed ? "top: calc(48px + 65px)" : "top: 48px"}
-            >
-              <div class="float-2">
-                <div class="card-with-border relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
-                  <img src={mobileCards[1].src} alt={mobileCards[1].alt || ""} class="w-full h-full object-cover" />
-                  <div class="image-overlay"></div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    )}
-
-    <!-- Media zone: default (no gallery, no resourceIcons, no mobileCards) -->
-    {gallery.length === 0 && resourceIcons.length === 0 && mobileCards.length === 0 && (
-      <div class="w-fit aspect-[232/360] overflow-hidden opacity-40 blur-[1px]">
-        <Mobile screenshot={screenshot1} dataRole="context-phone-mobile" />
-      </div>
-    )}
+    </div>
   </div>
 </section>
 
-
 <script define:vars={{ instanceId }}>
-  document.addEventListener('DOMContentLoaded', () => {
+  function initFeaturePhone() {
     const section = document.getElementById(instanceId);
-    if (!section) return;
+    if (!section || section.dataset.bound === 'true') return;
+    section.dataset.bound = 'true';
 
-    const buttons = section.querySelectorAll('.resource-btn[data-screenshot]');
-    const galleryButtons = section.querySelectorAll('.gallery-btn[data-screenshot]');
-    if (buttons.length === 0 && galleryButtons.length === 0) return;
+    const picker = section.querySelector('[data-picker]');
+    const stack = section.querySelector('[data-role="active-phone"] [data-screen-stack]');
+    if (!picker || !stack) return;
 
-    // Find the active phone (the "far" one that should change)
-    const activePhone = section.querySelector('[data-role="active-phone"]');
-    const activePhoneMobile = section.querySelector('[data-role="active-phone-mobile"]');
+    const indicator = picker.querySelector('[data-picker-indicator]');
+    const buttons = picker.querySelectorAll('.picker-btn');
+    const isGallery = picker.querySelector('img') !== null;
 
-    function updatePhoneScreenshot(screenshot) {
-      if (!screenshot) return;
-      // Find the screenshot img inside the active phone container
-      if (activePhone) {
-        const img = activePhone.querySelector('img[alt="Screenshot"]');
-        if (img) {
-          img.style.opacity = '0';
-          img.style.transition = 'opacity 0.3s ease';
-          setTimeout(() => {
-            img.src = screenshot;
-            img.style.opacity = '1';
-          }, 150);
-        }
-      }
-      if (activePhoneMobile) {
-        const imgMobile = activePhoneMobile.querySelector('img[alt="Screenshot"]');
-        if (imgMobile) {
-          imgMobile.style.opacity = '0';
-          imgMobile.style.transition = 'opacity 0.3s ease';
-          setTimeout(() => {
-            imgMobile.src = screenshot;
-            imgMobile.style.opacity = '1';
-          }, 150);
-        }
-      }
+    function select(btn) {
+      if (indicator) indicator.style.left = btn.offsetLeft + 'px';
+
+      buttons.forEach((b) => {
+        const on = b === btn;
+        b.dataset.active = on ? 'true' : 'false';
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.classList.toggle('opacity-50', !on);
+        if (isGallery) b.querySelector('img')?.classList.toggle('grayscale', !on);
+        else b.classList.toggle('bg-slate-900', on);
+      });
+
+      stack.querySelectorAll('[data-screen-index]').forEach((screen) => {
+        screen.dataset.active = screen.dataset.screenIndex === btn.dataset.index ? 'true' : 'false';
+      });
     }
 
-    function setActiveButton(clickedBtn) {
-      const container = clickedBtn.closest('[data-resource-buttons]');
-      if (!container) return;
+    buttons.forEach((btn) => btn.addEventListener('click', () => select(btn)));
+  }
 
-      const indicator = container.querySelector('[data-resource-indicator]');
-      if (indicator) indicator.style.left = clickedBtn.offsetLeft + 'px';
-
-      container.querySelectorAll('.resource-btn').forEach((btn) => {
-        btn.classList.add('opacity-50');
-        btn.classList.remove('bg-slate-900');
-        btn.dataset.active = 'false';
-      });
-
-      clickedBtn.classList.remove('opacity-50');
-      clickedBtn.classList.add('bg-slate-900');
-      clickedBtn.dataset.active = 'true';
-
-      updatePhoneScreenshot(clickedBtn.dataset.screenshot);
-    }
-
-    function setActiveGalleryButton(clickedBtn) {
-      const container = clickedBtn.closest('[data-gallery-buttons]');
-      if (!container) return;
-
-      // Move indicator to clicked button
-      const indicator = container.querySelector('[data-gallery-indicator]');
-      if (indicator) indicator.style.left = clickedBtn.offsetLeft + 'px';
-
-      // Reset all buttons to inactive state (opacity-50 + grayscale on img)
-      container.querySelectorAll('.gallery-btn').forEach((btn) => {
-        btn.classList.add('opacity-50');
-        btn.dataset.active = 'false';
-        const img = btn.querySelector('img');
-        if (img) img.classList.add('grayscale');
-      });
-
-      // Set clicked button to active state
-      clickedBtn.classList.remove('opacity-50');
-      clickedBtn.dataset.active = 'true';
-      const activeImg = clickedBtn.querySelector('img');
-      if (activeImg) activeImg.classList.remove('grayscale');
-
-      updatePhoneScreenshot(clickedBtn.dataset.screenshot);
-    }
-
-    // Init resource indicator to the initially active button
-    section.querySelectorAll('[data-resource-buttons]').forEach((container) => {
-      const activeBtn = container.querySelector('.resource-btn[data-active="true"]');
-      const indicator = container.querySelector('[data-resource-indicator]');
-      if (activeBtn && indicator) indicator.style.left = activeBtn.offsetLeft + 'px';
-    });
-
-    buttons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        setActiveButton(btn);
-      });
-    });
-
-    galleryButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        setActiveGalleryButton(btn);
-      });
-    });
-  });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initFeaturePhone);
+  else initFeaturePhone();
 </script>
 
 <style is:global>

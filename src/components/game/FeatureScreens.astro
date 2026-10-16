@@ -1,0 +1,150 @@
+---
+/**
+ * Les écrans d'un bloc « téléphone » de la home, déduits de sa famille de contenu :
+ *
+ *   - `context` : l'écran du téléphone central — la page de liste, la planète, la boutique ;
+ *   - `active`  : la pile d'écrans du téléphone secondaire, un par entité mise en avant, dont la
+ *                 galerie du bloc fait défiler l'affichage (`data-screen-index`).
+ *
+ * Valeurs d'illustration (niveaux, coûts) : choisies une fois ici, plutôt que dans le contenu, pour
+ * que `home.md` n'ait à nommer que des codes d'entités du jeu.
+ */
+import GameScreen from './GameScreen.astro';
+import ScreenEntityDetail from './ScreenEntityDetail.astro';
+import ScreenEntityList from './ScreenEntityList.astro';
+import ScreenPlanet from './ScreenPlanet.astro';
+import ScreenResourceDetail from './ScreenResourceDetail.astro';
+import ScreenShop from './ScreenShop.astro';
+import { family as familyOf, nav, type GameEntity, type ResourceCode } from '../../lib/game';
+
+export type FeatureFamily = 'resources' | 'buildings' | 'facilities' | 'defenses' | 'ships' | 'shop';
+
+interface Props {
+  role: 'context' | 'active';
+  family: FeatureFamily;
+  /** Entités mises en avant (déjà résolues), ou codes de ressources pour `resources`. */
+  items: GameEntity[] | ResourceCode[];
+}
+
+const { role, family, items } = Astro.props;
+
+const lists: Record<string, { title: string; tab: 'buildings' | 'build'; tabs?: { icon: string; label: string; active?: boolean }[]; counters: number[]; section?: string; units?: boolean }> = {
+  buildings: {
+    title: nav.buildings,
+    tab: 'buildings',
+    tabs: [{ icon: 'hammer', label: nav.resources, active: true }, { icon: 'factory', label: nav.installations }],
+    section: 'Production',
+    counters: [8, 7, 5, 9, 2],
+  },
+  facilities: {
+    title: nav.buildings,
+    tab: 'buildings',
+    tabs: [{ icon: 'hammer', label: nav.resources }, { icon: 'factory', label: nav.installations, active: true }],
+    counters: [4, 3, 2, 0, 1],
+  },
+  defenses: {
+    title: nav.defense,
+    tab: 'build',
+    tabs: [{ icon: 'rocket', label: nav.ships }, { icon: 'shield-star', label: nav.defense, active: true }],
+    counters: [24, 12, 6, 0, 0],
+    units: true,
+  },
+  ships: {
+    title: nav.ships,
+    tab: 'build',
+    tabs: [{ icon: 'rocket', label: nav.ships, active: true }, { icon: 'shield-star', label: nav.defense }],
+    counters: [18, 9, 4, 1, 0],
+    units: true,
+  },
+};
+
+const details: Record<string, { level: (i: number) => string; cta: string; ctaIcon: string; statLabel?: string; statValue?: string; costs: Record<string, string>[] }> = {
+  buildings: {
+    level: (i) => `Niveau ${[8, 7, 5, 9][i] ?? 3}`,
+    cta: 'Améliorer',
+    ctaIcon: 'arrow-up-right',
+    costs: [
+      { metal: '2 140', crystal: '535', energy: '84' },
+      { metal: '1 820', crystal: '910', energy: '96' },
+      { metal: '1 130', crystal: '377', energy: '120' },
+    ],
+  },
+  facilities: {
+    level: (i) => `Niveau ${[4, 3, 2, 0][i] ?? 1}`,
+    cta: 'Améliorer',
+    ctaIcon: 'arrow-up-right',
+    costs: [{ metal: '3 200', crystal: '6 400', hydrogen: '3 200' }, { metal: '6 400', crystal: '1 600', hydrogen: '800' }],
+  },
+  defenses: {
+    level: (i) => `${[24, 12, 6, 0][i] ?? 0} unités`,
+    cta: 'Construire',
+    ctaIcon: 'plus',
+    costs: [{ metal: '2 000', crystal: '0', hydrogen: '0' }, { metal: '1 500', crystal: '500', hydrogen: '0' }, { metal: '6 000', crystal: '2 000', hydrogen: '0' }],
+  },
+  ships: {
+    level: (i) => `${[18, 9, 4, 1][i] ?? 0} en orbite`,
+    cta: 'Construire',
+    ctaIcon: 'plus',
+    costs: [{ metal: '3 000', crystal: '1 000', hydrogen: '0' }, { metal: '6 000', crystal: '4 000', hydrogen: '0' }, { metal: '20 000', crystal: '7 000', hydrogen: '2 000' }],
+  },
+};
+
+const list = lists[family];
+const detail = details[family];
+const entities = items as GameEntity[];
+// La page de liste montre la famille entière, en commençant par ce que le bloc met en avant.
+const listed =
+  family in lists
+    ? [...entities, ...familyOf(family as 'buildings').filter((e) => !entities.some((x) => x.code === e.code))].slice(0, 5)
+    : [];
+---
+
+{role === 'context' && (
+  family === 'resources' ? (
+    <GameScreen activeTab="planet" label="Écran Planète du jeu">
+      <ScreenPlanet />
+    </GameScreen>
+  ) : family === 'shop' ? (
+    <GameScreen label="Écran Boutique du jeu, packs de Stellar Points">
+      <ScreenShop view="credits" />
+    </GameScreen>
+  ) : (
+    <GameScreen activeTab={list.tab} label={`Écran ${list.title} du jeu`}>
+      <ScreenEntityList title={list.title} tabs={list.tabs} section={list.section} items={listed} counters={list.counters} units={list.units} />
+    </GameScreen>
+  )
+)}
+
+{role === 'active' && (
+  family === 'shop' ? (
+    <div class="absolute inset-0 game-screen-swap" data-screen-index="0" data-active="true">
+      <GameScreen label="Écran Boutique du jeu, avatars">
+        <ScreenShop view="avatars" />
+      </GameScreen>
+    </div>
+  ) : family === 'resources' ? (
+    (items as ResourceCode[]).map((code, i) => (
+      <div class="absolute inset-0 game-screen-swap" data-screen-index={i} data-active={i === 0 ? 'true' : 'false'}>
+        <GameScreen chrome={false} label="Fiche d'une ressource dans le jeu">
+          <ScreenResourceDetail resource={code} />
+        </GameScreen>
+      </div>
+    ))
+  ) : (
+    entities.map((item, i) => (
+      <div class="absolute inset-0 game-screen-swap" data-screen-index={i} data-active={i === 0 ? 'true' : 'false'}>
+        <GameScreen chrome={false} label={`Fiche « ${item.name} » dans le jeu`}>
+          <ScreenEntityDetail
+            item={item}
+            level={detail.level(i)}
+            costs={detail.costs[i % detail.costs.length]}
+            statLabel={detail.statLabel}
+            statValue={detail.statValue}
+            cta={detail.cta}
+            ctaIcon={detail.ctaIcon}
+          />
+        </GameScreen>
+      </div>
+    ))
+  )
+)}

@@ -1,4 +1,7 @@
 ---
+import { planets } from "../../lib/game";
+import { parsePlanetAtmosphere } from "../../vendor/game/planetAtmosphere";
+
 interface Props {
   title: string;
   subtitle: string;
@@ -6,6 +9,25 @@ interface Props {
 }
 
 const { title, subtitle, sectionId } = Astro.props;
+
+// Le jeu de textures v8 de chaque biome (variante 01), synchronisé par scripts/sync-game.mjs, au
+// format `PlanetTextureSet` du moteur : cartes, nuages, et profil d'atmosphère lu par le parseur
+// du jeu, tel que `planetAtmosphere()` le fournit en jeu.
+const textures = Object.fromEntries(
+  Object.entries(planets).map(([biome, p]) => {
+    const atmosphere = parsePlanetAtmosphere(p.atmosphere) ?? undefined;
+    return [
+      biome,
+      {
+        albedo: p.albedo,
+        normal: p.normal,
+        specular: p.specular,
+        ...(p.clouds && atmosphere?.clouds ? { clouds: p.clouds } : {}),
+        ...(atmosphere ? { atmosphere } : {}),
+      },
+    ];
+  }),
+);
 ---
 
 <section
@@ -43,6 +65,7 @@ const { title, subtitle, sectionId } = Astro.props;
     <!-- Planet in the flow -->
     <div
       id="planet-3d"
+      data-textures={JSON.stringify(textures)}
       class="w-full aspect-square md:aspect-auto md:h-[480px] relative overflow-hidden"
     >
     </div>
@@ -128,484 +151,156 @@ const { title, subtitle, sectionId } = Astro.props;
   </style>
 
   <script>
-    // @ts-nocheck
+    // La planète du jeu, rendue par son propre moteur : `PlanetSurface`, copié du Frontend par
+    // scripts/sync-game.mjs (src/vendor/game/), posé dans la scène que le codex rejoue
+    // (dynasty-nova-codex, src/components/Planete3D.astro) — mêmes lumières, même courbe de tons,
+    // même caméra. Sol, halo, nuages et voile sont ceux du jeu ; les réglages d'atmosphère sont
+    // l'`atmosphere.json` livré avec chaque variante.
     import * as THREE from "three";
+    import { PLANET_SUN_DIRECTION, PlanetSurface } from "../../vendor/game/planetSurface.ts";
 
-    // ── Constants ──
-    const BIOMES = ["normal", "dry", "jungle", "water", "ice", "desert", "gas"];
-    const VARIANTS = 6;
-    const SUN_POS = new THREE.Vector3(-250, 50, 350);
-    const DEFAULT_ATM = new THREE.Color(0.8, 0.8, 0.8);
-
-    // 1×1 placeholder textures
-    const blackPixel = new THREE.DataTexture(
-      new Uint8Array([0, 0, 0, 255]),
-      1,
-      1,
-      THREE.RGBAFormat,
-    );
-    blackPixel.needsUpdate = true;
-    const whitePixel = new THREE.DataTexture(
-      new Uint8Array([204, 204, 204, 255]),
-      1,
-      1,
-      THREE.RGBAFormat,
-    );
-    whitePixel.needsUpdate = true;
-
-    // ── Compute dominant color from texture (identical to original) ──
-    function computeAverageColor(image) {
-      if (!image) return DEFAULT_ATM.clone();
-      const canvas = document.createElement("canvas");
-      canvas.width = 16;
-      canvas.height = 16;
-      const ctx = canvas.getContext("2d", { willReadFrequently: true });
-      try {
-        ctx.drawImage(image, 0, 0, 16, 16);
-        const data = ctx.getImageData(0, 0, 16, 16).data;
-        let r = 0,
-          g = 0,
-          b = 0,
-          count = 0;
-        for (let i = 0; i < data.length; i += 4) {
-          const bright = data[i] + data[i + 1] + data[i + 2];
-          if (bright > 30) {
-            r += data[i];
-            g += data[i + 1];
-            b += data[i + 2];
-            count++;
-          }
-        }
-        if (count === 0) return DEFAULT_ATM.clone();
-        const hsl = {};
-        new THREE.Color(
-          r / count / 255,
-          g / count / 255,
-          b / count / 255,
-        ).getHSL(hsl);
-        const c = new THREE.Color();
-        c.setHSL(
-          hsl.h,
-          Math.min(1, hsl.s * 1.5),
-          Math.min(1, Math.max(0.4, hsl.l * 1.5)),
-        );
-        return c;
-      } catch {
-        return DEFAULT_ATM.clone();
-      }
-    }
-
-    function pickRandom(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
-    }
-
-    function variantFolder(biome, v) {
-      const pad = v < 10 ? "0" + v : "" + v;
-      return `/assets/textures/${biome}/${biome}-${pad}`;
-    }
-
-    // Disable r182 color management to match r150 rendering
-    THREE.ColorManagement.enabled = false;
-
-    // ── Scene setup ──
-    const container = document.getElementById("planet-3d");
-    if (!container) throw new Error("Missing #planet-3d container");
-
-    function waitForSize(el) {
-      return new Promise((resolve) => {
-        const check = () =>
-          el.clientWidth > 0 && el.clientHeight > 0
-            ? resolve()
-            : requestAnimationFrame(check);
-        check();
-      });
-    }
-    await waitForSize(container);
-
-    const W = container.clientWidth;
-    const H = container.clientHeight;
-
-    const scene = new THREE.Scene();
-
-    const camera = new THREE.PerspectiveCamera(45, W / H, 1, 1000);
-
-    // Ensure the atmosphere sphere (radius ~69) always fits within the horizontal frustum.
-    // On narrow mobile viewports the horizontal FOV is smaller than the vertical FOV,
-    // so we push the camera back as needed while keeping z=160 on wider screens.
-    function fitCameraToContainer(w, h) {
-      const aspect = w / h;
-      const halfFovV = (45 / 2) * (Math.PI / 180);
-      const halfFovH = Math.atan(aspect * Math.tan(halfFovV));
-      const atmRadius = 60 * 1.15; // matches atmosphere SphereGeometry radius
-      const minZ = atmRadius / Math.tan(halfFovH) + 8; // +8 units safety margin
-      camera.position.z = Math.max(minZ, 160);
-      camera.aspect = aspect;
-      camera.updateProjectionMatrix();
-    }
-
-    fitCameraToContainer(W, H);
-
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
-    renderer.toneMapping = THREE.NoToneMapping;
-    renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(W, H);
-    container.appendChild(renderer.domElement);
-
-    // Lights — identical to original
-    // Scale ambient intensity by Math.PI to match legacy r150 brightness
-    const ambientLight = new THREE.AmbientLight(0x050505, Math.PI);
-    scene.add(ambientLight);
-
-    // Scale point light by Math.PI to match legacy point light brightness
-    const pointLight = new THREE.PointLight(0xffffff, 1.2 * Math.PI);
-    pointLight.decay = 0;
-    pointLight.position.copy(SUN_POS);
-    scene.add(pointLight);
-
-    // ── Planet material with shader injection ──
-    // Start with a dummy map so USE_MAP is defined and vMapUv is available in the shader
-    let earthShader = null;
-    let currentNightMap = null;
-    let currentAtmColor = DEFAULT_ATM.clone();
-
-    const planetMat = new THREE.MeshPhongMaterial({
-      map: whitePixel,
-      normalScale: new THREE.Vector2(0.8, 0.8),
-      shininess: 40,
-    });
-
-    planetMat.onBeforeCompile = (shader) => {
-      earthShader = shader;
-      shader.uniforms.nightMap = { value: currentNightMap || blackPixel };
-      shader.uniforms.nightIntensity = { value: 1.8 };
-      shader.uniforms.progressLevel = { value: 4.0 };
-      shader.uniforms.sunPosition = { value: SUN_POS.clone() };
-      shader.uniforms.atmosphereColor = { value: currentAtmColor.clone() };
-
-      // ── Vertex: pass world position & normal ──
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <common>",
-        `#include <common>
-        varying vec3 vWorldPos;
-        varying vec3 vWorldNorm;`,
-      );
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <fog_vertex>",
-        `#include <fog_vertex>
-        vWorldPos  = (modelMatrix * vec4(transformed, 1.0)).xyz;
-        vWorldNorm = normalize(mat3(modelMatrix) * objectNormal);`,
-      );
-
-      // ── Fragment: uniforms + varyings ──
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <common>",
-        `#include <common>
-        uniform sampler2D nightMap;
-        uniform float nightIntensity;
-        uniform float progressLevel;
-        uniform vec3 sunPosition;
-        uniform vec3 atmosphereColor;
-        varying vec3 vWorldPos;
-        varying vec3 vWorldNorm;`,
-      );
-
-      // ── Fragment: inject effects before dithering ──
-      // In Three.js r182, the map UV varying is called vMapUv (not vUv)
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <dithering_fragment>",
-        `// Saturation boost for more vivid albedo
-        float lum = dot(gl_FragColor.rgb, vec3(0.2126, 0.7152, 0.0722));
-        gl_FragColor.rgb = mix(vec3(lum), gl_FragColor.rgb, 1.3);
-
-        // Night lights — only on the dark hemisphere
-        vec3 nightColor = texture2D(nightMap, vMapUv).rgb;
-        float nightPixelBrightness = max(nightColor.r, max(nightColor.g, nightColor.b));
-        float threshold = 1.0 - (progressLevel / 4.0);
-        float pixelVisible = smoothstep(threshold, threshold + 0.15, nightPixelBrightness);
-
-        vec3 lightDir = normalize(sunPosition - vWorldPos);
-        float NdotL = dot(normalize(vWorldNorm), lightDir);
-        float nightMask = 1.0 - smoothstep(-0.6, 0.15, NdotL);
-        gl_FragColor.rgb += nightColor * pixelVisible * nightMask * nightIntensity;
-
-        // Fresnel / Atmospheric Rim Light on the lit side
-        vec3 viewDir = normalize(cameraPosition - vWorldPos);
-        float NdotV = dot(normalize(vWorldNorm), viewDir);
-        float rimFactor = 1.0 - smoothstep(0.0, 1.0, NdotV);
-        float litRimFactor = smoothstep(-0.3, 0.6, NdotL) * pow(rimFactor, 2.0);
-        gl_FragColor.rgb += atmosphereColor * litRimFactor * 0.8;
-
-        #include <dithering_fragment>`,
-      );
-    };
-
-    const earth = new THREE.Mesh(
-      new THREE.SphereGeometry(60, 32, 32),
-      planetMat,
-    );
-    scene.add(earth);
-
-    // ── Atmosphere glow (outer shell) — identical shader to original ──
-    const atmMat = new THREE.ShaderMaterial({
-      uniforms: {
-        atmosphereColor: { value: DEFAULT_ATM.clone() },
-        sunPosition: { value: SUN_POS.clone() },
-      },
-      vertexShader: `
-        varying vec3 vNormal;
-        varying vec3 vWorldPos;
-        void main() {
-          vNormal = normalize(normalMatrix * normal);
-          vec4 wp = modelMatrix * vec4(position, 1.0);
-          vWorldPos = wp.xyz;
-          gl_Position = projectionMatrix * viewMatrix * wp;
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 atmosphereColor;
-        uniform vec3 sunPosition;
-        varying vec3 vNormal;
-        varying vec3 vWorldPos;
-        void main() {
-          vec3 viewDir = normalize(cameraPosition - vWorldPos);
-          float NdotV = dot(vNormal, viewDir);
-          float intensity = pow(max(0.0, -NdotV), 2.5) * 1.5;
-          vec3 lightDir = normalize(sunPosition - vWorldPos);
-          float NdotL = dot(vNormal, lightDir);
-          float lightIntensity = smoothstep(-0.2, 0.8, NdotL);
-          gl_FragColor = vec4(atmosphereColor, 1.0) * intensity * lightIntensity;
-        }
-      `,
-      blending: THREE.AdditiveBlending,
-      side: THREE.BackSide,
-      transparent: true,
-      depthWrite: false,
-    });
-
-    const atmosphere = new THREE.Mesh(
-      new THREE.SphereGeometry(60 * 1.15, 32, 32),
-      atmMat,
-    );
-    scene.add(atmosphere);
-
-    // ── Manual drag rotation (matches original) ──
-    let mouseDown = false,
-      mouseX = 0,
-      mouseY = 0;
-    // Extra rotation from drag, will lerp back to 0
-    let dragRotX = 0,
-      dragRotY = 0;
+    // Scène du codex (Planete3D.astro), elle-même alignée sur UnifiedPlanet3D du jeu.
+    const SUN_DISTANCE = 50;
+    const PLANET_RADIUS = 0.8;
+    const CAMERA_FOV = 30;
+    const CAMERA_Z = 4.2;
+    const AUTO_ROTATION_SPEED = 0.25; // rad/s
+    // Glisser fait tourner la planète, qui revient d'elle-même à sa pose au relâcher.
     const DRAG_SPEED = 1 / 300;
-    const RETURN_SPEED = 0.08; // lerp factor per frame to return to neutral
+    const RETURN_SPEED = 0.08;
+    const DEFAULT_BIOME = "jungle";
 
-    renderer.domElement.addEventListener("mousedown", (e) => {
-      mouseDown = true;
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-    window.addEventListener("mouseup", () => {
-      mouseDown = false;
-    });
-    window.addEventListener("mousemove", (e) => {
-      if (!mouseDown) return;
-      dragRotY += (e.clientX - mouseX) * DRAG_SPEED;
-      dragRotX += (e.clientY - mouseY) * DRAG_SPEED;
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-    renderer.domElement.addEventListener(
-      "touchstart",
-      (e) => {
-        if (e.touches.length === 1) {
-          e.preventDefault();
-          mouseDown = true;
-          mouseX = e.touches[0].clientX;
-          mouseY = e.touches[0].clientY;
+    const container = document.getElementById("planet-3d");
+    if (container) init(container);
+
+    function init(container: HTMLElement) {
+      const textureSets = JSON.parse(container.dataset.textures || "{}");
+      const biomes = Object.keys(textureSets);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setClearColor(0x000000, 0);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.2;
+      renderer.domElement.style.touchAction = "pan-y";
+      container.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(CAMERA_FOV, 1, 0.1, 100);
+      const sunPosition = PLANET_SUN_DIRECTION.clone().multiplyScalar(SUN_DISTANCE);
+      scene.add(new THREE.AmbientLight(0x2a3348, 0.4));
+      const sun = new THREE.DirectionalLight(0xffffff, 3);
+      sun.position.copy(sunPosition);
+      scene.add(sun);
+
+      const surface = new PlanetSurface({
+        radius: PLANET_RADIUS,
+        sunPosition,
+        maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+      });
+      scene.add(surface.group);
+
+      // Cadrage du codex (vue carrée) ; plus étroit que haut, on recule pour garder le halo entier.
+      const resize = () => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (!w || !h) return;
+        renderer.setSize(w, h);
+        camera.aspect = w / h;
+        camera.position.z = CAMERA_Z / Math.min(1, camera.aspect);
+        camera.updateProjectionMatrix();
+      };
+      resize();
+      const ro = new ResizeObserver(resize);
+      ro.observe(container);
+
+      // ── Glisser ──
+      let dragging = false;
+      let lastX = 0;
+      let lastY = 0;
+      let dragRotX = 0;
+      let dragRotY = 0;
+      const canvas = renderer.domElement;
+      canvas.addEventListener("pointerdown", (e) => {
+        dragging = true;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        canvas.setPointerCapture(e.pointerId);
+      });
+      canvas.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+        dragRotY += (e.clientX - lastX) * DRAG_SPEED;
+        dragRotX += (e.clientY - lastY) * DRAG_SPEED;
+        lastX = e.clientX;
+        lastY = e.clientY;
+      });
+      const release = () => (dragging = false);
+      canvas.addEventListener("pointerup", release);
+      canvas.addEventListener("pointercancel", release);
+
+      // ── Animation ── comme le jeu, la rotation automatique s'arrête si l'on réduit les animations.
+      const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+      let baseRotY = 0;
+      let last = performance.now();
+      const animate = (now: number) => {
+        requestAnimationFrame(animate);
+        const elapsed = (now - last) / 1000;
+        last = now;
+        if (!dragging) {
+          if (!reducedMotion.matches) baseRotY += elapsed * AUTO_ROTATION_SPEED;
+          dragRotX *= 1 - RETURN_SPEED;
+          dragRotY *= 1 - RETURN_SPEED;
         }
-      },
-      { passive: false },
-    );
-    window.addEventListener("touchend", () => {
-      mouseDown = false;
-    });
-    renderer.domElement.addEventListener(
-      "touchmove",
-      (e) => {
-        if (!mouseDown || e.touches.length !== 1) return;
-        e.preventDefault();
-        dragRotY += (e.touches[0].clientX - mouseX) * DRAG_SPEED;
-        dragRotX += (e.touches[0].clientY - mouseY) * DRAG_SPEED;
-        mouseX = e.touches[0].clientX;
-        mouseY = e.touches[0].clientY;
-      },
-      { passive: false },
-    );
-
-    // ── Resize ──
-    const ro = new ResizeObserver(() => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      if (!w || !h) return;
-      fitCameraToContainer(w, h);
-      renderer.setSize(w, h);
-    });
-    ro.observe(container);
-
-    // ── Texture loader ──
-    const loader = new THREE.TextureLoader();
-    let loadedTextures = [];
-
-    function loadTex(url) {
-      return new Promise((resolve, reject) =>
-        loader.load(
-          url,
-          (tex) => {
-            // Prevent r182 GPU sRGB→linear decode (r150 read textures as-is)
-            tex.colorSpace = THREE.NoColorSpace;
-            resolve(tex);
-          },
-          undefined,
-          reject,
-        ),
-      );
-    }
-    function loadTexOpt(url) {
-      return loadTex(url).catch(() => null);
-    }
-
-    async function loadBiome(biome) {
-      const v = 1;
-      const folder = variantFolder(biome, v);
-
-      // Dispose previous textures
-      for (const t of loadedTextures) t.dispose();
-      loadedTextures = [];
-
-      const albedo = await loadTex(`${folder}/albedo.jpg`);
-      loadedTextures.push(albedo);
-
-      // Compute atmosphere color from albedo image (same as original)
-      const atmColor = computeAverageColor(albedo.image);
-
-      const [normalTex, specularTex, nightTex] = await Promise.all([
-        loadTexOpt(`${folder}/normal.jpg`),
-        loadTexOpt(`${folder}/specular.jpg`),
-        loadTexOpt(`${folder}/night.jpg`),
-      ]);
-      for (const t of [normalTex, specularTex, nightTex])
-        if (t) loadedTextures.push(t);
-
-      planetMat.map = albedo;
-      planetMat.normalMap = normalTex ?? null;
-      planetMat.specularMap = specularTex ?? null;
-      planetMat.needsUpdate = true;
-
-      // Persist current values (used by onBeforeCompile on recompilation)
-      currentNightMap = nightTex;
-      currentAtmColor.copy(atmColor);
-
-      // Update atmosphere color + night map in shader
-      atmMat.uniforms.atmosphereColor.value.copy(atmColor);
-      if (earthShader) {
-        earthShader.uniforms.atmosphereColor.value.copy(atmColor);
-        earthShader.uniforms.nightMap.value = nightTex || blackPixel;
-      }
-
-      return biome;
-    }
-
-    // ── Animate — rotation speed matches original (0.001/frame) ──
-    // Base Y rotation accumulator (auto-spin)
-    let baseRotY = 0;
-
-    function animate() {
+        surface.group.rotation.x = dragRotX;
+        surface.group.rotation.y = baseRotY + dragRotY;
+        surface.animateLayers(now / 1000);
+        renderer.render(scene, camera);
+      };
       requestAnimationFrame(animate);
 
-      // Auto-rotate only when NOT dragging
-      if (!mouseDown) {
-        baseRotY += 0.001;
+      // ── Biomes ──
+      let request = 0;
+      async function loadBiome(biome: string) {
+        const set = textureSets[biome];
+        if (!set) return;
+        const token = ++request;
+        await surface.load(set, () => token !== request);
       }
 
-      // When not dragging, lerp drag offsets back to 0
-      if (!mouseDown) {
-        dragRotX *= 1 - RETURN_SPEED;
-        dragRotY *= 1 - RETURN_SPEED;
-        // Snap to 0 when close enough
-        if (Math.abs(dragRotX) < 0.0001) dragRotX = 0;
-        if (Math.abs(dragRotY) < 0.0001) dragRotY = 0;
-      }
-
-      earth.rotation.x = dragRotX;
-      earth.rotation.y = baseRotY + dragRotY;
-
-      renderer.render(scene, camera);
-    }
-
-    // ── Init — start rendering immediately, load textures async ──
-    animate();
-
-    const buttons = Array.from(document.querySelectorAll("button.biome-btn"));
-    const biomeList = document.getElementById("biome-list");
-
-    function setActive(btn) {
-      for (const b of buttons) {
-        b.setAttribute("aria-pressed", String(b === btn));
-      }
-
-      if (biomeList && btn) {
-        const btnCenter = btn.offsetLeft + btn.offsetWidth / 2;
-        biomeList.style.transform = `translate(-${btnCenter}px, -50%)`;
-      }
-    }
-
-    window.addEventListener("resize", () => {
-      const activeBtn = buttons.find(
-        (b) => b.getAttribute("aria-pressed") === "true",
-      );
-      if (activeBtn) setActive(activeBtn);
-    });
-
-    try {
-      await loadBiome("jungle");
-    } catch (e) {
-      console.error("[planet] initial load failed", e);
-    }
-
-    const initialBtn = buttons.find(
-      (b) => b.getAttribute("data-biome") === "jungle",
-    );
-    if (initialBtn) setActive(initialBtn);
-
-    // ── Button events ──
-    for (const btn of buttons) {
-      btn.addEventListener("click", async () => {
-        const biome = btn.getAttribute("data-biome");
-        const action = btn.getAttribute("data-action");
-        try {
-          if (action === "random") {
-            const picked = await loadBiome(pickRandom(BIOMES));
-            const match = buttons.find(
-              (b) => b.getAttribute("data-biome") === picked,
-            );
-            setActive(match ?? btn);
-            return;
-          }
-          if (biome) {
-            setActive(btn);
-            await loadBiome(biome);
-          }
-        } catch (e) {
-          console.error(e);
+      const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>("button.biome-btn"));
+      const biomeList = document.getElementById("biome-list");
+      function setActive(btn: HTMLButtonElement | undefined) {
+        for (const b of buttons) b.setAttribute("aria-pressed", String(b === btn));
+        if (biomeList && btn) {
+          const btnCenter = btn.offsetLeft + btn.offsetWidth / 2;
+          biomeList.style.transform = `translate(-${btnCenter}px, -50%)`;
         }
+      }
+      window.addEventListener("resize", () =>
+        setActive(buttons.find((b) => b.getAttribute("aria-pressed") === "true")),
+      );
+
+      setActive(buttons.find((b) => b.dataset.biome === DEFAULT_BIOME));
+      loadBiome(DEFAULT_BIOME).catch((e) => console.error("[planet] initial load failed", e));
+
+      for (const btn of buttons) {
+        btn.addEventListener("click", () => {
+          const biome =
+            btn.dataset.action === "random"
+              ? biomes[Math.floor(Math.random() * biomes.length)]
+              : btn.dataset.biome;
+          if (!biome) return;
+          setActive(buttons.find((b) => b.dataset.biome === biome) ?? btn);
+          loadBiome(biome).catch((e) => console.error("[planet]", e));
+        });
+      }
+
+      window.addEventListener("pagehide", () => {
+        ro.disconnect();
+        surface.dispose();
+        renderer.dispose();
       });
     }
-
-    window.addEventListener("beforeunload", () => {
-      ro.disconnect();
-      for (const t of loadedTextures) t.dispose();
-      renderer.dispose();
-    });
   </script>
 </section>

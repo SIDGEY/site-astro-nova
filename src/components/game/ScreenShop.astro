@@ -1,0 +1,91 @@
+---
+/**
+ * La boutique du jeu : onglets de catégorie (`components.shop.categories`), puis soit les packs de
+ * Stellar Points (`credits`), soit la galerie d'avatars (`avatars`). Packs, contenus et avatars
+ * viennent du jeu et du codex ; aucun prix n'est affiché (il dépend de la région et de Stripe).
+ */
+import { avatars, family } from '../../lib/game';
+
+interface Props {
+  view: 'credits' | 'avatars';
+  /** Décalage dans la liste d'avatars, pour que deux écrans n'affichent pas les mêmes. */
+  offset?: number;
+}
+
+const { view, offset = 0 } = Astro.props;
+const tabs = [
+  { key: 'avatars', label: 'Avatars', icon: 'user-circle' },
+  { key: 'credits', label: 'Crédits', icon: 'star-four' },
+];
+const packs = family('packs') as { code: string; name: string; image: string; amount?: number | null }[];
+const gallery = avatars.slice(offset, offset + 12);
+---
+
+<div class="h-full overflow-hidden">
+  <div class="px-4 pt-4 pb-3 space-y-4">
+    <div class="flex justify-between items-center gap-2">
+      <h1 class="text-xl font-semibold">Boutique</h1>
+      <span class="flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-800/60 px-3 py-1 text-sm text-slate-200 tabular-nums">
+        <i class="ph-fill ph-star-four text-amber-300 leading-none"></i>
+        1 250
+      </span>
+    </div>
+    <div class="flex w-full">
+      {tabs.map((tab, i) => (
+        <span
+          class={`flex-1 flex h-12 items-center justify-center gap-2 border px-3 py-3 text-sm font-medium text-white ${
+            tab.key === view ? 'border-blue-500 bg-blue-500/20' : 'border-slate-700 bg-slate-800'
+          } ${i === 0 ? 'rounded-l-lg' : 'rounded-r-lg'}`}
+        >
+          <i class={`ph ph-${tab.icon} text-xl leading-none ${tab.key === view ? 'text-blue-400' : 'text-slate-400'}`}></i>
+          {tab.label}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  {view === 'credits' ? (
+    <div class="px-4 pt-1 space-y-4">
+      <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Packs de Stellar Points</div>
+      <div class="grid grid-cols-2 gap-4">
+        {packs.map((pack) => (
+          <div class="relative rounded-lg overflow-hidden card-with-border flex flex-col">
+            <div class="relative overflow-hidden rounded-t-lg bg-gray-700 aspect-square">
+              <img src={pack.image} alt="" class="w-full h-full object-cover" />
+              <div class="entity-veil"></div>
+              {pack.amount && (
+                <div class="absolute bottom-2 right-2 px-2 py-1 bg-slate-900/90 rounded-md text-sm font-medium text-slate-200 tabular-nums">
+                  {pack.amount} SP
+                </div>
+              )}
+            </div>
+            <div class="px-4 pt-2 pb-3 bg-slate-900/90">
+              <h3 class="text-sm text-white line-clamp-1">{pack.name}</h3>
+            </div>
+          </div>
+        ))}
+        <div class="relative rounded-lg overflow-hidden card-with-border flex flex-col items-center justify-center gap-2 aspect-[4/5] bg-slate-800/40">
+          <i class="ph ph-gift text-4xl leading-none text-slate-400"></i>
+          <span class="text-sm text-slate-300">Point du jour</span>
+          <span class="text-xs text-green-400">Récupérer +1</span>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div class="px-4 pt-1 space-y-4">
+      <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Avatars</div>
+      <div class="grid grid-cols-3 gap-3">
+        {gallery.map((a) => (
+          <div class="relative rounded-lg overflow-hidden card-with-border aspect-[4/5]">
+            <img src={a.background} alt="" class="absolute inset-0 w-full h-full object-cover opacity-50" />
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900"></div>
+            <div class="relative h-full flex flex-col items-center justify-end pb-2 gap-1.5">
+              <img src={a.image} alt="" class="w-14 h-14 rounded-full border-2 border-slate-500/70 object-cover" />
+              <span class="text-[10px] leading-[14px] text-slate-200 text-center line-clamp-1 px-1">{a.name}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>

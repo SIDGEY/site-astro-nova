@@ -1,4 +1,6 @@
 ---
+import { avatars, pick } from "../../lib/game";
+
 interface CarouselItem {
   image: string;
   title: string;
@@ -9,11 +11,34 @@ interface Props {
   icon: string;
   title: string;
   subtitle: string;
-  items: CarouselItem[];
+  /** Cartes tirées du catalogue du jeu ; `items` (codes) en restreint et ordonne la liste. */
+  source?: "research" | "avatars";
+  items?: (CarouselItem | string)[];
+  limit?: number;
   sectionId?: string;
 }
 
-const { icon, title, subtitle, items, sectionId } = Astro.props;
+const { icon, title, subtitle, source, items: rawItems = [], limit, sectionId } = Astro.props;
+
+function fromCatalog(): CarouselItem[] {
+  const codes = rawItems.filter((i): i is string => typeof i === "string");
+  if (source === "research") {
+    return pick("research", codes).map((r) => ({ image: r.image, title: r.name }));
+  }
+  if (source === "avatars") {
+    const list = codes.length
+      ? codes.map((code) => {
+          const found = avatars.find((a) => a.code === code || a.code === `avatar_${code}`);
+          if (!found) throw new Error(`Avatar « ${code} » absent du catalogue (seuls les avatars en ligne y figurent).`);
+          return found;
+        })
+      : avatars;
+    return list.map((a) => ({ image: a.background, title: a.name, avatar: a.image }));
+  }
+  return rawItems.filter((i): i is CarouselItem => typeof i !== "string");
+}
+
+const items = fromCatalog().slice(0, limit);
 const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
 
 // Detect if this is an avatar carousel (at least one item has an avatar field)

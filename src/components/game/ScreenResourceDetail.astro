@@ -1,0 +1,80 @@
+---
+/**
+ * La modale de ressource du jeu (`ResourceModal`) : illustration de la ressource, stock, puis les
+ * bâtiments qui la produisent et la stockent, en lignes illustrées. Les bâtiments sont ceux du
+ * jeu ; stocks, niveaux et débits sont des valeurs d'illustration.
+ */
+import { pick, resources, type ResourceCode } from '../../lib/game';
+
+interface Props {
+  resource: ResourceCode;
+}
+
+const { resource } = Astro.props;
+const meta = resources[resource];
+
+const chain: Record<ResourceCode, { produce: string[]; store: string[]; stock: string; rate: string }> = {
+  metal: { produce: ['metal_mine'], store: ['metal_storage'], stock: '12 400 / 25 000', rate: '1,2K / heure' },
+  crystal: { produce: ['crystal_mine'], store: ['crystal_storage'], stock: '6 800 / 25 000', rate: '640 / heure' },
+  hydrogen: { produce: ['hydrogen_synthesizer'], store: ['hydrogen_storage'], stock: '2 100 / 10 000', rate: '210 / heure' },
+  energy: { produce: ['solar_plant', 'fusion_plant'], store: [], stock: '86 %', rate: '+48' },
+};
+const { produce, store, stock, rate } = chain[resource];
+const levels = [8, 4, 3];
+
+const groups = [
+  { title: 'Production', aside: rate, items: pick('buildings', produce) },
+  ...(store.length ? [{ title: 'Stockage', aside: '', items: pick('buildings', store) }] : []),
+];
+---
+
+<div class="absolute inset-0 bg-slate-950">
+  <div class="absolute inset-6 bg-slate-900/95 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 flex flex-col">
+    <span class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/90">
+      <i class="ph-bold ph-x text-base leading-none text-white"></i>
+    </span>
+
+    <div class="flex-1 min-h-0 overflow-hidden">
+      <div class="relative flex aspect-[50/33] flex-col justify-end">
+        <div class="absolute inset-0 overflow-hidden">
+          <img src={meta.image} alt="" class="w-full h-full object-cover" />
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
+        <div class="relative px-5 pt-5">
+          <h2 class="text-2xl font-bold text-white">{meta.name}</h2>
+          <p class="text-sm text-slate-400 mt-1 tabular-nums">{stock}</p>
+        </div>
+      </div>
+
+      <div class="p-5 space-y-6">
+        <p class="text-sm text-slate-300 leading-relaxed">{meta.description}.</p>
+        {groups.map((group) => (
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-semibold text-slate-500 uppercase tracking-wider">{group.title}</span>
+              {group.aside && <span class="text-sm text-slate-400 tabular-nums">{group.aside}</span>}
+            </div>
+            {group.items.map((b, i) => (
+              <div class="flex gap-4 rounded-lg card-with-border bg-slate-800/30 overflow-hidden">
+                <div class="relative w-[88px] shrink-0 aspect-square">
+                  <img src={b.image} alt="" class="w-full h-full object-cover" />
+                  <div class="entity-veil"></div>
+                </div>
+                <div class="flex flex-col justify-center">
+                  <span class="text-sm text-slate-200">{b.name}</span>
+                  <span class="text-xs text-slate-500 mt-1">Niveau {levels[i] ?? 2}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="shrink-0 p-5 pt-3">
+      <span class="flex h-12 w-full items-center justify-center rounded-lg btn-raised btn-raised-blue text-white font-semibold">
+        D'accord
+      </span>
+    </div>
+  </div>
+</div>

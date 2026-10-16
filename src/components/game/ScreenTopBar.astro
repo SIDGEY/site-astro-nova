@@ -1,0 +1,48 @@
+---
+/**
+ * Barre du haut du jeu sous 768px : `Header` (menu, logo centré, messagerie, notifications) puis
+ * la barre de ressources embarquée (`ResourceBar` / `ResourceBlock`, icône et valeur côte à côte).
+ * Valeurs d'illustration : ce sont celles d'un empire de début de partie, pas des données du jeu.
+ */
+import { logo, resources, RESOURCE_ORDER } from '../../lib/game';
+
+const sample: Record<string, { value: string; fill: number }> = {
+  metal: { value: '12,4K', fill: 62 },
+  crystal: { value: '6,8K', fill: 41 },
+  hydrogen: { value: '2,1K', fill: 23 },
+  energy: { value: '86%', fill: 86 },
+};
+---
+
+<div class="shrink-0 relative z-10">
+  <div class="border-b border-slate-700 relative">
+    <div class="w-full px-3 py-1.5 flex bg-[#121E31] items-center justify-between">
+      <span class="p-2.5 rounded-lg"><i class="ph ph-list text-2xl text-slate-200 block"></i></span>
+      <img src={logo} alt="" class="absolute left-1/2 -translate-x-1/2 top-1/2 -mt-[8px] w-12 h-auto z-10" />
+      <div class="flex items-center gap-1">
+        <span class="p-2.5 rounded-lg"><i class="ph ph-chat-teardrop-dots text-2xl text-slate-200 block"></i></span>
+        <span class="p-2.5 rounded-lg relative">
+          <i class="ph ph-bell-simple text-2xl text-slate-200 block"></i>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-row divide-x divide-slate-700 border-b border-slate-700 w-full bg-[#121E31]/80">
+    {RESOURCE_ORDER.map((code) => {
+      const isEnergy = code === 'energy';
+      return (
+        <div class="px-2 py-3.5 relative w-full">
+          <div
+            class={`absolute -bottom-[1px] left-0 h-0.5 ${isEnergy ? 'bg-green-400' : 'bg-blue-400'}`}
+            style={`width: ${sample[code].fill}%`}
+          />
+          <div class="flex flex-row items-center justify-center gap-1.5 w-full">
+            <i class={`ph-fill ph-${resources[code].icon} text-xl leading-none ${isEnergy ? 'text-green-400' : 'text-slate-400'}`}></i>
+            <span class={`text-sm font-medium tabular-nums ${isEnergy ? 'text-green-400' : ''}`}>{sample[code].value}</span>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
