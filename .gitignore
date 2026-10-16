@@ -8,5 +8,6 @@ dist
 .env
 .gsc-cache
 .ga4-cache
+.posthog-cache
 .game-activity-cache
 editorial/backlog.jsonl

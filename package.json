@@ -11,6 +11,7 @@
     "import:cs": "node --loader ts-node/esm scripts/import-case-studies.ts",
     "gsc:fetch": "node scripts/gsc-fetch.mjs",
     "ga4:fetch": "node scripts/ga4-fetch.mjs",
+    "posthog:fetch": "node scripts/posthog-fetch.mjs",
     "game:fetch": "node scripts/game-activity-fetch.mjs",
     "ideas": "node scripts/dynasty-ideas.mjs",
     "ga4:key-events": "node scripts/ga4-mark-key-event.mjs",
@@ -33,6 +34,7 @@
     "html-entities": "^2.6.0",
     "p-limit": "^3.1.0",
     "phosphor-astro": "^2.1.0",
+    "posthog-js": "^1.438.12",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
     "three": "^0.186.1"

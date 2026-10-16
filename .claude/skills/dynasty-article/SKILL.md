@@ -3,7 +3,8 @@ name: dynasty-article
 description: >-
   Génère des brouillons d'articles pour le blog dynastynova.com à partir de six
   signaux réels croisés : l'activité de dev du jeu (PR mergées sur Dynasty-Nova/Frontend
-  et Dynasty-Nova/Backend), la performance GSC/GA4 propre à dynastynova.com, le capital
+  et Dynasty-Nova/Backend), la performance GSC/GA4 propre à dynastynova.com et sa
+  conversion vers le jeu par article (PostHog), le capital
   de recherche legacy de play-astronova.com (ancienne marque), et le cluster "jeux" de
   beryldesign.fr (déjà spécialisé sur Dynasty Nova/OGame, 78% de ses clics). Quatre modes
   de production (dev-diary, research, video/Vidiome, community-post pour Reddit/forums).
@@ -45,6 +46,10 @@ ni le pipeline de traduction EN (pas justifiés à ce corpus).
   (passer `--site` à `gsc-fetch.mjs`) et à `sc-domain:beryldesign.fr` / la propriété
   GA4 de beryldesign (lus directement depuis le cache déjà présent sur disque dans
   son repo, pas besoin de re-fetch).
+- `POSTHOG_PERSONAL_API_KEY` / `POSTHOG_PROJECT_ID` dans `.env` (voir `.env.example`) pour
+  `posthog:fetch` : conversion vers le jeu par page et par source, lecture réelle,
+  frictions. Absentes ou projet trop récent (moins de 7 jours de données) : se contenter
+  de GA4, et ne pas présenter de chiffre de conversion comme mesuré.
 - `gh` authentifié avec accès aux repos `Dynasty-Nova/Frontend` et `Dynasty-Nova/Backend`
   (déjà le cas si `gh repo view Dynasty-Nova/Frontend` répond).
 - `VIDIOME_API_KEY` dans `.env` — requis seulement pour le **mode `video`**. Prod :
@@ -57,6 +62,7 @@ ni le pipeline de traduction EN (pas justifiés à ce corpus).
 npm run gsc:fetch                                                  # dynastynova.com
 node scripts/gsc-fetch.mjs --site sc-domain:play-astronova.com     # legacy Astro Nova
 npm run ga4:fetch -- --host dynastynova.com                        # isole le nouveau site dans la propriété partagée
+npm run posthog:fetch                                               # conversion par page vers le jeu (PostHog)
 npm run game:fetch                                                  # PR mergées, les 2 repos du jeu
 npm run ideas -- --generate --apply                                 # combine tout dans le backlog
 ```
@@ -118,8 +124,20 @@ source :
 - Pour voir ce qui amène déjà des visiteurs, lire le dernier
   `.ga4-cache/dynastynova.com-GA4-*/` (`Pages.csv` : pages `/blog/…` qui reçoivent des
   sessions, `Sources.csv` : part du trafic organique, `Evenements.csv` : total des
-  `play_click`, départs vers le jeu). Le cache ne donne pas les `play_click` par
-  article : ne jamais présenter un chiffre de conversion par article comme mesuré.
+  `play_click`, départs vers le jeu).
+- **Ce qui convertit** : le dernier `.posthog-cache/dynastynova.com-PostHog-*/`.
+  `Pages.csv` donne par article les visiteurs, ceux partis vers le jeu, la conversion,
+  la durée médiane et la part lue jusqu'au bout ; `Entrees.csv` la conversion selon la
+  page d'arrivée ; `Sources.csv` selon l'origine (organique, Reddit, campagne UTM).
+  Croiser par chemin de page avec GSC (requête → page) : un sujet dont les articles
+  voisins **convertissent** mérite un article de plus, un sujet qui attire sans convertir
+  appelle plutôt un meilleur parcours qu'un nouvel article. Citer les chiffres au mot dans
+  la présentation du lot. Sous ~30 visiteurs sur une page, parler de tendance, pas de taux.
+- **Retouches prioritaires** : un article publié avec beaucoup de visiteurs mais une
+  conversion faible ou une lecture qui s'arrête tôt (`Lus jusqu'au bout` bas) est un
+  meilleur investissement qu'un article neuf. Le proposer dans le lot comme « mise à
+  niveau » (parcours d'acquisition de l'Étape 4, sans changer le slug) en citant ses
+  chiffres.
 
 **Mode batch** : sélectionner jusqu'à **3** idées `proposed`/`queued` (jamais plus).
 ```bash
@@ -376,7 +394,7 @@ dans le backlog une fois le fichier écrit.
   (1re personne Dynasty Nova, pas 3e personne agence).
 - Ne jamais ajouter de champ frontmatter hors du schéma `articlesCollection`.
 - Ne jamais exposer les clés (`.env`, `VIDIOME_API_KEY`, `CLOUDFLARE_API_TOKEN`, la
-  clé de service GSC/GA4).
+  clé de service GSC/GA4, `POSTHOG_PERSONAL_API_KEY`).
 - **Cover** : toujours relire visuellement une image générée avant de la référencer
   dans `image` — jamais committer un résultat qui s'écarte de
   `docs/dynasty-cover-style-guide.md` (deuxième teinte, forme non continue, objet
@@ -404,7 +422,7 @@ les trois points d'arrêt sont remplacés par **une PR** : l'auteur relit et fus
 c'est la fusion qui vaut validation. Le skill `publication` publiera ensuite l'article à sa
 date. Ce mode ne publie jamais et ne pousse jamais sur `main`.
 
-1. **Signaux** : si les clés GSC/GA4 ne sont pas dans l'environnement, sauter Étape 0 sauf
+1. **Signaux** : si les clés GSC/GA4/PostHog ne sont pas dans l'environnement, sauter Étape 0 sauf
    les PR du jeu : `gh pr list -R Dynasty-Nova/Frontend --state merged --search
    "merged:>=<date J-7>"`, idem pour `Dynasty-Nova/Backend`. Si `gh` n'a pas accès à ces
    dépôts, s'arrêter et le dire.

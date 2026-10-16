@@ -2,8 +2,10 @@
  * Système de tracking privacy-first minimal.
  * En développement : affiche dans la console et stocke en local.
  * En production : les événements remontent aussi dans GA4 via gtag
- * (voir le tag dans BaseLayout.astro).
+ * (voir le tag dans BaseLayout.astro) et dans PostHog (voir lib/posthog.ts).
  */
+
+import { loadPosthog } from "./posthog";
 
 declare global {
   interface Window {
@@ -38,4 +40,14 @@ export const trackEvent = (eventName: string, props: Record<string, any> = {}) =
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', eventName, props);
   }
+
+  // transport_type est la consigne gtag ; son équivalent PostHog passe en option d'envoi.
+  const { transport_type, ...properties } = props;
+  loadPosthog().then((posthog) =>
+    posthog?.capture(
+      eventName,
+      properties,
+      transport_type === "beacon" ? { transport: "sendBeacon" } : undefined,
+    ),
+  );
 };
