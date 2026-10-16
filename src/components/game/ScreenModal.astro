@@ -28,7 +28,9 @@ const { image, veil = false } = Astro.props;
           <img src={image} alt="" class="w-full h-full object-cover" />
           {veil && <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>}
         </div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
+        {/* Un pixel plus bas que l'image : réduit à l'échelle du cadre, le bord de l'image tombe
+            entre deux pixels et laissait un filet clair sous le fondu. */}
+        <div class="absolute inset-x-0 top-0 -bottom-px bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
         <div class="relative px-5 pt-5">
           <slot name="header" />
         </div>

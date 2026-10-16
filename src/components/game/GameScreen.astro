@@ -75,6 +75,10 @@ const { chrome = true, activeTab, label, class: className = '' } = Astro.props;
     height: calc(var(--screen-h) * 375 / 216);
     transform: scale(calc(216 / 375));
     transform-origin: top left;
+    /* La base du jeu : celle du navigateur (16px) et l'interligne 1,5 du preflight Tailwind. Le site
+       passe `body` à 18px ; hérité, il grossissait d'un quart tout texte sans classe de taille. */
+    font-size: 16px;
+    line-height: 1.5;
   }
 
   /* Encoche de `tel.svg` : de x 54,5 à 176,3 et jusqu'à y 24,4 dans le cadre, soit, rapporté à

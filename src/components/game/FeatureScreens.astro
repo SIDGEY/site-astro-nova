@@ -44,15 +44,18 @@ const lists: Record<string, { title: string; tab: 'buildings' | 'build'; tabs?: 
     tabs: [{ icon: 'hammer', label: nav.resources }, { icon: 'factory', label: nav.installations, active: true }],
     section: 'Développement',
   },
+  // Sous 768px, vaisseaux et défenses portent le titre de leur onglet de barre, « Docks »
+  // (`components.navigation.build`, cf. ShipsPage et DefensePage) ; « Vaisseaux » et « Défense »
+  // ne titrent la page qu'au-delà.
   defenses: {
-    title: nav.defense,
+    title: nav.build,
     tab: 'build',
     tabs: [{ icon: 'rocket', label: nav.ships }, { icon: 'shield-star', label: nav.defense, active: true }],
     section: 'Défenses Standards',
     units: true,
   },
   ships: {
-    title: nav.ships,
+    title: nav.build,
     tab: 'build',
     tabs: [{ icon: 'rocket', label: nav.ships, active: true }, { icon: 'shield-star', label: nav.defense }],
     section: 'Vaisseaux de Combat',
@@ -79,7 +82,7 @@ const counters = listed.map((e) => (list?.units ? QUANTITIES[e.code] : LEVELS[e.
       <ScreenShop view="showcase" />
     </GameScreen>
   ) : (
-    <GameScreen activeTab={list.tab} label={`Écran ${list.title} du jeu`}>
+    <GameScreen activeTab={list.tab} label={`Écran ${list.title} du jeu, onglet ${list.tabs?.find((t) => t.active)?.label}`}>
       <ScreenEntityList title={list.title} tabs={list.tabs} section={list.section} items={listed} counters={counters} units={list.units} />
     </GameScreen>
   )

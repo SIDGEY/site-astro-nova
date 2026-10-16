@@ -52,6 +52,10 @@ const tiles = [
   { icon: 'ph-fill ph-timer', label: formatTime(buildTime) },
 ];
 
+// `railCardWidth` du jeu : au-delà de trois tuiles, le rail en montre trois et laisse deviner la
+// quatrième ; sinon les trois remplissent la ligne.
+const tileWidth = tiles.length > 3 ? 'w-[calc((100%-3rem)/3)] min-w-[calc((100%-3rem)/3)]' : 'w-[calc((100%-2rem)/3)] min-w-[calc((100%-2rem)/3)]';
+
 const isUpgrade = kind === 'building' && count > 0;
 
 // Statistiques propres à l'entité, dans l'ordre où la modale les pose après le coût.
@@ -99,7 +103,7 @@ const unlocks = UNLOCKS[item.code] ?? 0;
       <span class="text-gray-400">{kind === 'building' ? 'Coût du prochain niveau' : 'Coût de fabrication'}</span>
       <div class="-mx-5 px-5 flex gap-4 pb-2 mt-2 overflow-hidden">
         {tiles.map((tile) => (
-          <div class="w-[calc((100%-3rem)/3)] min-w-[calc((100%-3rem)/3)] max-w-[104px] shrink-0 rounded-lg bg-slate-900 card-with-border overflow-hidden">
+          <div class={`${tileWidth} max-w-[104px] shrink-0 rounded-lg bg-slate-900 card-with-border overflow-hidden`}>
             <div class="relative aspect-square max-w-[104px] rounded-lg bg-slate-800/50 card-with-border overflow-hidden">
               <div class="absolute inset-0 flex items-center justify-center">
                 <i class={`${tile.icon} text-2xl leading-none text-gray-400`}></i>
