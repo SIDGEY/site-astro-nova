@@ -15,14 +15,14 @@ faq:
     answer: "\"Astro Nova\" était déjà utilisé par un autre jeu sans rapport, un roguelike publié sur Steam, ce qui créait un risque de confusion pour les joueurs et un mauvais signal pour le référencement."
   - question: "Le changement de nom a-t-il modifié le gameplay ?"
     answer: "Non, le rebranding ne touche que le nom, l'identité visuelle et les supports de communication. Les mécaniques (gestion de ressources, arbre technologique, flotte, défense) restent les mêmes."
-  - question: "Que devient l'ancienne adresse play-astronova.com ?"
-    answer: "Elle redirige désormais vers dynastynova.com : un joueur qui avait gardé l'ancien lien continue d'arriver sur le même jeu, sous son nouveau nom."
+  - question: "Peut-on toujours jouer à Astro Nova ?"
+    answer: "Oui, sous son nouveau nom : Astro Nova s'appelle désormais Dynasty Nova. L'ancienne adresse play-astronova.com redirige vers dynastynova.com, donc un joueur qui avait gardé l'ancien lien arrive sur le même jeu."
 coverPrompt: "a soft field of warm amber and antique gold light"
 ---
 
 ## Introduction
 
-Pendant huit mois, nous avons développé Dynasty Nova comme un projet de stratégie spatiale 4X pensé mobile-first, en réaction à l'UX vieillissante d'OGame. Puis, en pleine bêta, il a fallu changer son nom. Voici pourquoi, et ce que ça nous a appris sur le design d'identité d'un jeu déjà lancé.
+Pendant huit mois, nous avons développé Dynasty Nova, un jeu de stratégie spatiale 4X gratuit qui se joue dans le navigateur, pensé mobile-first en réaction à l'UX vieillissante d'OGame. Puis, en pleine bêta, il a fallu changer son nom. Voici pourquoi, et ce que ça nous a appris sur le design d'identité d'un jeu déjà lancé.
 
 ## Un nom déjà pris, sans qu'on le sache
 
@@ -48,7 +48,7 @@ Cette fois, la vérification s'est faite en amont : disponibilité du nom sur le
 
 ### Le gameplay ne bouge pas, l'identité si
 
-Le nom change, pas le jeu. Les mécaniques de gestion de ressources, l'arbre technologique ou le système de flotte restent identiques. Ce qui change, c'est tout ce qui porte le nom : logo, palette, icônes, textes de présentation.
+Le nom change, pas le jeu. Les mécaniques de gestion de ressources, l'arbre technologique ou le système de flotte restent identiques (elles sont décrites dans notre présentation du [jeu de stratégie spatiale gratuit sur navigateur](/blog/jeu-de-strategie-spatiale-gratuit-navigateur-dynasty-nova/)). Ce qui change, c'est tout ce qui porte le nom : logo, palette, icônes, textes de présentation.
 
 ### Migrer sans perdre les joueurs de la bêta
 
@@ -57,3 +57,5 @@ Le vrai défi n'était pas graphique, il était humain : prévenir les joueurs d
 ## Conclusion
 
 Un rebranding en pleine bêta coûte du temps qu'on préférerait mettre ailleurs. Mais mieux vaut le faire tôt, quand la base de joueurs est encore petite, que plus tard, quand chaque changement d'URL casse des liens, des avis et des habitudes. Vérifier la disponibilité d'un nom avant de le choisir reste la leçon la plus simple, et la plus souvent négligée par les créateurs indépendants. Dynasty Nova reste le même jeu de stratégie spatiale né d'une frustration face à l'UX vieillissante d'OGame : le nom a changé, l'ambition non.
+
+Que vous reveniez d'Astro Nova ou que vous découvriez le jeu, la galaxie vous attend sur [play.dynastynova.com](https://play.dynastynova.com/?utm_source=blog&utm_medium=article&utm_campaign=astro-nova). Pour vos premiers pas, le [guide des premières heures](/blog/debuter-jeu-de-strategie-spatiale-guide-premieres-heures/) vous accompagne des premières mines aux premiers vaisseaux.

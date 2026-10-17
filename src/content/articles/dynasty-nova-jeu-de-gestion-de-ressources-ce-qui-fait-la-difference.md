@@ -30,7 +30,7 @@ La différence entre un bon système de ressources et un système creux tient da
 
 ### Le stockage comme contrainte, pas comme confort
 
-Une ressource qui déborde sans conséquence perd tout intérêt stratégique. Un plafond de stockage, une perte en cas de surplus ou une vulnérabilité liée à un stock trop visible transforment la gestion de ressources en décision de timing : produire, mais aussi savoir quand dépenser avant qu'un excédent ne devienne un problème.
+Une ressource qui déborde sans conséquence perd tout intérêt stratégique. Un plafond de stockage, une perte en cas de surplus ou une vulnérabilité liée à un stock trop visible transforment la gestion de ressources en décision de timing : produire, mais aussi savoir quand dépenser avant qu'un excédent ne devienne un problème. Dans Dynasty Nova, un excédent peut aussi s'échanger contre des Crédits à la [banque stellaire](/blog/vendre-et-acheter-des-ressources-banque-stellaire-dynasty-nova/), puis servir à racheter la ressource qui manque.
 
 ## OGame et l'héritage du genre spatial
 
@@ -58,6 +58,6 @@ Une tendance nette du genre en 2026 est l'émergence de jeux « 4X Lite », qui 
 
 ### Où se situe Dynasty Nova
 
-Dynasty Nova reprend le socle 4X (planètes, ressources métal/cristal/hydrogène, flotte, alliances) tout en travaillant sa lisibilité d'interface pour qu'un nouveau joueur comprenne vite l'impact de chaque choix, sans renoncer à la profondeur d'arbitrage qui fait l'intérêt du genre. La gestion de ressources y reste au centre de la progression, entre construire un empire et devoir constamment choisir où investir ce qu'il produit.
+Dynasty Nova, notre [jeu de stratégie spatiale gratuit sur navigateur](/blog/jeu-de-strategie-spatiale-gratuit-navigateur-dynasty-nova/), reprend le socle 4X (planètes, ressources métal/cristal/hydrogène, flotte, alliances) tout en travaillant sa lisibilité d'interface pour qu'un nouveau joueur comprenne vite l'impact de chaque choix, sans renoncer à la profondeur d'arbitrage qui fait l'intérêt du genre. La gestion de ressources y reste au centre de la progression, entre construire un empire et devoir constamment choisir où investir ce qu'il produit.
 
-Rejoindre un univers, c'est prendre en main un empire naissant où chaque unité de métal ou de cristal doit être orientée vers un objectif précis, développement, recherche ou défense, plutôt que de simplement regarder un chiffre grimper.
+Rejoindre un univers, c'est prendre en main un empire naissant où chaque unité de métal ou de cristal doit être orientée vers un objectif précis, développement, recherche ou défense, plutôt que de simplement regarder un chiffre grimper. Pour fonder le vôtre, explorez la galaxie sur [play.dynastynova.com](https://play.dynastynova.com/?utm_source=blog&utm_medium=article&utm_campaign=intention-gestion-ressources).

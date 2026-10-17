@@ -22,7 +22,7 @@ coverPrompt: "a soft field of warm amber and gold light"
 
 ## Introduction
 
-OGame, Travian, Ikariam : ces trois noms évoquent une époque où attendre la fin d'une construction de plusieurs heures créait une vraie tension. Plus de vingt ans après, ces jeux de stratégie par navigateur continuent de fasciner, et Dynasty Nova en revendique ouvertement l'héritage.
+OGame, Travian, Ikariam : ces trois noms évoquent une époque où attendre la fin d'une construction de plusieurs heures créait une vraie tension. Plus de vingt ans après, ces jeux de stratégie par navigateur continuent de fasciner, et Dynasty Nova, jeu de stratégie spatiale gratuit qui se joue dans le navigateur, sur mobile comme sur ordinateur, en revendique ouvertement l'héritage.
 
 ## Le triptyque qui a fait naître le genre
 
@@ -48,12 +48,14 @@ Les alliances, les forums, les plans coordonnés sur plusieurs semaines : ces je
 
 ### Une interface pensée pour aujourd'hui, pas pour les années 2000
 
-Dynasty Nova reprend le triptyque collecter-construire-conquérir et le temps réel qui continue même déconnecté, mais abandonne les tableaux HTML et les menus imbriqués sur cinq niveaux au profit d'une interface mobile-first pensée pour 2026. L'objectif n'est jamais de révolutionner le genre, mais de le rendre accessible à des joueurs qui ne connaîtraient jamais les jeux qui l'ont inventé.
+Dynasty Nova reprend le triptyque collecter-construire-conquérir et le temps réel qui continue même déconnecté, mais abandonne les tableaux HTML et les menus imbriqués sur cinq niveaux au profit d'une interface mobile-first pensée pour 2026. L'objectif n'est jamais de révolutionner le genre, mais de le rendre accessible à des joueurs qui ne connaîtraient jamais les jeux qui l'ont inventé. Pour un vétéran, nous détaillons [ce qui change pour un joueur habitué à OGame](/blog/dynasty-nova-ce-qui-change-pour-un-joueur-habitue-a-ogame/).
 
 ### Garder l'attente, sans en faire une punition
 
-Les temps de construction, de recherche et de déplacement de flotte restent au cœur de la stratégie, mais des mécaniques comme les quêtes ou le simulateur de combat donnent au joueur de quoi occuper ces temps d'attente sans jamais s'y ennuyer. L'attente reste le moteur du genre, pas un simple minuteur imposé.
+Les temps de construction, de recherche et de [déplacement de flotte](/blog/dynasty-nova-duree-de-vol-des-flottes-la-formule-dogame/) restent au cœur de la stratégie, mais des mécaniques comme les quêtes ou le simulateur de combat donnent au joueur de quoi occuper ces temps d'attente sans jamais s'y ennuyer. L'attente reste le moteur du genre, pas un simple minuteur imposé.
 
 ## Conclusion
 
 Vingt ans après l'âge d'or des jeux par navigateur, le genre n'a rien perdu de sa pertinence. Ce qui a changé, c'est l'attente des joueurs envers l'interface qui porte cette expérience, et c'est précisément cet écart que Dynasty Nova cherche à combler.
+
+Pour retrouver cette boucle sur une interface d'aujourd'hui, explorez la galaxie sur [play.dynastynova.com](https://play.dynastynova.com/?utm_source=blog&utm_medium=article&utm_campaign=intention-jeux-comme-ogame). Si c'est votre premier jeu du genre, le [guide des premières heures](/blog/debuter-jeu-de-strategie-spatiale-guide-premieres-heures/) vous montre par où commencer.
