@@ -1,10 +1,11 @@
 ---
 title: Dynasty Nova | Jeu de stratégie spatiale 4X
-description: Conquérez l'univers dans ce jeu de stratégie 4X spatial immersif. Explorez des galaxies, développez votre civilisation et affrontez d'autres joueurs.
+description: "Dynasty Nova, anciennement Astro Nova : jeu de stratégie spatiale gratuit, sans téléchargement. Colonisez des planètes et bâtissez votre empire, sur mobile et ordinateur."
 blocks:
   - type: gameHero
     title: Forgez votre légende au cœur de l'univers
     subtitle: Explorez l'inconnu, étendez votre empire, exploitez chaque ressource et éliminez vos rivaux. Un jeu de stratégie 4X en temps réel, où chaque décision façonne la galaxie.
+    subtitleShort: Colonisez des planètes, bâtissez votre empire et affrontez d'autres joueurs dans un jeu de stratégie spatiale en temps réel.
     ctaText: Jouer gratuitement
     ctaLink: "https://play.dynastynova.com"
     secondaryCtaText: Découvrir le jeu

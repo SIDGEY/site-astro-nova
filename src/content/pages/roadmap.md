@@ -58,4 +58,10 @@ blocks:
               - icon: ph-shield-star
                 title: Guildes intergalactiques
                 description: Créez ou rejoignez des guildes puissantes pour dominer ensemble la galaxie entière.
+
+  - type: cta
+    title: Le jeu est déjà ouvert
+    subtitle: Gratuit, sans téléchargement, sur mobile comme sur ordinateur. Fondez votre empire dès aujourd'hui.
+    buttonText: Jouer gratuitement
+    buttonLink: "https://play.dynastynova.com"
 ---

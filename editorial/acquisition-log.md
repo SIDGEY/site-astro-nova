@@ -28,3 +28,21 @@ le skill `acquisition`). On ne réécrit jamais une entrée passée, on complèt
 - Résultat : à relire
 
 Note de mesure (2026-10-16) : le projet PostHog du jeu (218176) a épuisé son quota le 2026-10-14 (événements hors `$exception` : 2 041 le 14, 4 le 15, 6 le 16). Les inscriptions attribuées à une page (« Inscrits » de Pages.csv) sont nulles jusqu'à la remise à zéro, vers le 2026-11-05 : période exclue des comparaisons d'inscriptions. Le site a basculé sur son propre projet (308915) au déploiement de `9e211ee`.
+
+## 2026-10-17 · / (mobile) · premier écran qui montre le jeu au trafic publicitaire
+- Constat : PostHog 308915, 2026-10-16 → 2026-10-17 (moins de 7 jours de données, tendance) : 20 sessions `fb / paid` (campagne 120248449199420618), toutes sur mobile dans le navigateur intégré Facebook, toutes entrées sur `/` : 0 `play_click`, 0 clic d'aucune sorte, scroll moyen 1,6 %, durée médiane 11 s, LCP p75 1 265 ms. Autres sessions mobiles sur `/` : 15 sessions, 11 `play_click`, scroll moyen 35,2 %. GA4 2026-09-17 → 2026-10-17 : 178 sessions `fb / paid`. Le bouton était visible au premier écran (360×560), mais ce premier écran n'était que du texte, les écrans du jeu commençant sous la ligne de flottaison.
+- Changement : sous 640 px seulement, sous-titre court (`subtitleShort`), atouts « Gratuit · Sans téléchargement · Mobile et ordinateur » au-dessus du bouton, « Découvrir le jeu » masqué, marges resserrées : le haut des téléphones entre dans le premier écran (à 504 px sur 360×560). Ordinateur inchangé.
+- Mesure : part des sessions `fb / paid` avec `play_click` (départ : 0 / 20) et scroll moyen ; contrôle : conversion des autres sessions mobiles sur `/` (départ : 11 `play_click` / 15 sessions). À relire le 2026-10-31.
+- Résultat : à relire
+
+## 2026-10-17 · / · meta description qui nomme l'ancienne marque
+- Constat : GSC 2026-07-17 → 2026-10-15, Requêtes-Pages.csv : « astro nova » sur `/`, 202 impressions, 11 clics (5,45 %), position 4,72. La description de la home ne disait pas que Dynasty Nova s'appelait Astro Nova.
+- Changement : description « Dynasty Nova, anciennement Astro Nova : jeu de stratégie spatiale gratuit, sans téléchargement… » ; titre inchangé.
+- Mesure : CTR de « astro nova » sur `/` ; contrôle : « dynasty nova » (départ : 74,30 %, 572 impressions, position 1,02, Requêtes.csv). À relire le 2026-10-31, seconde lecture le 2026-11-14 (reprise de la description par Google).
+- Résultat : à relire
+
+## 2026-10-17 · /roadmap/, /blog/ · bouton vers le jeu
+- Constat : GA4 2026-09-17 → 2026-10-17 : /roadmap/ 90 vues, /blog/ 106 vues. PostHog 2026-10-16 → 2026-10-17 : /roadmap/ 5 visiteurs, 0 départ, 66,67 % lus jusqu'au bout ; /blog/ 6 visiteurs, 0 départ, scroll moyen 22,4 %. Sur mobile, aucun lien visible vers le jeu sur ces pages (seulement dans le menu).
+- Changement : bloc `cta` en fin de roadmap (bloc remis aux couleurs du site : carte sombre, bouton bleu) ; bouton « Jouer gratuitement » sous le chapeau de /blog/.
+- Mesure : départs vers le jeu depuis ces deux pages (PostHog Pages.csv), en tendance sous 30 visiteurs. À relire le 2026-10-31.
+- Résultat : à relire

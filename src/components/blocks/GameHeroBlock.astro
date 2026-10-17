@@ -7,6 +7,8 @@ import FeatureScreens from "../game/FeatureScreens.astro";
 interface Props {
   title: string;
   subtitle: string;
+  /** Sous-titre affiché sous 640 px : une phrase, pour que les écrans du jeu entrent dans le premier écran. */
+  subtitleShort?: string;
   ctaText: string;
   ctaLink: string;
   secondaryCtaText?: string;
@@ -22,6 +24,7 @@ interface Props {
 const {
   title,
   subtitle,
+  subtitleShort,
   ctaText,
   ctaLink,
   secondaryCtaText = "Découvrir le jeu",
@@ -63,18 +66,26 @@ const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/land
     </div>
   </div>
   <div
-    class="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-11 pt-28 pb-20 lg:pt-32 lg:pb-20 grid lg:grid-cols-[minmax(0,1fr)_auto] items-center gap-14 lg:gap-16"
+    class="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-11 pt-24 sm:pt-28 pb-20 lg:pt-32 lg:pb-20 grid lg:grid-cols-[minmax(0,1fr)_auto] items-center gap-6 sm:gap-14 lg:gap-16"
   >
-    <div class="max-w-2xl text-center lg:text-left mx-auto lg:mx-0">
-      <h1 class="text-4xl sm:text-5xl xl:text-6xl font-bold text-white mb-6 lg:mb-8">
+    {/* Sur téléphone, le premier écran montre le jeu : sous-titre court, atouts au-dessus du
+        bouton, pas de « Découvrir le jeu » (on y défile au doigt), téléphones juste dessous.
+        Le visiteur venu d'une publicité ne connaît pas le jeu et ne défile pas pour le découvrir. */}
+    <div class="max-w-2xl text-center lg:text-left mx-auto lg:mx-0 flex flex-col">
+      <h1 class="text-4xl sm:text-5xl xl:text-6xl font-bold text-white mb-4 sm:mb-6 lg:mb-8">
         {title}
       </h1>
 
-      <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-xl mx-auto lg:mx-0">
+      <p class:list={["text-lg md:text-xl text-slate-400 mb-6 sm:mb-10 max-w-xl mx-auto lg:mx-0", subtitleShort && "hidden sm:block"]}>
         {subtitle}
       </p>
+      {subtitleShort && (
+        <p class="sm:hidden text-lg text-slate-300 mb-5 max-w-xl mx-auto">
+          {subtitleShort}
+        </p>
+      )}
 
-      <div class="flex flex-col sm:flex-row flex-wrap gap-4 items-center justify-center lg:justify-start">
+      <div class="order-last sm:order-none flex flex-col sm:flex-row flex-wrap gap-4 items-center justify-center lg:justify-start">
         <a
           href={ctaLink}
           class="group flex items-center justify-center gap-2 h-12 px-6 w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold text-lg rounded-lg transition-colors shadow-lg shadow-blue-600/25"
@@ -85,14 +96,14 @@ const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/land
         <a
           href={secondaryCtaLink}
           data-scroll-next
-          class="flex items-center justify-center h-12 px-6 w-full sm:w-auto border border-slate-600 backdrop-blur-xl text-slate-200 hover:text-white hover:border-slate-500 font-semibold text-lg rounded-lg transition-colors"
+          class="hidden sm:flex items-center justify-center h-12 px-6 w-full sm:w-auto border border-slate-600 backdrop-blur-xl text-slate-200 hover:text-white hover:border-slate-500 font-semibold text-lg rounded-lg transition-colors"
         >
           {secondaryCtaText}
         </a>
       </div>
 
       {highlights.length > 0 && (
-        <ul class="mt-6 flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-slate-400">
+        <ul class="mb-5 sm:mb-0 sm:mt-6 flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-slate-400">
           {highlights.map((item) => (
             <li class="flex items-center gap-1.5">
               <i class={`ph ph-${item.icon} text-base text-blue-400`}></i>

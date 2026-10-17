@@ -246,6 +246,8 @@ const blockGameHeroSchema = blockBaseSchema.extend({
   type: z.literal('gameHero'),
   title: z.string(),
   subtitle: z.string(),
+  // Version courte du sous-titre, affichée sur téléphone : le premier écran doit laisser voir le jeu.
+  subtitleShort: z.string().optional(),
   ctaText: z.string(),
   ctaLink: z.string(),
   secondaryCtaText: z.string().optional(),

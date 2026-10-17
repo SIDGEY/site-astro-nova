@@ -17,25 +17,28 @@ interface Props {
 const { title, subtitle, bgVariant, buttonText, buttonLink, cta } = Astro.props;
 ---
 <Section variant={bgVariant || 'surface'}>
-  <div class="bg-secondary rounded-[48px] p-10 md:p-20 text-center text-secondary-contrast relative overflow-hidden shadow-2xl">
+  {/* Aux couleurs du hero de la home : carte sombre, bouton bleu, halo discret. */}
+  <div class="bg-slate-800/60 border border-slate-700/50 rounded-3xl p-8 md:p-16 text-center relative overflow-hidden shadow-2xl">
     <div class="relative z-10 max-w-3xl mx-auto">
-      <h2 class="text-4xl md:text-5xl font-bold mb-8 leading-tight text-white">
+      <h2 class="text-3xl md:text-5xl font-bold mb-6 leading-tight text-white">
         {title}
       </h2>
       {subtitle && (
-        <p class="text-xl md:text-2xl text-white/90 mb-12 leading-relaxed font-medium">
+        <p class="text-lg md:text-xl text-slate-400 mb-10 leading-relaxed">
           {subtitle}
         </p>
       )}
       <div class="flex flex-col sm:flex-row justify-center gap-6">
-        <a href={buttonLink || cta?.link} class="btn bg-white text-secondary hover:bg-white/90 btn-lg">
+        <a
+          href={buttonLink || cta?.link}
+          class="group flex items-center justify-center gap-2 h-12 px-6 w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold text-lg rounded-lg transition-colors shadow-lg shadow-blue-600/25"
+        >
           {buttonText || cta?.text}
+          <i class="ph ph-bold ph-arrow-right transition-transform group-hover:translate-x-0.5"></i>
         </a>
       </div>
     </div>
-    
-    <!-- Décoration épurée -->
-    <div class="absolute top-0 left-0 -z-0 w-80 h-80 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 -z-0 w-96 h-96 bg-black/10 rounded-full translate-x-1/4 translate-y-1/4 blur-3xl"></div>
+
+    <div class="absolute top-0 left-1/2 -z-0 w-96 h-96 bg-blue-500/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
   </div>
 </Section>
