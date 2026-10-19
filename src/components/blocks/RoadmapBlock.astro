@@ -1,8 +1,12 @@
 ---
+import { getCollection } from "astro:content";
+
 interface Card {
   icon?: string;
   title: string;
   description?: string;
+  /** Article ou ancre du site qui détaille la fonctionnalité. */
+  link?: string;
 }
 
 interface Entry {
@@ -27,6 +31,16 @@ interface Props {
 const { title, subtitle, sectionId, groups = [] } = Astro.props;
 
 const DEFAULT_ICON = "ph-shield-star";
+
+// Un lien vers un article absent ou encore en brouillon ferait une 404 : le build échoue plutôt.
+const published = new Set(
+  (await getCollection("articles", ({ data }) => data.draft !== true)).map((a) => `/blog/${a.id}/`),
+);
+for (const card of groups.flatMap((g) => g.entries.flatMap((e) => e.cards))) {
+  if (card.link?.startsWith("/blog/") && !published.has(card.link)) {
+    throw new Error(`Roadmap : « ${card.title} » pointe vers ${card.link}, absent ou en brouillon.`);
+  }
+}
 ---
 
 <section id={sectionId} class="roadmap bg-[#0F172B] text-slate-100">
@@ -179,6 +193,12 @@ const DEFAULT_ICON = "ph-shield-star";
                                   {card.description}
                                 </p>
                               )}
+                              {card.link && (
+                                <a href={card.link} class="roadmap-link inline-flex items-center gap-1 text-sm font-medium text-[#60A5FA] hover:text-[#93C5FD]">
+                                  En savoir plus
+                                  <i class="ph ph-bold ph-arrow-right" aria-hidden="true" />
+                                </a>
+                              )}
                             </div>
                           </div>
                         )}
@@ -208,6 +228,12 @@ const DEFAULT_ICON = "ph-shield-star";
                                   {card.description}
                                 </p>
                               )}
+                              {card.link && (
+                                <a href={card.link} class="roadmap-link inline-flex items-center gap-1 text-sm font-medium text-[#60A5FA] hover:text-[#93C5FD]">
+                                  En savoir plus
+                                  <i class="ph ph-bold ph-arrow-right" aria-hidden="true" />
+                                </a>
+                              )}
                             </div>
                           </div>
                         )}
@@ -234,6 +260,12 @@ const DEFAULT_ICON = "ph-shield-star";
                               <p class="text-[#90A1B9] text-sm leading-5 mb-0">
                                 {card.description}
                               </p>
+                            )}
+                            {card.link && (
+                              <a href={card.link} class="roadmap-link inline-flex items-center gap-1 text-sm font-medium text-[#60A5FA] hover:text-[#93C5FD]">
+                                En savoir plus
+                                <i class="ph ph-bold ph-arrow-right" aria-hidden="true" />
+                              </a>
                             )}
                           </div>
                         </div>

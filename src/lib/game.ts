@@ -31,6 +31,19 @@ export interface GameAvatar {
   price?: number;
 }
 
+export interface GameDynasty {
+  code: string;
+  name: string;
+  people: string;
+  motto: string;
+  /** Le récit de l'écran de choix ; vide pour une dynastie qui n'est pas encore jouable. */
+  fiction: string;
+  playable: boolean;
+  traits: { code: string; name: string; description: string }[];
+  scene: string;
+  banner: string;
+}
+
 export const ENTITY_FAMILIES = ['buildings', 'facilities', 'defenses', 'ships', 'research', 'packs'] as const;
 export type EntityFamily = (typeof ENTITY_FAMILIES)[number];
 
@@ -43,6 +56,7 @@ export const logo = catalog.logo;
 export const banners = catalog.banners as Record<string, string>;
 export const backdrops = (catalog as { backdrops: { space: string } }).backdrops;
 export const avatars = catalog.avatars as GameAvatar[];
+export const dynasties = catalog.dynasties as GameDynasty[];
 export const planets = catalog.planets as Record<
   string,
   { variant: string; albedo: string; normal?: string; specular?: string; clouds?: string; airless?: boolean; sphere?: string; horizon?: string; atmosphere?: Record<string, unknown> }

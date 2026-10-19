@@ -268,6 +268,15 @@ const block3DSchema = blockBaseSchema.extend({
   sectionId: z.string().optional(),
 });
 
+const blockDynastiesSchema = blockBaseSchema.extend({
+  type: z.literal('dynasties'),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  sectionId: z.string().optional(),
+  ctaText: z.string().optional(),
+  ctaLink: z.string().optional(),
+});
+
 const blockGameFeaturesSchema = blockBaseSchema.extend({
   type: z.literal('gameFeatures'),
   title: z.string(),
@@ -390,6 +399,7 @@ const blockRoadmapSchema = blockBaseSchema.extend({
         icon: z.string().optional(),
         title: z.string(),
         description: z.string().optional(),
+        link: z.string().optional(),
       })),
     })),
   })),
@@ -420,6 +430,7 @@ const blockSchema = z.discriminatedUnion('type', [
   blockImageCardsSchema,
   blockFeatureShowcaseSchema,
   block3DSchema,
+  blockDynastiesSchema,
   blockFeaturePhoneSchema,
   blockCarouselSchema,
   blockNewsSchema,

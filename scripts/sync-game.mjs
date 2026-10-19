@@ -56,6 +56,17 @@ const PLANET_SHOWCASE = {
   gas: '01',
   moon: '01',
 };
+/**
+ * Les traits de chaque dynastie, dans l'ordre de `DynastyKey::traits()` (backend). Le front ne porte
+ * que leurs textes : la correspondance est recopiée ici, le Chœur n'est pas jouable et n'en a pas.
+ */
+const DYNASTY_TRAITS = {
+  heritage: ['nothing_is_lost', 'halden_rotation'],
+  accord: ['tuning_fork', 'far_listening'],
+  choir: [],
+};
+/** Scène de dynastie (1376×768 en jeu), en fond de carte. */
+const DYNASTY_SCENE_WIDTH = 960;
 
 const git = (...args) => execFileSync('git', ['-C', FRONTEND, ...args], { maxBuffer: 1 << 28 });
 const show = (file) => git('show', `${REF}:${file}`);
@@ -232,6 +243,24 @@ for (const file of listTree('src/assets/images/heroes')) {
   const name = slugOf(file);
   catalog.banners[name] = await gameImage(file.replace(/^src/, ''), 'banners', name, BANNER_WIDTH);
 }
+// Dynasties : textes de l'écran de choix (`dynasties.json`), scène et bannière de chacune.
+const dynastiesFr = i18n('dynasties');
+catalog.dynasties = await Promise.all(
+  Object.entries(DYNASTY_TRAITS).map(async ([code, traits]) => {
+    const t = dynastiesFr[code];
+    return {
+      code,
+      name: t.name,
+      people: t.people ?? '',
+      motto: t.motto,
+      fiction: t.fiction ?? '',
+      playable: traits.length > 0,
+      traits: traits.map((key) => ({ code: key, ...dynastiesFr.traits[key] })),
+      scene: await gameImage(`/assets/images/dynasties/scenes/${code}.webp`, 'dynasties', `${code}-scene`, DYNASTY_SCENE_WIDTH),
+      banner: await gameImage(`/assets/images/dynasties/banners/${code}.webp`, 'dynasties', `${code}-banner`, 320),
+    };
+  }),
+);
 // Fond de la page Planète (`PLANET_BACKDROP_IMAGE`), posé derrière la scène 3D.
 catalog.backdrops = { space: await gameImage('/assets/images/backgrounds/space.webp', 'backgrounds', 'space', 1200) };
 catalog.logo = '/game/logo-icon.svg';

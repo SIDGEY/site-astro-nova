@@ -60,3 +60,21 @@ Note de mesure (2026-10-16) : le projet PostHog du jeu (218176) a épuisé son q
 - Résultat : à relire
 
 Note de mesure (2026-10-19) : depuis le déploiement de `7a154b4` (2026-10-17 vers 22 h 30), sur mobile et sur `/` : 37 sessions `fb`/`ig`, 0 `play_click`, 15 clics dont la plupart sur les boutons de biome par un seul visiteur, 15 sessions sorties avant toute mesure Web Vitals ; autres sessions mobiles : 29 sessions, 21 `play_click` (PostHog 308915, requête SQL). Tendance à confirmer à la relecture du 2026-10-31 : la perte du trafic payant semble venir de l'annonce (clics accidentels, navigateur intégré) plus que de la page. Le projet du jeu (218176) est toujours hors quota (1 à 11 événements par jour hors `$exception` du 15 au 19) : aucune inscription mesurable avant la remise à zéro.
+
+## 2026-10-19 · / · bloc « Choisissez votre dynastie » sous le hero
+- Constat : le jeu s'appelle Dynasty Nova mais ni la home ni la FAQ ne disaient ce qu'est une dynastie ; la home ne présentait que des mécaniques (ressources, mines, installations, défenses, flotte). Le jeu en production (3.26.1) porte pourtant le récit des dynasties : L'Héritage, L'Accord, et le Chœur non jouable. PostHog 308915, 2026-10-16 → 2026-10-19 (3 jours, tendance) : `/` 133 visiteurs, 48 partis vers le jeu (36,09 %), scroll moyen 20,7 %, 8,87 % lus jusqu'au bout ; mobile 29 / 96 sessions (30,21 %), ordinateur 42 / 81 (51,85 %) (Appareils.csv).
+- Changement : bloc `dynasties` entre le hero et la planète 3D. Les textes et les visuels viennent de l'écran de choix du jeu via `sync-game.mjs` (nouvelle section dynasties, synchro relancée sur le même commit 46160a4d, identique à la 3.26.1 pour les dynasties). Il comprend la devise, deux phrases du récit (la suite sous « Lire leur histoire »), les traits, le Chœur en carte verrouillée, et un bouton « Choisir ma dynastie ». Le sous-titre du hero ordinateur commence par « Choisissez votre dynastie ». Aucune histoire de l'univers inventée : le lore global n'est pas tranché (codex, LORE_BRIEF).
+- Mesure : conversion visiteurs de `/` (départ 36,09 %), scroll moyen (départ 20,7 %), part des `play_click` dont `link_text` vaut « Choisir ma dynastie », ouvertures de « Lire leur histoire » (autocapture). Recouvre le test du premier écran mobile du 2026-10-17 : juger d'abord sur l'ordinateur, que ce test ne touche pas (départ 51,85 %). À relire le 2026-11-02.
+- Résultat : à relire
+
+## 2026-10-19 · /faq/ · question « Qu'est-ce qu'une dynastie ? »
+- Constat : GSC 2026-07-19 → 2026-10-17 : /faq/ 78 impressions, 1 clic, position 3,44 ; la FAQ ne parlait pas des dynasties.
+- Changement : question ajoutée en deuxième position (reprise dans le JSON-LD FAQPage), textes fidèles à l'écran de choix du jeu.
+- Mesure : impressions et clics GSC de /faq/, à relire le 2026-11-02 (faible volume : tendance).
+- Résultat : à relire
+
+## 2026-10-19 · /roadmap/ · cartes reliées aux articles
+- Constat : GA4 2026-09-19 → 2026-10-19 : /roadmap/ 84 vues ; GSC : 90 impressions en position 1,32 ; PostHog 2026-10-16 → 2026-10-19 : 8 visiteurs, 0 départ, 66,67 % lus jusqu'au bout, 3 sessions entrées par la roadmap à 1,00 page par session (Entrees.csv). La roadmap reconstruite le jour même à partir des PR du jeu ne menait nulle part.
+- Changement : champ `link` sur les cartes, avec un lien « En savoir plus » vers les 12 articles publiés correspondants, et les dynasties vers `/#dynasties`. Le build échoue si un lien vise un article absent ou en brouillon (à ajouter quand les articles dynasties, bots et événements cosmiques seront publiés).
+- Mesure : pages par session des entrées sur /roadmap/ (départ 1,00), clics « En savoir plus » (autocapture), départs vers le jeu depuis /roadmap/ (départ 0). À relire le 2026-11-02.
+- Résultat : à relire

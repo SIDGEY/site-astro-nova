@@ -13,6 +13,8 @@ blocks:
     items:
       - question: "Qu'est-ce que Dynasty Nova ?"
         answer: "Dynasty Nova est un jeu de stratégie spatiale 4X où vous bâtissez votre empire interstellaire : gérez vos ressources, développez vos technologies, construisez votre flotte, et explorez, conquérez et dominez la galaxie."
+      - question: "Qu'est-ce qu'une dynastie dans Dynasty Nova ?"
+        answer: "C'est votre peuple d'origine, choisi dans chaque univers et pour toujours. L'Héritage rassemble humains, augmentés, cyborgs et clones (« On ne laisse personne derrière ») ; L'Accord réunit des xénos de multiples espèces (« S'accorder, ou trembler »). Chaque dynastie apporte deux traits actifs dès la première minute et deux classes qui n'appartiennent qu'à elle, chacune avec son arbre de talents. Une troisième dynastie, le Chœur, n'est pas encore jouable."
       - question: "Dynasty Nova est-il gratuit ?"
         answer: "Oui, Dynasty Nova est gratuit et jouable sans limite de progression. Le jeu suit un modèle Pay-to-Fast plutôt que Pay-to-Win : aucun achat ne donne un avantage stratégique définitif, seulement un gain de temps optionnel."
       - question: "Sur quelles plateformes puis-je jouer à Dynasty Nova ?"

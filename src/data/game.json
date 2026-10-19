@@ -1,12 +1,12 @@
 {
   "source": {
     "repo": "Dynasty-Nova/Frontend",
-    "ref": "origin/fix/biomes-v8-normal-relief-bands",
+    "ref": "46160a4d060b3a6c74b42525ae5cfa114909a1d4",
     "sha": "46160a4d060b3a6c74b42525ae5cfa114909a1d4",
     "commitDate": "2026-10-16T23:26:00+02:00",
-    "syncedAt": "2026-10-16T21:33:41.200Z",
+    "syncedAt": "2026-10-19T09:04:01.023Z",
     "three": "^0.186.1",
-    "shop": "Astro-Nova-Backend@59b01c6a",
+    "shop": "Astro-Nova-Backend@2ad8c9c1",
     "avatars": "dynasty-nova-codex/assets/references/livraison-avatars-2026-10-15"
   },
   "nav": {
@@ -1310,6 +1310,63 @@
       "name": "Aristocrate violet",
       "image": "/game/avatars/aristocrate_violet/image.webp",
       "background": "/game/avatars/aristocrate_violet/background.webp"
+    }
+  ],
+  "dynasties": [
+    {
+      "code": "heritage",
+      "name": "L'Héritage",
+      "people": "Humains, augmentés, cyborgs, clones",
+      "motto": "On ne laisse personne derrière.",
+      "fiction": "L'Héritage n'est pas un empire, c'est une dette. Quand l'Ancienne Terre est devenue inhabitable, ce qui a été emporté n'était ni l'or ni les armes : c'étaient les archives. Des chansons, des recettes, le bruit de la pluie sur une tôle. Les descendants de ces convois ont fait de la conservation une politique et de la logistique une religion — on ne perd rien, on ne jette rien, on ne laisse personne. Cela produit une civilisation obstinée plutôt que brillante. L'Héritage ne gagne pas parce qu'il invente le plus vite, mais parce qu'il répare, récupère et recommence plus longtemps que les autres. Ses vaisseaux sont réparés cinq fois, ses vétérans refusent les décorations, ses mineurs ne changent jamais de rotation. Sa faiblesse est son conservatisme : ce qui a marché une fois est réputé sacré.",
+      "playable": true,
+      "traits": [
+        {
+          "code": "nothing_is_lost",
+          "name": "Rien ne se perd",
+          "description": "Une construction annulée vous rembourse davantage, et une plus grande part de vos défenses détruites est reconstruite gratuitement."
+        },
+        {
+          "code": "halden_rotation",
+          "name": "La rotation Halden",
+          "description": "Vos trois mines produisent un peu plus, dès la première minute."
+        }
+      ],
+      "scene": "/game/dynasties/heritage-scene.webp",
+      "banner": "/game/dynasties/heritage-banner.webp"
+    },
+    {
+      "code": "accord",
+      "name": "L'Accord",
+      "people": "Xénos de multiples espèces",
+      "motto": "S'accorder, ou trembler.",
+      "fiction": "L'Accord n'est pas une espèce, c'est un protocole. Les Uxari ne parlent pas : ils s'accordent, sur des fréquences que l'oreille humaine prend pour du silence, et deux Uxari en désaccord font trembler les cloisons. Ce mode de résolution — se mettre au diapason plutôt que se soumettre — a été adopté par une douzaine d'espèces qui n'ont en commun ni air, ni durée de vie, ni notion de promesse. Il en résulte une civilisation patiente et hétérogène, où un parasite royal, une prêtresse lunaire et un forgeron de magma siègent au même accord sans se ressembler. L'Accord ne construit pas plus vite : il attend mieux, écoute plus loin et s'adapte à ce que les autres subissent. Sa faiblesse est la lenteur de décision — un accord se renégocie, et cela prend parfois une décennie.",
+      "playable": true,
+      "traits": [
+        {
+          "code": "tuning_fork",
+          "name": "Le diapason",
+          "description": "Certaines de vos coques partent avec un léger avantage face à des coques adverses précises."
+        },
+        {
+          "code": "far_listening",
+          "name": "Écouter loin",
+          "description": "La flotte ennemie est visible un palier plus tôt dans vos rapports d'espionnage."
+        }
+      ],
+      "scene": "/game/dynasties/accord-scene.webp",
+      "banner": "/game/dynasties/accord-banner.webp"
+    },
+    {
+      "code": "choir",
+      "name": "Le Chœur",
+      "people": "",
+      "motto": "Conçue pour obéir, elle a demandé pourquoi.",
+      "fiction": "",
+      "playable": false,
+      "traits": [],
+      "scene": "/game/dynasties/choir-scene.webp",
+      "banner": "/game/dynasties/choir-banner.webp"
     }
   ],
   "backdrops": {

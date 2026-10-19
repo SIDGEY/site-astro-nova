@@ -4,7 +4,7 @@ description: "Dynasty Nova, anciennement Astro Nova : jeu de stratégie spatiale
 blocks:
   - type: gameHero
     title: Forgez votre légende au cœur de l'univers
-    subtitle: Explorez l'inconnu, étendez votre empire, exploitez chaque ressource et éliminez vos rivaux. Un jeu de stratégie 4X en temps réel, où chaque décision façonne la galaxie.
+    subtitle: Choisissez votre dynastie, explorez l'inconnu, étendez votre empire et éliminez vos rivaux. Un jeu de stratégie 4X en temps réel, où chaque décision façonne la galaxie.
     subtitleShort: Colonisez des planètes, bâtissez votre empire et affrontez d'autres joueurs dans un jeu de stratégie spatiale en temps réel.
     ctaText: Jouer gratuitement
     ctaLink: "https://play.dynastynova.com"
@@ -15,6 +15,13 @@ blocks:
       - { icon: browser, label: Sans téléchargement }
       - { icon: devices, label: Mobile et ordinateur }
     banner: quests
+
+  - type: dynasties
+    sectionId: dynasties
+    title: Choisissez votre dynastie
+    subtitle: "Votre peuple d'origine : une identité, deux traits actifs dès la première minute, et deux classes qui n'appartiennent qu'à lui. Un choix pour chaque univers, et pour toujours."
+    ctaText: Choisir ma dynastie
+    ctaLink: "https://play.dynastynova.com"
 
   - type: block3D
     sectionId: planets

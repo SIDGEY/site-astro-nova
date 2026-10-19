@@ -93,39 +93,49 @@ blocks:
               - icon: ph-handshake
                 title: Alliances
                 description: Fondez une alliance, recrutez, discutez sur un canal dédié et partagez vos rapports d'espionnage.
+                link: "/blog/dynasty-nova-les-alliances-arrivent-en-jeu/"
               - icon: ph-chats-circle
                 title: Chat en direct
                 description: Un chat d'univers en temps réel, des messages privés et des réponses.
+                link: "/blog/dynasty-nova-le-chat-duniverse-arrive-en-jeu/"
               - icon: ph-calculator
                 title: Simulateur de combat
                 description: Simulez une bataille avant d'engager votre flotte.
+                link: "/blog/dynasty-nova-simuler-un-combat-avant-denvoyer-sa-flotte/"
               - icon: ph-crosshair
                 title: Missiles interplanétaires
                 description: Frappez les défenses adverses à distance.
+                link: "/blog/dynasty-nova-les-missiles-interplanetaires-arrivent-en-jeu/"
               - icon: ph-list-checks
                 title: Quêtes
                 description: Une campagne de quêtes guide votre progression.
+                link: "/blog/dynasty-nova-lance-son-systeme-de-quetes/"
           - month: Septembre
             side: right
             cards:
               - icon: ph-moon
                 title: Lunes
                 description: Des lunes se forment après les grandes batailles, avec leur propre surface en 3D. Elles peuvent aussi être détruites.
+                link: "/blog/dynasty-nova-des-lunes-en-orbite-de-vos-planetes/"
               - icon: ph-flag-banner
                 title: Guerres et pactes d'alliance
                 description: Les alliances votent leurs guerres et leurs pactes, partagent leur vision de la galaxie et ne peuvent plus tirer sur leurs alliés.
+                link: "/blog/dynasty-nova-declarer-la-guerre-a-une-autre-alliance-au-vote/"
               - icon: ph-graduation-cap
                 title: Tutoriel intégré
                 description: Un tutoriel progressif accompagne vos premiers pas, sur mobile comme sur ordinateur.
+                link: "/blog/dynasty-nova-un-tutoriel-qui-vous-suit-pas-votre-navigateur/"
               - icon: ph-hourglass
                 title: Files de construction
                 description: Programmez plusieurs constructions à la suite sur chaque planète.
               - icon: ph-island
                 title: Mode vacances
                 description: Mettez votre empire à l'abri pendant votre absence, univers par univers.
+                link: "/blog/dynasty-nova-le-mode-vacances-univers-par-univers/"
               - icon: ph-key
                 title: Univers privés
                 description: Rejoignez un univers privé sur invitation pour jouer entre amis.
+                link: "/blog/dynasty-nova-rejoindre-un-univers-prive-par-code-dinvitation/"
           - month: Octobre
             side: left
             current: true
@@ -133,6 +143,7 @@ blocks:
               - icon: ph-crown
                 title: Dynasties, classes et talents
                 description: Choisissez votre dynastie et votre classe, puis développez un arbre de talents qui façonne votre style de jeu.
+                link: "/#dynasties"
               - icon: ph-compass
                 title: Expéditions
                 description: "Explorez l'espace profond : vaisseaux abandonnés, pirates, aliens et trous noirs vous y attendent."
@@ -142,6 +153,7 @@ blocks:
               - icon: ph-users-three
                 title: Station stellaire d'alliance
                 description: Trésorerie commune, convois et missions d'alliance pour progresser ensemble.
+                link: "/blog/dynasty-nova-la-station-dalliance-et-son-arbre-de-doctrine/"
               - icon: ph-skull
                 title: Bots plus vivants
                 description: Les bots ont désormais une dynastie, des talents et des alliances. Ils se font la guerre, et des boss font leur apparition.
@@ -151,6 +163,7 @@ blocks:
               - icon: ph-shield-check
                 title: Bouclier des nouveaux venus
                 description: Sept jours de protection à votre arrivée pour bien démarrer.
+                link: "/blog/dynasty-nova-sept-jours-de-bouclier-pour-les-nouveaux-joueurs/"
       - year: À venir
         entries:
           - month: En développement
