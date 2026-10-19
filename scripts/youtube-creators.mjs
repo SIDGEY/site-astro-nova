@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 /**
  * Dresse la liste des créateurs YouTube francophones à contacter pour l'acquisition de
- * joueurs : chaînes de 1 k à 100 k abonnés (par défaut) qui ont publié dans l'année des
- * vidéos sur OGame, les jeux de stratégie spatiale, les 4X ou les jeux navigateur. Passe
- * par l'API YouTube Data v3 : le site youtube.com n'est pas joignable depuis les sessions
- * cloud, googleapis.com l'est.
+ * joueurs. Deux profils :
+ *   - `navigateur` (défaut) : créateurs grand public, 10 k abonnés et plus, qui ont publié
+ *     dans l'année des vidéos « jeux navigateur » (tests, tops, jeux gratuits sans
+ *     téléchargement, .io, Poki / CrazyGames). Dynasty Nova se joue dans le navigateur :
+ *     c'est le format où il entre sans effort pour le créateur ni pour son public.
+ *   - `niche` : petites chaînes (1 k à 100 k) sur OGame, la stratégie spatiale et les 4X.
+ * Passe par l'API YouTube Data v3 : le site youtube.com n'est pas joignable depuis les
+ * sessions cloud, googleapis.com l'est.
  *
  * Pour chaque chaîne : abonnés, vues moyennes des vidéos qui collent au thème, rapport
  * vues / abonnés, dernière mise en ligne, vidéos trouvées, e-mail et liens publics de la
@@ -17,15 +21,16 @@
  *   2. APIs & Services > Credentials : créer une clé API, la restreindre à cette API.
  *
  * Quota : 10 000 unités par jour. Une recherche coûte 100 unités, le reste 1 unité par
- * appel ; le jeu de requêtes par défaut (16 requêtes, 1 page chacune) prend environ 1 700
- * unités.
+ * appel ; le profil `navigateur` (14 requêtes, 2 pages chacune) prend environ 3 000 unités,
+ * le profil `niche` (16 requêtes, 1 page) environ 1 700.
  *
  * Variables d'env requises (dans .env, jamais commité) :
  *   YOUTUBE_API_KEY=AIza...
  *
  * Usage :
- *   node scripts/youtube-creators.mjs                       # 1 k à 100 k abonnés, vidéos des 365 derniers jours
- *   node scripts/youtube-creators.mjs --min 500 --max 50000 --days 180
+ *   node scripts/youtube-creators.mjs                       # profil navigateur : 10 k abonnés et plus, vidéos des 365 derniers jours
+ *   node scripts/youtube-creators.mjs --profil niche        # OGame / 4X, 1 k à 100 k abonnés
+ *   node scripts/youtube-creators.mjs --min 50000 --max 0 --days 180   # --max 0 : pas de plafond
  *   node scripts/youtube-creators.mjs --query "hades star" --query "eve online fr"   # remplace les requêtes par défaut
  *   node scripts/youtube-creators.mjs --pages 2 --out .youtube-cache
  */
@@ -36,9 +41,26 @@ import process from "node:process";
 
 const API = "https://www.googleapis.com/youtube/v3";
 
-// Requête -> poids dans le score : plus la vidéo est proche de Dynasty Nova (OGame-like,
-// navigateur, gratuit), plus la chaîne a de chances d'avoir le bon public.
-const DEFAULT_QUERIES = [
+// Requête -> poids dans le score : plus la vidéo est proche de Dynasty Nova (navigateur,
+// gratuit, stratégie), plus la chaîne a de chances d'avoir le bon public.
+const BROWSER_QUERIES = [
+  ["jeu navigateur stratégie", 5],
+  ["jeux navigateur", 4],
+  ["jeu navigateur", 4],
+  ["je teste des jeux navigateur", 4],
+  ["meilleurs jeux navigateur", 4],
+  ["jeux sur navigateur gratuits", 4],
+  ["jeux gratuits sans téléchargement", 3],
+  ["jeux en ligne gratuits", 3],
+  ["jeux navigateur bizarres", 3],
+  ["jeux .io", 2],
+  ["jeux poki", 2],
+  ["jeux crazygames", 2],
+  ["jeux flash", 2],
+  ["ogame", 2],
+];
+
+const NICHE_QUERIES = [
   ["ogame", 5],
   ["ogame fr", 5],
   ["jeu comme ogame", 5],
@@ -56,6 +78,11 @@ const DEFAULT_QUERIES = [
   ["meilleurs jeux de stratégie gratuits", 2],
   ["x4 foundations fr", 1],
 ];
+
+const PROFILES = {
+  navigateur: { queries: BROWSER_QUERIES, min: 10000, max: 0, pages: 2, order: "viewCount" },
+  niche: { queries: NICHE_QUERIES, min: 1000, max: 100000, pages: 1, order: "relevance" },
+};
 
 const FR_COUNTRIES = new Set(["FR", "BE", "CH", "CA", "LU", "MC", "MA", "TN", "SN", "CI", "DZ"]);
 
@@ -84,12 +111,17 @@ async function loadEnvVar(name) {
 }
 
 function parseArgs(argv) {
-  const o = { min: 1000, max: 100000, days: 365, pages: 1, out: ".youtube-cache", queries: [] };
+  const profil = argv.includes("--profil") ? argv[argv.indexOf("--profil") + 1] : "navigateur";
+  if (!PROFILES[profil]) fail(`--profil attend ${Object.keys(PROFILES).join(" ou ")}.`);
+  const { queries, ...defaults } = PROFILES[profil];
+  const o = { profil, ...defaults, days: 365, out: ".youtube-cache", queries: [] };
   for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === "--min") o.min = Number(argv[++i]);
+    if (argv[i] === "--profil") i++;
+    else if (argv[i] === "--min") o.min = Number(argv[++i]);
     else if (argv[i] === "--max") o.max = Number(argv[++i]);
     else if (argv[i] === "--days") o.days = Number(argv[++i]);
     else if (argv[i] === "--pages") o.pages = Number(argv[++i]);
+    else if (argv[i] === "--order") o.order = argv[++i];
     else if (argv[i] === "--out") o.out = argv[++i];
     else if (argv[i] === "--query") o.queries.push([argv[++i], 3]);
     else fail(`Option inconnue : ${argv[i]}`);
@@ -98,7 +130,8 @@ function parseArgs(argv) {
     if (!Number.isInteger(o[k]) || o[k] < 0) fail(`--${k} attend un entier positif.`);
   }
   if (o.pages < 1 || o.pages > 5) fail("--pages attend un entier de 1 à 5.");
-  if (!o.queries.length) o.queries = DEFAULT_QUERIES;
+  if (!["relevance", "viewCount", "date"].includes(o.order)) fail("--order attend relevance, viewCount ou date.");
+  if (!o.queries.length) o.queries = queries;
   return o;
 }
 
@@ -175,6 +208,7 @@ async function main() {
           relevanceLanguage: "fr",
           regionCode: "FR",
           publishedAfter,
+          order: opts.order,
           pageToken,
         },
         100,
@@ -209,14 +243,15 @@ async function main() {
   const kept = channels.filter((ch) => {
     const subs = Number(ch.statistics.subscriberCount || 0);
     if (ch.statistics.hiddenSubscriberCount) return false;
-    if (subs < opts.min || subs > opts.max) return false;
+    if (subs < opts.min || (opts.max && subs > opts.max)) return false;
     const country = ch.snippet.country || ch.brandingSettings?.channel?.country;
     const lang = ch.snippet.defaultLanguage || ch.brandingSettings?.channel?.defaultLanguage || "";
     // Pays absent : fréquent, on garde (les vidéos viennent déjà d'une recherche en français).
     if (country && !FR_COUNTRIES.has(country) && !lang.startsWith("fr")) return false;
     return true;
   });
-  console.log(`📺 ${channels.length} chaînes trouvées, ${kept.length} dans la cible (${opts.min}–${opts.max} abonnés, francophones)`);
+  const range = opts.max ? `${opts.min}–${opts.max}` : `${opts.min} et plus`;
+  console.log(`📺 ${channels.length} chaînes trouvées, ${kept.length} dans la cible (profil ${opts.profil}, ${range} abonnés, francophones)`);
 
   // 3. Activité : dernières mises en ligne (régularité) et vues des vidéos sur le thème.
   const allVideoIds = kept.flatMap((ch) => [...byChannel.get(ch.id).videos.keys()]);
@@ -247,10 +282,12 @@ async function main() {
     const { emails, links } = contactsFrom(ch.snippet.description || "");
     const sinceLast = lastUpload ? daysSince(lastUpload) : null;
 
-    // Score : thème (poids des requêtes), audience réelle (vues / abonnés, plafonné), chaîne
-    // active, et un contact direct qui épargne une recherche manuelle.
+    // Score : thème (poids des requêtes), portée (vues moyennes, en ordre de grandeur : 1 k
+    // vaut 0, 1 M vaut 24), audience réelle (vues / abonnés, plafonné), chaîne active, et un
+    // contact direct qui épargne une recherche manuelle.
     const score =
       Math.min(found.relevance, 25) * 2 +
+      Math.max(0, Math.log10(avgViews + 1) - 3) * 8 +
       Math.min(viewRatio, 1.5) * 20 +
       (sinceLast === null ? 0 : sinceLast <= 30 ? 15 : sinceLast <= 90 ? 8 : 0) +
       Math.min(uploads90, 12) +
@@ -281,8 +318,8 @@ async function main() {
   // 4. Sorties.
   await fs.mkdir(opts.out, { recursive: true });
   const stamp = new Date().toISOString().slice(0, 10);
-  const jsonPath = path.join(opts.out, `creators-${stamp}.json`);
-  const csvPath = path.join(opts.out, `creators-${stamp}.csv`);
+  const jsonPath = path.join(opts.out, `creators-${opts.profil}-${stamp}.json`);
+  const csvPath = path.join(opts.out, `creators-${opts.profil}-${stamp}.csv`);
   await fs.writeFile(jsonPath, JSON.stringify({ generatedAt: new Date().toISOString(), options: opts, rows }, null, 2));
   const cols = Object.keys(rows[0] || { score: 0 });
   await fs.writeFile(csvPath, [cols.join(","), ...rows.map((r) => cols.map((c) => csvCell(r[c])).join(","))].join("\n"));
