@@ -142,6 +142,26 @@ const coverImage = article.data.image ?? getFallbackCover(article.id);
       >
         <Content />
 
+        {/* Fin de lecture : la plupart des articles n'ont aucun lien vers le jeu, et sur
+            téléphone l'en-tête ne montre pas son bouton. Pas d'UTM sur le lien : BaseLayout y
+            pose l'origine de la session et la page de départ. Ni <p> ni <li> ici, que les styles
+            de l'article reprendraient. */}
+        <div class="w-full bg-slate-800/60 border border-slate-700/50 rounded-3xl p-8 md:p-10 flex flex-col items-center gap-5 text-center">
+          <span class="text-2xl font-bold text-white">Fondez votre empire dans Dynasty Nova</span>
+          <a
+            href="https://play.dynastynova.com"
+            class="group inline-flex items-center justify-center gap-2 h-12 px-6 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-lg rounded-lg transition-colors shadow-lg shadow-blue-600/25"
+          >
+            Jouer gratuitement
+            <i class="ph ph-bold ph-arrow-right transition-transform group-hover:translate-x-0.5"></i>
+          </a>
+          <div class="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-slate-400">
+            <span class="flex items-center gap-1.5"><i class="ph ph-gift text-base text-blue-400"></i>Gratuit</span>
+            <span class="flex items-center gap-1.5"><i class="ph ph-browser text-base text-blue-400"></i>Sans téléchargement</span>
+            <span class="flex items-center gap-1.5"><i class="ph ph-devices text-base text-blue-400"></i>Mobile et ordinateur</span>
+          </div>
+        </div>
+
         {
           article.data.faq && article.data.faq.length > 0 && (
             <div class="w-full flex flex-col gap-6">

@@ -46,3 +46,17 @@ Note de mesure (2026-10-16) : le projet PostHog du jeu (218176) a épuisé son q
 - Changement : bloc `cta` en fin de roadmap (bloc remis aux couleurs du site : carte sombre, bouton bleu) ; bouton « Jouer gratuitement » sous le chapeau de /blog/. Commit `7a154b4`.
 - Mesure : départs vers le jeu depuis ces deux pages (PostHog Pages.csv), en tendance sous 30 visiteurs. À relire le 2026-10-31.
 - Résultat : à relire
+
+## 2026-10-17 · trois articles sans lien vers le jeu · CTA tracé et maillage (entrée rattrapée le 2026-10-19)
+- Constat : GA4 2026-09-19 → 2026-10-19 : /blog/dynasty-nova-jeu-de-gestion-de-ressources-ce-qui-fait-la-difference/ 17 vues, /blog/dynasty-nova-pourquoi-les-jeux-comme-ogame-fascinent-encore-20-ans-apres/ 6 vues, /blog/dynasty-nova-pourquoi-renommer-astro-nova-en-pleine-beta/ 1 vue. Aucun des trois n'avait de lien vers le jeu.
+- Changement : intro à froid, CTA tracés `intention-gestion-ressources`, `intention-jeux-comme-ogame` et `astro-nova`, maillage vers le pilier, le guide et les articles voisins ; slugs, titres et dates inchangés. Commit `e09da7a`.
+- Mesure : départs vers le jeu depuis ces trois pages (PostHog Pages.csv), en tendance sous 30 visiteurs. À relire le 2026-10-31.
+- Résultat : à relire
+
+## 2026-10-19 · /blog/<slug>/ (tous les articles) · bouton vers le jeu en fin d'article
+- Constat : PostHog 308915, 2026-10-16 → 2026-10-19 (3 jours, tendance) : aucun article n'a de départ vers le jeu (Pages.csv). /blog/dynasty-nova-des-lunes-en-orbite-de-vos-planetes/ : 6 entrées, 7 vues, 6 visiteurs, 0 départ, durée médiane 119,8 s, 50 % lus jusqu'au bout, arrivées surtout par l'e-mail du jeu (`resend / email-e07`). 40 articles publiés sans aucun lien vers play.dynastynova.com ; le gabarit d'article n'en avait pas.
+- Changement : bloc « Fondez votre empire dans Dynasty Nova », bouton « Jouer gratuitement » et atouts de la home (Gratuit · Sans téléchargement · Mobile et ordinateur), entre le texte et la FAQ, dans `src/pages/blog/[...slug].astro`. Lien sans UTM : BaseLayout pose l'origine et la page de départ.
+- Mesure : départs vers le jeu depuis les pages /blog/<slug>/ (Pages.csv, départ : 0) ; part des `play_click` d'article dont `link_text` vaut « Jouer gratuitement ». À relire le 2026-11-02.
+- Résultat : à relire
+
+Note de mesure (2026-10-19) : depuis le déploiement de `7a154b4` (2026-10-17 vers 22 h 30), sur mobile et sur `/` : 37 sessions `fb`/`ig`, 0 `play_click`, 15 clics dont la plupart sur les boutons de biome par un seul visiteur, 15 sessions sorties avant toute mesure Web Vitals ; autres sessions mobiles : 29 sessions, 21 `play_click` (PostHog 308915, requête SQL). Tendance à confirmer à la relecture du 2026-10-31 : la perte du trafic payant semble venir de l'annonce (clics accidentels, navigateur intégré) plus que de la page. Le projet du jeu (218176) est toujours hors quota (1 à 11 événements par jour hors `$exception` du 15 au 19) : aucune inscription mesurable avant la remise à zéro.
