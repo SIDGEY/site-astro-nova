@@ -65,8 +65,8 @@ const DYNASTY_TRAITS = {
   accord: ['tuning_fork', 'far_listening'],
   choir: [],
 };
-/** Scène de dynastie (1376×768 en jeu), en fond de carte. */
-const DYNASTY_SCENE_WIDTH = 960;
+/** Scène de dynastie (1376×768 en jeu), en fond plein cadre sur la home : gardée à sa taille native. */
+const DYNASTY_SCENE_WIDTH = 1376;
 
 const git = (...args) => execFileSync('git', ['-C', FRONTEND, ...args], { maxBuffer: 1 << 28 });
 const show = (file) => git('show', `${REF}:${file}`);

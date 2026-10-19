@@ -19,9 +19,10 @@ blocks:
   - type: dynasties
     sectionId: dynasties
     title: Choisissez votre dynastie
-    subtitle: "Votre peuple d'origine : une identité, deux traits actifs dès la première minute, et deux classes qui n'appartiennent qu'à lui. Un choix pour chaque univers, et pour toujours."
-    ctaText: Choisir ma dynastie
+    subtitle: "Deux peuples, deux façons de conquérir la galaxie. Un choix pour chaque univers, et pour toujours."
+    ctaText: Choisir
     ctaLink: "https://play.dynastynova.com"
+    ctaNote: Création de compte gratuite
 
   - type: block3D
     sectionId: planets

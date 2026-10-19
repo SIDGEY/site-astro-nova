@@ -275,6 +275,7 @@ const blockDynastiesSchema = blockBaseSchema.extend({
   sectionId: z.string().optional(),
   ctaText: z.string().optional(),
   ctaLink: z.string().optional(),
+  ctaNote: z.string().optional(),
 });
 
 const blockGameFeaturesSchema = blockBaseSchema.extend({
