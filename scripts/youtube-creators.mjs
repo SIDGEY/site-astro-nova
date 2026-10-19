@@ -14,7 +14,15 @@
  * vues / abonnés, dernière mise en ligne, vidéos trouvées, e-mail et liens publics de la
  * description, et un lien tracé vers le jeu propre à la chaîne
  * (`utm_source=youtube&utm_medium=creator&utm_campaign=<chaîne>`) pour mesurer ensuite
- * dans PostHog qui amène des joueurs. Écrit dans .youtube-cache/ (gitignored).
+ * dans PostHog qui amène des joueurs (`npm run posthog:fetch`, Createurs.csv). Écartées :
+ * chaînes « conçues pour les enfants », chaînes d'éditeurs et de médias, chaînes dont aucun
+ * titre trouvé n'est en français.
+ *
+ * Sorties : la liste complète dans .youtube-cache/ (gitignored, avec les e-mails), et le
+ * suivi des prises de contact dans editorial/createurs/suivi.csv (commité, sans e-mail) :
+ * les nouvelles chaînes y entrent en statut « à qualifier », celles déjà suivies gardent
+ * leur statut et leurs notes, seuls leurs chiffres sont mis à jour. Le skill `createurs`
+ * part de ce fichier.
  *
  * Prérequis (une seule fois, dans Google Cloud, le projet du compte de service GSC convient) :
  *   1. APIs & Services > Library : activer « YouTube Data API v3 ».
@@ -33,6 +41,8 @@
  *   node scripts/youtube-creators.mjs --min 50000 --max 0 --days 180   # --max 0 : pas de plafond
  *   node scripts/youtube-creators.mjs --query "hades star" --query "eve online fr"   # remplace les requêtes par défaut
  *   node scripts/youtube-creators.mjs --pages 2 --out .youtube-cache
+ *   node scripts/youtube-creators.mjs --sans-suivi          # ne touche pas à editorial/createurs/suivi.csv
+ *   node scripts/youtube-creators.mjs --check               # vérifie la clé (1 unité de quota) et s'arrête
  */
 
 import fs from "node:fs/promises";
@@ -84,6 +94,18 @@ const PROFILES = {
   niche: { queries: NICHE_QUERIES, min: 1000, max: 100000, pages: 1, order: "relevance" },
 };
 
+// Éditeurs, portails et médias : ils ne relaient pas un jeu concurrent, inutile de les démarcher.
+const EXCLUDED = /gameforge|poki|crazygames|jeuxvideo\.com|jvcom|gamekult|millenium|gameblog|ign france|dynasty ?nova|astro ?nova/i;
+
+// Mots outils et accents : un titre qui n'en a aucun n'est très probablement pas en français.
+const FRENCH = /[èêàùçœ]|\b(les|des|du|une|jeux?|je|j|est|pour|avec|sur|et|qui|pas|mon|ce|cette|gratuits?|meilleurs?|navigateur)\b/i;
+
+const SUIVI = "editorial/createurs/suivi.csv";
+const SUIVI_COLS = [
+  "chaine", "url", "profil", "abonnes", "vues_moy_theme", "score", "lien_trace",
+  "statut", "contact_le", "relance_le", "reponse", "offre", "video_le", "notes", "vu_le",
+];
+
 const FR_COUNTRIES = new Set(["FR", "BE", "CH", "CA", "LU", "MC", "MA", "TN", "SN", "CI", "DZ"]);
 
 function fail(msg) {
@@ -114,9 +136,11 @@ function parseArgs(argv) {
   const profil = argv.includes("--profil") ? argv[argv.indexOf("--profil") + 1] : "navigateur";
   if (!PROFILES[profil]) fail(`--profil attend ${Object.keys(PROFILES).join(" ou ")}.`);
   const { queries, ...defaults } = PROFILES[profil];
-  const o = { profil, ...defaults, days: 365, out: ".youtube-cache", queries: [] };
+  const o = { profil, ...defaults, days: 365, out: ".youtube-cache", queries: [], suivi: true, check: false };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--profil") i++;
+    else if (argv[i] === "--sans-suivi") o.suivi = false;
+    else if (argv[i] === "--check") o.check = true;
     else if (argv[i] === "--min") o.min = Number(argv[++i]);
     else if (argv[i] === "--max") o.max = Number(argv[++i]);
     else if (argv[i] === "--days") o.days = Number(argv[++i]);
@@ -140,8 +164,18 @@ async function yt(apiKey, endpoint, params, cost = 1) {
   const url = new URL(`${API}/${endpoint}`);
   for (const [k, v] of Object.entries(params)) if (v !== undefined) url.searchParams.set(k, v);
   url.searchParams.set("key", apiKey);
-  const res = await fetch(url);
   quotaUsed += cost;
+  // Erreurs réseau et 5xx : passagères, on réessaie deux fois (2 s puis 4 s).
+  let res;
+  for (let attempt = 0; ; attempt++) {
+    try {
+      res = await fetch(url);
+      if (res.status < 500 || attempt === 2) break;
+    } catch (e) {
+      if (attempt === 2) fail(`YouTube ${endpoint} injoignable : ${e.message}`);
+    }
+    await new Promise((r) => setTimeout(r, 2000 * 2 ** attempt));
+  }
   const body = await res.json().catch(() => ({}));
   if (!res.ok) {
     const reason = body?.error?.errors?.[0]?.reason || res.status;
@@ -161,7 +195,7 @@ function chunks(arr, n) {
 function slug(s) {
   return s
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/^@/, "")
     .replace(/[^a-z0-9]+/g, "-")
@@ -185,10 +219,74 @@ function csvCell(v) {
   return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
+function toCsv(cols, rows) {
+  return [cols.join(","), ...rows.map((r) => cols.map((c) => csvCell(r[c])).join(","))].join("\n") + "\n";
+}
+
+// Lecteur CSV minimal (guillemets, virgules et retours à la ligne dans les notes).
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (quoted) {
+      if (ch === '"' && text[i + 1] === '"') (cell += '"'), i++;
+      else if (ch === '"') quoted = false;
+      else cell += ch;
+    } else if (ch === '"') quoted = true;
+    else if (ch === ",") row.push(cell), (cell = "");
+    else if (ch === "\n" || ch === "\r") {
+      if (ch === "\r" && text[i + 1] === "\n") i++;
+      row.push(cell), rows.push(row), (row = []), (cell = "");
+    } else cell += ch;
+  }
+  if (cell || row.length) row.push(cell), rows.push(row);
+  const [header = [], ...body] = rows.filter((r) => r.some((c) => c !== ""));
+  return body.map((r) => Object.fromEntries(header.map((h, i) => [h, r[i] ?? ""])));
+}
+
+// Ajoute les nouvelles chaînes au suivi, met à jour les chiffres des autres sans toucher à
+// leur statut ni à leurs notes. Renvoie le suivi par URL pour annoter la sortie.
+async function mergeSuivi(rows, profil) {
+  let existing = [];
+  try {
+    existing = parseCsv(await fs.readFile(SUIVI, "utf8"));
+  } catch {
+    // Premier run : le fichier sera créé.
+  }
+  const byUrl = new Map(existing.map((r) => [r.url, r]));
+  const today = new Date().toISOString().slice(0, 10);
+  let added = 0;
+  for (const r of rows) {
+    const prev = byUrl.get(r.url);
+    const numbers = { chaine: r.chaine, abonnes: r.abonnes, vues_moy_theme: r.vues_moy_theme, score: r.score, vu_le: today };
+    if (prev) Object.assign(prev, numbers);
+    else {
+      byUrl.set(r.url, { ...numbers, url: r.url, profil, lien_trace: r.lien_trace, statut: "à qualifier" });
+      added++;
+    }
+  }
+  const all = [...byUrl.values()].sort((a, b) => Number(b.score || 0) - Number(a.score || 0));
+  await fs.mkdir(path.dirname(SUIVI), { recursive: true });
+  await fs.writeFile(SUIVI, toCsv(SUIVI_COLS, all));
+  console.log(`🗂️  ${SUIVI} : ${added} nouvelles chaînes, ${all.length} au total`);
+  return byUrl;
+}
+
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
   const apiKey = await loadEnvVar("YOUTUBE_API_KEY");
   if (!apiKey) fail("YOUTUBE_API_KEY manquante (voir l'en-tête du script et .env.example).");
+
+  if (opts.check) {
+    // Chaîne YouTube officielle de Google pour les développeurs : toujours présente.
+    const res = await yt(apiKey, "channels", { part: "id", id: "UC_x5XG1OV2P6uZZ5FSM9Ttw" });
+    if (!res.items?.length) fail("La clé répond mais l'API ne renvoie rien : vérifier les restrictions de la clé.");
+    console.log("✅ Clé YouTube valide, API YouTube Data v3 activée.");
+    return;
+  }
 
   const publishedAfter = new Date(Date.now() - opts.days * 86400000).toISOString();
 
@@ -233,7 +331,7 @@ async function main() {
   const channels = [];
   for (const ids of chunks([...byChannel.keys()], 50)) {
     const res = await yt(apiKey, "channels", {
-      part: "snippet,statistics,contentDetails,brandingSettings",
+      part: "snippet,statistics,contentDetails,brandingSettings,status",
       id: ids.join(","),
       maxResults: 50,
     });
@@ -243,6 +341,10 @@ async function main() {
   const kept = channels.filter((ch) => {
     const subs = Number(ch.statistics.subscriberCount || 0);
     if (ch.statistics.hiddenSubscriberCount) return false;
+    // Public enfant : commentaires fermés, pas la cible d'un 4X, et règles publicitaires à part.
+    if (ch.status?.madeForKids) return false;
+    if (EXCLUDED.test(ch.snippet.title) || EXCLUDED.test(ch.snippet.customUrl || "")) return false;
+    if (![...byChannel.get(ch.id).videos.values()].some((v) => FRENCH.test(v.title))) return false;
     if (subs < opts.min || (opts.max && subs > opts.max)) return false;
     const country = ch.snippet.country || ch.brandingSettings?.channel?.country;
     const lang = ch.snippet.defaultLanguage || ch.brandingSettings?.channel?.defaultLanguage || "";
@@ -250,8 +352,8 @@ async function main() {
     if (country && !FR_COUNTRIES.has(country) && !lang.startsWith("fr")) return false;
     return true;
   });
-  const range = opts.max ? `${opts.min}–${opts.max}` : `${opts.min} et plus`;
-  console.log(`📺 ${channels.length} chaînes trouvées, ${kept.length} dans la cible (profil ${opts.profil}, ${range} abonnés, francophones)`);
+  const range = opts.max ? `${opts.min} à ${opts.max} abonnés` : `${opts.min} abonnés et plus`;
+  console.log(`📺 ${channels.length} chaînes trouvées, ${kept.length} dans la cible (profil ${opts.profil}, ${range}, francophones)`);
 
   // 3. Activité : dernières mises en ligne (régularité) et vues des vidéos sur le thème.
   const allVideoIds = kept.flatMap((ch) => [...byChannel.get(ch.id).videos.keys()]);
@@ -315,14 +417,18 @@ async function main() {
   }
   rows.sort((a, b) => b.score - a.score);
 
+  if (opts.suivi && rows.length) {
+    const suivi = await mergeSuivi(rows, opts.profil);
+    for (const r of rows) r.statut = suivi.get(r.url)?.statut || "";
+  }
+
   // 4. Sorties.
   await fs.mkdir(opts.out, { recursive: true });
   const stamp = new Date().toISOString().slice(0, 10);
   const jsonPath = path.join(opts.out, `creators-${opts.profil}-${stamp}.json`);
   const csvPath = path.join(opts.out, `creators-${opts.profil}-${stamp}.csv`);
   await fs.writeFile(jsonPath, JSON.stringify({ generatedAt: new Date().toISOString(), options: opts, rows }, null, 2));
-  const cols = Object.keys(rows[0] || { score: 0 });
-  await fs.writeFile(csvPath, [cols.join(","), ...rows.map((r) => cols.map((c) => csvCell(r[c])).join(","))].join("\n"));
+  await fs.writeFile(csvPath, toCsv(Object.keys(rows[0] || { score: 0 }), rows));
 
   console.log(`\n🏁 ${rows.length} créateurs, ${quotaUsed} unités de quota utilisées`);
   console.log(`   ${csvPath}\n   ${jsonPath}\n`);
@@ -330,7 +436,7 @@ async function main() {
     console.log(
       `${String(r.score).padStart(3)}  ${r.chaine} — ${r.abonnes.toLocaleString("fr-FR")} abonnés, ` +
         `${r.vues_moy_theme.toLocaleString("fr-FR")} vues moy. thème, dernière vidéo il y a ${r.derniere_video_jours} j` +
-        `${r.emails.length ? `, ${r.emails[0]}` : ""}`,
+        `${r.emails.length ? `, ${r.emails[0]}` : ""}${r.statut && r.statut !== "à qualifier" ? ` [${r.statut}]` : ""}`,
     );
   }
 }

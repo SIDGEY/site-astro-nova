@@ -12,6 +12,12 @@
  * page de départ (src/layouts/BaseLayout.astro), et le jeu l'enregistre sur sa page vue
  * d'arrivée. Les inscriptions se lisent donc côté jeu, par page d'origine.
  *
+ * Créateurs YouTube (Createurs.csv, côté jeu) : arrivées et inscriptions par `utm_campaign`
+ * des liens `utm_source=youtube` donnés aux créateurs (scripts/youtube-creators.mjs,
+ * editorial/createurs/suivi.csv), qu'ils mènent au jeu directement ou en passant par le site
+ * (BaseLayout transmet l'origine). Les arrivées depuis youtube.com sans lien tracé sont
+ * comptées à part.
+ *
  * Les chemins de page sont les mêmes que `pagePath` de GA4 et que l'URL de GSC, sans le
  * domaine : la jointure se fait sur le chemin (GSC requête -> page, GA4 vues -> page,
  * PostHog page -> départ vers le jeu).
@@ -213,11 +219,43 @@ async function main() {
     })
   );
   const results = Object.fromEntries(entries);
+  const siteErrors = errors.length;
 
   // Côté jeu : par visiteur arrivé depuis le site, sa page d'origine (`utm_content`, un chemin)
   // et s'il a soumis une inscription sur la période, dans la même visite ou plus tard.
   results.game = [];
+  results.creators = [];
   if (gameProjectId) {
+    try {
+      results.creators = await hogql(
+        apiHost,
+        gameProjectId,
+        apiKey,
+        `
+        SELECT campaign, count() AS arrivals, countIf(signed_up) AS signups
+        FROM (
+          SELECT
+            argMinIf(
+              if(properties.utm_source = 'youtube', coalesce(properties.utm_campaign, '(sans campagne)'),
+                '(youtube sans lien tracé)'),
+              timestamp,
+              event = '$pageview' AND (properties.utm_source = 'youtube'
+                OR properties.$referring_domain ILIKE '%youtube.com%'
+                OR properties.$referring_domain ILIKE '%youtu.be%')) AS campaign,
+            countIf(event = 'auth_signup_submitted') > 0 AS signed_up
+          FROM events
+          WHERE ${period} AND event IN ('$pageview', 'auth_signup_submitted')
+          GROUP BY distinct_id
+          HAVING campaign != ''
+        )
+        GROUP BY campaign
+        ORDER BY arrivals DESC
+        LIMIT 300`
+      );
+    } catch (e) {
+      errors.push(`creators : ${e.message}`);
+    }
+
     try {
       results.game = await hogql(
         apiHost,
@@ -243,7 +281,7 @@ async function main() {
       errors.push(`game : ${e.message}`);
     }
   }
-  if (errors.length === entries.length) {
+  if (siteErrors === entries.length) {
     fail(
       `Requêtes PostHog échouées : ${errors[0]}\n` +
         `   401/403 fréquent -> clé personnelle invalide ou sans le scope « Query: read » sur ce projet.\n` +
@@ -329,6 +367,10 @@ async function main() {
     results.vitals.map(([page, n, lcp, inp, cls]) => [page, n, num(lcp), num(inp), num(cls, 3)])
   );
   const eventsCsv = toCsv(["Événement", "Occurrences", "Visiteurs"], results.events);
+  const creatorsCsv = toCsv(
+    ["Campagne (créateur)", "Arrivés dans le jeu", "Inscrits", "Inscription (%)"],
+    results.creators.map(([campaign, arrivals, signups]) => [campaign, arrivals, signups, pct(signups, arrivals)])
+  );
 
   const dir = path.join(opts.out, `${opts.host}-PostHog-${ymd(new Date())}`);
   await fs.mkdir(dir, { recursive: true });
@@ -340,6 +382,7 @@ async function main() {
     fs.writeFile(path.join(dir, "Frictions.csv"), frictionsCsv),
     fs.writeFile(path.join(dir, "Vitals.csv"), vitalsCsv),
     fs.writeFile(path.join(dir, "Evenements.csv"), eventsCsv),
+    fs.writeFile(path.join(dir, "Createurs.csv"), creatorsCsv),
   ]);
 
   const played = results.sessions.filter((s) => s[7]).length;
