@@ -10,4 +10,5 @@ dist
 .ga4-cache
 .posthog-cache
 .game-activity-cache
+.youtube-cache
 editorial/backlog.jsonl
