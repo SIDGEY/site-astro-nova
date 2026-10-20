@@ -13,3 +13,4 @@ dist
 .game-activity-cache
 editorial/backlog.jsonl
 editorial/createurs/
+editorial/acquisition-log.md
