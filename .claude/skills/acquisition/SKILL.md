@@ -28,6 +28,7 @@ diff avant commit.
 npm run gsc:fetch
 npm run ga4:fetch -- --host dynastynova.com
 npm run posthog:fetch                     # --days 14 pour juger un changement récent
+npm run meta:fetch                        # campagnes Meta, si META_ACCESS_TOKEN est dans .env
 ```
 Puis lire `editorial/acquisition-log.md` : toute entrée « à relire » dont la date est
 passée se traite **avant** toute nouvelle proposition (Étape 3).
@@ -90,6 +91,9 @@ La clé de jointure est le chemin (`/blog/<slug>/`) : URL sans domaine dans GSC
    depuis les articles à fort trafic vers elles.
 5. **Sources qui convertissent** (`Sources.csv`) → Reddit, campagne, référent : à
    signaler pour `dynasty-article` (mode `community-post`) ou pour l'utilisateur.
+   Campagnes Meta (`.meta-cache/…/Annonces.csv`, croisé avec PostHog par l'ID de la
+   publicité) : coût par session et par départ vers le jeu, placements et appareils qui
+   dépensent sans amener de joueurs. Les réglages de campagne restent à l'utilisateur.
 6. **Frictions** (`Frictions.csv`) : un rage click ou dead click répété sur un élément
    donne un correctif précis (élément qui a l'air cliquable et ne l'est pas, lien cassé).
 7. **Appareils** (`Appareils.csv`) : un écart de conversion mobile/desktop pointe la

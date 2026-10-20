@@ -9,5 +9,7 @@ dist
 .gsc-cache
 .ga4-cache
 .posthog-cache
+.meta-cache
 .game-activity-cache
 editorial/backlog.jsonl
+editorial/createurs/
