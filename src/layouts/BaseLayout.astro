@@ -210,6 +210,11 @@ const {
           // l'unload, là où une requête classique serait annulée avant d'arriver.
           transport_type: "beacon",
         });
+        // Le Pixel Meta ne voyait que les PageView : sans ce départ vers le jeu, la campagne
+        // ne peut ni mesurer son coût par départ ni optimiser dessus (conversion personnalisée).
+        (window as any).fbq?.("trackCustom", "PlayClick", {
+          page_path: window.location.pathname,
+        });
       });
     </script>
   </body>
