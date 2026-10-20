@@ -6,7 +6,9 @@ if (!settings) return Astro.redirect("/404");
 const PLAY_URL = "https://play.dynastynova.com";
 
 // Les sections de la home : sous-menu « Le jeu » (dropdown en desktop, accordéon en mobile).
+// En desktop, « Le jeu » mène aussi à la première d'entre elles (les clics y étaient perdus).
 const gameLinks = [
+  { href: "/#dynasties", label: "Dynasties", icon: "crown" },
   { href: "/#planets", label: "Planètes", icon: "planet" },
   { href: "/#resources", label: "Ressources", icon: "cube" },
   { href: "/#buildings", label: "Bâtiments", icon: "buildings" },
@@ -23,7 +25,7 @@ const mainLinks = [
   { href: "/roadmap/", label: "Roadmap" },
 ];
 // En mobile, la galerie (les avatars) rejoint les sections du jeu : la liste de premier niveau
-// reste courte et la grille du sous-menu tombe juste (8 tuiles sur 2 colonnes).
+// reste courte. Les dynasties occupent toute la première ligne, la grille tombe juste (1 + 8 tuiles).
 const mobileGameLinks = [...gameLinks, galleryLink];
 const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
 ---
@@ -41,12 +43,13 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
     <div class="flex items-center justify-end gap-6 xl:gap-8">
       <div class="flex items-center text-base gap-6 xl:gap-8 whitespace-nowrap">
         <div class="relative group">
-          <button
+          <a
+            href={gameLinks[0].href}
             class="flex items-center gap-2 text-slate-300 hover:text-slate-200 transition-colors py-2"
           >
             <span>Le jeu</span>
             <i class="ph ph-bold ph-caret-down text-slate-300 text-base opacity-50"></i>
-          </button>
+          </a>
           <div
             class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200"
           >
@@ -149,10 +152,13 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
           >
             <div class="overflow-hidden">
               <div class="grid grid-cols-2 gap-2 pb-4">
-                {mobileGameLinks.map((link) => (
+                {mobileGameLinks.map((link, index) => (
                   <a
                     href={link.href}
-                    class="flex items-center gap-2.5 min-w-0 rounded-md border border-slate-800 bg-slate-900/60 px-3 py-2.5 text-[15px] text-slate-300 hover:border-blue-500/50 hover:text-white transition-colors"
+                    class:list={[
+                      "flex items-center gap-2.5 min-w-0 rounded-md border border-slate-800 bg-slate-900/60 px-3 py-2.5 text-[15px] text-slate-300 hover:border-blue-500/50 hover:text-white transition-colors",
+                      index === 0 && "col-span-2",
+                    ]}
                   >
                     <i class={`ph ph-${link.icon} text-lg text-blue-400 shrink-0`}></i>
                     <span class="truncate">{link.label}</span>
