@@ -170,8 +170,21 @@ const textures = Object.fromEntries(
     const RETURN_SPEED = 0.08;
     const DEFAULT_BIOME = "normal";
 
+    // La scène ne se construit qu'à l'approche de l'écran, comme celle du hero (ScreenPlanet) :
+    // montée au chargement, elle occupait le fil principal des téléphones et retardait leurs
+    // interactions (INP de la home).
     const container = document.getElementById("planet-3d");
-    if (container) init(container);
+    if (container) {
+      const pending = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          pending.disconnect();
+          init(container);
+        },
+        { rootMargin: "200px" },
+      );
+      pending.observe(container);
+    }
 
     function init(container: HTMLElement) {
       const textureSets = JSON.parse(container.dataset.textures || "{}");
@@ -240,11 +253,13 @@ const textures = Object.fromEntries(
       canvas.addEventListener("pointercancel", release);
 
       // ── Animation ── comme le jeu, la rotation automatique s'arrête si l'on réduit les animations.
+      // Hors de l'écran, la boucle s'arrête.
       const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
       let baseRotY = 0;
-      let last = performance.now();
+      let last = 0;
+      let frame = 0;
       const animate = (now: number) => {
-        requestAnimationFrame(animate);
+        frame = requestAnimationFrame(animate);
         const elapsed = (now - last) / 1000;
         last = now;
         if (!dragging) {
@@ -257,7 +272,19 @@ const textures = Object.fromEntries(
         surface.animateLayers(now / 1000);
         renderer.render(scene, camera);
       };
-      requestAnimationFrame(animate);
+      const play = () => {
+        if (frame) return;
+        last = performance.now(); // sans quoi la planète rattrape d'un bond le temps passé en pause
+        frame = requestAnimationFrame(animate);
+      };
+      const pause = () => {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      };
+      const visibility = new IntersectionObserver(([entry]) =>
+        entry.isIntersecting ? play() : pause(),
+      );
+      visibility.observe(container);
 
       // ── Biomes ──
       let request = 0;
@@ -299,6 +326,8 @@ const textures = Object.fromEntries(
       }
 
       window.addEventListener("pagehide", () => {
+        pause();
+        visibility.disconnect();
         ro.disconnect();
         surface.dispose();
         renderer.dispose();
