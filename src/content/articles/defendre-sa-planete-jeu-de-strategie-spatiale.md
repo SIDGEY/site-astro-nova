@@ -5,7 +5,7 @@ description: "Comment protéger sa planète quand sa flotte est absente : tourel
 author: "Guillaume Hambourger"
 coAuthors: []
 tags: ["Stratégie", "Défense", "Guide", "OGame"]
-draft: true
+draft: false
 image: "/uploads/blog/covers/defendre-sa-planete-jeu-de-strategie-spatiale.webp"
 icon: "ph-shield"
 coverPrompt: "a soft field of violet and deep indigo light, a wide luminous arc curving over the lower frame like a planetary shield"
