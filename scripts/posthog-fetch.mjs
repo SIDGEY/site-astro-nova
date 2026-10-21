@@ -12,11 +12,11 @@
  * page de départ (src/layouts/BaseLayout.astro), et le jeu l'enregistre sur sa page vue
  * d'arrivée. Les inscriptions se lisent donc côté jeu, par page d'origine.
  *
- * Créateurs YouTube (Createurs.csv, côté jeu) : arrivées et inscriptions par `utm_campaign`
- * des liens `utm_source=youtube` donnés aux créateurs (scripts/youtube-creators.mjs,
- * editorial/createurs/suivi.csv), qu'ils mènent au jeu directement ou en passant par le site
- * (BaseLayout transmet l'origine). Les arrivées depuis youtube.com sans lien tracé sont
- * comptées à part.
+ * Créateurs YouTube (Createurs.csv, côté jeu) : arrivées et inscriptions par chaîne, lue
+ * dans `utm_content=yt-<handle>` des liens `utm_source=youtube` donnés aux créateurs
+ * (feuille « cibles », scripts/youtube-creators.mjs). Un lien qui passe par le site perd ce
+ * `utm_content` (BaseLayout y met la page de départ) : il est alors compté sous sa
+ * `utm_campaign`. Les arrivées depuis youtube.com sans lien tracé sont comptées à part.
  *
  * Les chemins de page sont les mêmes que `pagePath` de GA4 et que l'URL de GSC, sans le
  * domaine : la jointure se fait sur le chemin (GSC requête -> page, GA4 vues -> page,
@@ -236,7 +236,9 @@ async function main() {
         FROM (
           SELECT
             argMinIf(
-              if(properties.utm_source = 'youtube', coalesce(properties.utm_campaign, '(sans campagne)'),
+              if(properties.utm_source = 'youtube',
+                if(startsWith(coalesce(properties.utm_content, ''), 'yt-'), properties.utm_content,
+                  coalesce(properties.utm_campaign, '(sans campagne)')),
                 '(youtube sans lien tracé)'),
               timestamp,
               event = '$pageview' AND (properties.utm_source = 'youtube'
@@ -368,7 +370,7 @@ async function main() {
   );
   const eventsCsv = toCsv(["Événement", "Occurrences", "Visiteurs"], results.events);
   const creatorsCsv = toCsv(
-    ["Campagne (créateur)", "Arrivés dans le jeu", "Inscrits", "Inscription (%)"],
+    ["Créateur (utm_content) ou campagne", "Arrivés dans le jeu", "Inscrits", "Inscription (%)"],
     results.creators.map(([campaign, arrivals, signups]) => [campaign, arrivals, signups, pct(signups, arrivals)])
   );
 

@@ -1,8 +1,9 @@
 # Kit créateurs YouTube
 
-Ce qu'on envoie aux créateurs pour qu'ils parlent de Dynasty Nova. Le skill `createurs`
-part de ces modèles, les personnalise chaîne par chaîne et les dépose en brouillon :
-rien ne part sans relecture.
+Ce qu'on envoie aux créateurs pour qu'ils parlent de Dynasty Nova. Le message envoyé par
+l'Apps Script (`envoi-gmail.gs`, feuille « cibles ») est `message-youtube.txt`, rempli
+chaîne par chaîne par `scripts/youtube-creators.mjs`. Les modèles ci-dessous servent aux
+cas particuliers : relance à la main, message court sur un réseau, demande de tarif.
 
 Les `[CROCHETS]` se remplissent à chaque envoi. `[OFFRE]` se décide une fois pour toutes
 (voir « Ce qu'on propose ») avant le premier envoi.
@@ -32,7 +33,7 @@ image de partage `public/og-default.jpg`. Vidéo de démonstration : `demo-video
 
 ## Ce qu'on propose
 
-À trancher avant le premier envoi, puis à reporter dans la colonne `offre` du suivi.
+À trancher avant le premier envoi : le message type (`message-youtube.txt`) propose aujourd'hui le niveau Contenu (avantages en jeu, univers privé avec bots).
 
 | Niveau | Pour qui | Contrepartie | Ce qu'on demande |
 |---|---|---|---|
@@ -52,10 +53,11 @@ les chaînes de 10 k à 100 k qui font des vidéos « je teste des jeux navigate
   Au-delà d'un montant fixé par décret, un contrat écrit est obligatoire.
 - **Jamais** de chaîne pour enfants (le script les écarte), jamais d'avis imposé : le créateur
   dit ce qu'il pense du jeu.
-- **Un seul message, une seule relance.** Pas de réponse sept jours après la relance :
-  statut `sans réponse`, on ne recontacte pas avant trois mois.
-- **Un lien tracé par chaîne** (colonne `lien_trace` du suivi), jamais le lien nu : c'est ce
-  qui permet de savoir qui amène des joueurs (`npm run posthog:fetch`, Createurs.csv).
+- **Un seul message, une seule relance** (l'Apps Script relance à J+7). Pas de réponse
+  ensuite : on ne recontacte pas avant trois mois. « stop » : on retire la ligne.
+- **Un lien tracé par chaîne** (colonne `lien tracé` de la feuille,
+  `utm_content=yt-<handle>`), jamais le lien nu : c'est ce qui permet de savoir qui amène
+  des joueurs (`npm run posthog:fetch`, Createurs.csv).
 
 ## Modèles
 

@@ -1,0 +1,15 @@
+Salut {nom},
+
+{accroche}
+
+Je développe Dynasty Nova (anciennement Astro Nova) : un jeu de stratégie spatiale en temps réel, gratuit, qui se joue sur téléphone comme sur ordinateur, sans rien installer. Tu choisis ta dynastie, tu colonises des planètes, tu bâtis ta flotte et tu affrontes d'autres joueurs. L'idée de départ : l'esprit d'OGame avec une interface d'aujourd'hui.
+
+Si ça te tente d'en parler dans {support}, on t'accompagne : avantages en jeu pour toi et ta communauté, et on peut aller jusqu'à créer un univers privé peuplé de bots pour le tournage de ta vidéo ou de ta série (toi contre tes viewers, ou ta commu contre les bots). On en discute selon ce que tu as en tête. Ton lien pour le jeu :
+{lien}
+
+Aucune obligation de ton côté, ni sur le ton ni sur la date : si le jeu ne te plaît pas, tant pis. Visuels et présentation du jeu : https://dynastynova.com
+
+Guillaume
+Dynasty Nova · hambourger.guillaume@gmail.com
+
+(Pour ne plus recevoir de message de ma part, réponds simplement « stop ».)
