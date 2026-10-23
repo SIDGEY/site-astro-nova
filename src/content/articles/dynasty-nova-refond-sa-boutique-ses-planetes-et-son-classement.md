@@ -58,4 +58,4 @@ Le nom d'utilisateur, l'e-mail, le mot de passe et l'inscription à la newslette
 
 Aucune de ces évolutions ne modifie l'équilibre du jeu : elles réduisent simplement le nombre de clics et de menus entre vous et l'information dont vous avez besoin pour décider. Une planète plus lisible, c'est une décision de construction ou de défense prise plus vite ; un classement épuré, c'est une rivalité suivie sans effort.
 
-**Explorer la galaxie** dès maintenant permet de découvrir ces nouveaux écrans directement en jeu.
+[**Explorer la galaxie**](https://play.dynastynova.com/?utm_source=blog&utm_medium=article&utm_campaign=refonte-boutique) dès maintenant permet de découvrir ces nouveaux écrans directement en jeu.

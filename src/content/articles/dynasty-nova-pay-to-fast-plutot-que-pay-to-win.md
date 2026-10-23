@@ -54,4 +54,4 @@ Une charte « Pay-to-Fast, jamais Pay-to-Win » écrite dans un texte de présen
 
 Chez Dynasty Nova, la monétisation n'est pas qu'une question de règles économiques : c'est une question de design. Une boutique qui affiche clairement son option gratuite, sépare le temps de la puissance et cantonne l'argent réel au cosmétique construit une confiance qu'aucune charte ne remplace.
 
-**Explorer la galaxie** reste le meilleur moyen de juger cette promesse par vous-même.
+[**Explorer la galaxie**](https://play.dynastynova.com/?utm_source=blog&utm_medium=article&utm_campaign=pay-to-fast) reste le meilleur moyen de juger cette promesse par vous-même.

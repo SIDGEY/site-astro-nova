@@ -57,3 +57,5 @@ Reprogrammer un lancement n'est possible que sur un univers qui n'a pas encore o
 ## Conclusion
 
 Annoncer un univers avant son ouverture donne aux joueurs le temps de préparer leur départ, alliance en tête, plutôt que de découvrir un lancement au dernier moment. Le décompte fait le travail d'information, le serveur celui de la décision, et la frontière entre les deux ne laisse place à aucune ambiguïté.
+
+Dynasty Nova est un jeu de stratégie spatiale gratuit, qui se joue dans le navigateur. Pour découvrir ses univers, [créez votre compte sur play.dynastynova.com](https://play.dynastynova.com/?utm_source=blog&utm_medium=article&utm_campaign=decompte-univers), ou lisez d'abord [la présentation du jeu](/blog/jeu-de-strategie-spatiale-gratuit-navigateur-dynasty-nova/) et le [guide des premières heures](/blog/debuter-jeu-de-strategie-spatiale-guide-premieres-heures/).
