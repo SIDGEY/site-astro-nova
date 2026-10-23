@@ -233,7 +233,7 @@ const coverImage = article.data.image ?? getFallbackCover(article.id);
           <div class="related-track flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0 sm:gap-x-8 sm:gap-y-16 sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-3">
             {relatedArticles.map((rel) => (
               <a
-                href={`/blog/${rel.id}`}
+                href={`/blog/${rel.id}/`}
                 class="related-card card-with-border group flex-shrink-0 w-[87%] snap-center sm:w-auto rounded-xl overflow-hidden no-underline"
               >
                 <div class="aspect-[5/3] rounded-xl w-full relative flex shrink-0 items-center justify-center overflow-hidden border bg-slate-800 border-slate-700/50">

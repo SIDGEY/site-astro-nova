@@ -7,7 +7,7 @@ export async function GET(context: any) {
   
   return rss({
     title: SITE_NAME,
-    description: 'Expertise IA & Data pour le Mid-Market',
+    description: 'Le blog de Dynasty Nova : guides, conseils de stratégie et nouveautés du jeu de stratégie spatiale 4X gratuit par navigateur.',
     site: context.site || SITE_URL,
     items: articles.map((article) => ({
       title: article.data.title,

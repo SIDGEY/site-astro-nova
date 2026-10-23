@@ -365,6 +365,8 @@ const blockNewsSchema = blockBaseSchema.extend({
   subtitle: z.string(),
   ctaText: z.string().optional(),
   ctaLink: z.string().optional(),
+  // Slugs d'articles affichés avant les plus récents (pages piliers à pousser).
+  featured: z.array(z.string()).optional(),
   items: z.array(z.object({
     icon: z.string(),
     title: z.string(),

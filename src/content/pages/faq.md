@@ -23,4 +23,12 @@ blocks:
         answer: "Dynasty Nova reprend les fondamentaux qui ont fait le succès d'OGame — gestion de planètes, recherche technologique, flottes, colonisation — avec une interface moderne, une planète en 3D et un arbre technologique réorganisé par catégories."
       - question: "Comment jouer à Dynasty Nova ?"
         answer: "Le jeu est ouvert à tous sur https://play.dynastynova.com : créez votre compte et commencez à jouer directement depuis votre navigateur, sans liste d'attente ni téléchargement."
+  - type: "richContent"
+    content: |
+      <h2>Pour aller plus loin</h2>
+      <ul>
+        <li>Ce que propose un <a href="/blog/jeu-de-strategie-spatiale-gratuit-navigateur-dynasty-nova/">jeu de stratégie spatiale gratuit sur navigateur</a> comme Dynasty Nova.</li>
+        <li>Vous venez d'OGame ? Voici <a href="/blog/dynasty-nova-ce-qui-change-pour-un-joueur-habitue-a-ogame/">ce qui change pour un joueur habitué à OGame</a>.</li>
+        <li>Pour bien démarrer, suivez <a href="/blog/debuter-jeu-de-strategie-spatiale-guide-premieres-heures/">le guide des premières heures</a>.</li>
+      </ul>
 ---

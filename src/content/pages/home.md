@@ -99,6 +99,10 @@ blocks:
   - type: news
     title: Actualités
     subtitle: "Guides, actualités et conseils stratégiques pour devenir un maître de la galaxie."
+    featured:
+      - jeu-de-strategie-spatiale-gratuit-navigateur-dynasty-nova
+      - debuter-jeu-de-strategie-spatiale-guide-premieres-heures
+      - dynasty-nova-ce-qui-change-pour-un-joueur-habitue-a-ogame
     items:
       - icon: planet
         title: Planète

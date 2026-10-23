@@ -34,9 +34,11 @@ const { title, subtitle, bgVariant, ctaText, ctaLink, secondaryCtaText, secondar
       {(ctaText && ctaLink || cta) && (
         <a href={ctaLink || cta?.link} class="btn btn-primary btn-lg">{ctaText || cta?.text}</a>
       )}
-      <a href={secondaryCtaLink || "/cas-clients"} class="btn btn-ghost btn-lg">
-        {secondaryCtaText || "Nos succès"}
-      </a>
+      {secondaryCtaText && secondaryCtaLink && (
+        <a href={secondaryCtaLink} class="btn btn-ghost btn-lg">
+          {secondaryCtaText}
+        </a>
+      )}
     </div>
   </div>
   

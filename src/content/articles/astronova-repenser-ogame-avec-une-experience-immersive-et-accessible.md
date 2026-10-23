@@ -88,6 +88,8 @@ Dynasty Nova se différencie par :
 
 Le jeu s'adresse aux joueurs recherchant une stratégie spatiale solo, des alternatives Android à OGame, ou des expériences web plus douces, une nouvelle génération de joueurs préférant la construction à la compétition.
 
+Pour aller plus loin, voyez [ce qui change pour un joueur habitué à OGame](/blog/dynasty-nova-ce-qui-change-pour-un-joueur-habitue-a-ogame/), lisez [pourquoi les jeux comme OGame fascinent encore](/blog/dynasty-nova-pourquoi-les-jeux-comme-ogame-fascinent-encore-20-ans-apres/), ou comparez avec [les meilleurs jeux par navigateur en 2026](/blog/dynasty-nova-notre-selection-des-meilleurs-jeux-par-navigateur-en-2026/).
+
 ## Conclusion
 
 Dynasty Nova dépasse le simple jeu pour représenter une exploration expérimentale de ce que le jeu en navigateur peut devenir : « une expérience humaine, immersive et esthétique » pour ceux qui cherchent à construire plutôt qu'à détruire.
