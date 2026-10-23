@@ -12,6 +12,7 @@
     "gsc:fetch": "node scripts/gsc-fetch.mjs",
     "ga4:fetch": "node scripts/ga4-fetch.mjs",
     "posthog:fetch": "node scripts/posthog-fetch.mjs",
+    "seo:audit": "node scripts/seo-audit.mjs",
     "meta:fetch": "node scripts/meta-fetch.mjs",
     "game:fetch": "node scripts/game-activity-fetch.mjs",
     "ideas": "node scripts/dynasty-ideas.mjs",
