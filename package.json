@@ -18,7 +18,10 @@
     "ideas": "node scripts/dynasty-ideas.mjs",
     "ga4:key-events": "node scripts/ga4-mark-key-event.mjs",
     "cover:generate": "node scripts/generate-cover.mjs",
-    "game:sync": "node scripts/sync-game.mjs"
+    "game:sync": "node scripts/sync-game.mjs",
+    "ads:google": "node scripts/ads-google.mjs",
+    "ads:reddit": "node scripts/ads-reddit.mjs",
+    "ads:report": "node scripts/ads-report.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
@@ -48,6 +51,7 @@
     "@types/three": "^0.182.0",
     "@types/turndown": "^5.0.6",
     "dotenv": "^17.2.3",
+    "google-ads-api": "^25.1.0",
     "node-fetch": "^2.7.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",

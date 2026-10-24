@@ -1,0 +1,31 @@
+{
+  "name": "reddit-en-ogame",
+  "status": "pret",
+  "note": "Communauté OGame, en anglais (le jeu est en anglais pour tout navigateur hors fr/es). Objectif clics au départ ; passer en CONVERSIONS quand le pixel Reddit remonte des inscriptions. Budget et enchère : editorial/ads-plan.json (hors Git), passés à la création. Chaque annonce attend un post Reddit créé dans le gestionnaire, avec une vraie capture du jeu : renseigner son postId ici avant la création.",
+  "objective": "CLICKS",
+  "adGroups": [
+    {
+      "name": "ogame",
+      "communities": ["OGame"],
+      "geolocations": ["US", "GB", "CA", "AU", "IE", "NZ"],
+      "excludedKeywords": ["cheat", "hack", "bot", "script"],
+      "clickUrl": "https://dynastynova.com/en/from-ogame/",
+      "ads": [
+        {
+          "variant": "simulateur",
+          "postId": null,
+          "headline": "OGame veterans: we built a free space 4X that runs your fleet sims with the real combat engine",
+          "body": "Same backbone you know (metal, crystal, hydrogen, research, fleets, colonies), designed for mobile first. Every attack can be simulated 50 times before launch, and every battle report breaks the fight down round by round. Free, in your browser.",
+          "image": "capture réelle de play.dynastynova.com : simulateur de combat sur mobile"
+        },
+        {
+          "variant": "hors-ligne",
+          "postId": null,
+          "headline": "Loved OGame but can't stay online all day? This one was balanced for players who log off",
+          "body": "Dynasty Nova keeps the OGame-style economy, mines produce while you're offline, and the balance doesn't punish less available players. Free, no download, phone and desktop.",
+          "image": "capture réelle de play.dynastynova.com : page Planète sur mobile"
+        }
+      ]
+    }
+  ]
+}

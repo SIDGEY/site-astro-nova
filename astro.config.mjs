@@ -18,6 +18,15 @@ const articleDates = new Map(
         .filter(([, date]) => date),
 );
 
+// Pages marquées `index: false` dans leur frontmatter (pages légales, pages d'atterrissage des
+// campagnes payantes) : servies en noindex, donc absentes du sitemap.
+const PAGES_DIR = path.resolve('src/content/pages');
+const noindexPages = fs
+    .readdirSync(PAGES_DIR, { recursive: true })
+    .filter((file) => file.endsWith('.md'))
+    .filter((file) => /^index:\s*false\s*$/m.test(fs.readFileSync(path.join(PAGES_DIR, file), 'utf8')))
+    .map((file) => `/${file.slice(0, -3).split(path.sep).join('/')}/`);
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://dynastynova.com/',
@@ -25,8 +34,8 @@ export default defineConfig({
         sitemap({
             // Pages en noindex (champ `index: false` des pages, sommaire /pages/, styleguide) : hors sitemap.
             filter: (page) =>
-                !['/pages/', '/conditions-generales/', '/politique-de-confidentialite/', '/styleguide/'].some((path) =>
-                    page.endsWith(path),
+                !['/pages/', '/conditions-generales/', '/politique-de-confidentialite/', '/styleguide/', ...noindexPages].some(
+                    (path) => page.endsWith(path),
                 ),
             serialize: (item) => {
                 const lastmod = articleDates.get(new URL(item.url).pathname);

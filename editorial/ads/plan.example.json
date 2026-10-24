@@ -1,0 +1,22 @@
+{
+  "_comment": "Modèle du plan de campagne. Le vrai plan est editorial/ads-plan.json (hors Git : montants). Il s'écrit AVANT le lancement et ne se modifie ensuite qu'en le notant dans editorial/ads-log.md. scripts/ads-report.mjs en lit les règles chiffrées.",
+  "campaigns": {
+    "search-fr-ogame": {
+      "platform": "google",
+      "spec": "editorial/ads/google/search-fr-ogame.json",
+      "landing": "/venir-d-ogame/",
+      "start": "AAAA-MM-JJ (jour d'activation)",
+      "dailyBudgetEur": 0,
+      "maxCpcEur": 0,
+      "testBudgetEur": 0,
+      "signupValueEur": null,
+      "signupValueMeasured": false,
+      "stopRules": [
+        "rétention J7 des inscrits payés < 15 % sur 7 jours glissants (cohorte ≥ ADS_MIN_COHORT) : pause et alerte",
+        "coût par inscription sur 14 jours > 2 × signupValueEur : couper",
+        "testBudgetEur dépensé sans aucune inscription : couper, puis vérifier la chaîne de mesure",
+        "sinon : maintenir, ou +30 % de budget au plus par semaine si coût par inscription < valeur et J7 ≥ 15 %"
+      ]
+    }
+  }
+}

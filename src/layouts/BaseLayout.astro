@@ -129,6 +129,10 @@ const {
       const PLAY_HOST = "play.dynastynova.com";
       const ORIGIN_KEY = "dn_session_origin";
       const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+      // Identifiants de clic publicitaire (Google Ads, Reddit Ads). Relayés tels quels au jeu,
+      // dont le PostHog les lit dans l'URL d'arrivée : c'est ce qui permet de renvoyer une
+      // inscription à la régie qui l'a payée (scripts/ads-google.mjs upload-conversions).
+      const CLICK_ID_KEYS = ["gclid", "gbraid", "wbraid", "rdt_cid"];
 
       // Origine de la visite, retenue à la première page de la session : sans elle, le jeu ne
       // voit arriver que « dynastynova.com » et ne sait pas qui vient de LinkedIn, d'un e-mail
@@ -141,6 +145,10 @@ const {
           for (const key of UTM_KEYS) {
             const value = params.get(key);
             if (value) origin[key] = value.slice(0, 100);
+          }
+          for (const key of CLICK_ID_KEYS) {
+            const value = params.get(key);
+            if (value) origin[key] = value.slice(0, 200);
           }
           if (!origin.utm_source && document.referrer) {
             const host = new URL(document.referrer).hostname;
@@ -181,6 +189,9 @@ const {
           // dans deux projets PostHog (quotas séparés), le jeu relit ce paramètre de sa session
           // pour attribuer une inscription à un article (voir scripts/posthog-fetch.mjs).
           url.searchParams.set("utm_content", window.location.pathname);
+          for (const key of CLICK_ID_KEYS) {
+            if (origin[key]) url.searchParams.set(key, origin[key]);
+          }
           link.href = url.toString();
         } catch {
           // URL illisible : le lien part tel quel.
