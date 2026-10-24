@@ -3,8 +3,8 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import { SITE_URL } from "../lib/seo";
-// La home a sa propre route (/) : /home n'existe pas.
-const pages = await getCollection("pages", ({ id }) => id !== "home");
+// La home a sa propre route (/) : /home n'existe pas. Cette page ne liste que le français.
+const pages = await getCollection("pages", ({ id }) => id !== "home" && !id.startsWith("en/"));
 const sortedPages = pages.sort(
   (a, b) => (a.data.order || 99) - (b.data.order || 99),
 );

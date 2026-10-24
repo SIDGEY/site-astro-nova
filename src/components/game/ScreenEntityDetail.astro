@@ -19,7 +19,8 @@
  * Le corps est rogné au pied comme dans le jeu : seul le haut de ces blocs est visible. Nom,
  * descriptions et image viennent du jeu ; niveaux, coûts, stocks et durées de `empire.ts`.
  */
-import { resources, type GameEntity } from '../../lib/game';
+import { gameFor, gameT, type GameEntity } from '../../lib/game';
+import { localeFromPath } from '../../lib/i18n';
 import { LEVELS, REQUIREMENTS, STOCK, UNLOCKS, productionAt, type Cost, type CostCode } from './empire';
 import { compact, formatTime } from './format';
 import ScreenMetric from './ScreenMetric.astro';
@@ -35,20 +36,24 @@ interface Props {
   energy?: number;
   /** Durée de construction, en secondes. */
   buildTime: number;
+  /** Pour une unité : vaisseau ou défense, dont les modales n'ont pas tout à fait les mêmes libellés. */
+  unit?: 'ship' | 'defense';
 }
 
-const { item, kind, count, costs, energy, buildTime } = Astro.props;
+const { item, kind, count, costs, energy, buildTime, unit } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
+const { resources } = gameFor(locale);
 
 const tiles = [
   ...(['metal', 'crystal', 'hydrogen'] as CostCode[])
     .filter((code) => (costs[code] ?? 0) > 0)
     .map((code) => ({
       icon: `ph-fill ph-${resources[code].icon}`,
-      label: compact(costs[code]!),
+      label: compact(costs[code]!, locale),
       fill: Math.min((STOCK[code] / costs[code]!) * 100, 100),
       short: STOCK[code] < costs[code]!,
     })),
-  ...(energy ? [{ icon: `ph-fill ph-${resources.energy.icon}`, label: `${energy > 0 ? '+' : ''}${compact(energy)}` }] : []),
+  ...(energy ? [{ icon: `ph-fill ph-${resources.energy.icon}`, label: `${energy > 0 ? '+' : ''}${compact(energy, locale)}` }] : []),
   { icon: 'ph-fill ph-timer', label: formatTime(buildTime) },
 ];
 
@@ -58,7 +63,9 @@ const tileWidth = tiles.length > 3 ? 'w-[calc((100%-3rem)/3)] min-w-[calc((100%-
 
 const isUpgrade = kind === 'building' && count > 0;
 
-// Statistiques propres à l'entité, dans l'ordre où la modale les pose après le coût.
+// Statistiques propres à l'entité, dans l'ordre où la modale les pose après le coût. « Production
+// par heure » et « Production d'énergie » sont écrits en dur dans le jeu (`ProductionGrid`,
+// `EnergyGrid`) : le jeu anglais les affiche ainsi.
 const MINED: Record<string, CostCode> = { metal_mine: 'metal', crystal_mine: 'crystal', hydrogen_synthesizer: 'hydrogen' };
 const level = LEVELS[item.code] ?? 0;
 const metric = (() => {
@@ -66,18 +73,18 @@ const metric = (() => {
     const res = MINED[item.code];
     const now = productionAt(item.code, level)[res] ?? 0;
     const next = productionAt(item.code, level + 1)[res] ?? 0;
-    return { label: 'Production par heure', icon: `ph-fill ph-${resources[res].icon}`, value: compact(now), next: compact(next), delta: `+${compact(next - now)}`, deltaClass: 'text-green-400', clip: true };
+    return { label: 'Production par heure', icon: `ph-fill ph-${resources[res].icon}`, value: compact(now, locale), next: compact(next, locale), delta: `+${compact(next - now, locale)}`, deltaClass: 'text-green-400', clip: true };
   }
   if (item.code === 'solar_plant') {
     const now = productionAt(item.code, level).energy ?? 0;
     const next = productionAt(item.code, level + 1).energy ?? 0;
-    return { label: "Production d'énergie", icon: 'ph ph-lightning', value: compact(now), next: compact(next), delta: `+${compact(next - now)}`, deltaClass: 'text-emerald-400', clip: true };
+    return { label: "Production d'énergie", icon: 'ph ph-lightning', value: compact(now, locale), next: compact(next, locale), delta: `+${compact(next - now, locale)}`, deltaClass: 'text-emerald-400', clip: true };
   }
   if (item.code === 'research_lab') {
-    return { label: 'Vitesse de recherche', icon: 'ph ph-flask', value: `${level * 10}%`, next: `${(level + 1) * 10}%`, delta: '+10%', deltaClass: 'text-blue-400', clip: true };
+    return { label: gameT(locale, 'components/statGrids:researchSpeed'), icon: 'ph ph-flask', value: `${level * 10}%`, next: `${(level + 1) * 10}%`, delta: '+10%', deltaClass: 'text-blue-400', clip: true };
   }
   if (item.code === 'robotic_factory' || item.code === 'shipyard') {
-    return { label: 'Réduction du temps de construction', icon: 'ph ph-bulldozer', value: `${level * 10}%`, next: `${(level + 1) * 10}%`, delta: '+10%', deltaClass: 'text-blue-400', clip: false };
+    return { label: gameT(locale, 'components/statGrids:buildTimeReduction'), icon: 'ph ph-bulldozer', value: `${level * 10}%`, next: `${(level + 1) * 10}%`, delta: '+10%', deltaClass: 'text-blue-400', clip: false };
   }
   return undefined;
 })();
@@ -88,18 +95,23 @@ const unlocks = UNLOCKS[item.code] ?? 0;
 <ScreenModal image={item.image}>
   <div slot="header">
     <h2 class="text-2xl font-semibold text-white mb-1">{item.name}</h2>
-    <p class="text-gray-400">{kind === 'building' ? `Niveau ${count}` : `${count} unités`}</p>
+    <p class="text-gray-400">
+      {kind === 'building'
+        ? `${gameT(locale, 'pages/building:level_label')} ${count}`
+        : `${count} ${unit === 'defense' ? gameT(locale, 'pages/defense:units_label') : gameT(locale, 'pages/fleet:modal.unitsLabel')}`}
+    </p>
   </div>
 
   {(item.longDescription || item.description) && (
     <div>
       <div class="text-slate-300 line-clamp-3">{item.longDescription || item.description}</div>
-      <span class="mt-2 inline-block text-sm font-medium text-blue-400">Voir plus</span>
+      <span class="mt-2 inline-block text-sm font-medium text-blue-400">{gameT(locale, 'components/expandableText:more')}</span>
     </div>
   )}
 
   <div class="space-y-3">
     <div>
+      {/* Écrits en dur dans le jeu (`ResourceGrid`) : en anglais aussi. */}
       <span class="text-gray-400">{kind === 'building' ? 'Coût du prochain niveau' : 'Coût de fabrication'}</span>
       <div class="-mx-5 px-5 flex gap-4 pb-2 mt-2 overflow-hidden">
         {tiles.map((tile) => (
@@ -128,7 +140,7 @@ const unlocks = UNLOCKS[item.code] ?? 0;
   {requirements > 0 && (
     <div class="border-t border-slate-800 pt-1">
       <div class="flex min-h-11 items-center gap-2 text-gray-400">
-        <span>Prérequis</span>
+        <span>{gameT(locale, 'components/statGrids:requirements')}</span>
         <span class="inline-flex shrink-0 items-center gap-1 border text-xs font-medium rounded-md px-2 py-0.5 border-emerald-500/40 bg-emerald-500/10 text-emerald-300 tabular-nums">{requirements}/{requirements}</span>
         <i class="ph-bold ph-caret-down ml-auto text-base leading-none shrink-0"></i>
       </div>
@@ -137,12 +149,12 @@ const unlocks = UNLOCKS[item.code] ?? 0;
 
   {metric && <ScreenMetric {...metric} />}
 
-  {kind === 'unit' && <span class="block text-gray-400">Caractéristiques</span>}
+  {kind === 'unit' && <span class="block text-gray-400">{gameT(locale, 'stats:title')}</span>}
 
   {unlocks > 0 && (
     <div class="border-t border-slate-800 pt-1">
       <div class="flex min-h-11 items-center gap-2 text-gray-400">
-        <span>Débloque</span>
+        <span>{gameT(locale, 'components/statGrids:unlocks')}</span>
         <span class="inline-flex shrink-0 items-center gap-1 border text-xs font-medium rounded-md px-2 py-0.5 border-slate-700/60 bg-slate-800/60 text-slate-300 tabular-nums">{unlocks}</span>
         <i class="ph-bold ph-caret-down ml-auto text-base leading-none shrink-0"></i>
       </div>
@@ -159,7 +171,11 @@ const unlocks = UNLOCKS[item.code] ?? 0;
     )}
     <span class={`flex-1 inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-base font-medium text-white btn-raised ${isUpgrade ? 'btn-raised-green' : 'btn-raised-blue'}`}>
       <i class={`ph ph-${isUpgrade ? 'arrow-up-right' : 'plus'} text-xl leading-none`}></i>
-      {isUpgrade ? 'Améliorer' : 'Construire'}
+      {isUpgrade
+        ? gameT(locale, 'pages/building:modal.upgrade')
+        : unit === 'defense'
+          ? gameT(locale, 'pages/defense:modal.build')
+          : gameT(locale, 'pages/building:modal.build')}
     </span>
   </div>
 </ScreenModal>

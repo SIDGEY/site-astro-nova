@@ -12,7 +12,8 @@
  * Nom et coordonnées sont des valeurs d'illustration ; libellés, fond et textures viennent du jeu.
  */
 import GameScreen from './GameScreen.astro';
-import { backdrops, planets } from '../../lib/game';
+import { backdrops, gameT, planets } from '../../lib/game';
+import { localeFromPath, t } from '../../lib/i18n';
 import { parsePlanetAtmosphere } from '../../vendor/game/planetAtmosphere.ts';
 
 interface Props {
@@ -22,7 +23,8 @@ interface Props {
   label?: string;
 }
 
-const { biome = 'normal', name = 'Kerinaurus', coordinates = '2:148:7', label = 'Écran Planète du jeu' } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
+const { biome = 'normal', name = 'Kerinaurus', coordinates = '2:148:7', label = t(locale, 'screen.planet') } = Astro.props;
 const planet = planets[biome] ?? planets.normal;
 const atmosphere = planet.atmosphere ? parsePlanetAtmosphere(planet.atmosphere) ?? undefined : undefined;
 const textures = {
@@ -71,11 +73,11 @@ const backdropY = SCENE_H / 2 - verticalOffset;
       <div class="inline-flex shrink-0 rounded-lg min-w-full">
         <span class="flex-1 flex h-12 items-center justify-center gap-2 rounded-l-lg border border-blue-500 bg-blue-500/20 px-3 py-3 text-sm font-medium text-white">
           <i class="ph ph-globe-hemisphere-west text-xl leading-none text-blue-400"></i>
-          <span class="whitespace-nowrap">Planète</span>
+          <span class="whitespace-nowrap">{gameT(locale, 'pages/planet:tabs.overview')}</span>
         </span>
         <span class="flex-1 flex h-12 items-center justify-center gap-2 rounded-r-lg border border-l-0 border-slate-700 bg-slate-800 px-3 py-3 text-sm font-medium text-white">
           <i class="ph ph-book text-xl leading-none text-slate-400"></i>
-          <span class="whitespace-nowrap">Détails</span>
+          <span class="whitespace-nowrap">{gameT(locale, 'pages/planet:tabs.info')}</span>
         </span>
       </div>
     </div>

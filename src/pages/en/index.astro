@@ -1,0 +1,17 @@
+---
+// La home anglaise : src/content/pages/en/home.md, avec les mêmes blocs que la française.
+import { getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlockRenderer from '../../components/BlockRenderer.astro';
+
+const homeEntry = await getEntry('pages', 'en/home');
+
+if (!homeEntry) {
+  return Astro.redirect('/404');
+}
+const { title, description, blocks, sectionVariants } = homeEntry.data;
+---
+
+<BaseLayout description={description} title={title} alternates={{ fr: '/', en: '/en/' }}>
+  <BlockRenderer {blocks} {sectionVariants} />
+</BaseLayout>

@@ -4,10 +4,12 @@
  * scène de l'écran de choix du jeu en fond, et un appel à créer son compte. Tout vient du catalogue
  * synchronisé (`lib/game.ts`) ; le Chœur, pas encore jouable, n'y figure pas.
  *
- * Le CTA de chaque colonne nomme sa dynastie (« Choisir l'Héritage ») : le `play_click` du site
- * relève le texte du lien, ce qui dit quelle dynastie a fait partir le visiteur vers le jeu.
+ * Le CTA de chaque colonne nomme sa dynastie (« Choisir l'Héritage », “Choose the Heritage”) : le
+ * `play_click` du site relève le texte du lien, ce qui dit quelle dynastie a fait partir le visiteur
+ * vers le jeu. Noms, peuples et devises sont ceux du jeu, dans la langue de la page.
  */
-import { dynasties } from "../../lib/game";
+import { gameFor } from "../../lib/game";
+import { localeFromPath, quote, t } from "../../lib/i18n";
 
 interface Props {
   title: string;
@@ -20,7 +22,8 @@ interface Props {
   ctaNote?: string;
 }
 
-const { title, subtitle, sectionId, ctaText = "Choisir", ctaLink, ctaNote } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
+const { title, subtitle, sectionId, ctaText = t(locale, "dynasties.choose"), ctaLink, ctaNote } = Astro.props;
 
 // Couleur d'accent de chaque dynastie, tirée de son identité visuelle (codex, LORE_BRIEF §1).
 const ACCENT: Record<string, string> = {
@@ -33,13 +36,13 @@ const FOCUS: Record<string, string> = {
   accord: "50% center",
 };
 
-const columns = dynasties
-  .filter((d) => d.playable)
+const columns = gameFor(locale)
+  .dynasties.filter((d) => d.playable)
   .map((d) => ({
     ...d,
     accent: ACCENT[d.code] ?? "#90A1B9",
     focus: FOCUS[d.code] ?? "center",
-    // « L'Héritage » devient « l'Héritage » au milieu de la phrase du CTA.
+    // « L'Héritage » devient « l'Héritage » au milieu de la phrase du CTA, “The Heritage” “the Heritage”.
     cta: `${ctaText} ${d.name.charAt(0).toLowerCase()}${d.name.slice(1)}`,
   }));
 ---
@@ -79,7 +82,7 @@ const columns = dynasties
           <div class="relative z-10 w-full flex flex-col items-center text-center gap-3 px-6 pb-16 md:pb-20">
             {d.people && <p class="dynasty-accent text-xs md:text-sm font-semibold uppercase tracking-[0.2em] mb-0">{d.people}</p>}
             <h3 class="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-50 mb-0">{d.name}</h3>
-            <p class="text-lg md:text-xl italic text-slate-200 mb-0">« {d.motto} »</p>
+            <p class="text-lg md:text-xl italic text-slate-200 mb-0">{quote(d.motto, locale)}</p>
             {ctaLink && (
               <a
                 href={ctaLink}

@@ -1,29 +1,39 @@
 ---
 import { getEntry } from "astro:content";
+import LanguageSwitch from "./LanguageSwitch.astro";
+import { homeSection, pathFor, t, type Alternates, type Locale } from "../lib/i18n";
 const settings = await getEntry("settings", "general");
 if (!settings) return Astro.redirect("/404");
+
+interface Props {
+  locale: Locale;
+  alternates: Alternates;
+}
+
+const { locale, alternates } = Astro.props;
 
 const PLAY_URL = "https://play.dynastynova.com";
 
 // Les sections de la home : sous-menu « Le jeu » (dropdown en desktop, accordéon en mobile).
 // En desktop, « Le jeu » mène aussi à la première d'entre elles (les clics y étaient perdus).
 const gameLinks = [
-  { href: "/#dynasties", label: "Dynasties", icon: "crown" },
-  { href: "/#planets", label: "Planètes", icon: "planet" },
-  { href: "/#resources", label: "Ressources", icon: "cube" },
-  { href: "/#buildings", label: "Bâtiments", icon: "buildings" },
-  { href: "/#laboratory", label: "Technologies", icon: "flask" },
-  { href: "/#defenses", label: "Défenses", icon: "shield-star" },
-  { href: "/#fleet", label: "Vaisseaux", icon: "rocket-launch" },
-  { href: "/#shop", label: "Boutique", icon: "storefront" },
+  { href: homeSection("dynasties", locale), label: t(locale, "nav.dynasties"), icon: "crown" },
+  { href: homeSection("planets", locale), label: t(locale, "nav.planets"), icon: "planet" },
+  { href: homeSection("resources", locale), label: t(locale, "nav.resources"), icon: "cube" },
+  { href: homeSection("buildings", locale), label: t(locale, "nav.buildings"), icon: "buildings" },
+  { href: homeSection("laboratory", locale), label: t(locale, "nav.technologies"), icon: "flask" },
+  { href: homeSection("defenses", locale), label: t(locale, "nav.defenses"), icon: "shield-star" },
+  { href: homeSection("fleet", locale), label: t(locale, "nav.fleet"), icon: "rocket-launch" },
+  { href: homeSection("shop", locale), label: t(locale, "nav.shop"), icon: "storefront" },
 ];
-const galleryLink = { href: "/#gallery", label: "Galerie", icon: "user-circle" };
+const galleryLink = { href: homeSection("gallery", locale), label: t(locale, "nav.gallery"), icon: "user-circle" };
 const mainLinks = [
-  { href: "/blog/", label: "Blog" },
-  { href: "/#community", label: "Communauté" },
+  { href: pathFor("blog", locale), label: t(locale, "nav.blog") },
+  { href: homeSection("community", locale), label: t(locale, "nav.community") },
   galleryLink,
-  { href: "/roadmap/", label: "Roadmap" },
+  { href: pathFor("roadmap", locale), label: t(locale, "nav.roadmap") },
 ];
+const homeHref = pathFor("home", locale);
 // En mobile, la galerie (les avatars) rejoint les sections du jeu : la liste de premier niveau
 // reste courte. Les dynasties occupent toute la première ligne, la grille tombe juste (1 + 8 tuiles).
 const mobileGameLinks = [...gameLinks, galleryLink];
@@ -36,7 +46,7 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
 >
   <div class="hidden lg:flex items-center justify-between h-10 w-full mx-auto">
     <div class="flex items-center justify-start">
-      <a href="/">
+      <a href={homeHref}>
         <img src="/logo.svg" alt="Dynasty Nova" class="h-11 w-auto" />
       </a>
     </div>
@@ -47,7 +57,7 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
             href={gameLinks[0].href}
             class="flex items-center gap-2 text-slate-300 hover:text-slate-200 transition-colors py-2"
           >
-            <span>Le jeu</span>
+            <span>{t(locale, "nav.game")}</span>
             <i class="ph ph-bold ph-caret-down text-slate-300 text-base opacity-50"></i>
           </a>
           <div
@@ -72,11 +82,12 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
         ))}
       </div>
       <div class="flex items-center gap-4">
+        <LanguageSwitch {locale} {alternates} variant="desktop" />
         <a
           href={PLAY_URL}
           class="inline-flex items-center px-4 py-2 whitespace-nowrap bg-blue-600 hover:bg-blue-500 text-slate-50 rounded-md font-semibold text-base transition-colors h-10"
         >
-          Rejoindre Dynasty Nova
+          {t(locale, "nav.join")}
         </a>
       </div>
     </div>
@@ -84,13 +95,15 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
 
   <!-- Au-dessus du panneau mobile : logo et bouton restent visibles menu ouvert. -->
   <div class="lg:hidden flex items-center justify-between relative z-[1000]">
-    <a href="/">
+    <a href={homeHref}>
       <img src="/logo.svg" alt="Dynasty Nova" class="h-11 w-auto" />
     </a>
     <button
       id="mobile-menu-toggle"
       class="absolute top-0 right-0 flex items-center justify-center w-12 h-12 rounded-full bg-slate-950 hover:bg-slate-900/90 transition-colors overflow-hidden"
-      aria-label="Ouvrir le menu"
+      aria-label={t(locale, "nav.openMenu")}
+      data-label-open={t(locale, "nav.openMenu")}
+      data-label-close={t(locale, "nav.closeMenu")}
       aria-controls="mobile-menu"
       aria-expanded="false"
     >
@@ -139,7 +152,7 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
             aria-expanded="false"
             aria-controls="mobile-game-links"
           >
-            <span>Le jeu</span>
+            <span>{t(locale, "nav.game")}</span>
             <i
               class="ph ph-bold ph-caret-down text-base text-slate-400 transition-transform duration-300"
               data-caret
@@ -180,6 +193,7 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
           </li>
         ))}
       </ul>
+      <LanguageSwitch {locale} {alternates} variant="panel" />
       <a
         href={PLAY_URL}
         class="mt-auto pt-6 group/cta"
@@ -187,7 +201,7 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
         <span
           class="flex items-center justify-center h-12 rounded-md bg-blue-600 group-hover/cta:bg-blue-500 text-slate-50 font-semibold text-base transition-colors"
         >
-          Rejoindre Dynasty Nova
+          {t(locale, "nav.join")}
         </span>
       </a>
     </div>
@@ -235,7 +249,7 @@ const mobileMainLinks = mainLinks.filter((link) => link !== galleryLink);
     iconClose.classList.toggle("scale-50", !isOpen);
 
     menuToggle.setAttribute("aria-expanded", String(isOpen));
-    menuToggle.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+    menuToggle.setAttribute("aria-label", (isOpen ? menuToggle.dataset.labelClose : menuToggle.dataset.labelOpen) ?? "");
     // Rouvert, le menu repart replié.
     if (!isOpen) setGameOpen(false);
   };

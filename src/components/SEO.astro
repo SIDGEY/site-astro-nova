@@ -1,7 +1,9 @@
 ---
 import { getEntry } from 'astro:content';
+import { LOCALE_META, LOCALES, X_DEFAULT_LOCALE, type Alternates, type Locale } from '../lib/i18n';
 import {
   SITE_NAME,
+  DEFAULT_DESCRIPTIONS,
   DEFAULT_OG_IMAGE,
   getCanonicalURL,
   formatTitle,
@@ -11,13 +13,11 @@ import {
   getBreadcrumbSchema,
   getArticleSchema,
   getVideoGameSchema,
-  getFaqSchema,
-  pageLang
+  getFaqSchema
 } from '../lib/seo';
 
 const settingsEntry = await getEntry('settings', 'general');
 const siteName = settingsEntry?.data.siteName || SITE_NAME;
-const defaultDesc = settingsEntry?.data.defaultDescription || "";
 
 interface BreadcrumbItem {
   name: string;
@@ -38,11 +38,16 @@ interface Props {
   };
   breadcrumbs?: BreadcrumbItem[];
   faqItems?: { question: string; answer: string }[];
+  locale: Locale;
+  /** Les deux versions de la page ; le hreflang n'est émis que si `hreflang` le permet. */
+  alternates?: Alternates;
+  hreflang?: boolean;
 }
 
+const locale = Astro.props.locale;
 const {
   title,
-  description = defaultDesc,
+  description = locale === 'fr' ? settingsEntry?.data.defaultDescription || "" : DEFAULT_DESCRIPTIONS[locale],
   image = DEFAULT_OG_IMAGE,
   canonicalURL = Astro.props.canonicalURL || getCanonicalURL(Astro.url.pathname || ""),
   type = 'website',
@@ -50,19 +55,32 @@ const {
   follow = true,
   articleData,
   breadcrumbs,
-  faqItems
+  faqItems,
+  alternates = {},
+  hreflang = true
 } = Astro.props;
 
 const formattedTitle = title.includes('|') ? title : `${title} | ${siteName}`;
 const robots = `${index ? 'index' : 'noindex'}, ${follow ? 'follow' : 'nofollow'}`;
 const ogImageURL = image.startsWith('http') ? image : new URL(image, Astro.site);
 
+// hreflang réciproques, seulement entre deux pages indexables qui existent toutes les deux : un
+// hreflang vers (ou depuis) une page noindex fait ignorer toute la paire par Google.
+const languageLinks =
+  index && hreflang && LOCALES.every((l) => alternates[l])
+    ? [
+        ...LOCALES.map((l) => ({ hreflang: LOCALE_META[l].htmlLang, href: new URL(alternates[l]!, Astro.site).href })),
+        { hreflang: 'x-default', href: new URL(alternates[X_DEFAULT_LOCALE]!, Astro.site).href },
+      ]
+    : [];
+const otherLocales = LOCALES.filter((l) => l !== locale && alternates[l]);
+
 // JSON-LD Graph construction
 const schemas = [
   getOrganizationSchema(),
-  getWebSiteSchema(),
-  getVideoGameSchema(),
-  getWebPageSchema(formattedTitle, description, canonicalURL)
+  getWebSiteSchema(locale),
+  getVideoGameSchema(locale),
+  getWebPageSchema(formattedTitle, description, canonicalURL, locale)
 ];
 
 if (breadcrumbs && breadcrumbs.length > 0) {
@@ -76,7 +94,8 @@ if (type === 'article' && articleData) {
     url: canonicalURL,
     image,
     datePublished: articleData.datePublished,
-    author: articleData.author
+    author: articleData.author,
+    locale
   }));
 }
 
@@ -112,6 +131,8 @@ const jsonLdGraph = {
 <meta property="og:title" content={formattedTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImageURL} />
+<meta property="og:locale" content={LOCALE_META[locale].og} />
+{otherLocales.map((l) => <meta property="og:locale:alternate" content={LOCALE_META[l].og} />)}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -120,10 +141,8 @@ const jsonLdGraph = {
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImageURL} />
 
-<!-- Hreflang (FR as default, placeholder for EN) -->
-<link rel="alternate" hreflang={pageLang(Astro.url.pathname)} href={canonicalURL} />
-<link rel="alternate" hreflang="x-default" href={canonicalURL} />
-<!-- <link rel="alternate" hreflang="en" href={new URL('/en' + (Astro.url.pathname || ""), Astro.site)} /> -->
+<!-- Hreflang -->
+{languageLinks.map((link) => <link rel="alternate" hreflang={link.hreflang} href={link.href} />)}
 
 <!-- JSON-LD Graph -->
 <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLdGraph)} />

@@ -1,0 +1,120 @@
+---
+/**
+ * Propose l'autre langue au visiteur qui la lit mieux : un anglophone tombé sur une page
+ * française (lien partagé sur Discord, résultat de recherche) se voit proposer la même page en
+ * anglais, et inversement. Le texte est écrit dans la langue proposée, la seule que ce visiteur
+ * lise à coup sûr.
+ *
+ * Jamais de redirection : seulement une invitation, et seulement si la page a sa traduction, si
+ * le navigateur préfère cette langue, et tant que le visiteur n'a pas choisi (fermer la
+ * suggestion ou utiliser le sélecteur de langue vaut choix, retenu dans `dn_lang`). Elle apparaît
+ * après le premier affichage, en position fixe : rien ne bouge dans la page.
+ */
+import { LOCALE_META, otherLocale, t, type Alternates, type Locale } from "../lib/i18n";
+
+interface Props {
+  locale: Locale;
+  alternates: Alternates;
+}
+
+const { locale, alternates } = Astro.props;
+const target = otherLocale(locale);
+const href = alternates[target];
+const lang = LOCALE_META[target].htmlLang;
+---
+
+{href && (
+  <div
+    class="lang-suggest fixed inset-x-4 bottom-4 sm:inset-x-auto sm:right-6 sm:bottom-6 sm:max-w-sm z-[998] flex items-start gap-3 rounded-xl border border-slate-700 bg-slate-900/95 backdrop-blur-xl p-4 shadow-2xl shadow-slate-950/60"
+    role="region"
+    aria-label={t(target, "lang.label")}
+    lang={lang}
+    data-lang-suggest={target}
+    hidden
+  >
+    <i class="ph ph-globe text-2xl leading-none text-blue-400 shrink-0 mt-0.5" aria-hidden="true"></i>
+    <div class="flex-1 min-w-0">
+      <p class="text-sm text-slate-300 m-0">{t(target, "lang.suggest")}</p>
+      <a
+        href={href}
+        hreflang={lang}
+        class="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors"
+        data-lang-suggest-go
+      >
+        {t(target, "lang.suggestCta")}
+        <i class="ph ph-bold ph-arrow-right" aria-hidden="true"></i>
+      </a>
+    </div>
+    <button
+      type="button"
+      class="flex items-center justify-center w-8 h-8 -mr-1 -mt-1 rounded-full text-slate-500 hover:text-slate-200 hover:bg-slate-800 transition-colors shrink-0"
+      aria-label={t(target, "lang.dismiss")}
+      data-lang-suggest-close
+    >
+      <i class="ph ph-bold ph-x text-base leading-none" aria-hidden="true"></i>
+    </button>
+  </div>
+)}
+
+<script>
+  const CHOICE_KEY = "dn_lang";
+  const box = document.querySelector<HTMLElement>("[data-lang-suggest]");
+
+  const remember = (lang: string) => {
+    try {
+      localStorage.setItem(CHOICE_KEY, lang);
+    } catch {
+      // Stockage refusé : la suggestion reviendra à la prochaine page, sans plus.
+    }
+  };
+
+  if (box) {
+    const target = box.dataset.langSuggest ?? "";
+    const pageLang = document.documentElement.lang;
+    let chosen: string | null = null;
+    try {
+      chosen = localStorage.getItem(CHOICE_KEY);
+    } catch {
+      chosen = null;
+    }
+    // La première des deux langues du site dans les préférences du navigateur.
+    const preferred = (navigator.languages?.length ? navigator.languages : [navigator.language])
+      .map((l) => l.slice(0, 2).toLowerCase())
+      .find((l) => l === "fr" || l === "en");
+    const isBot = /bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent);
+
+    if (!chosen && preferred === target && !isBot) {
+      window.setTimeout(() => {
+        box.hidden = false;
+        requestAnimationFrame(() => box.classList.add("is-visible"));
+      }, 1200);
+    }
+
+    box.querySelector("[data-lang-suggest-go]")?.addEventListener("click", () => remember(target));
+    box.querySelector("[data-lang-suggest-close]")?.addEventListener("click", () => {
+      remember(pageLang);
+      box.classList.remove("is-visible");
+      window.setTimeout(() => (box.hidden = true), 200);
+    });
+  }
+</script>
+
+<style>
+  .lang-suggest {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+  .lang-suggest.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lang-suggest {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

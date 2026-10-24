@@ -1,5 +1,6 @@
 ---
-import { banner as bannerUrl, pick } from "../../lib/game";
+import { banner as bannerUrl, gameFor } from "../../lib/game";
+import { localeFromPath, t } from "../../lib/i18n";
 import Mobile from "../Mobile.astro";
 import ScreenPlanet from "../game/ScreenPlanet.astro";
 import FeatureScreens from "../game/FeatureScreens.astro";
@@ -21,20 +22,21 @@ interface Props {
   banner?: string;
 }
 
+const locale = localeFromPath(Astro.url.pathname);
 const {
   title,
   subtitle,
   subtitleShort,
   ctaText,
   ctaLink,
-  secondaryCtaText = "Découvrir le jeu",
+  secondaryCtaText = t(locale, "hero.discover"),
   secondaryCtaLink = "#features",
   backgroundImage: customBackground,
   highlights = [],
   banner,
 } = Astro.props;
 
-const heroBuildings = pick("buildings", ["metal_mine", "crystal_mine", "hydrogen_synthesizer", "solar_plant"]);
+const heroBuildings = gameFor(locale).pick("buildings", ["metal_mine", "crystal_mine", "hydrogen_synthesizer", "solar_plant"]);
 
 const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/landing/backgrounds/bg-hero.webp");
 ---
@@ -127,7 +129,7 @@ const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/land
         <div class="hero-device hero-device--front">
           <div class="hero-device__inner">
             <Mobile shadow={false}>
-              <ScreenPlanet label="La page Planète du jeu, telle qu'elle s'affiche sur mobile" />
+              <ScreenPlanet label={t(locale, "hero.planetScreen")} />
             </Mobile>
           </div>
         </div>
@@ -139,6 +141,7 @@ const backgroundImage = customBackground ?? (banner ? bannerUrl(banner) : "/land
     <a
       href="#features"
       data-scroll-next
+      aria-label={t(locale, "hero.scroll")}
       class="animate-bounce text-slate-400 hover:text-slate-300 transition-colors"
     >
       <div class="w-12 h-12 flex items-center justify-center">

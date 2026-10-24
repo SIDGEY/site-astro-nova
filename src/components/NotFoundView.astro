@@ -1,0 +1,31 @@
+---
+// La page introuvable des deux langues : /404.html pour le site, /en/404/ pour sa partie anglaise.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pathFor, t, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  title={t(locale, 'notFound.title')}
+  description={t(locale, 'notFound.description')}
+  index={false}
+>
+  <section class="min-h-[70vh] flex items-center py-20 bg-[rgb(var(--bg))]">
+    <div class="container-custom text-center">
+      <span class="text-9xl font-extrabold text-primary/10 block mb-4">404</span>
+      <h1 class="text-5xl font-extrabold mb-6">{t(locale, 'notFound.oops')} <span class="text-primary">{t(locale, 'notFound.lost')}</span></h1>
+      <p class="text-xl text-[rgb(var(--muted))] mb-10 max-w-lg mx-auto">
+        {t(locale, 'notFound.text')}
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href={pathFor('home', locale)} class="btn btn-primary btn-lg">{t(locale, 'notFound.home')}</a>
+        <a href={pathFor('contact', locale)} class="btn btn-outline btn-lg">{t(locale, 'notFound.contact')}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -522,9 +522,13 @@ const settingsCollection = defineCollection({
   }),
 });
 
+// Les pages anglaises vivent sous `pages/en/` (servies sous /en/) et nomment leur page française :
+// c'est ce qui relie les deux versions (hreflang, sélecteur de langue). Voir src/lib/i18n.ts.
 const pagesCollection = defineCollection({
   loader: glob({ pattern: '**/*.md', base: 'src/content/pages' }),
   schema: z.object({
+    // (Pages anglaises) id de la page française traduite : `faq`, `home`, `politique-de-confidentialite`…
+    translationOf: z.string().optional(),
     title: z.string(),
     description: z.string(),
     blocks: z.array(blockSchema).optional(),
@@ -607,6 +611,25 @@ const articlesCollection = defineCollection({
   }),
 });
 
+// La traduction anglaise d'un article : rien que le texte. Date, auteur, tags, cover, icône et
+// statut de brouillon restent ceux de l'article français (`translationOf`), relus au build : la
+// version anglaise paraît avec la française, sans rien à publier deux fois (src/lib/articles.ts).
+const articlesEnCollection = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/articles-en' }),
+  schema: z.object({
+    // Slug (nom de fichier) de l'article français traduit.
+    translationOf: z.string(),
+    title: z.string(),
+    description: z.string(),
+    faq: z.array(z.object({
+      question: z.string(),
+      answer: z.string(),
+    })).optional(),
+    // true retient la version anglaise alors que la française est publiée (traduction à revoir).
+    draft: z.boolean().optional(),
+  }),
+});
+
 const agenciesCollection = defineCollection({
   loader: glob({ pattern: '**/*.md', base: 'src/content/agencies' }),
   schema: z.object({
@@ -645,6 +668,7 @@ export const collections = {
   'landings': landingsCollection,
   'cases': casesCollection,
   'articles': articlesCollection,
+  'articlesEn': articlesEnCollection,
   'agencies': agenciesCollection,
   'commercials': commercialsCollection,
 };

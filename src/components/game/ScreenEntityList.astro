@@ -7,7 +7,8 @@
  * nom et description à droite, une carte par ligne).
  *
  * Le compteur suit le jeu : « Niveau 8 » pour un bâtiment (`level_counter`), « 18 unités » pour
- * une unité. L'action d'un bâtiment déjà construit est l'amélioration, en vert (`cardStyles.button`).
+ * une unité ; libellés et compteur viennent de la page appelante, qui sait de quelle liste du jeu il
+ * s'agit. L'action d'un bâtiment déjà construit est l'amélioration, en vert (`cardStyles.button`).
  */
 import type { GameEntity } from '../../lib/game';
 
@@ -27,9 +28,13 @@ interface Props {
   counters?: number[];
   /** Unités (défenses, vaisseaux) : le compteur est une quantité, l'action reste « construire ». */
   units?: boolean;
+  /** La bascule de l'en-tête (« Disponible »), propre à chaque page du jeu. */
+  available: string;
+  /** Le compteur d'une carte (« Niveau 8 », « 18 unités »). */
+  formatCounter: (count: number) => string;
 }
 
-const { title, section, tabs = [], items, counters = [], units = false } = Astro.props;
+const { title, section, tabs = [], items, counters = [], units = false, available, formatCounter } = Astro.props;
 ---
 
 <div class="h-full flex flex-col">
@@ -38,7 +43,7 @@ const { title, section, tabs = [], items, counters = [], units = false } = Astro
     <div class="flex justify-between items-center gap-2">
       <h1 class="text-xl font-semibold">{title}</h1>
       <div class="flex flex-row items-center justify-end gap-3 h-5">
-        <span class="text-sm text-gray-400">Disponible</span>
+        <span class="text-sm text-gray-400">{available}</span>
         <span class="relative flex h-4 w-10 items-center rounded-[58px] border border-slate-700">
           <span class="absolute h-6 w-6 rounded-full -translate-x-px bg-gray-400"></span>
         </span>
@@ -83,7 +88,7 @@ const { title, section, tabs = [], items, counters = [], units = false } = Astro
                     <div class="entity-veil"></div>
                   </div>
                   <div class="absolute bottom-2 right-2 px-2 py-1 bg-slate-900/90 backdrop-blur-sm rounded-md text-sm font-medium text-slate-200 shadow-lg">
-                    {units ? `${count} unités` : `Niveau ${count}`}
+                    {formatCounter(count)}
                   </div>
                   <span class={`absolute top-2 left-2 p-2 rounded-md backdrop-blur-sm btn-raised ${upgrade ? 'btn-raised-green' : 'btn-raised-blue'}`}>
                     <i class={`ph ${upgrade ? 'ph-arrow-up-right' : 'ph-plus'} text-xl leading-none block text-white`}></i>

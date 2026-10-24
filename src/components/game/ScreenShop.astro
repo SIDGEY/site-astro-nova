@@ -13,13 +13,16 @@
  * du point du jour est celui du backend (`DailyClaimSchedule`). Solde, série en cours, compte à
  * rebours et objets possédés sont des valeurs d'illustration : le jeu les reçoit de l'API.
  */
-import { avatars, type GameAvatar } from '../../lib/game';
+import { gameFor, gameT, type GameAvatar } from '../../lib/game';
+import { localeFromPath } from '../../lib/i18n';
 
 interface Props {
   view: 'showcase' | 'collection';
 }
 
 const { view } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
+const { avatars } = gameFor(locale);
 
 type Rarity = 'offered' | 'common' | 'rare' | 'epic' | 'legendary' | 'exclusive';
 
@@ -62,20 +65,12 @@ const RARITY: Record<Rarity, { tile: string; border: string; glow: string; label
     label: 'text-pink-200',
   },
 };
-// `components.avatar.rarity` (FR).
-const RARITY_LABEL: Record<Rarity, string> = {
-  offered: 'Offert',
-  common: 'Commun',
-  rare: 'Rare',
-  epic: 'Épique',
-  legendary: 'Légendaire',
-  exclusive: 'Exclusif',
-};
+const rarityLabel = (rarity: Rarity) => gameT(locale, `components/avatar:rarity.${rarity}`);
 
 const tabs = [
-  { key: 'showcase', label: 'Boutique', icon: 'storefront' },
-  { key: 'collection', label: 'Collection', icon: 'squares-four' },
-  { key: 'stellar', label: 'Crédits', icon: 'sparkle' },
+  { key: 'showcase', label: gameT(locale, 'components/shop:categories.showcase'), icon: 'storefront' },
+  { key: 'collection', label: gameT(locale, 'components/shop:categories.collection'), icon: 'squares-four' },
+  { key: 'stellar', label: gameT(locale, 'components/shop:categories.stellar'), icon: 'sparkle' },
 ];
 
 // Barème du point du jour (`DailyClaimSchedule::AMOUNTS`) ; série illustrée : 3e jour, à récupérer.
@@ -104,11 +99,11 @@ const collection: { avatar: (typeof inShop)[number]; state: TileState; seenDaysA
   {/* `PageHeader` : px-5 pt-4 space-y-3, sans fondu (`hideTopFade`). */}
   <div class="shrink-0 relative px-5 pt-4 space-y-3">
     <div class="flex justify-between items-center gap-2">
-      <h1 class="text-xl font-semibold">Boutique</h1>
+      <h1 class="text-xl font-semibold">{gameT(locale, 'components/shop:title')}</h1>
       <div class="flex items-center gap-2">
         <span class="inline-flex shrink-0 items-center justify-center whitespace-nowrap h-8 gap-1.5 rounded-md px-3 text-xs font-semibold text-slate-400">
           <i class="ph ph-gift"></i>
-          J'ai un code
+          {gameT(locale, 'rewardCodes:shopButton')}
         </span>
         <span class="flex items-center gap-1.5 rounded-full border border-yellow-400/30 bg-slate-900/80 px-3 py-1 text-sm">
           <i class="ph-fill ph-star-four text-base leading-none text-yellow-400"></i>
@@ -148,8 +143,8 @@ const collection: { avatar: (typeof inShop)[number]; state: TileState; seenDaysA
             <i class="ph-fill ph-star-four text-xl leading-none text-yellow-400"></i>
           </span>
           <div class="min-w-0">
-            <h2 class="font-semibold text-white">Point du jour</h2>
-            <p class="text-sm text-slate-400">Revenez chaque jour : {SCHEDULE.at(-1)} points au {SCHEDULE.length}e jour d'affilée.</p>
+            <h2 class="font-semibold text-white">{gameT(locale, 'components/shop:dailyClaim.title')}</h2>
+            <p class="text-sm text-slate-400">{gameT(locale, 'components/shop:dailyClaim.hint', { amount: SCHEDULE[SCHEDULE.length - 1], length: SCHEDULE.length })}</p>
           </div>
         </div>
         <ol class="flex shrink-0 items-center gap-1.5">
@@ -174,7 +169,7 @@ const collection: { avatar: (typeof inShop)[number]; state: TileState; seenDaysA
         <div class="flex shrink-0 flex-col items-stretch gap-1">
           <span class="btn-raised btn-raised-amber inline-flex items-center justify-center whitespace-nowrap h-10 gap-2 rounded-lg px-4 text-sm font-medium text-white">
             <i class="ph-fill ph-star-four text-base leading-none"></i>
-            Récupérer +{SCHEDULE[STREAK_DAY - 1]}
+            {gameT(locale, 'components/shop:dailyClaim.claim', { amount: SCHEDULE[STREAK_DAY - 1] })}
           </span>
         </div>
       </section>
@@ -184,24 +179,24 @@ const collection: { avatar: (typeof inShop)[number]; state: TileState; seenDaysA
           {featured && (
             <section class="space-y-3.5">
               <div class="flex flex-wrap items-center justify-between gap-3">
-                <h2 class="text-base font-bold uppercase tracking-wider text-slate-50">À la une</h2>
+                <h2 class="text-base font-bold uppercase tracking-wider text-slate-50">{gameT(locale, 'components/shop:showcase.featured')}</h2>
                 <span class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs text-slate-300">
                   <i class="ph ph-clock text-sm leading-none text-slate-400"></i>
-                  Change dans
-                  <strong class="font-semibold tabular-nums text-slate-50">3 j 14:22:05</strong>
+                  {gameT(locale, 'components/shop:showcase.changesIn')}
+                  <strong class="font-semibold tabular-nums text-slate-50">{`3 ${gameT(locale, 'components/shop:showcase.dayUnit')} 14:22:05`}</strong>
                 </span>
               </div>
               {/* `FeaturedTile`. */}
               <article class={`relative flex min-h-[230px] overflow-hidden rounded-2xl border ${RARITY[featured.rarity].tile} ${RARITY[featured.rarity].border} ${RARITY[featured.rarity].glow}`}>
                 <div class="relative flex flex-[1_1_58%] flex-col justify-end gap-1.5 p-4">
                   <span class="flex gap-1.5">
-                    <span class="rounded-md bg-slate-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-900">À la une</span>
+                    <span class="rounded-md bg-slate-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-900">{gameT(locale, 'components/shop:showcase.featured')}</span>
                   </span>
                   <span class={`text-[10px] font-semibold uppercase tracking-widest ${RARITY[featured.rarity].label}`}>
-                    {RARITY_LABEL[featured.rarity]} · Avatar
+                    {rarityLabel(featured.rarity)} · {gameT(locale, 'components/shop:tile.avatar')}
                   </span>
                   <h3 class="text-2xl font-bold leading-tight text-white">{featured.name}</h3>
-                  <p class="text-xs text-slate-200">1re apparition</p>
+                  <p class="text-xs text-slate-200">{gameT(locale, 'components/shop:tile.firstAppearance')}</p>
                   <div class="mt-1 flex items-center gap-2.5">
                     <span class="flex h-11 items-center gap-2 rounded-lg bg-slate-50 px-4 text-[15px] font-bold text-slate-900">
                       <i class="ph-fill ph-star-four text-base leading-none text-yellow-600"></i>
@@ -229,14 +224,14 @@ const collection: { avatar: (typeof inShop)[number]; state: TileState; seenDaysA
           <div class="flex flex-wrap items-center gap-3">
             {[
               [
-                { label: 'Avatars', icon: 'user-circle', active: true },
-                { label: 'Skins de planète', icon: 'globe-hemisphere-east' },
+                { label: gameT(locale, 'components/shop:categories.avatars'), icon: 'user-circle', active: true },
+                { label: gameT(locale, 'components/shop:categories.planetSkins'), icon: 'globe-hemisphere-east' },
               ],
               [
-                { label: 'Tous', active: true },
-                { label: 'Possédés' },
-                { label: 'Manquants' },
-                { label: 'Mes envies', icon: 'heart' },
+                { label: gameT(locale, 'components/shop:collection.filters.all'), active: true },
+                { label: gameT(locale, 'components/shop:collection.filters.owned') },
+                { label: gameT(locale, 'components/shop:collection.filters.missing') },
+                { label: gameT(locale, 'components/shop:collection.filters.wished'), icon: 'heart' },
               ],
             ].map((items) => (
               <div class="flex max-w-full overflow-hidden">
@@ -283,7 +278,7 @@ const collection: { avatar: (typeof inShop)[number]; state: TileState; seenDaysA
                   {state === 'inShop' && (
                     <span class="pointer-events-none absolute left-2.5 top-2.5 flex items-center gap-1.5 rounded-md bg-emerald-400 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-950">
                       <span class="size-1.5 rounded-full bg-emerald-950"></span>
-                      En boutique
+                      {gameT(locale, 'components/shop:tile.inShop')}
                     </span>
                   )}
                   {canWish && (
@@ -297,17 +292,19 @@ const collection: { avatar: (typeof inShop)[number]; state: TileState; seenDaysA
                   )}
                   <div class="flex flex-col gap-0.5 border-t border-white/10 bg-slate-950/70 px-3 pb-3 pt-2.5">
                     <span class:list={['text-[10px] font-semibold uppercase tracking-widest', isMissed ? 'text-slate-400' : scale.label]}>
-                      {RARITY_LABEL[avatar.rarity]} · Avatar
+                      {rarityLabel(avatar.rarity)} · {gameT(locale, 'components/shop:tile.avatar')}
                     </span>
                     <span class:list={['truncate text-[15px] font-semibold', isMissed ? 'text-slate-300' : 'text-white']}>{avatar.name}</span>
                     {isUsable ? (
                       <span class="flex items-center gap-1 text-[13px] font-semibold text-emerald-300">
                         <i class="ph-bold ph-check text-sm leading-none"></i>
-                        {state === 'offered' ? 'Offert' : 'Possédé'}
+                        {state === 'offered' ? gameT(locale, 'components/shop:tile.offered') : gameT(locale, 'components/shop:tile.owned')}
                       </span>
                     ) : isMissed ? (
                       <span class="truncate text-xs text-slate-400">
-                        {state === 'notYetShown' ? 'Pas encore en vitrine' : `vu il y a ${seenDaysAgo} j`}
+                        {state === 'notYetShown'
+                          ? gameT(locale, 'components/shop:tile.notYetShown')
+                          : gameT(locale, 'components/shop:tile.seenDaysAgo', { count: seenDaysAgo ?? 0 })}
                       </span>
                     ) : (
                       <span class="flex items-center gap-1 text-sm font-bold text-white">

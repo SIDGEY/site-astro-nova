@@ -1,5 +1,6 @@
 ---
 import { planets } from "../../lib/game";
+import { localeFromPath, t } from "../../lib/i18n";
 import { parsePlanetAtmosphere } from "../../vendor/game/planetAtmosphere";
 
 interface Props {
@@ -9,21 +10,25 @@ interface Props {
 }
 
 const { title, subtitle, sectionId } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
 
 // Le jeu de textures v8 de chaque biome (variante 01), synchronisé par scripts/sync-game.mjs, au
 // format `PlanetTextureSet` du moteur : cartes, nuages, et profil d'atmosphère lu par le parseur
 // du jeu, tel que `planetAtmosphere()` le fournit en jeu.
 // Ordre, libellé et icône du sélecteur ; seuls les corps présents dans le catalogue sont proposés.
-const BIOMES = [
-  { key: "desert", label: "Désertique", icon: "sun" },
-  { key: "dry", label: "Aride", icon: "wind" },
-  { key: "normal", label: "Tempérée", icon: "globe-simple" },
-  { key: "jungle", label: "Jungle", icon: "leaf" },
-  { key: "water", label: "Océanique", icon: "drop" },
-  { key: "ice", label: "Glaciaire", icon: "snowflake" },
-  { key: "gas", label: "Géante gazeuse", icon: "cloud" },
-  { key: "moon", label: "Lune", icon: "moon" },
-];
+// Les libellés sont ceux du site (`biome.*`), les fichiers de langue du jeu ne nommant pas les biomes.
+const BIOMES = (
+  [
+    { key: "desert", icon: "sun" },
+    { key: "dry", icon: "wind" },
+    { key: "normal", icon: "globe-simple" },
+    { key: "jungle", icon: "leaf" },
+    { key: "water", icon: "drop" },
+    { key: "ice", icon: "snowflake" },
+    { key: "gas", icon: "cloud" },
+    { key: "moon", icon: "moon" },
+  ] as const
+).map((b) => ({ ...b, label: t(locale, `biome.${b.key}`) }));
 
 const textures = Object.fromEntries(
   Object.entries(planets).map(([biome, p]) => {

@@ -5,13 +5,15 @@
  * L'écran natif fait 375px, sous le seuil de 430px du jeu (`isNarrow`) : les onglets y passent en
  * largeur flexible au lieu de leurs 72px fixes, qui ne tiendraient pas.
  */
-import { nav, planets } from '../../lib/game';
+import { gameFor, planets } from '../../lib/game';
+import { localeFromPath } from '../../lib/i18n';
 
 interface Props {
   active?: string;
 }
 
 const { active } = Astro.props;
+const { nav } = gameFor(localeFromPath(Astro.url.pathname));
 
 const left = [
   { key: 'buildings', icon: 'buildings', label: nav.buildings },

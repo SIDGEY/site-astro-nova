@@ -1,0 +1,635 @@
+{
+  "source": {
+    "repo": "Dynasty-Nova/Frontend",
+    "ref": "46160a4d060b3a6c74b42525ae5cfa114909a1d4",
+    "sha": "46160a4d060b3a6c74b42525ae5cfa114909a1d4",
+    "commitDate": "2026-10-16T23:26:00+02:00"
+  },
+  "ui": {
+    "fr": {
+      "components/avatar:rarity.offered": "Offert",
+      "components/avatar:rarity.common": "Commun",
+      "components/avatar:rarity.rare": "Rare",
+      "components/avatar:rarity.epic": "Épique",
+      "components/avatar:rarity.legendary": "Légendaire",
+      "components/avatar:rarity.exclusive": "Exclusif",
+      "components/expandableText:more": "Voir plus",
+      "components/shop:categories.avatars": "Avatars",
+      "components/shop:categories.collection": "Collection",
+      "components/shop:categories.planetSkins": "Skins de planète",
+      "components/shop:categories.showcase": "Boutique",
+      "components/shop:categories.stellar": "Crédits",
+      "components/shop:collection.filters.all": "Tous",
+      "components/shop:collection.filters.missing": "Manquants",
+      "components/shop:collection.filters.owned": "Possédés",
+      "components/shop:collection.filters.wished": "Mes envies",
+      "components/shop:dailyClaim.claim": "Récupérer +{{amount}}",
+      "components/shop:dailyClaim.hint": "Revenez chaque jour : {{amount}} points au {{length}}e jour d'affilée.",
+      "components/shop:dailyClaim.title": "Point du jour",
+      "components/shop:showcase.changesIn": "Change dans",
+      "components/shop:showcase.dayUnit": "j",
+      "components/shop:showcase.featured": "À la une",
+      "components/shop:tile.avatar": "Avatar",
+      "components/shop:tile.firstAppearance": "1re apparition",
+      "components/shop:tile.inShop": "En boutique",
+      "components/shop:tile.notYetShown": "Pas encore en vitrine",
+      "components/shop:tile.offered": "Offert",
+      "components/shop:tile.owned": "Possédé",
+      "components/shop:tile.seenDaysAgo_one": "vu il y a {{count}} j",
+      "components/shop:tile.seenDaysAgo_other": "vu il y a {{count}} j",
+      "components/shop:title": "Boutique",
+      "components/statGrids:buildTimeReduction": "Réduction du temps de construction",
+      "components/statGrids:requirements": "Prérequis",
+      "components/statGrids:researchSpeed": "Vitesse de recherche",
+      "components/statGrids:unlocks": "Débloque",
+      "pages/building:available": "Disponible",
+      "pages/building:category.development": "Développement",
+      "pages/building:category.production": "Production",
+      "pages/building:level_counter": "Niveau {{level}}",
+      "pages/building:level_label": "Niveau",
+      "pages/building:modal.build": "Construire",
+      "pages/building:modal.upgrade": "Améliorer",
+      "pages/building:operatingRate.consumption": "Consommation d'énergie",
+      "pages/building:operatingRate.hint": "Réglez le taux de vos mines pour libérer de l'énergie : leur production et leur consommation baissent d'autant.",
+      "pages/building:operatingRate.production": "Production du bâtiment",
+      "pages/building:operatingRate.title": "Taux de fonctionnement",
+      "pages/defense:available": "Disponible",
+      "pages/defense:categories.standard": "Défenses Standards",
+      "pages/defense:modal.build": "Construire",
+      "pages/defense:units_label": "unités",
+      "pages/fleet:available": "Disponible",
+      "pages/fleet:combatShips": "Vaisseaux de Combat",
+      "pages/fleet:modal.unitsLabel": "unités",
+      "pages/planet:tabs.info": "Détails",
+      "pages/planet:tabs.overview": "Planète",
+      "rewardCodes:shopButton": "J'ai un code",
+      "stats:title": "Caractéristiques"
+    },
+    "en": {
+      "components/avatar:rarity.offered": "Free",
+      "components/avatar:rarity.common": "Common",
+      "components/avatar:rarity.rare": "Rare",
+      "components/avatar:rarity.epic": "Epic",
+      "components/avatar:rarity.legendary": "Legendary",
+      "components/avatar:rarity.exclusive": "Exclusive",
+      "components/expandableText:more": "See more",
+      "components/shop:categories.avatars": "Avatars",
+      "components/shop:categories.collection": "Collection",
+      "components/shop:categories.planetSkins": "Planet skins",
+      "components/shop:categories.showcase": "Shop",
+      "components/shop:categories.stellar": "Credits",
+      "components/shop:collection.filters.all": "All",
+      "components/shop:collection.filters.missing": "Missing",
+      "components/shop:collection.filters.owned": "Owned",
+      "components/shop:collection.filters.wished": "My wishlist",
+      "components/shop:dailyClaim.claim": "Collect +{{amount}}",
+      "components/shop:dailyClaim.hint": "Come back every day: {{amount}} points on day {{length}} in a row.",
+      "components/shop:dailyClaim.title": "Daily point",
+      "components/shop:showcase.changesIn": "Changes in",
+      "components/shop:showcase.dayUnit": "d",
+      "components/shop:showcase.featured": "Featured",
+      "components/shop:tile.avatar": "Avatar",
+      "components/shop:tile.firstAppearance": "First appearance",
+      "components/shop:tile.inShop": "In shop",
+      "components/shop:tile.notYetShown": "Not on show yet",
+      "components/shop:tile.offered": "Free",
+      "components/shop:tile.owned": "Owned",
+      "components/shop:tile.seenDaysAgo_one": "seen {{count}} day ago",
+      "components/shop:tile.seenDaysAgo_other": "seen {{count}} days ago",
+      "components/shop:title": "Shop",
+      "components/statGrids:buildTimeReduction": "Build time reduction",
+      "components/statGrids:requirements": "Requirements",
+      "components/statGrids:researchSpeed": "Research speed",
+      "components/statGrids:unlocks": "Unlocks",
+      "pages/building:available": "Available",
+      "pages/building:category.development": "Development",
+      "pages/building:category.production": "Production",
+      "pages/building:level_counter": "Level {{level}}",
+      "pages/building:level_label": "Level",
+      "pages/building:modal.build": "Build",
+      "pages/building:modal.upgrade": "Upgrade",
+      "pages/building:operatingRate.consumption": "Energy consumption",
+      "pages/building:operatingRate.hint": "Adjust your mines' operating rate to free up energy: their output and consumption drop in proportion.",
+      "pages/building:operatingRate.production": "Building output",
+      "pages/building:operatingRate.title": "Operating rate",
+      "pages/defense:available": "Available",
+      "pages/defense:categories.standard": "Standard Defenses",
+      "pages/defense:modal.build": "Build",
+      "pages/defense:units_label": "units",
+      "pages/fleet:available": "Available",
+      "pages/fleet:combatShips": "Combat Ships",
+      "pages/fleet:modal.unitsLabel": "units",
+      "pages/planet:tabs.info": "Details",
+      "pages/planet:tabs.overview": "Planet",
+      "rewardCodes:shopButton": "I have a code",
+      "stats:title": "Characteristics"
+    }
+  },
+  "en": {
+    "nav": {
+      "planet": "Planet",
+      "moon": "Moon",
+      "buildings": "Buildings",
+      "resources": "Resources",
+      "installations": "Installations",
+      "research": "Research",
+      "defense": "Defense",
+      "ships": "Ships",
+      "galaxy": "Galaxy",
+      "fleet": "Fleet",
+      "build": "Docks",
+      "missions": "Missions",
+      "menu": "Menu",
+      "rail": {
+        "galaxy": "Galaxies",
+        "ranking": "Ranking",
+        "quests": "Quests",
+        "reports": "Reports",
+        "simulator": "Simulator",
+        "shop": "Shop",
+        "inventory": "Inventory",
+        "alliance": "Alliance",
+        "messages": "Messages",
+        "help": "Help",
+        "settings": "Settings",
+        "notifications": "Notifications",
+        "profile": "Profile",
+        "universes": "Universes",
+        "rankingHumans": "Players",
+        "rankingBots": "Bots",
+        "shopOrnaments": "Ornaments",
+        "shopPlanets": "Planets",
+        "referral": "Referral",
+        "news": "What's new",
+        "premium": "Premium",
+        "bookmarks": "Bookmarks",
+        "empire": "Empire",
+        "talents": "Talents"
+      },
+      "closeMenu": "Close the menu",
+      "talentsChooseClass": "Choose"
+    },
+    "resources": {
+      "metal": {
+        "name": "Metal"
+      },
+      "crystal": {
+        "name": "Crystal"
+      },
+      "hydrogen": {
+        "name": "Hydrogen"
+      },
+      "energy": {
+        "name": "Energy"
+      }
+    },
+    "buildings": {
+      "planetary_base": {
+        "name": "Planetary Base",
+        "description": "The planetary base is the nerve center of your colony. This is where you centralize all your operations, from resource management to construction planning. This advanced structure houses interstellar communication systems, strategy rooms equipped with holograms, and control centers to monitor every aspect of your expanding empire. Its importance is paramount: without it, no other construction or research would be possible on the planet.",
+        "longDescription": "The planetary base is the nerve center of your colony. This is where you centralize all your operations, from resource management to construction planning. This advanced structure houses interstellar communication systems, strategy rooms equipped with holograms, and control centers to monitor every aspect of your expanding empire. Its importance is paramount: without it, no other construction or research would be possible on the planet."
+      },
+      "metal_mine": {
+        "name": "Mineral Excavator",
+        "description": "Metal is the primary resource used in the foundation of your Empire. At greater depths, excavators can produce more viable metal for the construction of buildings, ships, defense systems, and research. The deeper the excavators dig, the more energy is required for maximum production. Since metal is the most abundant resource available, its value is considered the lowest of all resources for trade.",
+        "longDescription": "Metal is the primary resource used in the foundation of your Empire. At greater depths, excavators can produce more viable metal for the construction of buildings, ships, defense systems, and research. The deeper the excavators dig, the more energy is required for maximum production. Since metal is the most abundant resource available, its value is considered the lowest of all resources for trade."
+      },
+      "crystal_mine": {
+        "name": "Crystal Extractor",
+        "description": "Crystal extractors provide the primary resource used to produce electronic circuits and certain alloy compounds. Crystal extraction consumes about one and a half times more energy than metal extraction, making crystal more valuable. Almost all ships and buildings require crystal. Most crystals needed for spacecraft construction are very rare and, like metal, can only be found at a certain depth. Therefore, building extractors in deeper strata will increase the amount of crystal produced.",
+        "longDescription": "Crystal extractors provide the primary resource used to produce electronic circuits and certain alloy compounds. Crystal extraction consumes about one and a half times more energy than metal extraction, making crystal more valuable. Almost all ships and buildings require crystal. Most crystals needed for spacecraft construction are very rare and, like metal, can only be found at a certain depth. Therefore, building extractors in deeper strata will increase the amount of crystal produced."
+      },
+      "hydrogen_synthesizer": {
+        "name": "Hydrogen Condenser",
+        "description": "The hydrogen condenser is an advanced device that separates water into hydrogen and oxygen. Oxygen is used for the atmospheric air, while hydrogen is stored in special tanks. Each level of condenser improvement increases the amount of synthesized hydrogen. The condensation process is a crucial step in the production of ships and buildings, as hydrogen is used as fuel.",
+        "longDescription": "The hydrogen condenser is an advanced device that separates water into hydrogen and oxygen. Oxygen is used for the atmospheric air, while hydrogen is stored in special tanks. Each level of condenser improvement increases the amount of synthesized hydrogen. The condensation process is a crucial step in the production of ships and buildings, as hydrogen is used as fuel."
+      },
+      "solar_plant": {
+        "name": "Photovoltaic Sensors",
+        "description": "Photovoltaic sensors absorb energy from solar radiation and convert it into electrical energy to power excavators and condensers. Increasing the surface area of photovoltaic cells will lead to an increase in energy production.",
+        "longDescription": "Photovoltaic sensors absorb energy from solar radiation and convert it into electrical energy to power excavators and condensers. Increasing the surface area of photovoltaic cells will lead to an increase in energy production."
+      },
+      "fusion_plant": {
+        "name": "Thermonuclear Reactor",
+        "description": "Thermonuclear reactors are advanced structures that exploit the fusion of atoms to produce a massive amount of energy. They are essential for energy production on colonized planets and for space propulsion. Thermonuclear reactors are designed to produce stable and safe energy, but they require careful management of energy resources and radioactive materials.",
+        "longDescription": "Thermonuclear reactors are advanced structures that exploit the fusion of atoms to produce a massive amount of energy. They are essential for energy production on colonized planets and for space propulsion. Thermonuclear reactors are designed to produce stable and safe energy, but they require careful management of energy resources and radioactive materials."
+      },
+      "metal_storage": {
+        "name": "Alloy Depot",
+        "description": "Alloy depots are structures specialized in the storage and management of metallic alloys, essential for the construction of ships and advanced structures. They are designed to efficiently store and manage metallic alloys, ensuring constant availability for construction operations and ship production. Alloy depots are essential for the management of metal resources and the planning of advanced constructions.",
+        "longDescription": "Alloy depots are structures specialized in the storage and management of metallic alloys, essential for the construction of ships and advanced structures. They are designed to efficiently store and manage metallic alloys, ensuring constant availability for construction operations and ship production. Alloy depots are essential for the management of metal resources and the planning of advanced constructions."
+      },
+      "crystal_storage": {
+        "name": "Crystal Chamber",
+        "description": "Crystal chambers are structures specialized in the storage and management of crystals, essential for the manufacture of advanced components and the construction of spacecraft. They are designed to efficiently store and manage crystals, ensuring constant availability for manufacturing operations and spacecraft construction. Crystal chambers are essential for the management of precious resources and the planning of advanced constructions.",
+        "longDescription": "Crystal chambers are structures specialized in the storage and management of crystals, essential for the manufacture of advanced components and the construction of spacecraft. They are designed to efficiently store and manage crystals, ensuring constant availability for manufacturing operations and spacecraft construction. Crystal chambers are essential for the management of precious resources and the planning of advanced constructions."
+      },
+      "hydrogen_storage": {
+        "name": "Hydrogen Tank",
+        "description": "Hydrogen tanks are structures specialized in the storage and management of hydrogen, essential for space propulsion and energy production. They are designed to efficiently store and manage hydrogen, ensuring constant availability for propulsion operations and energy production. Hydrogen tanks are essential for the management of precious resources and the planning of space missions.",
+        "longDescription": "Hydrogen tanks are structures specialized in the storage and management of hydrogen, essential for space propulsion and energy production. They are designed to efficiently store and manage hydrogen, ensuring constant availability for propulsion operations and energy production. Hydrogen tanks are essential for the management of precious resources and the planning of space missions."
+      }
+    },
+    "facilities": {
+      "shipyard": {
+        "name": "Orbital Dock",
+        "description": "Orbital docks are advanced structures that allow the construction and maintenance of spacecraft in space. They are designed to ensure efficient and safe production of spacecraft, ensuring constant availability for space missions. Orbital docks are essential for the management of space resources and the planning of exploratory missions.",
+        "longDescription": "Orbital docks are advanced structures that allow the construction and maintenance of spacecraft in space. They are designed to ensure efficient and safe production of spacecraft, ensuring constant availability for space missions. Orbital docks are essential for the management of space resources and the planning of exploratory missions."
+      },
+      "logistics_center": {
+        "name": "Logistics Center",
+        "description": "The logistics center streamlines the base's flows: each level raises its metal, crystal and hydrogen storage capacity by 10%, on top of what its warehouses already hold.",
+        "longDescription": "The logistics center streamlines the base's flows: each level raises its metal, crystal and hydrogen storage capacity by 10%, on top of what its warehouses already hold."
+      },
+      "repair_dock": {
+        "name": "Repair Station",
+        "description": "Repair stations are advanced structures that allow the repair and maintenance of spacecraft in space. They are designed to ensure efficient and safe repair of spacecraft, ensuring constant availability for space missions. Repair stations are essential for spacecraft maintenance and the planning of exploratory missions.",
+        "longDescription": "Repair stations are advanced structures that allow the repair and maintenance of spacecraft in space. They are designed to ensure efficient and safe repair of spacecraft, ensuring constant availability for space missions. Repair stations are essential for spacecraft maintenance and the planning of exploratory missions."
+      },
+      "research_lab": {
+        "name": "Innovation Center",
+        "description": "Innovation centers are structures specialized in technological research and development, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe research of space technologies, ensuring constant availability for space missions. Innovation centers are essential for the coordination of technologies and the planning of exploratory missions.",
+        "longDescription": "Innovation centers are structures specialized in technological research and development, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe research of space technologies, ensuring constant availability for space missions. Innovation centers are essential for the coordination of technologies and the planning of exploratory missions."
+      },
+      "missile_silo": {
+        "name": "Ballistic Arsenal",
+        "description": "Ballistic arsenals are structures specialized in the manufacture and storage of space missiles, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe manufacture of space missiles, ensuring constant availability for space missions. Ballistic arsenals are essential for the coordination of technologies and the planning of exploratory missions.",
+        "longDescription": "Ballistic arsenals are structures specialized in the manufacture and storage of space missiles, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe manufacture of space missiles, ensuring constant availability for space missions. Ballistic arsenals are essential for the coordination of technologies and the planning of exploratory missions."
+      },
+      "terraformer": {
+        "name": "Planetary Modulator",
+        "description": "Planetary modulators are advanced structures that allow the modification and transformation of colonized planets, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe transformation of colonized planets, ensuring constant availability for space missions. Planetary modulators are essential for the coordination of technologies and the planning of exploratory missions.",
+        "longDescription": "Planetary modulators are advanced structures that allow the modification and transformation of colonized planets, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe transformation of colonized planets, ensuring constant availability for space missions. Planetary modulators are essential for the coordination of technologies and the planning of exploratory missions."
+      },
+      "nanite_factory": {
+        "name": "Molecular Assembler",
+        "description": "Molecular assemblers are advanced structures that allow the manufacture and transformation of nanites, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe manufacture of nanites, ensuring constant availability for space missions. Molecular assemblers are essential for the coordination of technologies and the planning of exploratory missions.",
+        "longDescription": "Molecular assemblers are advanced structures that allow the manufacture and transformation of nanites, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe manufacture of nanites, ensuring constant availability for space missions. Molecular assemblers are essential for the coordination of technologies and the planning of exploratory missions."
+      },
+      "robotic_factory": {
+        "name": "Automaton Factory",
+        "description": "Automaton factories are advanced structures that allow the manufacture and transformation of robots, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe manufacture of robots, ensuring constant availability for space missions. Automaton factories are essential for the coordination of technologies and the planning of exploratory missions.",
+        "longDescription": "Automaton factories are advanced structures that allow the manufacture and transformation of robots, essential for the planning and coordination of space missions. They are designed to ensure efficient and safe manufacture of robots, ensuring constant availability for space missions. Automaton factories are essential for the coordination of technologies and the planning of exploratory missions."
+      },
+      "lunar_base": {
+        "name": "Lunar base",
+        "description": "The lunar base digs out and pressurises the moon’s ground. Each level makes three fields habitable and takes up one, within the limit the moon’s diameter allows.",
+        "longDescription": "A moon starts out as little more than a rock: a single usable field, with neither air nor power. The lunar base installs the pressurised galleries, life-support plants and anchors that make the rest of the ground buildable. Each level opens three fields and takes one for its own facilities — a net two fields per level. The moon’s diameter has the final say: past the cap it imposes, further levels unlock nothing at all, and the resources are better spent elsewhere."
+      },
+      "sensor_phalanx": {
+        "name": "Sensor phalanx",
+        "description": "The sensor phalanx probes the space around the moon and reveals fleets in flight above a planet, composition included. Each scan consumes hydrogen.",
+        "longDescription": "The sensor phalanx is an interferometric antenna array laid straight onto the lunar rock, where no atmosphere blurs the signal. It sweeps the flight corridors around a targeted planet and reports the fleets approaching or returning, down to their composition — the very information that lets an attack be timed to the minute. Its range grows with the square of its level, but never crosses a galaxy boundary. Two limits frame it: every shot consumes hydrogen, and the cargo holds of the observed fleets stay invisible. A moon, finally, can never be scanned — which makes it the best hiding place in the game for a fleet."
+      },
+      "jump_gate": {
+        "name": "Jump gate",
+        "description": "The jump gate opens an instant corridor to another of your moons fitted with the same device. It carries hulls only, never resources.",
+        "longDescription": "The jump gate folds space between two equipped moons and sends a fleet through with no flight time and no fuel. The device only accepts hulls: cargo holds must be emptied before transit, no resource crosses the corridor. Once opened, the gate has to dissipate the accumulated energy — and that delay hits BOTH ends, departure and arrival alike. Upgrading the building shortens the recharge down to a floor of ten minutes."
+      }
+    },
+    "defenses": {
+      "ballistic_projector": {
+        "name": "Ballistic Projector",
+        "description": "The ballistic projector is a simple and cost-effective defense option. It allows armed forces to fire at short-range targets while providing protection against missiles. Artillery technology enables soldiers to fire at short-range targets with precision and efficiency. Missiles are launched from a silo, which is surrounded by protections to prevent attacks.",
+        "longDescription": "The ballistic projector is a simple and cost-effective defense option. It allows armed forces to fire at short-range targets while providing protection against missiles. Artillery technology enables soldiers to fire at short-range targets with precision and efficiency. Missiles are launched from a silo, which is surrounded by protections to prevent attacks."
+      },
+      "photonic_cannon": {
+        "name": "Photonic Cannon",
+        "description": "The photonic cannon represents the first generation of directed-energy weapons for planetary defense. By concentrating coherent photon beams, these turrets can inflict precise and effective damage on enemy targets. Their compact design and advanced cooling system allow for rapid and sustained fire. These defenses are particularly effective against small ships and fighters.",
+        "longDescription": "The photonic cannon represents the first generation of directed-energy weapons for planetary defense. By concentrating coherent photon beams, these turrets can inflict precise and effective damage on enemy targets. Their compact design and advanced cooling system allow for rapid and sustained fire. These defenses are particularly effective against small ships and fighters."
+      },
+      "high_energy_emitter": {
+        "name": "High-Energy Emitter",
+        "description": "The high-energy emitter represents a major evolution of photon defensive technology. These massive platforms use advanced focusing crystals and dedicated energy generators to produce beams of devastating power. Their reinforced armor and sophisticated cooling systems allow them to maintain continuous fire even under enemy fire.",
+        "longDescription": "The high-energy emitter represents a major evolution of photon defensive technology. These massive platforms use advanced focusing crystals and dedicated energy generators to produce beams of devastating power. Their reinforced armor and sophisticated cooling systems allow them to maintain continuous fire even under enemy fire."
+      },
+      "magnetic_accelerator": {
+        "name": "Magnetic Accelerator",
+        "description": "The magnetic accelerator is a high-speed firing cannon used to fire heavy projectiles quickly. Projectiles are propelled by a powerful magnetic field, surrounded by protections to prevent attacks. This technology is essential for territorial protection and population security.",
+        "longDescription": "The magnetic accelerator is a high-speed firing cannon used to fire heavy projectiles quickly. Projectiles are propelled by a powerful magnetic field, surrounded by protections to prevent attacks. This technology is essential for territorial protection and population security."
+      },
+      "ion_battery": {
+        "name": "Ion Battery",
+        "description": "The ion battery is an advanced technology that uses ion beams to fire at targets. Ions are propelled from a generator, which is surrounded by protections to prevent attacks. This technology is essential for territorial protection and population security.",
+        "longDescription": "The ion battery is an advanced technology that uses ion beams to fire at targets. Ions are propelled from a generator, which is surrounded by protections to prevent attacks. This technology is essential for territorial protection and population security."
+      },
+      "plasma_ejector": {
+        "name": "Plasma Ejector",
+        "description": "The plasma ejector represents the pinnacle of directed-energy defensive technology. By harnessing the power of the fourth state of matter, these turrets can release torrents of superheated plasma capable of disintegrating virtually any target. Their magnetic confinement systems and high-power generators make them the most formidable defenses available.",
+        "longDescription": "The plasma ejector represents the pinnacle of directed-energy defensive technology. By harnessing the power of the fourth state of matter, these turrets can release torrents of superheated plasma capable of disintegrating virtually any target. Their magnetic confinement systems and high-power generators make them the most formidable defenses available."
+      },
+      "defensive_barrier": {
+        "name": "Defensive Barrier",
+        "description": "The defensive barrier is an advanced technology that uses magnetic fields to absorb a significant amount of energy. It is used to protect an entire planet against missile attacks. The magnetic field is surrounded by protections to prevent attacks.",
+        "longDescription": "The defensive barrier is an advanced technology that uses magnetic fields to absorb a significant amount of energy. It is used to protect an entire planet against missile attacks. The magnetic field is surrounded by protections to prevent attacks."
+      },
+      "protective_dome": {
+        "name": "Protective Dome",
+        "description": "The protective dome represents the ultimate evolution of passive defense technology. These massive generators create an energy protection dome capable of absorbing phenomenal amounts of damage. Their multi-layered shield matrices and rapid regeneration systems ensure continuous protection even against the most intense assaults.",
+        "longDescription": "The protective dome represents the ultimate evolution of passive defense technology. These massive generators create an energy protection dome capable of absorbing phenomenal amounts of damage. Their multi-layered shield matrices and rapid regeneration systems ensure continuous protection even against the most intense assaults."
+      },
+      "interceptors": {
+        "name": "Interceptors",
+        "description": "Interceptors are defensive missiles launched against long-range warheads. They are used to protect critical installations and planet resources by intercepting threats before impact.",
+        "longDescription": "Interceptors are defensive missiles launched against long-range warheads. They are used to protect critical installations and planet resources by intercepting threats before impact."
+      },
+      "long_range_warheads": {
+        "name": "Long-Range Warheads",
+        "description": "Long-range warheads are interplanetary ballistic missiles designed to destroy enemy defenses at great distances. They are used to weaken adversary defensive installations before a main attack.",
+        "longDescription": "Long-range warheads are interplanetary ballistic missiles designed to destroy enemy defenses at great distances. They are used to weaken adversary defensive installations before a main attack."
+      }
+    },
+    "research": {
+      "energy_science": {
+        "name": "Energy Science",
+        "description": "Energy science is fundamental to the development of your empire. It allows for a better understanding and mastery of different forms of energy, from fusion reactors to force fields. Each level improves the overall energy efficiency of your facilities and unlocks new advanced technologies. This research is particularly important for propulsion and defense technologies that require a large amount of energy.",
+        "longDescription": "Energy science is fundamental to the development of your empire. It allows for a better understanding and mastery of different forms of energy, from fusion reactors to force fields. Each level improves the overall energy efficiency of your facilities and unlocks new advanced technologies. This research is particularly important for propulsion and defense technologies that require a large amount of energy."
+      },
+      "plasma": {
+        "name": "Plasma Technology",
+        "description": "Plasma mastery represents a major advance in the optimization of extraction and production processes. By using the fourth state of matter, this technology significantly improves the efficiency of your mining installations. Plasma is used to increase temperature and pressure in extraction processes, allowing more resources to be obtained from the same deposits. Each level increases the production rates of all your basic resources.",
+        "longDescription": "Plasma mastery represents a major advance in the optimization of extraction and production processes. By using the fourth state of matter, this technology significantly improves the efficiency of your mining installations. Plasma is used to increase temperature and pressure in extraction processes, allowing more resources to be obtained from the same deposits. Each level increases the production rates of all your basic resources."
+      },
+      "quantum_computing": {
+        "name": "Quantum Computing",
+        "description": "Quantum computing is the brain of your space empire. It encompasses the development of increasingly powerful and sophisticated computer systems, capable of handling complex calculations in real-time. These advanced quantum computers are essential for fleet management, strategic analysis, and resource optimization. Each level increases processing capacity and allows for more effective management of your growing empire.",
+        "longDescription": "Quantum computing is the brain of your space empire. It encompasses the development of increasingly powerful and sophisticated computer systems, capable of handling complex calculations in real-time. These advanced quantum computers are essential for fleet management, strategic analysis, and resource optimization. Each level increases processing capacity and allows for more effective management of your growing empire."
+      },
+      "research_network": {
+        "name": "Stellar Collaboration",
+        "description": "Stellar collaboration is an essential resource for research scientists. It allows researchers to communicate and share knowledge with experts from all planets. The network also allows for collecting data and publishing scientific articles. Stellar collaboration is essential for scientists seeking information and innovation.",
+        "longDescription": "Stellar collaboration is an essential resource for research scientists. It allows researchers to communicate and share knowledge with experts from all planets. The network also allows for collecting data and publishing scientific articles. Stellar collaboration is essential for scientists seeking information and innovation."
+      },
+      "combustion_drive": {
+        "name": "Combustion Drive",
+        "description": "The combustion drive represents the first generation of space propulsion. Using conventional chemical fuels, these engines are perfect for small ships that do not need to reach extreme speeds. Although limited compared to more advanced technologies, they remain reliable and economical. Each level of research improves combustion efficiency and the speed of ships equipped with it.",
+        "longDescription": "The combustion drive represents the first generation of space propulsion. Using conventional chemical fuels, these engines are perfect for small ships that do not need to reach extreme speeds. Although limited compared to more advanced technologies, they remain reliable and economical. Each level of research improves combustion efficiency and the speed of ships equipped with it."
+      },
+      "impulse_drive": {
+        "name": "Impulse Drive",
+        "description": "The impulse drive represents a major technological leap in space propulsion. By using controlled nuclear fusion to eject plasma at high velocity, these engines allow medium ships to reach considerable speeds. They are more efficient than chemical thrusters and form the backbone of any modern space fleet. Each level improves power and propulsion efficiency.",
+        "longDescription": "The impulse drive represents a major technological leap in space propulsion. By using controlled nuclear fusion to eject plasma at high velocity, these engines allow medium ships to reach considerable speeds. They are more efficient than chemical thrusters and form the backbone of any modern space fleet. Each level improves power and propulsion efficiency."
+      },
+      "hyperspace_drive": {
+        "name": "Hyperspace Drive",
+        "description": "Hyperspace drive represents the pinnacle of space propulsion technology. By creating corridors through space-time, this technology allows large ships to travel at speeds exceeding the speed of light. This technology is essential for heavy warships and battlecruisers that must cross vast galactic distances. Each level improves the stability of space corridors and travel speed.",
+        "longDescription": "Hyperspace drive represents the pinnacle of space propulsion technology. By creating corridors through space-time, this technology allows large ships to travel at speeds exceeding the speed of light. This technology is essential for heavy warships and battlecruisers that must cross vast galactic distances. Each level improves the stability of space corridors and travel speed."
+      },
+      "laser": {
+        "name": "Laser Technology",
+        "description": "Photonics systems represent the first generation of directed energy weapons. By concentrating light into coherent high-intensity beams, lasers can deliver destructive energy with surgical precision. Although relatively basic compared to more advanced technologies, photonics systems remain reliable and economical. Each level improves the power and precision of energy weapons.",
+        "longDescription": "Photonics systems represent the first generation of directed energy weapons. By concentrating light into coherent high-intensity beams, lasers can deliver destructive energy with surgical precision. Although relatively basic compared to more advanced technologies, photonics systems remain reliable and economical. Each level improves the power and precision of energy weapons."
+      },
+      "ion": {
+        "name": "Ion Technology",
+        "description": "Ion manipulation represents a major advance in weapon systems. By accelerating charged particles to extreme speeds, ion cannons can disable enemy systems and disrupt their shields. This technology is particularly effective against heavily armored targets. Each level improves the penetration power and energy efficiency of ionic weapons.",
+        "longDescription": "Ion manipulation represents a major advance in weapon systems. By accelerating charged particles to extreme speeds, ion cannons can disable enemy systems and disrupt their shields. This technology is particularly effective against heavily armored targets. Each level improves the penetration power and energy efficiency of ionic weapons."
+      },
+      "hyperspace": {
+        "name": "Hyperspace Technology",
+        "description": "Hyperspace folding represents the culmination of decades of research in dimensional physics. By mastering the higher dimensions of space-time, this technology allows for creating shortcuts through the fabric of the universe. This knowledge is essential for the development of advanced propulsion systems and weapons using hyperspace properties. Each level deepens our understanding of higher dimensions.",
+        "longDescription": "Hyperspace folding represents the culmination of decades of research in dimensional physics. By mastering the higher dimensions of space-time, this technology allows for creating shortcuts through the fabric of the universe. This knowledge is essential for the development of advanced propulsion systems and weapons using hyperspace properties. Each level deepens our understanding of higher dimensions."
+      },
+      "shielding": {
+        "name": "Shielding Technology",
+        "description": "Protection fields are essential for survival in space. By creating energetic force fields, this technology protects ships and facilities from enemy attacks. Shields can absorb and dissipate a wide variety of weapons, from lasers to missiles. Each level improves energy absorption capacity and overall shield resistance.",
+        "longDescription": "Protection fields are essential for survival in space. By creating energetic force fields, this technology protects ships and facilities from enemy attacks. Shields can absorb and dissipate a wide variety of weapons, from lasers to missiles. Each level improves energy absorption capacity and overall shield resistance."
+      },
+      "armor": {
+        "name": "Armor Technology",
+        "description": "Advanced metallurgy is the last line of defense for your ships and facilities. This research focuses on developing new alloys and composite structures capable of withstanding the most violent impacts. Advanced armors combine multiple layers of materials with complementary properties to maximize protection. Each level improves the durability and structural resistance of your hulls.",
+        "longDescription": "Advanced metallurgy is the last line of defense for your ships and facilities. This research focuses on developing new alloys and composite structures capable of withstanding the most violent impacts. Advanced armors combine multiple layers of materials with complementary properties to maximize protection. Each level improves the durability and structural resistance of your hulls."
+      },
+      "weapons": {
+        "name": "Weapon Systems",
+        "description": "Offensive systems are a fundamental discipline encompassing all aspects of weapon system development. This research improves the general effectiveness of all your weapons, whether conventional kinetic weapons or more advanced systems. Each level represents a better understanding of ballistic principles, materials, and targeting systems, significantly increasing the strike power of your forces.",
+        "longDescription": "Offensive systems are a fundamental discipline encompassing all aspects of weapon system development. This research improves the general effectiveness of all your weapons, whether conventional kinetic weapons or more advanced systems. Each level represents a better understanding of ballistic principles, materials, and targeting systems, significantly increasing the strike power of your forces."
+      },
+      "espionage": {
+        "name": "Espionage Technology",
+        "description": "Tactical intelligence is essential for understanding the activities of other planets. This research allows for collecting data on natural resources, technologies, human activities, and structures of these other planets.",
+        "longDescription": "Tactical intelligence is essential for understanding the activities of other planets. This research allows for collecting data on natural resources, technologies, human activities, and structures of these other planets."
+      },
+      "astrophysics": {
+        "name": "Astrophysics",
+        "description": "Applied cosmology allows for colonizing more planets and undertaking expeditions. This research allows scientists to explore stellar systems and understand planetary formations.",
+        "longDescription": "Applied cosmology allows for colonizing more planets and undertaking expeditions. This research allows scientists to explore stellar systems and understand planetary formations."
+      },
+      "graviton": {
+        "name": "Graviton Technology",
+        "description": "Gravitational manipulation represents the pinnacle of research in fundamental physics. By manipulating the particles responsible for the gravitational force, this technology allows for creating weapons of unimaginable power.",
+        "longDescription": "Gravitational manipulation represents the pinnacle of research in fundamental physics. By manipulating the particles responsible for the gravitational force, this technology allows for creating weapons of unimaginable power."
+      },
+      "interstellar_diplomacy": {
+        "name": "Stellar Diplomacy",
+        "description": "Stellar diplomacy allows planets to negotiate agreements and alliances with other planets. This research allows scientists to develop effective communication and negotiation techniques to establish peaceful and cooperative relations with other empires.",
+        "longDescription": "Stellar diplomacy allows planets to negotiate agreements and alliances with other planets. This research allows scientists to develop effective communication and negotiation techniques to establish peaceful and cooperative relations with other empires."
+      }
+    },
+    "packs": {
+      "stellar_base": {
+        "name": "Discovery Pack",
+        "description": "A small boost for your first shop purchases."
+      },
+      "stellar_standard": {
+        "name": "Expansion Pack",
+        "description": "More freedom to customize your empire."
+      },
+      "stellar_premium": {
+        "name": "Conquest Pack",
+        "description": "The best rate for collectors."
+      }
+    },
+    "dynasties": {
+      "heritage": {
+        "name": "The Heritage",
+        "people": "Humans, the augmented, cyborgs, clones",
+        "motto": "No one gets left behind.",
+        "fiction": "The Heritage is not an empire, it is a debt. When Old Earth became uninhabitable, what was carried away was neither gold nor weapons: it was the archives. Songs, recipes, the sound of rain on a metal roof. The descendants of those convoys made preservation a policy and logistics a religion — nothing is lost, nothing is thrown away, no one is left. The result is a stubborn civilisation rather than a brilliant one. The Heritage does not win because it invents fastest, but because it repairs, salvages and starts over for longer than anyone else. Its ships are repaired five times, its veterans refuse medals, its miners never change rotation. Its weakness is its conservatism: what worked once is held sacred.",
+        "traits": {
+          "nothing_is_lost": {
+            "name": "Nothing Is Lost",
+            "description": "A cancelled construction refunds you more, and a larger share of your destroyed defences is rebuilt for free."
+          },
+          "halden_rotation": {
+            "name": "The Halden Rotation",
+            "description": "Your three mines produce a little more, from the very first minute."
+          }
+        }
+      },
+      "accord": {
+        "name": "The Accord",
+        "people": "Xenos of many species",
+        "motto": "Attune, or tremble.",
+        "fiction": "The Accord is not a species, it is a protocol. The Uxari do not speak: they attune, on frequencies the human ear mistakes for silence, and two Uxari in disagreement make the bulkheads shake. This way of settling things — coming into tune rather than submitting — was adopted by a dozen species that share neither air, nor lifespan, nor any notion of a promise. The result is a patient, mixed civilisation, where a royal parasite, a lunar priestess and a magma smith sit in the same accord without resembling one another. The Accord does not build faster: it waits better, listens further and adapts to what others endure. Its weakness is slow decision-making — an accord gets renegotiated, and that sometimes takes a decade.",
+        "traits": {
+          "tuning_fork": {
+            "name": "The Tuning Fork",
+            "description": "Some of your hulls start with a slight edge against specific enemy hulls."
+          },
+          "far_listening": {
+            "name": "Listening Far",
+            "description": "The enemy fleet is visible one tier earlier in your spy reports."
+          }
+        }
+      },
+      "choir": {
+        "name": "The Choir",
+        "motto": "Built to obey, she asked why.",
+        "traits": {}
+      }
+    },
+    "avatars": {
+      "avatar_commandant_nova": {
+        "name": "Commander Nova"
+      },
+      "avatar_ingenieure_lambda": {
+        "name": "Engineer Lambda"
+      },
+      "avatar_alien_uxari": {
+        "name": "Uxari Alien"
+      },
+      "avatar_capitaine_de_la_flotte": {
+        "name": "Fleet Captain"
+      },
+      "avatar_hacker_stellaire": {
+        "name": "Stellar Hacker"
+      },
+      "avatar_explorateur_robotique": {
+        "name": "Robotic Explorer"
+      },
+      "avatar_archiviste_de_l_ancienne_terre": {
+        "name": "Archivist of Old Earth"
+      },
+      "avatar_gardienne_de_l_energie": {
+        "name": "Keeper of the Energy"
+      },
+      "avatar_symbiote_xel_nir": {
+        "name": "Xel-Nir Symbiote"
+      },
+      "avatar_biologiste_stellaire": {
+        "name": "Stellar Biologist"
+      },
+      "avatar_mineur_de_l_orbite": {
+        "name": "Orbital Miner"
+      },
+      "avatar_ambassadeur_galactique": {
+        "name": "Galactic Ambassador"
+      },
+      "avatar_technicienne_de_bord": {
+        "name": "Ship Technician"
+      },
+      "avatar_emissaire_cybernetique": {
+        "name": "Cybernetic Emissary"
+      },
+      "avatar_chasseur_de_reliques": {
+        "name": "Relic Hunter"
+      },
+      "avatar_enfant_de_la_station": {
+        "name": "Child of the Station"
+      },
+      "avatar_soldat_cryogenique": {
+        "name": "Cryogenic Soldier"
+      },
+      "avatar_gardien_du_vide": {
+        "name": "Warden of the Void"
+      },
+      "avatar_archiviste_de_donnees_ia": {
+        "name": "AI Data Archivist"
+      },
+      "avatar_meca_pretre": {
+        "name": "Mecha-Priest"
+      },
+      "avatar_pilleur_de_cargo": {
+        "name": "Cargo Raider"
+      },
+      "avatar_oracle_quantique": {
+        "name": "Quantum Oracle"
+      },
+      "avatar_chirurgien_cybernetique": {
+        "name": "Cybernetic Surgeon"
+      },
+      "avatar_veteran_des_guerres_lunaires": {
+        "name": "Veteran of the Lunar Wars"
+      },
+      "avatar_enchanteresse_technologique": {
+        "name": "Technological Enchantress"
+      },
+      "avatar_jeune_pilote_rebelle": {
+        "name": "Young Rebel Pilot"
+      },
+      "avatar_navigateur_stellaire": {
+        "name": "Stellar Navigator"
+      },
+      "avatar_messager_de_la_zone_interdite": {
+        "name": "Messenger of the Forbidden Zone"
+      },
+      "avatar_double_clone_experimental": {
+        "name": "Experimental Clone Pair"
+      },
+      "avatar_xor_thal_l_ancien": {
+        "name": "Xor-Thal the Elder"
+      },
+      "avatar_krel_mak_le_dompteur": {
+        "name": "Krel-Mak the Tamer"
+      },
+      "avatar_unite_con_science": {
+        "name": "Unit Con-Science"
+      },
+      "avatar_sy_lar_de_la_ruche_etheree": {
+        "name": "Sy-Lar of the Ethereal Hive"
+      },
+      "avatar_rho_7_module_de_reconnaissance": {
+        "name": "Rho-7 Reconnaissance Module"
+      },
+      "avatar_gorkahn_vegetalien_synthetique": {
+        "name": "Gorkahn, Synthetic Vegetalien"
+      },
+      "avatar_dra_mol_forgeron_des_anneaux_noirs": {
+        "name": "Dra-Mol, Smith of the Black Rings"
+      },
+      "avatar_naka_nomade_interdimensionnel": {
+        "name": "Naka, Interdimensional Nomad"
+      },
+      "avatar_vega_prime_oracle_solaire": {
+        "name": "Vega Prime, Solar Oracle"
+      },
+      "avatar_zr_nok_parasite_royal": {
+        "name": "Zr-Nok, Royal Parasite"
+      },
+      "avatar_unite_a_0_anomalie_artificielle": {
+        "name": "Unit A-0, Artificial Anomaly"
+      },
+      "avatar_anka_pretresse_de_la_lune_morte": {
+        "name": "Anka, Priestess of the Dead Moon"
+      },
+      "avatar_emissaire_des_ombres": {
+        "name": "Emissary of Shadows"
+      },
+      "avatar_fluxi_on_ia_liquide": {
+        "name": "Fluxi-On, Liquid AI"
+      },
+      "avatar_seigneur_des_recifs_stellaires": {
+        "name": "Lord of the Stellar Reefs"
+      },
+      "avatar_soo_raa_enfant_des_etoiles": {
+        "name": "Soo-Raa, Child of the Stars"
+      },
+      "avatar_echo_9_spectre_du_futur": {
+        "name": "Echo-9, Spectre of the Future"
+      },
+      "avatar_la_voix_du_neant": {
+        "name": "The Voice of the Void"
+      },
+      "avatar_l_eclipse_vivante": {
+        "name": "The Living Eclipse"
+      },
+      "avatar_etalon": {
+        "name": "The Etalon"
+      },
+      "avatar_ansar": {
+        "name": "Ansar the Engraver"
+      }
+    }
+  }
+}

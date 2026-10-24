@@ -4,7 +4,8 @@
  * jeu (`GaugeSlider`, ton vert à 100 %, crans tous les 10 %) puis l'aperçu production / consommation
  * d'énergie (`PreviewRow`), sans écart tant que rien ne bouge.
  */
-import { resources, type ResourceCode } from '../../lib/game';
+import { gameFor, gameT, type ResourceCode } from '../../lib/game';
+import { localeFromPath } from '../../lib/i18n';
 import { compact } from './format';
 
 interface Props {
@@ -14,17 +15,19 @@ interface Props {
 }
 
 const { output, production, consumption } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
+const { resources } = gameFor(locale);
 const rate = 100;
 const rows = [
-  { icon: resources[output].icon, label: 'Production du bâtiment', value: `${compact(production)} /h` },
-  { icon: resources.energy.icon, label: "Consommation d'énergie", value: compact(consumption) },
+  { icon: resources[output].icon, label: gameT(locale, 'pages/building:operatingRate.production'), value: `${compact(production, locale)} /h` },
+  { icon: resources.energy.icon, label: gameT(locale, 'pages/building:operatingRate.consumption'), value: compact(consumption, locale) },
 ];
 ---
 
 <div class="space-y-3 rounded-lg border border-slate-700/50 bg-slate-800/30 p-3">
   <div class="space-y-3">
     <div class="flex items-center justify-between">
-      <div class="text-slate-400 text-base tracking-wide">Taux de fonctionnement</div>
+      <div class="text-slate-400 text-base tracking-wide">{gameT(locale, 'pages/building:operatingRate.title')}</div>
       <div class="flex items-center gap-1">
         <span class="grid h-7 w-7 shrink-0 place-items-center rounded-md text-slate-500"><i class="ph ph-caret-left text-xl leading-none"></i></span>
         <div class="flex h-8 items-center rounded-md border border-slate-700/50 bg-slate-950/50 px-2">

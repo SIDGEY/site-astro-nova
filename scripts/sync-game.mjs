@@ -14,12 +14,15 @@
  *     avatar : le catalogue de la boutique est semé par ses migrations (`shop_item`).
  *
  * Sorties (versionnées : la CI de déploiement n'a pas les autres dépôts) :
- *   - `src/data/game.json`  le catalogue, avec le commit du jeu dont il est tiré ;
- *   - `public/game/**`      les images, redimensionnées pour le web.
+ *   - `src/data/game.json`       le catalogue, textes français, avec le commit du jeu dont il est tiré ;
+ *   - `src/data/game.i18n.json`  les textes du jeu anglais par code, et les libellés d'interface que
+ *                                les écrans du site reprennent au jeu, dans chaque langue ;
+ *   - `public/game/**`           les images, redimensionnées pour le web.
  *
  * Usage :
  *   node scripts/sync-game.mjs            # lit origin/main tel que connu localement
  *   node scripts/sync-game.mjs --fetch    # git fetch origin main d'abord
+ *   node scripts/sync-game.mjs --texts    # les textes seuls, au commit du catalogue en place
  *   FRONTEND_PATH=… CODEX_PATH=… BACKEND_PATH=… GAME_REF=… node scripts/sync-game.mjs
  */
 import { execFileSync } from 'node:child_process';
@@ -32,9 +35,16 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const FRONTEND = path.resolve(process.env.FRONTEND_PATH ?? path.join(ROOT, '..', 'Frontend'));
 const CODEX = path.resolve(process.env.CODEX_PATH ?? path.join(ROOT, '..', 'dynasty-nova-codex'));
 const BACKEND = path.resolve(process.env.BACKEND_PATH ?? path.join(ROOT, '..', 'Astro-Nova-Backend'));
-const REF = process.env.GAME_REF ?? 'origin/main';
 const OUT_PUBLIC = path.join(ROOT, 'public', 'game');
 const OUT_DATA = path.join(ROOT, 'src', 'data', 'game.json');
+const OUT_TEXTS = path.join(ROOT, 'src', 'data', 'game.i18n.json');
+/**
+ * `--texts` ne réécrit que `game.i18n.json`, lu au commit dont le catalogue en place est tiré : un
+ * libellé que le site emprunte au jeu s'ajoute ainsi sans resynchroniser le jeu ni ses images.
+ */
+const TEXTS_ONLY = process.argv.includes('--texts');
+const REF =
+  process.env.GAME_REF ?? (TEXTS_ONLY ? JSON.parse(fs.readFileSync(OUT_DATA, 'utf8')).source.sha : 'origin/main');
 
 /** Largeur des vignettes d'entités : pleine largeur d'un écran de 216px, en densité ×3. */
 const ENTITY_WIDTH = 640;
@@ -87,7 +97,7 @@ const commitDate = git('show', '-s', '--format=%cI', REF).toString('utf8').trim(
 
 // --- Catalogue ---------------------------------------------------------------------------------
 
-const i18n = (ns) => showJson(`src/i18n/locales/fr/${ns}.json`);
+const i18n = (ns, lang = 'fr') => showJson(`src/i18n/locales/${lang}/${ns}.json`);
 
 /**
  * Les tables `code → { imageUrl: assetUrl('…') }` des utilitaires d'administration : la seule
@@ -186,6 +196,134 @@ const packs = ['base', 'standard', 'premium'].map((tier) => ({
 }));
 
 const navFr = showJson('src/i18n/locales/fr/components/navigation.json');
+
+// --- Textes par langue -------------------------------------------------------------------------
+
+/**
+ * Le catalogue porte les textes français. Les textes anglais s'y superposent code par code, tels
+ * que le jeu anglais les a : ce qu'il n'écrit qu'en français (noms et descriptions des vaisseaux,
+ * `shipsData.ts` ; descriptions des ressources) n'y figure pas, et le site le montre en français,
+ * comme le jeu. Les noms des ressources y sont (`components/resources`) ; la fiche ressource du jeu
+ * ne s'en sert pas, `ScreenResourceDetail` non plus.
+ */
+const LANGS = ['fr', 'en'];
+const kept = (texts) => Object.fromEntries(Object.entries(texts).filter(([, v]) => typeof v === 'string' && v !== ''));
+
+function englishEntities(entries, ns) {
+  const t = i18n(ns, 'en');
+  return Object.fromEntries(
+    entries.map(({ code }) => [
+      code,
+      kept({ name: t.name?.[code], description: t.description?.[code], longDescription: t.long_description?.[code] }),
+    ]),
+  );
+}
+
+function englishTexts() {
+  const resourcesEn = i18n('components/resources', 'en');
+  const shopEn = i18n('components/shop', 'en');
+  const dynastiesEn = i18n('dynasties', 'en');
+  return {
+    nav: i18n('components/navigation', 'en'),
+    resources: Object.fromEntries(Object.keys(resourceMeta).map((code) => [code, kept({ name: resourcesEn[code] })])),
+    buildings: englishEntities(buildings, 'buildings'),
+    facilities: englishEntities(facilities, 'buildings'),
+    defenses: englishEntities(defenses, 'defenses'),
+    research: englishEntities(research, 'researches'),
+    packs: Object.fromEntries(
+      packs.map(({ code }) => {
+        const pack = shopEn.packs?.stellar?.[code.replace('stellar_', '')] ?? {};
+        return [code, kept({ name: pack.title, description: pack.description })];
+      }),
+    ),
+    dynasties: Object.fromEntries(
+      Object.entries(DYNASTY_TRAITS).map(([code, traits]) => {
+        const t = dynastiesEn[code] ?? {};
+        return [
+          code,
+          {
+            ...kept({ name: t.name, people: t.people, motto: t.motto, fiction: t.fiction }),
+            traits: Object.fromEntries(traits.map((key) => [key, kept(dynastiesEn.traits?.[key] ?? {})])),
+          },
+        ];
+      }),
+    ),
+    avatars: Object.fromEntries(
+      Object.entries(i18n('avatars', 'en')).map(([code, avatar]) => [code, kept({ name: avatar.name })]),
+    ),
+  };
+}
+
+/**
+ * Les libellés d'interface que les écrans du site empruntent au jeu : chaque `gameT(locale, 'ns:clé')`
+ * de `src/`, relu dans chaque langue. Une clé écrite en gabarit (`…rarity.${r}`) vaut toutes celles
+ * qui commencent ainsi ; une clé au pluriel (`clé_one`, `clé_other`…) vient avec toutes ses formes.
+ * Une clé introuvable fait échouer la synchro : le jeu l'a renommée ou retirée.
+ */
+function uiKeys() {
+  const keys = new Set();
+  const walk = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const file = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(file);
+      else if (/\.(astro|ts)$/.test(entry.name)) {
+        for (const m of fs.readFileSync(file, 'utf8').matchAll(/gameT\(\s*[\w.]+\s*,\s*(['"`])([^'"`]+)\1/g)) keys.add(m[2]);
+      }
+    }
+  };
+  walk(path.join(ROOT, 'src'));
+  return [...keys].sort();
+}
+
+function uiTexts(keys, lang) {
+  const files = new Map();
+  const node = (ns, parts) => {
+    if (!files.has(ns)) files.set(ns, i18n(ns, lang));
+    return parts.reduce((n, part) => n?.[part], files.get(ns));
+  };
+  const out = {};
+  for (const key of keys) {
+    const [ns, dotted] = key.split(':');
+    if (!dotted) throw new Error(`Clé de libellé « ${key} » : attendu « espace:chemin ».`);
+    const template = dotted.indexOf('${');
+    const parts = (template >= 0 ? dotted.slice(0, template).replace(/\.$/, '') : dotted).split('.');
+    const leaf = template >= 0 ? null : parts.pop();
+    const parent = node(ns, parts);
+    // La clé elle-même et ses formes plurielles, ou toutes les clés du gabarit.
+    const forms = Object.entries(parent ?? {}).filter(
+      ([name, text]) =>
+        typeof text === 'string' && (leaf === null || name === leaf || new RegExp(`^${leaf}_(zero|one|two|few|many|other)$`).test(name)),
+    );
+    for (const [name, text] of forms) out[`${ns}:${[...parts, name].join('.')}`] = text;
+    if (forms.length === 0) out[key] = null;
+  }
+  return out;
+}
+
+{
+  const keys = uiKeys();
+  const ui = Object.fromEntries(LANGS.map((lang) => [lang, uiTexts(keys, lang)]));
+  const absent = Object.keys(ui.fr).filter((key) => ui.fr[key] === null);
+  if (absent.length) throw new Error(`Libellés absents du jeu : ${absent.join(', ')}. Renommés ou retirés ?`);
+  // Une clé sans anglais, le jeu anglais l'afficherait brute (son `t()` retombe sur l'anglais,
+  // puis sur la clé) : le site garde le français, et la synchro le signale.
+  const untranslated = Object.keys(ui.fr).filter((key) => ui.en[key] == null);
+  for (const key of untranslated) ui.en[key] = ui.fr[key];
+  for (const key of Object.keys(ui.en)) if (!(key in ui.fr)) delete ui.en[key];
+  if (untranslated.length) console.warn(`Libellés sans anglais dans le jeu : ${untranslated.join(', ')}`);
+
+  const texts = {
+    source: { repo: 'Dynasty-Nova/Frontend', ref: REF, sha, commitDate },
+    ui,
+    en: englishTexts(),
+  };
+  fs.mkdirSync(path.dirname(OUT_TEXTS), { recursive: true });
+  fs.writeFileSync(OUT_TEXTS, `${JSON.stringify(texts, null, 2)}\n`);
+  if (TEXTS_ONLY) {
+    console.log(`Textes du jeu ${sha.slice(0, 8)} (${commitDate.slice(0, 10)}) — ${keys.length} libellés, ${LANGS.join(' + ')}.`);
+    process.exit(0);
+  }
+}
 
 // --- Images ------------------------------------------------------------------------------------
 

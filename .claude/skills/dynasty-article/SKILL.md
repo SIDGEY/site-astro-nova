@@ -369,6 +369,31 @@ continue) ; en cas de résultat raté, réessayer plutôt que publier tel quel. 
 résultat n'est pas satisfaisant après 2-3 essais, revenir au fallback existant (ne pas
 renseigner `image`) plutôt que de forcer un rendu médiocre.
 
+## Étape 4ter — Version anglaise
+
+Chaque nouvel article de blog (pas `community-post`) a sa version anglaise, écrite dans la foulée :
+`src/content/articles-en/<slug-anglais>.md`, servie sous `/en/blog/<slug-anglais>/`. Le slug
+anglais vise la requête anglaise (pas une traduction mot à mot du slug français). Règles
+complètes : `docs/i18n.md` § Articles. En bref :
+
+```yaml
+translationOf: "<slug-français>"   # toujours le premier champ
+title: "..."                       # ≤ 65 caractères, réécrit pour la recherche anglaise
+description: "..."                 # 140-160 caractères
+faq:                               # les mêmes questions, traduites
+  - question: "..."
+    answer: "..."
+```
+
+- Rien d'autre dans le frontmatter : date, auteur, tags, image, icône et `draft` viennent de
+  l'article français. Les deux versions sont donc publiées ensemble, par `/publication`.
+- Même structure que le français (titres, listes, tableaux, gras, liens, FAQ). Liens internes vers
+  les slugs anglais : le fichier de `src/content/articles-en/` dont `translationOf` est le slug
+  français visé. Liens vers play.dynastynova.com et chemins d'images inchangés.
+- Termes du jeu : ceux du jeu anglais (`../Frontend/src/i18n/locales/en/`). Les vaisseaux gardent
+  leur nom français, avec une glose anglaise à la première mention.
+- Typographie anglaise : pas de « », pas d'espace avant `: ; ! ?`.
+
 ## Étape 5 — Valider
 
 ```bash
@@ -380,7 +405,8 @@ contre `docs/charte_editoriale.md` §11 tient lieu de contrôle qualité.
 ## Étape 6 — Confirmation finale (point d'arrêt ③)
 
 Présenter chaque brouillon produit (chemin, titre, mode, source, plus la requête
-non-marque visée, le lien CTA avec sa campagne et les articles liés) → l'utilisateur
+non-marque visée, le lien CTA avec sa campagne, les articles liés et le chemin de sa version
+anglaise) → l'utilisateur
 relit et décide de publier (`draft: false`) ou d'ajuster. Marquer l'idée `--complete`
 dans le backlog une fois le fichier écrit.
 

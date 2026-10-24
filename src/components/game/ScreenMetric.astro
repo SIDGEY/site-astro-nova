@@ -41,6 +41,7 @@ const { label, icon, value, next, delta, deltaClass, clip = false } = Astro.prop
     <div class="col-span-2 relative">
       <div class="absolute inset-0 metric-panel-border"><div class="h-full w-full metric-panel-fill"></div></div>
       <div class="relative flex h-full flex-col items-start justify-center px-4 py-4">
+        {/* « Niveau suivant » est écrit en dur dans les grilles du jeu (`ProductionGrid`…) : en anglais aussi. */}
         <div class="flex items-center gap-2 text-gray-500"><span>Niveau suivant</span></div>
         <div class="flex items-center gap-2">
           <span class="text-white">{next}</span>

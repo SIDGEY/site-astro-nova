@@ -1,5 +1,6 @@
 ---
 import Section from "../Section.astro";
+import { localeFromPath, t } from "../../lib/i18n";
 import type { BgVariant } from "../../utils/bgHelper";
 
 interface Props {
@@ -44,7 +45,7 @@ const { title, subtitle, items, bgVariant } = Astro.props;
               href={item.link}
               class="text-primary font-bold inline-flex items-center group-hover:translate-x-2 transition-transform"
             >
-              {item.cta || "Découvrir"}
+              {item.cta || t(localeFromPath(Astro.url.pathname), "benefits.more")}
               <i class="ph ph-arrow-right ml-2" />
             </a>
           )}

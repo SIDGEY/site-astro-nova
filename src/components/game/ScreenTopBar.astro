@@ -5,17 +5,20 @@
  * Stocks, capacités et bilan d'énergie de l'empire d'illustration (`empire.ts`) ; la jauge sous
  * chaque bloc est le remplissage du stockage, ou le taux d'utilisation de l'énergie.
  */
-import { logo, resources, RESOURCE_ORDER } from '../../lib/game';
+import { gameFor, logo, RESOURCE_ORDER } from '../../lib/game';
+import { localeFromPath } from '../../lib/i18n';
 import { energyBalance, resourceBalance } from './empire';
 import { compact, energyTone } from './format';
 
+const locale = localeFromPath(Astro.url.pathname);
+const { resources } = gameFor(locale);
 const energy = energyBalance();
 const tone = energyTone(energy.usage, energy.available);
 const sample: Record<string, { value: string; fill: number }> = {
   ...Object.fromEntries(
     (['metal', 'crystal', 'hydrogen'] as const).map((code) => {
       const { stock, capacity } = resourceBalance(code);
-      return [code, { value: compact(stock), fill: Math.min((stock / capacity) * 100, 100) }];
+      return [code, { value: compact(stock, locale), fill: Math.min((stock / capacity) * 100, 100) }];
     }),
   ),
   energy: { value: `${energy.usage}%`, fill: Math.min(energy.usage, 100) },

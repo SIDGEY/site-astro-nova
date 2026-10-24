@@ -1,5 +1,6 @@
 ---
-import { avatars, pick } from "../../lib/game";
+import { gameFor } from "../../lib/game";
+import { localeFromPath, t } from "../../lib/i18n";
 
 interface CarouselItem {
   image: string;
@@ -19,6 +20,8 @@ interface Props {
 }
 
 const { icon, title, subtitle, source, items: rawItems = [], limit, sectionId } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
+const { avatars, pick } = gameFor(locale);
 
 function fromCatalog(): CarouselItem[] {
   const codes = rawItems.filter((i): i is string => typeof i === "string");
@@ -147,7 +150,7 @@ const isAvatarCarousel = items.some((item) => item.avatar);
   </div>
 
   <!-- Dots -->
-  <div class="carousel-dots relative z-10 flex justify-center gap-0 my-12 overflow-hidden">
+  <div class="carousel-dots relative z-10 flex justify-center gap-0 my-12 overflow-hidden" data-page-label={t(locale, "carousel.page")}>
   </div>
 </section>
 
@@ -278,7 +281,7 @@ const isAvatarCarousel = items.some((item) => item.avatar);
           btn.style.cssText =
             "display:flex;align-items:center;justify-content:center;" +
             "cursor:pointer;transition:width 300ms ease,padding 300ms ease;overflow:hidden;";
-          btn.setAttribute("aria-label", `Page ${i + 1}`);
+          btn.setAttribute("aria-label", (dotsContainer!.dataset.pageLabel ?? "Page {n}").replace("{n}", String(i + 1)));
 
           const dot = document.createElement("span");
           dot.style.cssText =

@@ -28,6 +28,9 @@ fusion vaut validation. Un brouillon qui n'est pas sur `main` n'existe pas pour 
 - **Date honnête** : si la `date` d'un article retenu est antérieure à aujourd'hui (il a
   attendu son tour), la passer à la date du jour en même temps que `draft: false`.
 - **Rien d'autre ne bouge** : ni titre, ni slug, ni corps, ni autre fichier.
+- **Version anglaise** : un article de `src/content/articles-en/` dont `translationOf` nomme
+  l'article publié paraît avec lui, sous `/en/blog/<son fichier>/` : il hérite de la date et du
+  brouillon du français (voir `docs/i18n.md`). Il n'y a rien à y modifier.
 
 ## Contrôles
 
@@ -39,6 +42,8 @@ Bloquants (l'article n'est pas publié, il reste en brouillon et c'est signalé)
 - aucun tiret cadratin ou demi-cadratin (`—`, `–`) dans le fichier.
 
 Signalés sans bloquer :
+- un article sans version anglaise (aucun fichier de `src/content/articles-en/` dont
+  `translationOf` est son slug) : seul le français paraît ;
 - un titre qui commence par « Dynasty Nova : » (règle « titre orienté intention » du
   skill `dynasty-article`) ;
 - un corps hors de 450 à 800 mots.
@@ -63,7 +68,8 @@ Signalés sans bloquer :
 
 Court, en français, pour l'auteur :
 - les articles publiés, avec leur URL `https://dynastynova.com/blog/<fichier sans .md>/`
-  (en ligne environ 35 minutes après le push, le temps du déploiement FTP) ;
+  et celle de leur version anglaise s'il y en a une (en ligne environ 35 minutes après le
+  push, le temps du déploiement FTP) ;
 - ceux bloqués par un contrôle, et pourquoi ;
 - les avertissements non bloquants ;
 - pour chaque article publié, **un brouillon de post LinkedIn** prêt à programmer :

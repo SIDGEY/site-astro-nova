@@ -2,8 +2,8 @@
 import SEO from "../components/SEO.astro";
 import Header from "../components/Header.astro";
 import GameFooter from "../components/GameFooter.astro";
-import LandingHeader from "../components/LandingHeader.astro";
-import { pageLang } from "../lib/seo";
+import LanguageSuggest from "../components/LanguageSuggest.astro";
+import { LOCALE_META, localeFromPath, t, type Alternates } from "../lib/i18n";
 import "../styles/global.css";
 import "@fontsource/lexend/300.css";
 import "@fontsource/lexend/400.css";
@@ -28,6 +28,10 @@ interface Props {
   breadcrumbs?: { name: string; item: string }[];
   canonicalURL?: string;
   faqItems?: { question: string; answer: string }[];
+  /** Les versions française et anglaise de la page (sélecteur de langue, hreflang). */
+  alternates?: Alternates;
+  /** false : pas de hreflang, même si les deux versions existent (l'une des deux est noindex). */
+  hreflang?: boolean;
 }
 
 const {
@@ -41,12 +45,16 @@ const {
   breadcrumbs,
   canonicalURL,
   faqItems,
+  alternates = {},
+  hreflang,
 } = Astro.props;
-const lang = pageLang(Astro.url.pathname);
+
+// La langue se lit dans l'URL : tout ce qui est sous /en/ est anglais.
+const locale = localeFromPath(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-smooth">
+<html lang={LOCALE_META[locale].htmlLang} class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <!-- Google tag (gtag.js) -->
@@ -91,6 +99,9 @@ const lang = pageLang(Astro.url.pathname);
       {breadcrumbs}
       {canonicalURL}
       {faqItems}
+      {locale}
+      {alternates}
+      {hreflang}
     />
   </head>
   <body
@@ -111,16 +122,18 @@ const lang = pageLang(Astro.url.pathname);
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 bg-primary text-primary-contrast p-4 rounded-lg z-[100] font-bold"
     >
-      Passer au contenu principal
+      {t(locale, "a11y.skip")}
     </a>
 
-    {lang === "en" ? <LandingHeader /> : <Header />}
+    <Header {locale} {alternates} />
 
     <main id="main-content" class="flex-grow outline-none" tabindex="-1">
       <slot />
     </main>
 
-    <GameFooter {lang} />
+    <GameFooter {locale} />
+
+    <LanguageSuggest {locale} {alternates} />
 
     <script>
       // Le départ vers le jeu est la conversion principale du site depuis l'arrêt

@@ -1,4 +1,6 @@
 ---
+import { localeFromPath, pathFor, t } from "../lib/i18n";
+
 interface Props {
   items: {
     label: string;
@@ -7,6 +9,7 @@ interface Props {
 }
 
 const { items } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -23,7 +26,7 @@ const jsonLd = {
 <nav aria-label="Breadcrumb" class="py-4">
   <ol class="flex flex-wrap items-center text-sm text-gray-500 dark:text-vert-clair">
     <li class="flex items-center">
-      <a href="/" class="hover:text-corail transition-colors">Accueil</a>
+      <a href={pathFor("home", locale)} class="hover:text-corail transition-colors">{t(locale, "crumb.home")}</a>
       <span class="mx-2">/</span>
     </li>
     {items.map((item, index) => (

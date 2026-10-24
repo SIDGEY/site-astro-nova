@@ -1,0 +1,145 @@
+---
+/**
+ * Le sélecteur de langue de l'en-tête, sur le modèle de celui de beryldesign.fr. Chaque langue est
+ * écrite dans sa propre langue ; son lien mène à la même page dans cette langue quand elle existe,
+ * sinon à l'accueil de cette langue.
+ *
+ *   - `desktop` : dans la barre, une pastille globe + code de la langue qui déplie la liste. C'est
+ *     un bouton qui déplie des liens (motif « disclosure »), pas un `role="menu"` : Tab suffit.
+ *   - `panel` : dans le menu mobile, les deux langues côte à côte, à un geste. La barre mobile n'a
+ *     pas la place d'une pastille de plus : sous 400px, le logo et le bouton du menu la remplissent.
+ */
+import { LOCALE_META, LOCALES, pathFor, t, type Alternates, type Locale } from "../lib/i18n";
+
+interface Props {
+  locale: Locale;
+  alternates: Alternates;
+  variant: "desktop" | "panel";
+}
+
+const { locale, alternates, variant } = Astro.props;
+const here = Astro.url.pathname;
+// Sur la home, on garde la section où l'on se trouve : ses ancres sont les mêmes dans les deux langues.
+const keepsSection = here === pathFor("home", "fr") || here === pathFor("home", "en");
+const options = LOCALES.map((l) => ({
+  locale: l,
+  href: l === locale ? here : alternates[l] ?? pathFor("home", l),
+  current: l === locale,
+  lang: LOCALE_META[l].htmlLang,
+  name: LOCALE_META[l].name,
+}));
+---
+
+{variant === "panel" ? (
+  <div class="mt-6" data-lang-panel>
+    <p class="flex items-center gap-2 text-sm text-slate-500 mb-2">
+      <i class="ph ph-globe text-base leading-none" aria-hidden="true"></i>
+      {t(locale, "lang.label")}
+    </p>
+    <ul class="grid grid-cols-2 gap-1 rounded-lg border border-slate-800 bg-slate-900/60 p-1">
+      {options.map((option) => (
+        <li>
+          <a
+            href={option.href}
+            hreflang={option.lang}
+            lang={option.lang}
+            aria-current={option.current ? "page" : undefined}
+            data-lang-option={option.locale}
+            data-keep-section={keepsSection ? "" : undefined}
+            class:list={[
+              "flex h-11 items-center justify-center gap-2 rounded-md text-[15px] font-medium transition-colors",
+              option.current ? "bg-slate-800 text-white" : "text-slate-400 hover:text-white",
+            ]}
+          >
+            {option.current && <i class="ph ph-bold ph-check text-sm text-blue-400" aria-hidden="true"></i>}
+            {option.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+) : (
+  <div class="relative" data-lang-switch>
+    <button
+      type="button"
+      class="flex items-center gap-1.5 h-10 px-3 rounded-md border border-slate-700 text-sm font-semibold text-slate-300 hover:text-white hover:border-slate-500 transition-colors"
+      aria-expanded="false"
+      aria-controls="lang-menu-desktop"
+      aria-label={t(locale, "lang.change")}
+      data-lang-toggle
+    >
+      <i class="ph ph-globe text-lg leading-none" aria-hidden="true"></i>
+      <span>{LOCALE_META[locale].short}</span>
+      <i class="ph ph-bold ph-caret-down text-xs leading-none opacity-60 transition-transform duration-200" aria-hidden="true" data-caret></i>
+    </button>
+    <div id="lang-menu-desktop" class="absolute top-full right-0 pt-2 z-10" hidden data-lang-menu>
+      <ul class="bg-slate-800 border border-slate-700 rounded-md shadow-xl py-2 min-w-[180px]">
+        {options.map((option) => (
+          <li>
+            <a
+              href={option.href}
+              hreflang={option.lang}
+              lang={option.lang}
+              aria-current={option.current ? "page" : undefined}
+              data-lang-option={option.locale}
+              data-keep-section={keepsSection ? "" : undefined}
+              class:list={[
+                "flex items-center justify-between gap-6 px-4 py-2 text-sm transition-colors",
+                option.current ? "text-white font-semibold" : "text-slate-300 hover:bg-slate-700 hover:text-white",
+              ]}
+            >
+              {option.name}
+              {option.current && <i class="ph ph-bold ph-check text-base text-blue-400" aria-hidden="true"></i>}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
+
+<script>
+  // Un choix explicite de langue : la suggestion de langue (LanguageSuggest) ne revient plus.
+  const CHOICE_KEY = "dn_lang";
+
+  document.querySelectorAll<HTMLAnchorElement>("[data-lang-option]").forEach((link) => {
+    link.addEventListener("click", () => {
+      try {
+        localStorage.setItem(CHOICE_KEY, link.dataset.langOption ?? "");
+      } catch {
+        // Stockage refusé : la suggestion pourra revenir, rien de plus.
+      }
+      if (link.hasAttribute("data-keep-section") && window.location.hash && !link.hash) {
+        link.hash = window.location.hash;
+      }
+    });
+  });
+
+  // La liste dépliante de la barre desktop.
+  document.querySelectorAll<HTMLElement>("[data-lang-switch]").forEach((root) => {
+    const toggle = root.querySelector<HTMLButtonElement>("[data-lang-toggle]");
+    const menu = root.querySelector<HTMLElement>("[data-lang-menu]");
+    if (!toggle || !menu) return;
+
+    const setOpen = (open: boolean) => {
+      menu.hidden = !open;
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.querySelector("[data-caret]")?.classList.toggle("rotate-180", open);
+    };
+
+    toggle.addEventListener("click", () => setOpen(menu.hidden));
+    document.addEventListener("click", (event) => {
+      if (!root.contains(event.target as Node)) setOpen(false);
+    });
+    // Le focus rendu au bouton : sans ça, le lien focalisé disparaît et le focus tombe sur <body>.
+    root.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !menu.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    root.addEventListener("focusout", (event) => {
+      if (!root.contains(event.relatedTarget as Node | null)) setOpen(false);
+    });
+  });
+</script>

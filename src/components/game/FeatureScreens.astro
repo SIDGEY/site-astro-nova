@@ -15,7 +15,8 @@ import ScreenEntityList from './ScreenEntityList.astro';
 import ScreenPlanet from './ScreenPlanet.astro';
 import ScreenResourceDetail from './ScreenResourceDetail.astro';
 import ScreenShop from './ScreenShop.astro';
-import { family as familyOf, nav, type GameEntity, type ResourceCode } from '../../lib/game';
+import { gameFor, gameT, type GameEntity, type ResourceCode } from '../../lib/game';
+import { localeFromPath, quote, t } from '../../lib/i18n';
 import { LEVELS, QUANTITIES, nextLevel, unitBuild } from './empire';
 
 export type FeatureFamily = 'resources' | 'buildings' | 'facilities' | 'defenses' | 'ships' | 'shop';
@@ -28,21 +29,39 @@ interface Props {
 }
 
 const { role, family, items } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
+const { nav, family: familyOf } = gameFor(locale);
 
 // La page de liste de chaque famille, et la section où se trouvent ses cartes (catégories du jeu :
-// `pages.buildings.category.*`, `pages.fleet.combatShips`, `pages.defense.sections.standard`).
-const lists: Record<string, { title: string; tab: 'buildings' | 'build'; tabs?: { icon: string; label: string; active?: boolean }[]; section?: string; units?: boolean }> = {
+// `pages/building:category.*`, `pages/fleet:combatShips`, `pages/defense:categories.standard`),
+// avec la bascule « Disponible » et le compteur des cartes de cette page. La carte de vaisseau
+// écrit « unités » en dur (`ShipCard`) : le jeu anglais l'affiche ainsi.
+type List = {
+  title: string;
+  tab: 'buildings' | 'build';
+  tabs?: { icon: string; label: string; active?: boolean }[];
+  section?: string;
+  units?: boolean;
+  available: string;
+  counter: (count: number) => string;
+};
+const levelCounter = (level: number) => gameT(locale, 'pages/building:level_counter', { level });
+const lists: Record<string, List> = {
   buildings: {
     title: nav.buildings,
     tab: 'buildings',
     tabs: [{ icon: 'hammer', label: nav.resources, active: true }, { icon: 'factory', label: nav.installations }],
-    section: 'Production',
+    section: gameT(locale, 'pages/building:category.production'),
+    available: gameT(locale, 'pages/building:available'),
+    counter: levelCounter,
   },
   facilities: {
     title: nav.buildings,
     tab: 'buildings',
     tabs: [{ icon: 'hammer', label: nav.resources }, { icon: 'factory', label: nav.installations, active: true }],
-    section: 'Développement',
+    section: gameT(locale, 'pages/building:category.development'),
+    available: gameT(locale, 'pages/building:available'),
+    counter: levelCounter,
   },
   // Sous 768px, vaisseaux et défenses portent le titre de leur onglet de barre, « Docks »
   // (`components.navigation.build`, cf. ShipsPage et DefensePage) ; « Vaisseaux » et « Défense »
@@ -51,15 +70,19 @@ const lists: Record<string, { title: string; tab: 'buildings' | 'build'; tabs?: 
     title: nav.build,
     tab: 'build',
     tabs: [{ icon: 'rocket', label: nav.ships }, { icon: 'shield-star', label: nav.defense, active: true }],
-    section: 'Défenses Standards',
+    section: gameT(locale, 'pages/defense:categories.standard'),
     units: true,
+    available: gameT(locale, 'pages/defense:available'),
+    counter: (count) => `${count} ${gameT(locale, 'pages/defense:units_label')}`,
   },
   ships: {
     title: nav.build,
     tab: 'build',
     tabs: [{ icon: 'rocket', label: nav.ships, active: true }, { icon: 'shield-star', label: nav.defense }],
-    section: 'Vaisseaux de Combat',
+    section: gameT(locale, 'pages/fleet:combatShips'),
     units: true,
+    available: gameT(locale, 'pages/fleet:available'),
+    counter: (count) => `${count} unités`,
   },
 };
 
@@ -78,12 +101,12 @@ const counters = listed.map((e) => (list?.units ? QUANTITIES[e.code] : LEVELS[e.
   family === 'resources' ? (
     <ScreenPlanet />
   ) : family === 'shop' ? (
-    <GameScreen label="Écran Boutique du jeu, la vitrine">
+    <GameScreen label={t(locale, 'screen.shopShowcase')}>
       <ScreenShop view="showcase" />
     </GameScreen>
   ) : (
-    <GameScreen activeTab={list.tab} label={`Écran ${list.title} du jeu, onglet ${list.tabs?.find((t) => t.active)?.label}`}>
-      <ScreenEntityList title={list.title} tabs={list.tabs} section={list.section} items={listed} counters={counters} units={list.units} />
+    <GameScreen activeTab={list.tab} label={t(locale, 'screen.list', { title: list.title, tab: list.tabs?.find((tab) => tab.active)?.label ?? '' })}>
+      <ScreenEntityList title={list.title} tabs={list.tabs} section={list.section} items={listed} counters={counters} units={list.units} available={list.available} formatCounter={list.counter} />
     </GameScreen>
   )
 )}
@@ -91,14 +114,14 @@ const counters = listed.map((e) => (list?.units ? QUANTITIES[e.code] : LEVELS[e.
 {role === 'active' && (
   family === 'shop' ? (
     <div class="absolute inset-0 game-screen-swap" data-screen-index="0" data-active="true">
-      <GameScreen label="Écran Boutique du jeu, la collection d'avatars">
+      <GameScreen label={t(locale, 'screen.shopCollection')}>
         <ScreenShop view="collection" />
       </GameScreen>
     </div>
   ) : family === 'resources' ? (
     (items as ResourceCode[]).map((code, i) => (
       <div class="absolute inset-0 game-screen-swap" data-screen-index={i} data-active={i === 0 ? 'true' : 'false'}>
-        <GameScreen chrome={false} label="Fiche d'une ressource dans le jeu">
+        <GameScreen chrome={false} label={t(locale, 'screen.resource')}>
           <ScreenResourceDetail resource={code} />
         </GameScreen>
       </div>
@@ -106,9 +129,9 @@ const counters = listed.map((e) => (list?.units ? QUANTITIES[e.code] : LEVELS[e.
   ) : (
     entities.map((item, i) => (
       <div class="absolute inset-0 game-screen-swap" data-screen-index={i} data-active={i === 0 ? 'true' : 'false'}>
-        <GameScreen chrome={false} label={`Fiche « ${item.name} » dans le jeu`}>
+        <GameScreen chrome={false} label={t(locale, 'screen.entity', { name: quote(item.name, locale) })}>
           {list?.units ? (
-            <ScreenEntityDetail item={item} kind="unit" {...unitBuild(item.code)} />
+            <ScreenEntityDetail item={item} kind="unit" unit={family === 'defenses' ? 'defense' : 'ship'} {...unitBuild(item.code)} />
           ) : (
             (() => {
               const next = nextLevel(item.code);

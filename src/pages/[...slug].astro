@@ -2,10 +2,13 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlockRenderer from "../components/BlockRenderer.astro";
-import { SITE_URL, pageLang } from "../lib/seo";
+import { SITE_URL } from "../lib/seo";
+import { localeFromPath, pageUrl, pathFor, t, type Alternates } from "../lib/i18n";
 
+// Les pages des deux langues : `faq` est servie sous /faq/, `en/faq` sous /en/faq/. Les deux
+// accueils ont leur propre route (index.astro, en/index.astro).
 export async function getStaticPaths() {
-  const pages = await getCollection("pages", ({ id }) => id !== "home");
+  const pages = await getCollection("pages", ({ id }) => id !== "home" && id !== "en/home");
   return pages.map((page) => ({
     params: { slug: page.id.replace(/\.md$/, "").replace(/\.json$/, "") },
     props: { page },
@@ -16,9 +19,21 @@ const { page } = Astro.props;
 const { title, description, blocks, sectionVariants, index = true } = page.data;
 const slug = page.id.replace(/\.md$/, "").replace(/\.json$/, "");
 const canonicalURL = `${SITE_URL}/${slug}/`;
+const locale = localeFromPath(`/${slug}/`);
+
+// L'autre version de la page : la page anglaise nomme sa page française (`translationOf`), la
+// française se retrouve par ce même champ.
+const allPages = await getCollection("pages");
+const counterpart =
+  locale === "en"
+    ? allPages.find((p) => p.id === page.data.translationOf)
+    : allPages.find((p) => p.id.startsWith("en/") && p.data.translationOf === page.id);
+const alternates: Alternates = counterpart
+  ? { [locale]: pageUrl(page.id), [locale === "en" ? "fr" : "en"]: pageUrl(counterpart.id) }
+  : {};
 
 const breadcrumbs = [
-  { name: pageLang(`/${slug}/`) === "en" ? "Home" : "Accueil", item: `${SITE_URL}/` },
+  { name: t(locale, "crumb.home"), item: `${SITE_URL}${pathFor("home", locale)}` },
   { name: title, item: canonicalURL },
 ];
 
@@ -32,6 +47,15 @@ const faqBlock = blocks?.find(
 const faqItems = faqBlock?.items;
 ---
 
-<BaseLayout {title} {description} {canonicalURL} {breadcrumbs} {faqItems} {index}>
+<BaseLayout
+  {title}
+  {description}
+  {canonicalURL}
+  {breadcrumbs}
+  {faqItems}
+  {index}
+  {alternates}
+  hreflang={counterpart?.data.index !== false}
+>
   <BlockRenderer {blocks} {sectionVariants} />
 </BaseLayout>

@@ -1,0 +1,17 @@
+---
+import ArticleView from "../../../components/blog/ArticleView.astro";
+import { getArticles } from "../../../lib/articles";
+
+// Les traductions publiées : une traduction ne paraît qu'avec son article français.
+export async function getStaticPaths() {
+  const articles = await getArticles("en");
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+---
+
+<ArticleView {article} />

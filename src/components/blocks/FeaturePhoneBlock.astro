@@ -10,7 +10,8 @@
  */
 import Mobile from "../Mobile.astro";
 import FeatureScreens, { type FeatureFamily } from "../game/FeatureScreens.astro";
-import { avatars, banners, family as familyOf, pick, resources, RESOURCE_ORDER, type GameEntity, type ResourceCode } from "../../lib/game";
+import { banners, gameFor, RESOURCE_ORDER, type GameEntity, type ResourceCode } from "../../lib/game";
+import { localeFromPath } from "../../lib/i18n";
 
 interface Props {
   icon: string;
@@ -24,6 +25,7 @@ interface Props {
 }
 
 const { icon, title, subtitle, family, items, backgroundImage, reversed = false, sectionId } = Astro.props;
+const game = gameFor(localeFromPath(Astro.url.pathname));
 
 const BANNER: Record<FeatureFamily, string> = {
   resources: "planet",
@@ -39,17 +41,17 @@ const isResources = family === "resources";
 const isShop = family === "shop";
 const resourceCodes = (items?.length ? items : [...RESOURCE_ORDER]) as ResourceCode[];
 for (const code of resourceCodes) {
-  if (isResources && !resources[code]) throw new Error(`Ressource inconnue « ${code} » (attendu : ${RESOURCE_ORDER.join(", ")})`);
+  if (isResources && !game.resources[code]) throw new Error(`Ressource inconnue « ${code} » (attendu : ${RESOURCE_ORDER.join(", ")})`);
 }
-const entities: GameEntity[] = isResources || isShop ? [] : pick(family, items?.length ? items : familyOf(family).slice(0, 4).map((e) => e.code));
-const galleryExtra = isResources || isShop ? 0 : Math.max(0, familyOf(family).length - entities.length);
+const entities: GameEntity[] = isResources || isShop ? [] : game.pick(family, items?.length ? items : game.family(family).slice(0, 4).map((e) => e.code));
+const galleryExtra = isResources || isShop ? 0 : Math.max(0, game.family(family).length - entities.length);
 
 // Les deux vignettes flottantes du rendu mobile.
 // Pour la boutique : deux avatars du catalogue, ceux que ses écrans mettent en vitrine.
 const mobileCards = isShop
-  ? avatars.filter((a) => a.rarity === "legendary").slice(0, 2)
+  ? game.avatars.filter((a) => a.rarity === "legendary").slice(0, 2)
   : isResources
-    ? resourceCodes.slice(0, 2).map((code) => resources[code])
+    ? resourceCodes.slice(0, 2).map((code) => game.resources[code])
     : entities.slice(0, 2);
 
 const instanceId = `feature-phone-${Math.random().toString(36).slice(2, 9)}`;
@@ -138,10 +140,10 @@ const screenItems = isResources ? resourceCodes : entities;
                 class={`picker-btn w-14 h-14 rounded-lg flex items-center justify-center transition-all cursor-pointer hover:text-slate-50 text-slate-300 ${index === 0 ? "bg-slate-900" : "opacity-50"}`}
                 data-index={index}
                 data-active={index === 0 ? "true" : "false"}
-                aria-label={resources[code].name}
+                aria-label={game.resources[code].name}
                 aria-pressed={index === 0 ? "true" : "false"}
               >
-                <i class={`ph ph-fill ph-${resources[code].icon} text-2xl`} />
+                <i class={`ph ph-fill ph-${game.resources[code].icon} text-2xl`} />
               </button>
             ))}
           </div>

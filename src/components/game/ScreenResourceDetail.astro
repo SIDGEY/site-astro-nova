@@ -10,10 +10,15 @@
  *     production puis la consommation, chaque mine suivie de son taux de fonctionnement ;
  *   - au pied, « D'accord ».
  *
+ * Nom, description, titres de section (« Production », « Stockage », « Consommation ») et bouton
+ * sont écrits en dur en français dans le jeu (`resourceIconsData.ts`, `RESOURCE_DATA`,
+ * `ResourceBreakdown`, `ResourceModal`) : la fiche du jeu anglais les montre ainsi, celle-ci aussi.
+ *
  * Les panneaux de talents (conversion du surplus, talents de production ou d'énergie) n'existent
  * qu'avec une classe : l'empire d'illustration (`empire.ts`) n'en a pas.
  */
-import { pick, resources, type ResourceCode } from '../../lib/game';
+import { gameFor, gameT, type ResourceCode } from '../../lib/game';
+import { localeFromPath } from '../../lib/i18n';
 import { energyBalance, resourceBalance } from './empire';
 import { compact } from './format';
 import ScreenDetailRow from './ScreenDetailRow.astro';
@@ -25,8 +30,11 @@ interface Props {
 }
 
 const { resource } = Astro.props;
-const meta = resources[resource];
-const building = (code: string) => pick('buildings', [code])[0];
+const locale = localeFromPath(Astro.url.pathname);
+// Nom et description longue : `RESOURCE_DATA` du jeu, écrit en français, que la fiche affiche
+// telle quelle dans le jeu anglais aussi. Les noms des bâtiments, eux, sont traduits.
+const meta = gameFor('fr').resources[resource];
+const building = (code: string) => gameFor(locale).pick('buildings', [code])[0];
 
 const isEnergy = resource === 'energy';
 const energy = energyBalance();
@@ -42,8 +50,8 @@ const mineDraw = balance ? energy.consumers.find((c) => c.code === balance.mine)
       <span class="relative inline-flex shrink-0"><i class={`ph-fill ph-${meta.icon} text-xl leading-none text-slate-400`}></i></span>
       <p class="text-gray-300 tabular-nums">
         {isEnergy
-          ? `${compact(energy.consumption)} / ${compact(energy.production)} (${energy.usage}%)`
-          : `${compact(balance!.stock)} / ${compact(balance!.capacity)}`}
+          ? `${compact(energy.consumption, locale)} / ${compact(energy.production, locale)} (${energy.usage}%)`
+          : `${compact(balance!.stock, locale)} / ${compact(balance!.capacity, locale)}`}
       </p>
     </div>
   </div>
@@ -51,7 +59,7 @@ const mineDraw = balance ? energy.consumers.find((c) => c.code === balance.mine)
   {meta.longDescription && (
     <div>
       <div class="text-slate-300 line-clamp-3">{meta.longDescription}</div>
-      <span class="mt-2 inline-block text-sm font-medium text-blue-400">Voir plus</span>
+      <span class="mt-2 inline-block text-sm font-medium text-blue-400">{gameT(locale, 'components/expandableText:more')}</span>
     </div>
   )}
 
@@ -63,24 +71,24 @@ const mineDraw = balance ? energy.consumers.find((c) => c.code === balance.mine)
         <div>
           <div class="mb-2 flex items-center justify-between gap-2 text-gray-400">
             <span>Production</span>
-            <span class="text-slate-500">{compact(balance.productionTotal)} /h</span>
+            <span class="text-slate-500">{compact(balance.productionTotal, locale)} /h</span>
           </div>
           <div class="space-y-3">
             {balance.production.map((line) => {
               const b = building(line.code);
-              return <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={`+${compact(line.value)} /h`} valueClass="text-green-400" />;
+              return <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={`+${compact(line.value, locale)} /h`} valueClass="text-green-400" />;
             })}
           </div>
         </div>
         <div>
           <div class="mb-2 flex items-center justify-between gap-2 text-gray-400">
             <span>Stockage</span>
-            <span class="text-slate-500">{compact(balance.capacity)}</span>
+            <span class="text-slate-500">{compact(balance.capacity, locale)}</span>
           </div>
           <div class="space-y-3">
             {balance.storage.map((line) => {
               const b = building(line.code);
-              return <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={compact(line.value)} valueClass="text-slate-200" />;
+              return <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={compact(line.value, locale)} valueClass="text-slate-200" />;
             })}
           </div>
         </div>
@@ -94,7 +102,7 @@ const mineDraw = balance ? energy.consumers.find((c) => c.code === balance.mine)
               const b = building(line.code);
               return (
                 <div class="space-y-2">
-                  <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={`+${compact(line.value)} (${energy.share(line.value)}%)`} valueClass="text-green-400" />
+                  <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={`+${compact(line.value, locale)} (${energy.share(line.value)}%)`} valueClass="text-green-400" />
                 </div>
               );
             })}
@@ -105,13 +113,13 @@ const mineDraw = balance ? energy.consumers.find((c) => c.code === balance.mine)
           <div class="space-y-3">
             <div class="flex gap-3 text-sm text-gray-500 items-start">
               <div class="rounded-full bg-slate-950/50 p-3 border border-gray-700/50"><i class="ph-bold ph-info block text-base leading-none text-gray-200"></i></div>
-              <div>Réglez le taux de vos mines pour libérer de l'énergie : leur production et leur consommation baissent d'autant.</div>
+              <div>{gameT(locale, 'pages/building:operatingRate.hint')}</div>
             </div>
             {energy.consumers.map((line) => {
               const b = building(line.code);
               return (
                 <div class="space-y-2">
-                  <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={`-${compact(line.value)} (${energy.share(line.value)}%)`} valueClass="text-amber-400" />
+                  <ScreenDetailRow image={b.image} badge={line.level} title={b.name} value={`-${compact(line.value, locale)} (${energy.share(line.value)}%)`} valueClass="text-amber-400" />
                   <ScreenOperatingRate output={line.res} production={line.output} consumption={line.value} />
                 </div>
               );

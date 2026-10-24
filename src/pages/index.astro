@@ -9,8 +9,9 @@ if (!homeEntry) {
   return Astro.redirect('/404');
 }
 const { title, description, blocks, sectionVariants } = homeEntry.data;
+const english = await getEntry('pages', 'en/home');
 ---
 
-<BaseLayout description={description} title={title}>
+<BaseLayout description={description} title={title} alternates={{ fr: '/', ...(english ? { en: '/en/' } : {}) }}>
   <BlockRenderer {blocks} {sectionVariants} />
 </BaseLayout>
