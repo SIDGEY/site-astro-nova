@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlockRenderer from "../components/BlockRenderer.astro";
-import { SITE_URL } from "../lib/seo";
+import { SITE_URL, pageLang } from "../lib/seo";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages", ({ id }) => id !== "home");
@@ -18,7 +18,7 @@ const slug = page.id.replace(/\.md$/, "").replace(/\.json$/, "");
 const canonicalURL = `${SITE_URL}/${slug}/`;
 
 const breadcrumbs = [
-  { name: "Accueil", item: `${SITE_URL}/` },
+  { name: pageLang(`/${slug}/`) === "en" ? "Home" : "Accueil", item: `${SITE_URL}/` },
   { name: title, item: canonicalURL },
 ];
 

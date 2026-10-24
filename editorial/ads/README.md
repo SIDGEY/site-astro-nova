@@ -31,13 +31,15 @@ plan chiffré, puis le jeton `--confirm` affiché par le dry-run.
 2. **Attendre que le PostHog du jeu reçoive de nouveau des événements** (quota du plan gratuit
    épuisé à la mi-octobre, remise à zéro attendue début novembre). Contrôle : requête de santé de
    `references/mesure.md`. Tant qu'il est aveugle, aucune inscription ni rétention n'est
-   mesurable : on ne lance pas. Envisager de réduire le volume d'événements du jeu ou de changer de
-   plan, sinon le quota retombera en cours de campagne.
+   mesurable : on ne lance pas. Le projet reste sur le plan gratuit (décision du 2026-10-24) : si
+   le quota retombe en cours de campagne, la semaine est aveugle et aucune décision ne se prend sur
+   les inscriptions.
 3. **Brancher les accès API** (procédure : `references/api.md`, en-têtes de
    `scripts/ads-google.mjs` et `scripts/ads-reddit.mjs`), poser le plafond `ADS_DAILY_CAP_EUR`
    dans `.env.local`, puis relancer `create` sans `--apply` : la validation API remplace le
    contrôle hors ligne.
-4. **Valider le plan** (`editorial/ads-plan.json`) : budgets, plafonds de CPC, budgets de test.
+4. ~~Valider le plan~~ : fait le 2026-10-24 (`editorial/ads-plan.json`, plafond posé dans
+   `.env.local`). Chaque création et activation reste soumise au feu vert de l'utilisateur.
 5. **Reddit seulement** : créer les posts des annonces avec de vraies captures du jeu, renseigner
    leur `postId` dans les specs, créer le pixel Reddit.
 6. **Allemand** : seulement quand le jeu sera traduit en allemand ; créer alors `/de/von-ogame/`.
@@ -51,13 +53,9 @@ plan chiffré, puis le jeton `--confirm` affiché par le dry-run.
 - Les posts Reddit : rédigés à partir des textes des specs, illustrés par de vraies captures de
   play.dynastynova.com (jamais d'écran inventé), publiés depuis le gestionnaire. Commentaires
   ouverts seulement si quelqu'un peut répondre dans la journée.
-- La décision sur le plan chiffré, puis l'accord explicite sur chaque création et chaque
-  activation.
+- L'accord explicite sur chaque création et chaque activation (le plan chiffré est validé).
 - La valeur d'une inscription : export du revenu des premiers jours d'une cohorte passée depuis
   l'admin du jeu, en attendant un événement d'achat côté serveur (voir plus bas).
-- La relecture des pages `/en/` : elles sont servies avec la mise en page du site en français
-  (langue du document, navigation, pied de page). À corriger dans la mise en page avant de payer
-  du trafic anglophone, ou à accepter en connaissance de cause.
 
 ## La chaîne de mesure
 
