@@ -2,6 +2,8 @@
 import SEO from "../components/SEO.astro";
 import Header from "../components/Header.astro";
 import GameFooter from "../components/GameFooter.astro";
+import LandingHeader from "../components/LandingHeader.astro";
+import { pageLang } from "../lib/seo";
 import "../styles/global.css";
 import "@fontsource/lexend/300.css";
 import "@fontsource/lexend/400.css";
@@ -40,10 +42,11 @@ const {
   canonicalURL,
   faqItems,
 } = Astro.props;
+const lang = pageLang(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang="fr" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <!-- Google tag (gtag.js) -->
@@ -111,13 +114,13 @@ const {
       Passer au contenu principal
     </a>
 
-    <Header />
+    {lang === "en" ? <LandingHeader /> : <Header />}
 
     <main id="main-content" class="flex-grow outline-none" tabindex="-1">
       <slot />
     </main>
 
-    <GameFooter />
+    <GameFooter {lang} />
 
     <script>
       // Le départ vers le jeu est la conversion principale du site depuis l'arrêt

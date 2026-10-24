@@ -11,7 +11,8 @@ import {
   getBreadcrumbSchema,
   getArticleSchema,
   getVideoGameSchema,
-  getFaqSchema
+  getFaqSchema,
+  pageLang
 } from '../lib/seo';
 
 const settingsEntry = await getEntry('settings', 'general');
@@ -120,7 +121,7 @@ const jsonLdGraph = {
 <meta property="twitter:image" content={ogImageURL} />
 
 <!-- Hreflang (FR as default, placeholder for EN) -->
-<link rel="alternate" hreflang="fr" href={canonicalURL} />
+<link rel="alternate" hreflang={pageLang(Astro.url.pathname)} href={canonicalURL} />
 <link rel="alternate" hreflang="x-default" href={canonicalURL} />
 <!-- <link rel="alternate" hreflang="en" href={new URL('/en' + (Astro.url.pathname || ""), Astro.site)} /> -->
 

@@ -137,3 +137,9 @@ export function getArticleSchema(article: {
     "mainEntityOfPage": { "@id": `${article.url}/#webpage` }
   };
 }
+
+// Langue d'une page d'après son chemin : le site est en français, sauf les pages d'atterrissage
+// des campagnes anglophones (src/content/pages/en/).
+export function pageLang(pathname: string): "fr" | "en" {
+  return pathname.startsWith("/en/") ? "en" : "fr";
+}

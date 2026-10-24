@@ -73,8 +73,8 @@ blocks:
             side: right
             cards:
               - icon: ph-sword
-                title: Combats et rapports rejouables
-                description: Flottes et défenses s'affrontent, et chaque bataille se rejoue en 3D, round par round. Les débris se recyclent ensuite.
+                title: Combats et rapports détaillés
+                description: Flottes et défenses s'affrontent, et chaque rapport de combat détaille l'affrontement round par round. Les débris se recyclent ensuite.
               - icon: ph-eye
                 title: Espionnage et contre-espionnage
                 description: Rapports d'espionnage complets, sondes repérables et défenses de contre-espionnage.
