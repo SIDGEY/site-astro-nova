@@ -16,3 +16,7 @@ editorial/createurs/
 editorial/acquisition-log.md
 .seo-cache
 editorial/seo-log.md
+.env.local
+.ads-cache
+editorial/ads-log.md
+editorial/ads-plan.json

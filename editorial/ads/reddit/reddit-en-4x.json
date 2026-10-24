@@ -1,0 +1,83 @@
+{
+  "name": "reddit-en-4x",
+  "status": "pret",
+  "note": "Joueurs de 4X, de jeux navigateur et de jeux incrémentaux, en anglais. Un groupe par communauté pour lire le coût par inscription de chacune. Ton de la communauté : parler de mécanique, pas de superlatifs. Chaque annonce attend un post Reddit créé dans le gestionnaire, avec une vraie capture du jeu : renseigner son postId ici avant la création. Budget (par groupe, donc ×3 pour la campagne) et enchère : editorial/ads-plan.json (hors Git), passés à la création.",
+  "objective": "CLICKS",
+  "adGroups": [
+    {
+      "name": "4xgaming",
+      "communities": [
+        "4Xgaming"
+      ],
+      "geolocations": [
+        "US",
+        "GB",
+        "CA",
+        "AU",
+        "IE",
+        "NZ"
+      ],
+      "excludedKeywords": [],
+      "clickUrl": "https://dynastynova.com/en/space-strategy-browser-game/",
+      "ads": [
+        {
+          "variant": "dynasties",
+          "postId": null,
+          "headline": "A browser space 4X where you pick a dynasty for good: two peoples, each with its own traits and classes",
+          "body": "Explore, expand, exploit and fight in a shared real-time universe. The Heritage or The Accord, two active traits from minute one, a battle simulator running the real combat engine. Free, on mobile and desktop.",
+          "image": "capture réelle de play.dynastynova.com : choix de la dynastie"
+        }
+      ]
+    },
+    {
+      "name": "webgames",
+      "communities": [
+        "WebGames"
+      ],
+      "geolocations": [
+        "US",
+        "GB",
+        "CA",
+        "AU",
+        "IE",
+        "NZ"
+      ],
+      "excludedKeywords": [],
+      "clickUrl": "https://dynastynova.com/en/space-strategy-browser-game/",
+      "ads": [
+        {
+          "variant": "navigateur",
+          "postId": null,
+          "headline": "Free space strategy game that runs in your browser, built for phones first",
+          "body": "Colonize planets, research technologies, build a fleet and take on other players. No download, same account on phone and desktop.",
+          "image": "capture réelle de play.dynastynova.com : page Planète sur mobile"
+        }
+      ]
+    },
+    {
+      "name": "incremental",
+      "communities": [
+        "incremental_games"
+      ],
+      "geolocations": [
+        "US",
+        "GB",
+        "CA",
+        "AU",
+        "IE",
+        "NZ"
+      ],
+      "excludedKeywords": [],
+      "clickUrl": "https://dynastynova.com/en/space-strategy-browser-game/",
+      "ads": [
+        {
+          "variant": "hors-ligne",
+          "postId": null,
+          "headline": "Space empire builder where your mines keep producing while you're offline, then you send fleets against other players",
+          "body": "Short sessions on your phone: queue upgrades, research, come back later. Metal, crystal and hydrogen keep flowing while you're away. Free, in your browser.",
+          "image": "capture réelle de play.dynastynova.com : page Bâtiments sur mobile"
+        }
+      ]
+    }
+  ]
+}

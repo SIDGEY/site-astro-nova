@@ -1,0 +1,265 @@
+{
+  "name": "search-fr-ogame",
+  "status": "pret",
+  "note": "Campagne Search FR sur les requêtes OGame. Budget et CPC maximal : editorial/ads-plan.json (hors Git), passés à la création. Volumes de recherche : à lire dans le Planificateur de mots-clés une fois le compte ouvert, aucun n'est supposé ici.",
+  "languages": [
+    1002
+  ],
+  "geoTargets": [
+    2250,
+    2056,
+    2756,
+    2442,
+    2124
+  ],
+  "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=search-fr-ogame&utm_content={creative}&utm_term={keyword}",
+  "negatives": {
+    "PHRASE": [
+      "connexion",
+      "se connecter",
+      "login",
+      "mot de passe",
+      "lobby",
+      "gameforge",
+      "speedsim",
+      "trashsim",
+      "simulateur",
+      "calculateur",
+      "convertisseur",
+      "infocompte",
+      "tracker",
+      "formule",
+      "wiki",
+      "hack",
+      "cheat",
+      "triche",
+      "script",
+      "apk",
+      "emploi",
+      "stage",
+      "pdf",
+      "mod",
+      "ogame bot",
+      "bot ogame",
+      "bot pour ogame",
+      "télécharger ogame",
+      "ogame télécharger",
+      "ogame download",
+      "ogame apk",
+      "forum",
+      "ogotcha",
+      "ogniter",
+      "galaxytool"
+    ]
+  },
+  "adGroups": [
+    {
+      "name": "alternative",
+      "keywords": {
+        "PHRASE": [
+          "jeu comme ogame",
+          "jeux comme ogame",
+          "jeu similaire à ogame",
+          "jeux similaires à ogame",
+          "alternative à ogame",
+          "alternative ogame",
+          "jeu type ogame",
+          "jeu style ogame",
+          "équivalent ogame",
+          "jeu genre ogame",
+          "successeur d'ogame",
+          "ogame like"
+        ],
+        "EXACT": [
+          "jeu comme ogame",
+          "alternative ogame",
+          "jeux comme ogame"
+        ]
+      },
+      "ads": [
+        {
+          "variant": "avec-marque",
+          "finalUrl": "https://dynastynova.com/venir-d-ogame/",
+          "path1": "jeu-spatial",
+          "path2": "gratuit",
+          "headlines": [
+            "Vous venez d'OGame ?",
+            "Un jeu comme OGame, gratuit",
+            "Dynasty Nova, 4X spatial",
+            "Stratégie spatiale gratuite",
+            "Pensé pour le mobile",
+            "Sans téléchargement",
+            "Simulateur de combat intégré",
+            "Chat d'univers en direct",
+            "Choisissez votre dynastie",
+            "Vos mines tournent hors ligne",
+            "Colonisez la galaxie",
+            "Jouez dans le navigateur",
+            "Mobile et ordinateur",
+            "Créez votre empire spatial",
+            "Inscription gratuite"
+          ],
+          "descriptions": [
+            "Ressources, recherches, flottes et colonies : les bases d'OGame, pensées pour le mobile.",
+            "Simulez chaque attaque 50 fois avec le vrai moteur de combat avant d'envoyer vos flottes.",
+            "Gratuit, sans téléchargement, sur téléphone comme sur ordinateur. Lancez votre empire.",
+            "Une économie qui ne punit pas les absents : vos mines produisent même hors ligne."
+          ]
+        },
+        {
+          "variant": "sans-marque",
+          "finalUrl": "https://dynastynova.com/venir-d-ogame/",
+          "path1": "jeu-spatial",
+          "path2": "gratuit",
+          "headlines": [
+            "Dynasty Nova, 4X spatial",
+            "Stratégie spatiale gratuite",
+            "Le 4X spatial de navigateur",
+            "Pensé pour le mobile",
+            "Sans téléchargement",
+            "Simulateur de combat intégré",
+            "Chat d'univers en direct",
+            "Choisissez votre dynastie",
+            "Vos mines tournent hors ligne",
+            "Colonisez la galaxie",
+            "Jouez dans le navigateur",
+            "Mobile et ordinateur",
+            "Créez votre empire spatial",
+            "Inscription gratuite",
+            "Métal, cristal, hydrogène"
+          ],
+          "descriptions": [
+            "Ressources, recherches, flottes et colonies : un 4X spatial pensé pour le mobile.",
+            "Simulez chaque attaque 50 fois avec le vrai moteur de combat avant d'envoyer vos flottes.",
+            "Gratuit, sans téléchargement, sur téléphone comme sur ordinateur. Lancez votre empire.",
+            "Une économie qui ne punit pas les absents : vos mines produisent même hors ligne."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogame",
+      "keywords": {
+        "PHRASE": [
+          "ogame mobile",
+          "ogame gratuit",
+          "ogame nouvel univers",
+          "ogame sur téléphone",
+          "ogame navigateur"
+        ],
+        "EXACT": [
+          "ogame",
+          "ogame fr",
+          "jeu ogame"
+        ]
+      },
+      "ads": [
+        {
+          "variant": "avec-marque",
+          "finalUrl": "https://dynastynova.com/venir-d-ogame/",
+          "path1": "jeu-spatial",
+          "path2": "gratuit",
+          "headlines": [
+            "Vous venez d'OGame ?",
+            "Un autre jeu, le même genre",
+            "Dynasty Nova, 4X spatial",
+            "Jeu indépendant et gratuit",
+            "Pensé pour le mobile",
+            "Sans téléchargement",
+            "Simulateur de combat intégré",
+            "Chat d'univers en direct",
+            "Choisissez votre dynastie",
+            "Vos mines tournent hors ligne",
+            "Colonisez la galaxie",
+            "Jouez dans le navigateur",
+            "Mobile et ordinateur",
+            "Créez votre empire spatial",
+            "Inscription gratuite"
+          ],
+          "descriptions": [
+            "Vous aimez OGame ? Dynasty Nova reprend le genre, sur une interface pensée pour le mobile.",
+            "Simulez chaque attaque 50 fois avec le vrai moteur de combat avant d'envoyer vos flottes.",
+            "Gratuit, sans téléchargement, sur téléphone comme sur ordinateur. Lancez votre empire.",
+            "Une économie qui ne punit pas les absents : vos mines produisent même hors ligne."
+          ]
+        },
+        {
+          "variant": "sans-marque",
+          "finalUrl": "https://dynastynova.com/venir-d-ogame/",
+          "path1": "jeu-spatial",
+          "path2": "gratuit",
+          "headlines": [
+            "Un nouveau 4X spatial",
+            "Dynasty Nova, 4X spatial",
+            "Jeu indépendant et gratuit",
+            "Pensé pour le mobile",
+            "Sans téléchargement",
+            "Simulateur de combat intégré",
+            "Chat d'univers en direct",
+            "Choisissez votre dynastie",
+            "Vos mines tournent hors ligne",
+            "Colonisez la galaxie",
+            "Jouez dans le navigateur",
+            "Mobile et ordinateur",
+            "Créez votre empire spatial",
+            "Inscription gratuite",
+            "Métal, cristal, hydrogène"
+          ],
+          "descriptions": [
+            "Ressources, recherches, flottes et colonies : un 4X spatial pensé pour le mobile.",
+            "Simulez chaque attaque 50 fois avec le vrai moteur de combat avant d'envoyer vos flottes.",
+            "Gratuit, sans téléchargement, sur téléphone comme sur ordinateur. Lancez votre empire.",
+            "Une économie qui ne punit pas les absents : vos mines produisent même hors ligne."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "generique",
+      "keywords": {
+        "PHRASE": [
+          "jeu de stratégie spatiale navigateur",
+          "jeu de stratégie spatiale gratuit",
+          "jeu spatial navigateur",
+          "jeu spatial gratuit en ligne",
+          "jeu de conquête spatiale",
+          "jeu 4x spatial",
+          "jeu de stratégie spatiale mobile",
+          "jeu de colonisation spatiale"
+        ],
+        "EXACT": []
+      },
+      "ads": [
+        {
+          "variant": "sans-marque",
+          "finalUrl": "https://dynastynova.com/venir-d-ogame/",
+          "path1": "jeu-spatial",
+          "path2": "gratuit",
+          "headlines": [
+            "Stratégie spatiale gratuite",
+            "Le 4X spatial de navigateur",
+            "Dynasty Nova, 4X spatial",
+            "Pensé pour le mobile",
+            "Sans téléchargement",
+            "Simulateur de combat intégré",
+            "Chat d'univers en direct",
+            "Choisissez votre dynastie",
+            "Vos mines tournent hors ligne",
+            "Colonisez la galaxie",
+            "Jouez dans le navigateur",
+            "Mobile et ordinateur",
+            "Créez votre empire spatial",
+            "Inscription gratuite",
+            "Métal, cristal, hydrogène"
+          ],
+          "descriptions": [
+            "Ressources, recherches, flottes et colonies : un 4X spatial pensé pour le mobile.",
+            "Simulez chaque attaque 50 fois avec le vrai moteur de combat avant d'envoyer vos flottes.",
+            "Gratuit, sans téléchargement, sur téléphone comme sur ordinateur. Lancez votre empire.",
+            "Une économie qui ne punit pas les absents : vos mines produisent même hors ligne."
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -119,9 +119,9 @@ async function main() {
 
   console.log(`\n▶ GA4 live fetch — ${property} | période ${startDate} → ${endDate}`);
 
-  let pageRows, sourceRows, eventRows;
+  let pageRows, sourceRows, eventRows, campaignRows;
   try {
-    [pageRows, sourceRows, eventRows] = await Promise.all([
+    [pageRows, sourceRows, eventRows, campaignRows] = await Promise.all([
       runReport(client, property, {
         dateRanges: [{ startDate, endDate }],
         dimensions: [{ name: "pagePath" }],
@@ -162,6 +162,15 @@ async function main() {
           },
         }),
       }),
+      // Sessions par campagne et par jour : le skill `ads` (scripts/ads-report.mjs) les croise
+      // avec la dépense des régies, la clé étant utm_campaign = nom de la campagne.
+      runReport(client, property, {
+        dateRanges: [{ startDate, endDate }],
+        dimensions: [{ name: "date" }, { name: "sessionSource" }, { name: "sessionMedium" }, { name: "sessionCampaignName" }],
+        metrics: [{ name: "sessions" }, { name: "engagedSessions" }],
+        dimensionFilter: withHostFilter(opts.host, null),
+        limit: 10000,
+      }),
     ]);
   } catch (e) {
     const detail = e.response?.data?.error?.message || e.message;
@@ -198,6 +207,16 @@ async function main() {
   await fs.writeFile(path.join(dir, "Pages.csv"), pagesCsv);
   await fs.writeFile(path.join(dir, "Sources.csv"), sourcesCsv);
   await fs.writeFile(path.join(dir, "Evenements.csv"), eventsCsv);
+  await fs.writeFile(
+    path.join(dir, "Campagnes.csv"),
+    toCsv(
+      ["Date", "Source", "Support", "Campagne", "Sessions", "Sessions engagées"],
+      campaignRows.map((r) => {
+        const d = r.dimensionValues[0].value;
+        return [`${d.slice(0, 4)}-${d.slice(4, 6)}-${d.slice(6, 8)}`, r.dimensionValues[1].value, r.dimensionValues[2].value, r.dimensionValues[3].value, r.metricValues[0].value, r.metricValues[1].value];
+      })
+    )
+  );
 
   console.log(
     `✅ ${pageRows.length} pages, ${sourceRows.length} sources, ${eventRows.length} types d'événement -> ${dir}\n`

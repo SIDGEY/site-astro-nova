@@ -1,0 +1,255 @@
+{
+  "name": "search-de-ogame",
+  "status": "bloque",
+  "blockedReason": "Le jeu n'a pas de version allemande (Frontend src/i18n/config.ts : en, fr, es) : un navigateur allemand bascule en anglais. Ne pas créer la campagne avant la traduction allemande du jeu et une page d'atterrissage /de/ dans src/content/pages/.",
+  "note": "Allemagne, Autriche, Suisse, en allemand. Mots-clés et annonces prêts pour le jour où le jeu parle allemand ; finalUrl à créer alors (/de/von-ogame/).",
+  "languages": [
+    1001
+  ],
+  "geoTargets": [
+    2276,
+    2040,
+    2756
+  ],
+  "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=search-de-ogame&utm_content={creative}&utm_term={keyword}",
+  "negatives": {
+    "PHRASE": [
+      "login",
+      "anmelden",
+      "einloggen",
+      "passwort",
+      "lobby",
+      "gameforge",
+      "speedsim",
+      "trashsim",
+      "simulator",
+      "rechner",
+      "umrechner",
+      "infocompte",
+      "tracker",
+      "formel",
+      "wiki",
+      "hack",
+      "cheat",
+      "script",
+      "apk",
+      "jobs",
+      "pdf",
+      "mod",
+      "ogame bot",
+      "bot für ogame",
+      "ogame herunterladen",
+      "ogame download",
+      "ogame apk",
+      "forum",
+      "ogotcha",
+      "ogniter",
+      "galaxytool"
+    ]
+  },
+  "adGroups": [
+    {
+      "name": "alternative",
+      "keywords": {
+        "PHRASE": [
+          "spiele wie ogame",
+          "spiel wie ogame",
+          "ogame alternative",
+          "alternative zu ogame",
+          "ogame ähnliche spiele",
+          "browsergame wie ogame",
+          "browserspiele wie ogame",
+          "ogame nachfolger",
+          "handyspiel wie ogame"
+        ],
+        "EXACT": [
+          "spiele wie ogame",
+          "ogame alternative",
+          "spiel wie ogame"
+        ]
+      },
+      "ads": [
+        {
+          "variant": "avec-marque",
+          "finalUrl": "https://dynastynova.com/de/von-ogame/",
+          "path1": "weltraum-4x",
+          "path2": "kostenlos",
+          "headlines": [
+            "Du kommst von OGame?",
+            "Ein Gratis-Spiel wie OGame",
+            "Dynasty Nova, Weltraum-4X",
+            "Kostenloses Strategiespiel",
+            "Fürs Handy entwickelt",
+            "Kein Download nötig",
+            "Mit Kampfsimulator",
+            "Live-Chat im Universum",
+            "Wähle deine Dynastie",
+            "Minen fördern auch offline",
+            "Kolonisiere die Galaxie",
+            "Im Browser spielen",
+            "Handy und Computer",
+            "Baue dein Weltraumimperium",
+            "Kostenlos registrieren"
+          ],
+          "descriptions": [
+            "Rohstoffe, Forschung, Flotten und Kolonien: die OGame-Grundlagen, fürs Handy gedacht.",
+            "Simuliere jeden Angriff 50-mal mit der echten Kampf-Engine, bevor deine Flotte startet.",
+            "Kostenlos, ohne Download, auf Handy und Computer. Dein Imperium wartet.",
+            "Eine Wirtschaft, die Abwesenheit nicht bestraft: Deine Minen fördern auch offline."
+          ]
+        },
+        {
+          "variant": "sans-marque",
+          "finalUrl": "https://dynastynova.com/de/von-ogame/",
+          "path1": "weltraum-4x",
+          "path2": "kostenlos",
+          "headlines": [
+            "Dynasty Nova, Weltraum-4X",
+            "Kostenloses Strategiespiel",
+            "Weltraum-4X im Browser",
+            "Fürs Handy entwickelt",
+            "Kein Download nötig",
+            "Mit Kampfsimulator",
+            "Live-Chat im Universum",
+            "Wähle deine Dynastie",
+            "Minen fördern auch offline",
+            "Kolonisiere die Galaxie",
+            "Im Browser spielen",
+            "Handy und Computer",
+            "Baue dein Weltraumimperium",
+            "Kostenlos registrieren",
+            "Metall, Kristall, Wasserstoff"
+          ],
+          "descriptions": [
+            "Rohstoffe, Forschung, Flotten und Kolonien: ein Weltraum-4X, fürs Handy entwickelt.",
+            "Simuliere jeden Angriff 50-mal mit der echten Kampf-Engine, bevor deine Flotte startet.",
+            "Kostenlos, ohne Download, auf Handy und Computer. Dein Imperium wartet.",
+            "Eine Wirtschaft, die Abwesenheit nicht bestraft: Deine Minen fördern auch offline."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogame",
+      "keywords": {
+        "PHRASE": [
+          "ogame handy",
+          "ogame kostenlos",
+          "ogame neues universum",
+          "ogame browsergame",
+          "ogame mobil"
+        ],
+        "EXACT": [
+          "ogame",
+          "ogame de",
+          "ogame spiel"
+        ]
+      },
+      "ads": [
+        {
+          "variant": "avec-marque",
+          "finalUrl": "https://dynastynova.com/de/von-ogame/",
+          "path1": "weltraum-4x",
+          "path2": "kostenlos",
+          "headlines": [
+            "Du kommst von OGame?",
+            "Gleiches Genre, neues Spiel",
+            "Dynasty Nova, Weltraum-4X",
+            "Unabhängig und kostenlos",
+            "Fürs Handy entwickelt",
+            "Kein Download nötig",
+            "Mit Kampfsimulator",
+            "Live-Chat im Universum",
+            "Wähle deine Dynastie",
+            "Minen fördern auch offline",
+            "Kolonisiere die Galaxie",
+            "Im Browser spielen",
+            "Handy und Computer",
+            "Baue dein Weltraumimperium",
+            "Kostenlos registrieren"
+          ],
+          "descriptions": [
+            "Du magst OGame? Dynasty Nova bringt das Genre auf eine Oberfläche fürs Handy.",
+            "Simuliere jeden Angriff 50-mal mit der echten Kampf-Engine, bevor deine Flotte startet.",
+            "Kostenlos, ohne Download, auf Handy und Computer. Dein Imperium wartet.",
+            "Eine Wirtschaft, die Abwesenheit nicht bestraft: Deine Minen fördern auch offline."
+          ]
+        },
+        {
+          "variant": "sans-marque",
+          "finalUrl": "https://dynastynova.com/de/von-ogame/",
+          "path1": "weltraum-4x",
+          "path2": "kostenlos",
+          "headlines": [
+            "Dynasty Nova, Weltraum-4X",
+            "Unabhängig und kostenlos",
+            "Ein neues Weltraum-4X",
+            "Fürs Handy entwickelt",
+            "Kein Download nötig",
+            "Mit Kampfsimulator",
+            "Live-Chat im Universum",
+            "Wähle deine Dynastie",
+            "Minen fördern auch offline",
+            "Kolonisiere die Galaxie",
+            "Im Browser spielen",
+            "Handy und Computer",
+            "Baue dein Weltraumimperium",
+            "Kostenlos registrieren",
+            "Metall, Kristall, Wasserstoff"
+          ],
+          "descriptions": [
+            "Rohstoffe, Forschung, Flotten und Kolonien: ein Weltraum-4X, fürs Handy entwickelt.",
+            "Simuliere jeden Angriff 50-mal mit der echten Kampf-Engine, bevor deine Flotte startet.",
+            "Kostenlos, ohne Download, auf Handy und Computer. Dein Imperium wartet.",
+            "Eine Wirtschaft, die Abwesenheit nicht bestraft: Deine Minen fördern auch offline."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "generique",
+      "keywords": {
+        "PHRASE": [
+          "weltraum strategiespiel browser",
+          "kostenloses weltraum strategiespiel",
+          "weltraum browsergame",
+          "weltraum 4x browserspiel",
+          "weltraum strategie handy",
+          "browsergame weltraum kostenlos"
+        ],
+        "EXACT": []
+      },
+      "ads": [
+        {
+          "variant": "sans-marque",
+          "finalUrl": "https://dynastynova.com/de/von-ogame/",
+          "path1": "weltraum-4x",
+          "path2": "kostenlos",
+          "headlines": [
+            "Kostenloses Strategiespiel",
+            "Weltraum-4X im Browser",
+            "Dynasty Nova, Weltraum-4X",
+            "Fürs Handy entwickelt",
+            "Kein Download nötig",
+            "Mit Kampfsimulator",
+            "Live-Chat im Universum",
+            "Wähle deine Dynastie",
+            "Minen fördern auch offline",
+            "Kolonisiere die Galaxie",
+            "Im Browser spielen",
+            "Handy und Computer",
+            "Baue dein Weltraumimperium",
+            "Kostenlos registrieren",
+            "Metall, Kristall, Wasserstoff"
+          ],
+          "descriptions": [
+            "Rohstoffe, Forschung, Flotten und Kolonien: ein Weltraum-4X, fürs Handy entwickelt.",
+            "Simuliere jeden Angriff 50-mal mit der echten Kampf-Engine, bevor deine Flotte startet.",
+            "Kostenlos, ohne Download, auf Handy und Computer. Dein Imperium wartet.",
+            "Eine Wirtschaft, die Abwesenheit nicht bestraft: Deine Minen fördern auch offline."
+          ]
+        }
+      ]
+    }
+  ]
+}

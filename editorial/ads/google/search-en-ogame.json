@@ -1,0 +1,259 @@
+{
+  "name": "search-en-ogame",
+  "status": "pret",
+  "note": "Campagne Search EN sur les requêtes OGame, pays anglophones. Budget et CPC maximal : editorial/ads-plan.json (hors Git), passés à la création. Volumes de recherche : à lire dans le Planificateur de mots-clés, aucun n'est supposé ici.",
+  "languages": [
+    1000
+  ],
+  "geoTargets": [
+    2840,
+    2826,
+    2124,
+    2036,
+    2372,
+    2554
+  ],
+  "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=search-en-ogame&utm_content={creative}&utm_term={keyword}",
+  "negatives": {
+    "PHRASE": [
+      "login",
+      "log in",
+      "sign in",
+      "password",
+      "lobby",
+      "gameforge",
+      "speedsim",
+      "trashsim",
+      "simulator",
+      "calculator",
+      "converter",
+      "infocompte",
+      "tracker",
+      "formula",
+      "wiki",
+      "hack",
+      "cheat",
+      "script",
+      "apk",
+      "jobs",
+      "pdf",
+      "mod",
+      "ogame bot",
+      "bot for ogame",
+      "ogame download",
+      "download ogame",
+      "ogame apk",
+      "forum",
+      "ogotcha",
+      "ogniter",
+      "galaxytool"
+    ]
+  },
+  "adGroups": [
+    {
+      "name": "alternative",
+      "keywords": {
+        "PHRASE": [
+          "games like ogame",
+          "game like ogame",
+          "ogame alternative",
+          "alternative to ogame",
+          "games similar to ogame",
+          "ogame like games",
+          "browser games like ogame",
+          "mobile games like ogame",
+          "ogame successor",
+          "ogame style game"
+        ],
+        "EXACT": [
+          "games like ogame",
+          "ogame alternative",
+          "game like ogame"
+        ]
+      },
+      "ads": [
+        {
+          "variant": "avec-marque",
+          "finalUrl": "https://dynastynova.com/en/from-ogame/",
+          "path1": "space-4x",
+          "path2": "free",
+          "headlines": [
+            "Coming from OGame?",
+            "A free game like OGame",
+            "Dynasty Nova, space 4X",
+            "Free space strategy game",
+            "Built for mobile first",
+            "No download needed",
+            "Built-in battle simulator",
+            "Live universe chat",
+            "Pick your dynasty",
+            "Mines produce while offline",
+            "Colonize the galaxy",
+            "Play in your browser",
+            "Mobile and desktop",
+            "Build your space empire",
+            "Free sign-up"
+          ],
+          "descriptions": [
+            "Resources, research, fleets and colonies: the OGame basics, redesigned for mobile.",
+            "Simulate any attack 50 times with the real combat engine before your fleet takes off.",
+            "Free, no download, on phone and desktop. Start your empire today.",
+            "An economy that doesn't punish logging off: your mines keep producing while you're away."
+          ]
+        },
+        {
+          "variant": "sans-marque",
+          "finalUrl": "https://dynastynova.com/en/from-ogame/",
+          "path1": "space-4x",
+          "path2": "free",
+          "headlines": [
+            "Dynasty Nova, space 4X",
+            "Free space strategy game",
+            "A browser space 4X",
+            "Built for mobile first",
+            "No download needed",
+            "Built-in battle simulator",
+            "Live universe chat",
+            "Pick your dynasty",
+            "Mines produce while offline",
+            "Colonize the galaxy",
+            "Play in your browser",
+            "Mobile and desktop",
+            "Build your space empire",
+            "Free sign-up",
+            "Metal, crystal, hydrogen"
+          ],
+          "descriptions": [
+            "Resources, research, fleets and colonies: a space 4X designed for mobile first.",
+            "Simulate any attack 50 times with the real combat engine before your fleet takes off.",
+            "Free, no download, on phone and desktop. Start your empire today.",
+            "An economy that doesn't punish logging off: your mines keep producing while you're away."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogame",
+      "keywords": {
+        "PHRASE": [
+          "ogame mobile",
+          "ogame free",
+          "ogame new universe",
+          "ogame on phone",
+          "ogame browser game"
+        ],
+        "EXACT": [
+          "ogame",
+          "ogame game"
+        ]
+      },
+      "ads": [
+        {
+          "variant": "avec-marque",
+          "finalUrl": "https://dynastynova.com/en/from-ogame/",
+          "path1": "space-4x",
+          "path2": "free",
+          "headlines": [
+            "Coming from OGame?",
+            "Same genre, a new game",
+            "Dynasty Nova, space 4X",
+            "Independent and free to play",
+            "Built for mobile first",
+            "No download needed",
+            "Built-in battle simulator",
+            "Live universe chat",
+            "Pick your dynasty",
+            "Mines produce while offline",
+            "Colonize the galaxy",
+            "Play in your browser",
+            "Mobile and desktop",
+            "Build your space empire",
+            "Free sign-up"
+          ],
+          "descriptions": [
+            "Love OGame? Dynasty Nova brings the genre to an interface built for mobile first.",
+            "Simulate any attack 50 times with the real combat engine before your fleet takes off.",
+            "Free, no download, on phone and desktop. Start your empire today.",
+            "An economy that doesn't punish logging off: your mines keep producing while you're away."
+          ]
+        },
+        {
+          "variant": "sans-marque",
+          "finalUrl": "https://dynastynova.com/en/from-ogame/",
+          "path1": "space-4x",
+          "path2": "free",
+          "headlines": [
+            "A new space 4X",
+            "Dynasty Nova, space 4X",
+            "Independent and free to play",
+            "Built for mobile first",
+            "No download needed",
+            "Built-in battle simulator",
+            "Live universe chat",
+            "Pick your dynasty",
+            "Mines produce while offline",
+            "Colonize the galaxy",
+            "Play in your browser",
+            "Mobile and desktop",
+            "Build your space empire",
+            "Free sign-up",
+            "Metal, crystal, hydrogen"
+          ],
+          "descriptions": [
+            "Resources, research, fleets and colonies: a space 4X designed for mobile first.",
+            "Simulate any attack 50 times with the real combat engine before your fleet takes off.",
+            "Free, no download, on phone and desktop. Start your empire today.",
+            "An economy that doesn't punish logging off: your mines keep producing while you're away."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "generique",
+      "keywords": {
+        "PHRASE": [
+          "space strategy browser game",
+          "free space strategy game",
+          "browser space game",
+          "space 4x browser game",
+          "space empire browser game",
+          "space strategy game mobile",
+          "free online space strategy",
+          "space colonization game"
+        ],
+        "EXACT": []
+      },
+      "ads": [
+        {
+          "variant": "sans-marque",
+          "finalUrl": "https://dynastynova.com/en/space-strategy-browser-game/",
+          "path1": "space-4x",
+          "path2": "free",
+          "headlines": [
+            "Free space strategy game",
+            "A browser space 4X",
+            "Dynasty Nova, space 4X",
+            "Built for mobile first",
+            "No download needed",
+            "Built-in battle simulator",
+            "Live universe chat",
+            "Pick your dynasty",
+            "Mines produce while offline",
+            "Colonize the galaxy",
+            "Play in your browser",
+            "Mobile and desktop",
+            "Build your space empire",
+            "Free sign-up",
+            "Metal, crystal, hydrogen"
+          ],
+          "descriptions": [
+            "Resources, research, fleets and colonies: a space 4X designed for mobile first.",
+            "Simulate any attack 50 times with the real combat engine before your fleet takes off.",
+            "Free, no download, on phone and desktop. Start your empire today.",
+            "An economy that doesn't punish logging off: your mines keep producing while you're away."
+          ]
+        }
+      ]
+    }
+  ]
+}
