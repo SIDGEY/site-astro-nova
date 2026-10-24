@@ -70,6 +70,8 @@ jobs:
           name: web-deploy-artifact
           path: deploy/
           retention-days: 1
+          # .htaccess (the site's 404 pages) is a dotfile, which upload-artifact skips by default.
+          include-hidden-files: true
 
   deploy:
     name: Publish via FTP

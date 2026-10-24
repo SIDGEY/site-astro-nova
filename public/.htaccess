@@ -1,0 +1,8 @@
+# Pages d'erreur du site, à la place de la page générique de l'hébergeur (OVH). Chemin local et
+# non URL complète : Apache sert la page avec le statut 404, sans redirection.
+ErrorDocument 404 /404.html
+
+# Sous /en/, la page introuvable anglaise.
+<If "%{REQUEST_URI} =~ m#^/en/#">
+    ErrorDocument 404 /en/404/index.html
+</If>
