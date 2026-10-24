@@ -106,26 +106,7 @@ La plateforme fonctionne comme un espace d'expérimentation où les explorations
 
 ### Mon point de vue de designer
 
-Ces plateformes transforment la pratique créative non pas en la rendant obsolète, mais en ouvrant des horizons inexplорés. Elles demandent une intégration réfléchie dans le workflow, une conscience des limites, et surtout une vision claire de ce qu'on cherche à produire. L'IA n'est pas une fin en soi : c'est un accélérateur au service d'une intention.
-
-## Notre expérience avec cet outil
-
-Après avoir testé Krea.ai sur plusieurs projets clients et internes, nous pouvons affirmer qu'il répond aux besoins des designers professionnels. Notre équipe l'utilise régulièrement dans son workflow quotidien, ce qui nous permet, selon notre expérience, de valider son efficacité en conditions réelles de production.
-
-**Points testés en détail :**
-
-- Performance sur des fichiers volumineux (500+ frames)
-- Compatibilité avec les design systems complexes
-- Stabilité lors d'utilisations intensives
-- Intégration dans un workflow d'équipe
-
-### Points d'attention (testés en conditions réelles)
-
-Dans un souci de transparence, voici les limitations que nous avons identifiées lors de nos tests :
-
-- Temps de traitement pouvant être allongé sur des fichiers très volumineux
-- Nécessite une connexion internet stable pour certaines fonctionnalités
-- Courbe d'apprentissage pour les utilisateurs débutants
+Ces plateformes transforment la pratique créative non pas en la rendant obsolète, mais en ouvrant des horizons inexplorés. Elles demandent une intégration réfléchie dans le workflow, une conscience des limites, et surtout une vision claire de ce qu'on cherche à produire. L'IA n'est pas une fin en soi : c'est un accélérateur au service d'une intention.
 
 ## Tutoriel express : votre première création sur Krea
 

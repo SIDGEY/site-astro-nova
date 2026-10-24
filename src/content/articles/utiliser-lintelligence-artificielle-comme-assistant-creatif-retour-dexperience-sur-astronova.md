@@ -75,25 +75,6 @@ Aucune image générée n'a été utilisée telle quelle. Toutes ont été retou
 
 Les visuels générés étaient carrés. Or, les cartes du jeu sont verticales (format 2/3). Pour chaque élément (bâtiments, recherches, vaisseaux, boutique…), j'ai placé l'image dans une carte, simulé les débords et choisi celle qui fonctionnait le mieux dans le cadre. Un travail de sélection, mais aussi d'élagage, jusqu'à ce qu'une seule image soit retenue pour chaque item.
 
-## Notre expérience avec cet outil
-
-Après avoir testé cet outil sur plusieurs projets clients et internes, nous pouvons affirmer qu'il répond aux besoins des designers professionnels. Notre équipe l'utilise régulièrement dans son workflow quotidien, ce qui nous permet, selon notre expérience, de valider son efficacité en conditions réelles de production.
-
-**Points testés en détail :**
-
-- Performance sur des fichiers volumineux (500+ frames)
-- Compatibilité avec les design systems complexes
-- Stabilité lors d'utilisations intensives
-- Intégration dans un workflow d'équipe
-
-### Points d'attention (testés en conditions réelles)
-
-Dans un souci de transparence, voici les limitations que nous avons identifiées lors de nos tests :
-
-- Temps de traitement pouvant être allongé sur des fichiers très volumineux
-- Nécessite une connexion internet stable pour certaines fonctionnalités
-- Courbe d'apprentissage pour les utilisateurs débutants
-
 ## Conclusion
 
 Utiliser l'intelligence artificielle ne signifie pas renoncer à la création. Dans Dynasty Nova, l'IA a été un levier, un moteur, un catalyseur, jamais une fin en soi. Elle m'a permis d'aller plus vite, d'oser plus, de générer plus… mais toujours sous ma supervision.

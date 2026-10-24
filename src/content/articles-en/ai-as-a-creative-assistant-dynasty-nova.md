@@ -68,25 +68,6 @@ No generated image was used as is. Every one was retouched: perspective fixes, a
 
 The generated visuals were square, but the game's cards are vertical (2:3 format). For each item (buildings, research, ships, shop…), I placed the image in a card, simulated the overflow and picked the one that worked best in the frame. It was a process of selection, but also of elimination, until only one image was left for each item.
 
-## Our experience with this tool
-
-Having tested this tool on several client and in-house projects, we can say that it meets the needs of professional designers. Our team uses it regularly in its daily workflow, which, in our experience, lets us confirm how effective it is in real production conditions.
-
-**What we tested in detail:**
-
-- Performance on large files (500+ frames)
-- Compatibility with complex design systems
-- Stability under heavy use
-- Integration into a team workflow
-
-### Things to watch out for (tested in real conditions)
-
-In the interest of transparency, here are the limitations we found during our tests:
-
-- Processing can take longer on very large files
-- Some features require a stable internet connection
-- A learning curve for beginners
-
 ## Conclusion
 
 Using artificial intelligence doesn't mean giving up on creative work. On Dynasty Nova, AI was a lever, an engine, a catalyst, never an end in itself. It let me go faster, dare more, generate more… but always under my supervision.

@@ -101,25 +101,6 @@ The platform works as a space for experimentation, where the most unexpected exp
 
 These platforms are transforming creative practice, not by making it obsolete but by opening up unexplored horizons. They call for thoughtful integration into the workflow, awareness of their limits and, above all, a clear vision of what you're trying to produce. AI isn't an end in itself: it's an accelerator in service of a purpose.
 
-## Our experience with this tool
-
-After testing Krea.ai on several client and in-house projects, we can say that it meets the needs of professional designers. Our team uses it regularly in its day-to-day workflow, which, in our experience, lets us vouch for its effectiveness in real production conditions.
-
-**What we tested in detail:**
-
-- Performance on large files (500+ frames)
-- Compatibility with complex design systems
-- Stability under intensive use
-- Integration into a team workflow
-
-### Caveats (tested in real-world conditions)
-
-In the interest of transparency, here are the limitations we identified during our tests:
-
-- Processing times can run longer on very large files
-- A stable internet connection is required for some features
-- A learning curve for beginners
-
 ## Quick tutorial: your first creation on Krea
 
 1. Create a free account (the free plan is generous)
